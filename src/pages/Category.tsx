@@ -3,6 +3,7 @@ import { ArrowLeft, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 // Mock data - in production this would come from your data source
 const worksheets = {
@@ -50,29 +51,30 @@ const Category = () => {
   const categoryTitle = categoryTitles[categoryId as string] || "Worksheets";
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="container mx-auto max-w-6xl py-8 px-6">
-        <Link to="/">
-          <Button variant="ghost" className="mb-6">
-            <ArrowLeft className="mr-2" />
-            Back to Home
-          </Button>
-        </Link>
+      <div className="flex-1">
+        <div className="container mx-auto max-w-[1140px] py-8 px-6">
+          <Link to="/">
+            <Button variant="ghost" className="mb-6">
+              <ArrowLeft className="mr-2" />
+              Back to Home
+            </Button>
+          </Link>
 
-        <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-heading">{categoryTitle}</h1>
-          <p className="text-xl text-muted-foreground">
-            Explore our collection of {categoryWorksheets.length} high-quality worksheets
-          </p>
-        </div>
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-heading">{categoryTitle}</h1>
+            <p className="text-lg text-muted-foreground">
+              Explore our collection of {categoryWorksheets.length} high-quality worksheets
+            </p>
+          </div>
 
-        {/* AdSense Placement */}
-        <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-secondary mb-8">
-          <p className="text-muted-foreground">Advertisement Space</p>
-        </div>
+          {/* AdSense Placement */}
+          <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-border mb-8">
+            <p className="text-muted-foreground">Advertisement Space</p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categoryWorksheets.map((worksheet) => (
             <Card key={worksheet.id} className="overflow-hidden group">
               <CardHeader className="p-0">
@@ -88,7 +90,7 @@ const Category = () => {
                 <CardTitle className="text-xl mb-3 group-hover:text-primary transition-colors font-heading">{worksheet.title}</CardTitle>
                 <p className="text-muted-foreground">High-quality educational worksheet</p>
               </CardContent>
-              <CardFooter className="p-6 pt-0 flex gap-2">
+              <CardFooter className="p-5 pt-0 flex gap-2">
                 <Link to={`/worksheet/${worksheet.id}`} className="flex-1">
                   <Button className="w-full">
                     View Details
@@ -101,7 +103,9 @@ const Category = () => {
             </Card>
           ))}
         </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

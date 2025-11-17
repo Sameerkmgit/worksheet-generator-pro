@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const categories = [
   { id: "math", title: "Math", icon: Calculator, color: "from-primary to-primary-dark", worksheets: 145 },
@@ -12,8 +14,6 @@ const categories = [
   { id: "coloring", title: "Coloring Pages", icon: Palette, color: "from-pink-500 to-pink-600", worksheets: 164 },
   { id: "class-1", title: "Class 1", icon: Star, color: "from-teal-500 to-teal-600", worksheets: 89 },
 ];
-
-import Header from "@/components/Header";
 
 const Home = () => {
   return (
@@ -28,7 +28,7 @@ const Home = () => {
           <div className="absolute bottom-10 right-10 w-48 h-48 bg-accent rounded-full blur-3xl"></div>
         </div>
         
-        <div className="container mx-auto max-w-6xl relative z-10">
+        <div className="container mx-auto max-w-[1140px] relative z-10">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in font-heading">
               SmartKidsWorksheets
@@ -39,13 +39,13 @@ const Home = () => {
             
             {/* Search Bar */}
             <div className="max-w-2xl mx-auto animate-fade-in">
-              <div className="flex gap-2 bg-white/10 backdrop-blur-sm p-2 rounded-full border border-white/20">
+              <div className="flex gap-3 bg-white p-3 rounded-lg shadow-card">
                 <Input 
                   type="search" 
                   placeholder="Search worksheets by topic, grade, or subject..." 
-                  className="border-0 bg-white text-foreground placeholder:text-muted-foreground h-14 text-base focus-visible:ring-0 rounded-full"
+                  className="border border-border bg-white text-foreground placeholder:text-muted-foreground h-12 text-base focus-visible:ring-2 focus-visible:ring-primary rounded-md"
                 />
-                <Button size="lg" variant="accent" className="h-14 px-8 text-base font-semibold">
+                <Button size="lg" className="h-12 px-8 text-base">
                   <Search className="mr-2" />
                   Search
                 </Button>
@@ -57,15 +57,15 @@ const Home = () => {
 
       {/* Categories Section */}
       <section className="py-16 px-6">
-        <div className="container mx-auto max-w-6xl">
+        <div className="container mx-auto max-w-[1140px]">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-foreground mb-4 font-heading">Browse by Category</h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               Explore our collection of high-quality educational worksheets
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category) => (
               <Link to={`/category/${category.id}`} key={category.id}>
                 <Card className="cursor-pointer group h-full">
@@ -90,8 +90,8 @@ const Home = () => {
       </section>
 
       {/* Featured Section */}
-      <section className="py-16 px-6 bg-accent/5">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-16 px-6 bg-secondary/10">
+        <div className="container mx-auto max-w-[1140px]">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-foreground mb-4 font-heading">Why Choose SmartKidsWorksheets?</h2>
           </div>
@@ -132,12 +132,14 @@ const Home = () => {
 
       {/* AdSense Placement Area */}
       <section className="py-8 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-secondary">
+        <div className="container mx-auto max-w-[1140px]">
+          <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-border">
             <p className="text-muted-foreground">Advertisement Space</p>
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };
