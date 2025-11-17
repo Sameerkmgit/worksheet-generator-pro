@@ -6,10 +6,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 const Header = () => {
   const navItems = [
     { label: "Home", path: "/" },
+    { label: "Classes", path: "/category/class-1" },
     { label: "Math", path: "/category/math" },
     { label: "English", path: "/category/english" },
     { label: "Science", path: "/category/science" },
-    { label: "More", path: "/category/coloring" },
   ];
 
   return (
@@ -22,7 +22,7 @@ const Header = () => {
               <BookOpen className="w-6 h-6 text-white" />
             </div>
             <span className="text-xl font-bold font-heading text-primary">
-              SmartKidsWorksheets
+              SmartKids<span className="text-foreground">Worksheets</span>
             </span>
           </Link>
 
@@ -32,16 +32,11 @@ const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors font-heading"
               >
                 {item.label}
               </Link>
             ))}
-            <Link to="/admin/upload">
-              <Button size="sm" variant="accent">
-                Upload
-              </Button>
-            </Link>
           </nav>
 
           {/* Mobile Navigation */}
@@ -57,16 +52,11 @@ const Header = () => {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className="text-lg font-medium text-foreground hover:text-primary transition-colors"
+                    className="text-lg font-medium text-foreground hover:text-primary transition-colors font-heading"
                   >
                     {item.label}
                   </Link>
                 ))}
-                <Link to="/admin/upload" className="mt-4">
-                  <Button className="w-full" variant="accent">
-                    Upload Worksheet
-                  </Button>
-                </Link>
               </nav>
             </SheetContent>
           </Sheet>
