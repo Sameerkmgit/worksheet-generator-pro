@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 const categories = [
-  { id: "math", title: "Math", icon: Calculator, color: "from-blue-500 to-blue-600", worksheets: 145 },
+  { id: "math", title: "Math", icon: Calculator, color: "from-primary to-primary-dark", worksheets: 145 },
   { id: "english", title: "English", icon: BookOpen, color: "from-purple-500 to-purple-600", worksheets: 128 },
   { id: "science", title: "Science", icon: Globe, color: "from-green-500 to-green-600", worksheets: 98 },
   { id: "word-search", title: "Word Search", icon: FileText, color: "from-orange-500 to-orange-600", worksheets: 76 },
@@ -19,13 +19,14 @@ const Home = () => {
       {/* Hero Section */}
       <section className="gradient-hero text-white py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-40 h-40 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute top-10 left-10 w-40 h-40 bg-accent rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 right-1/4 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-48 h-48 bg-accent rounded-full blur-3xl"></div>
         </div>
         
-        <div className="container mx-auto max-w-6xl relative z-10">
+        <div className="container mx-auto max-w-5xl relative z-10">
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in font-heading">
               SmartKidsWorksheets
             </h1>
             <p className="text-xl md:text-2xl text-blue-50 mb-8 animate-fade-in">
@@ -34,13 +35,13 @@ const Home = () => {
             
             {/* Search Bar */}
             <div className="max-w-2xl mx-auto animate-fade-in">
-              <div className="flex gap-2 bg-white/10 backdrop-blur-sm p-2 rounded-2xl border border-white/20">
+              <div className="flex gap-2 bg-white/10 backdrop-blur-sm p-2 rounded-full border border-white/20">
                 <Input 
                   type="search" 
                   placeholder="Search worksheets by topic, grade, or subject..." 
-                  className="border-0 bg-white text-foreground placeholder:text-muted-foreground h-14 text-lg focus-visible:ring-0"
+                  className="border-0 bg-white text-foreground placeholder:text-muted-foreground h-14 text-base focus-visible:ring-0 rounded-full"
                 />
-                <Button size="lg" className="bg-secondary hover:bg-secondary/90 h-14 px-8">
+                <Button size="lg" variant="accent" className="h-14 px-8 text-base font-semibold">
                   <Search className="mr-2" />
                   Search
                 </Button>
@@ -52,9 +53,9 @@ const Home = () => {
 
       {/* Categories Section */}
       <section className="py-16 px-4">
-        <div className="container mx-auto max-w-6xl">
+        <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Browse by Category</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-4 font-heading">Browse by Category</h2>
             <p className="text-xl text-muted-foreground">
               Explore our collection of high-quality educational worksheets
             </p>
@@ -63,17 +64,17 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category) => (
               <Link to={`/category/${category.id}`} key={category.id}>
-                <Card className="shadow-card hover:shadow-soft transition-all duration-300 hover:-translate-y-1 border-2 cursor-pointer group h-full">
+                <Card className="cursor-pointer group h-full border-border/50">
                   <CardHeader>
                     <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                       <category.icon className="w-8 h-8 text-white" />
                     </div>
-                    <CardTitle className="text-2xl group-hover:text-primary transition-colors">
+                    <CardTitle className="text-2xl group-hover:text-primary transition-colors font-heading">
                       {category.title}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground text-lg">
+                    <p className="text-muted-foreground text-base">
                       {category.worksheets} worksheets available
                     </p>
                   </CardContent>
@@ -85,38 +86,38 @@ const Home = () => {
       </section>
 
       {/* Featured Section */}
-      <section className="py-16 px-4 bg-accent/30">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-16 px-4 bg-accent/5">
+        <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Why Choose SmartKidsWorksheets?</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-4 font-heading">Why Choose SmartKidsWorksheets?</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <FileText className="w-10 h-10 text-primary" />
+              <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20">
+                <FileText className="w-10 h-10 text-accent" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">100% Free</h3>
+              <h3 className="text-xl font-semibold mb-3 font-heading">100% Free</h3>
               <p className="text-muted-foreground">
                 All worksheets are completely free to download and print
               </p>
             </div>
 
             <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <Star className="w-10 h-10 text-primary" />
+              <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20">
+                <Star className="w-10 h-10 text-accent" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">High Quality</h3>
+              <h3 className="text-xl font-semibold mb-3 font-heading">High Quality</h3>
               <p className="text-muted-foreground">
                 Professionally designed and educationally sound content
               </p>
             </div>
 
             <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <BookOpen className="w-10 h-10 text-primary" />
+              <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20">
+                <BookOpen className="w-10 h-10 text-accent" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Regular Updates</h3>
+              <h3 className="text-xl font-semibold mb-3 font-heading">Regular Updates</h3>
               <p className="text-muted-foreground">
                 New worksheets added weekly across all subjects
               </p>
@@ -127,8 +128,8 @@ const Home = () => {
 
       {/* AdSense Placement Area */}
       <section className="py-8 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="bg-muted/50 rounded-xl p-8 text-center border-2 border-dashed">
+        <div className="container mx-auto max-w-5xl">
+          <div className="bg-muted/30 rounded-2xl p-8 text-center border-2 border-dashed border-border">
             <p className="text-muted-foreground">Advertisement Space</p>
           </div>
         </div>
