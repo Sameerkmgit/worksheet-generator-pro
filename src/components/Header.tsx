@@ -13,16 +13,16 @@ const Header = () => {
   ];
 
   return (
-    <header className="border-b border-secondary bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="container mx-auto max-w-6xl px-6 py-4">
+    <header className="border-b border-gray-200 bg-card sticky top-0 z-50 shadow-sm">
+      <div className="container mx-auto max-w-[1140px] px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center group-hover:scale-110 transition-transform">
               <BookOpen className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold font-heading text-foreground">
-              SmartKids<span className="text-primary">Worksheets</span>
+            <span className="text-xl font-bold font-heading text-primary">
+              SmartKidsWorksheets
             </span>
           </Link>
 

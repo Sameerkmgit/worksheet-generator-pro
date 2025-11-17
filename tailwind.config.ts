@@ -14,11 +14,12 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-        heading: ['Poppins', 'Nunito', 'sans-serif'],
+        sans: ['Lato', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        heading: ['Poppins', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
+        "card-border": "hsl(var(--card-border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",

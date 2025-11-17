@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const AdminUpload = () => {
   const { toast } = useToast();
@@ -44,19 +45,20 @@ const AdminUpload = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-secondary/5 flex flex-col">
       <Header />
-      <div className="container mx-auto max-w-4xl py-8 px-6">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-heading">
-            Upload New Worksheet
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            Add a new worksheet to the collection
-          </p>
-        </div>
+      <div className="flex-1">
+        <div className="container mx-auto max-w-[1140px] py-8 px-6">
+          <div className="mb-8 text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-heading">
+              Upload New Worksheet
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Add a new worksheet to the collection
+            </p>
+          </div>
 
-        <Card>
+          <Card>
           <CardHeader>
             <CardTitle className="text-2xl font-heading">Worksheet Details</CardTitle>
             <CardDescription>
@@ -123,7 +125,7 @@ const AdminUpload = () => {
                 <Label htmlFor="pdf" className="text-base font-semibold">
                   PDF File *
                 </Label>
-                <div className="border-2 border-dashed rounded-lg border-secondary p-6 text-center hover:border-primary transition-colors">
+                <div className="border-2 border-dashed rounded-lg border-border p-6 text-center hover:border-primary transition-colors">
                   <input
                     id="pdf"
                     type="file"
@@ -154,7 +156,7 @@ const AdminUpload = () => {
                 <Label htmlFor="preview" className="text-base font-semibold">
                   Preview Image (JPG) *
                 </Label>
-                <div className="border-2 border-dashed rounded-lg border-secondary p-6 text-center hover:border-primary transition-colors">
+                <div className="border-2 border-dashed rounded-lg border-border p-6 text-center hover:border-primary transition-colors">
                   <input
                     id="preview"
                     type="file"
@@ -187,7 +189,9 @@ const AdminUpload = () => {
             </form>
           </CardContent>
         </Card>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

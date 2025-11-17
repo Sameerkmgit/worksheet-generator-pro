@@ -3,6 +3,7 @@ import { ArrowLeft, Download, Printer, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 // Mock data - in production this would come from your data source
 const worksheetData: Record<string, any> = {
@@ -31,9 +32,10 @@ const WorksheetDetail = () => {
   const worksheet = worksheetData[worksheetId || ""] || worksheetData["1"];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="container mx-auto max-w-6xl py-8 px-6">
+      <div className="flex-1">
+        <div className="container mx-auto max-w-[1140px] py-8 px-6">
         <Link to={`/category/${worksheet.category.toLowerCase()}`}>
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="mr-2" />
@@ -120,7 +122,7 @@ const WorksheetDetail = () => {
         </div>
 
         {/* AdSense Placement */}
-        <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-secondary mb-8">
+        <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-border mb-8">
           <p className="text-muted-foreground">Advertisement Space</p>
         </div>
 
@@ -132,7 +134,7 @@ const WorksheetDetail = () => {
               <Card key={i} className="cursor-pointer">
                 <CardContent className="p-0">
                   <div className="aspect-[4/3] bg-muted"></div>
-                  <div className="p-4">
+                  <div className="p-5">
                     <h3 className="font-semibold mb-2 font-heading">Related Worksheet {i}</h3>
                     <Button variant="outline" size="sm" className="w-full">
                       View Details
@@ -143,7 +145,9 @@ const WorksheetDetail = () => {
             ))}
           </div>
         </section>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };
