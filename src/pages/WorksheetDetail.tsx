@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Download, Printer, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Header from "@/components/Header";
 
 // Mock data - in production this would come from your data source
 const worksheetData: Record<string, any> = {
@@ -30,8 +31,9 @@ const WorksheetDetail = () => {
   const worksheet = worksheetData[worksheetId || ""] || worksheetData["1"];
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="container mx-auto max-w-5xl">
+    <div className="min-h-screen">
+      <Header />
+      <div className="container mx-auto max-w-6xl py-8 px-6">
         <Link to={`/category/${worksheet.category.toLowerCase()}`}>
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="mr-2" />
@@ -42,7 +44,7 @@ const WorksheetDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Preview */}
           <div>
-            <Card className="overflow-hidden border-border/50">
+            <Card className="overflow-hidden">
               <CardContent className="p-0">
                 <img 
                   src={worksheet.preview} 
@@ -91,7 +93,7 @@ const WorksheetDetail = () => {
             </div>
 
             {/* Features */}
-            <Card className="mt-8 border-border/50">
+            <Card className="mt-8">
               <CardContent className="p-6">
                 <h3 className="font-semibold text-lg mb-4 font-heading">What's Included:</h3>
                 <ul className="space-y-2 text-muted-foreground">
@@ -118,7 +120,7 @@ const WorksheetDetail = () => {
         </div>
 
         {/* AdSense Placement */}
-        <div className="bg-muted/30 rounded-2xl p-8 text-center border-2 border-dashed border-border mb-8">
+        <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-secondary mb-8">
           <p className="text-muted-foreground">Advertisement Space</p>
         </div>
 
@@ -127,7 +129,7 @@ const WorksheetDetail = () => {
           <h2 className="text-3xl font-bold text-foreground mb-6 font-heading">Related Worksheets</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
-              <Card key={i} className="cursor-pointer border-border/50">
+              <Card key={i} className="cursor-pointer">
                 <CardContent className="p-0">
                   <div className="aspect-[4/3] bg-muted"></div>
                   <div className="p-4">

@@ -8,10 +8,10 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 43% 97%;
+    --background: 216 100% 98%;
     --foreground: 0 0% 10%;
 
-    --card: 0 0% 100%;
+    --card: 207 89% 95%;
     --card-foreground: 0 0% 10%;
 
     --popover: 0 0% 100%;
@@ -22,10 +22,10 @@ All colors MUST be HSL.
     
     --primary-dark: 213 86% 34%;
 
-    --secondary: 207 79% 41%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 207 59% 76%;
+    --secondary-foreground: 207 79% 20%;
 
-    --muted: 220 43% 97%;
+    --muted: 216 100% 98%;
     --muted-foreground: 215 16% 47%;
 
     --accent: 43 100% 50%;
@@ -34,16 +34,16 @@ All colors MUST be HSL.
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 228 100% 94%;
-    --input: 228 100% 94%;
+    --border: 207 59% 76%;
+    --input: 207 89% 95%;
     --ring: 207 79% 41%;
 
-    --radius: 1rem;
+    --radius: 0.5rem;
     
     --gradient-primary: linear-gradient(135deg, hsl(207 79% 41%), hsl(207 79% 41%));
     --gradient-hero: linear-gradient(135deg, hsl(207 79% 41%) 0%, hsl(213 86% 34%) 100%);
-    --shadow-soft: 0 8px 24px -4px hsl(207 79% 41% / 0.12);
-    --shadow-card: 0 4px 16px -2px hsl(207 79% 41% / 0.08);
+    --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.05);
+    --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.05);
 
     --sidebar-background: 0 0% 98%;
 
@@ -64,21 +64,21 @@ All colors MUST be HSL.
 
   .dark {
     --background: 0 0% 10%;
-    --foreground: 220 43% 97%;
+    --foreground: 216 100% 98%;
 
     --card: 0 0% 15%;
-    --card-foreground: 220 43% 97%;
+    --card-foreground: 216 100% 98%;
 
     --popover: 0 0% 15%;
-    --popover-foreground: 220 43% 97%;
+    --popover-foreground: 216 100% 98%;
 
     --primary: 207 79% 41%;
     --primary-foreground: 0 0% 100%;
     
     --primary-dark: 213 86% 34%;
 
-    --secondary: 207 79% 41%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 207 59% 76%;
+    --secondary-foreground: 207 79% 20%;
 
     --muted: 0 0% 20%;
     --muted-foreground: 215 16% 65%;
@@ -87,7 +87,7 @@ All colors MUST be HSL.
     --accent-foreground: 0 0% 10%;
 
     --destructive: 0 63% 31%;
-    --destructive-foreground: 220 43% 97%;
+    --destructive-foreground: 216 100% 98%;
 
     --border: 0 0% 25%;
     --input: 0 0% 25%;

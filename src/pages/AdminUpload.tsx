@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import Header from "@/components/Header";
 
 const AdminUpload = () => {
   const { toast } = useToast();
@@ -43,8 +44,9 @@ const AdminUpload = () => {
   };
 
   return (
-    <div className="min-h-screen py-8 px-4 bg-muted/5">
-      <div className="container mx-auto max-w-4xl">
+    <div className="min-h-screen bg-muted/30">
+      <Header />
+      <div className="container mx-auto max-w-4xl py-8 px-6">
         <div className="mb-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-heading">
             Upload New Worksheet
@@ -54,7 +56,7 @@ const AdminUpload = () => {
           </p>
         </div>
 
-        <Card className="border-border/50">
+        <Card>
           <CardHeader>
             <CardTitle className="text-2xl font-heading">Worksheet Details</CardTitle>
             <CardDescription>
@@ -121,7 +123,7 @@ const AdminUpload = () => {
                 <Label htmlFor="pdf" className="text-base font-semibold">
                   PDF File *
                 </Label>
-                <div className="border-2 border-dashed rounded-2xl border-border p-6 text-center hover:border-primary transition-colors">
+                <div className="border-2 border-dashed rounded-lg border-secondary p-6 text-center hover:border-primary transition-colors">
                   <input
                     id="pdf"
                     type="file"
@@ -152,7 +154,7 @@ const AdminUpload = () => {
                 <Label htmlFor="preview" className="text-base font-semibold">
                   Preview Image (JPG) *
                 </Label>
-                <div className="border-2 border-dashed rounded-2xl border-border p-6 text-center hover:border-primary transition-colors">
+                <div className="border-2 border-dashed rounded-lg border-secondary p-6 text-center hover:border-primary transition-colors">
                   <input
                     id="preview"
                     type="file"
