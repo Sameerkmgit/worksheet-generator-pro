@@ -43,10 +43,10 @@ const AdminUpload = () => {
   };
 
   return (
-    <div className="min-h-screen py-8 px-4 bg-muted/30">
+    <div className="min-h-screen py-8 px-4 bg-muted/5">
       <div className="container mx-auto max-w-4xl">
         <div className="mb-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-heading">
             Upload New Worksheet
           </h1>
           <p className="text-xl text-muted-foreground">
@@ -54,9 +54,9 @@ const AdminUpload = () => {
           </p>
         </div>
 
-        <Card className="shadow-soft">
+        <Card className="border-border/50">
           <CardHeader>
-            <CardTitle className="text-2xl">Worksheet Details</CardTitle>
+            <CardTitle className="text-2xl font-heading">Worksheet Details</CardTitle>
             <CardDescription>
               Fill in the information and upload the files for your worksheet
             </CardDescription>
@@ -121,7 +121,7 @@ const AdminUpload = () => {
                 <Label htmlFor="pdf" className="text-base font-semibold">
                   PDF File *
                 </Label>
-                <div className="border-2 border-dashed rounded-lg p-6 text-center hover:border-primary transition-colors">
+                <div className="border-2 border-dashed rounded-2xl border-border p-6 text-center hover:border-primary transition-colors">
                   <input
                     id="pdf"
                     type="file"
@@ -133,16 +133,14 @@ const AdminUpload = () => {
                   <label htmlFor="pdf" className="cursor-pointer">
                     <FileText className="w-12 h-12 mx-auto mb-3 text-primary" />
                     {pdfFile ? (
-                      <div className="flex items-center justify-center gap-2 text-green-600">
+                      <div className="flex items-center justify-center gap-2 text-accent">
                         <CheckCircle className="w-5 h-5" />
-                        <span>{pdfFile.name}</span>
+                        <span className="font-medium">{pdfFile.name}</span>
                       </div>
                     ) : (
                       <div>
-                        <p className="font-medium mb-1">Upload PDF Worksheet</p>
-                        <p className="text-sm text-muted-foreground">
-                          Click to browse or drag and drop
-                        </p>
+                        <p className="font-medium text-foreground mb-1">Click to upload PDF</p>
+                        <p className="text-sm text-muted-foreground">or drag and drop</p>
                       </div>
                     )}
                   </label>
@@ -154,7 +152,7 @@ const AdminUpload = () => {
                 <Label htmlFor="preview" className="text-base font-semibold">
                   Preview Image (JPG) *
                 </Label>
-                <div className="border-2 border-dashed rounded-lg p-6 text-center hover:border-primary transition-colors">
+                <div className="border-2 border-dashed rounded-2xl border-border p-6 text-center hover:border-primary transition-colors">
                   <input
                     id="preview"
                     type="file"
@@ -166,23 +164,21 @@ const AdminUpload = () => {
                   <label htmlFor="preview" className="cursor-pointer">
                     <Image className="w-12 h-12 mx-auto mb-3 text-primary" />
                     {previewFile ? (
-                      <div className="flex items-center justify-center gap-2 text-green-600">
+                      <div className="flex items-center justify-center gap-2 text-accent">
                         <CheckCircle className="w-5 h-5" />
-                        <span>{previewFile.name}</span>
+                        <span className="font-medium">{previewFile.name}</span>
                       </div>
                     ) : (
                       <div>
-                        <p className="font-medium mb-1">Upload Preview Image</p>
-                        <p className="text-sm text-muted-foreground">
-                          JPG format recommended
-                        </p>
+                        <p className="font-medium text-foreground mb-1">Click to upload JPG</p>
+                        <p className="text-sm text-muted-foreground">or drag and drop</p>
                       </div>
                     )}
                   </label>
                 </div>
               </div>
 
-              <Button type="submit" size="lg" className="w-full h-14 text-lg">
+              <Button type="submit" size="lg" className="w-full h-14 text-base">
                 <Upload className="mr-2" />
                 Upload Worksheet
               </Button>

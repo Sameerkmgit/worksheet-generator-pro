@@ -31,7 +31,7 @@ const WorksheetDetail = () => {
 
   return (
     <div className="min-h-screen py-8 px-4">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto max-w-5xl">
         <Link to={`/category/${worksheet.category.toLowerCase()}`}>
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="mr-2" />
@@ -42,7 +42,7 @@ const WorksheetDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Preview */}
           <div>
-            <Card className="overflow-hidden shadow-soft">
+            <Card className="overflow-hidden border-border/50">
               <CardContent className="p-0">
                 <img 
                   src={worksheet.preview} 
@@ -55,25 +55,25 @@ const WorksheetDetail = () => {
 
           {/* Details */}
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-heading">
               {worksheet.title}
             </h1>
             
             <div className="flex flex-wrap gap-3 mb-6">
-              <span className="px-4 py-2 bg-primary/10 text-primary rounded-full font-medium">
+              <span className="px-4 py-2 bg-primary/10 text-primary rounded-full font-medium border border-primary/20">
                 {worksheet.category}
               </span>
-              <span className="px-4 py-2 bg-secondary/10 text-secondary rounded-full font-medium">
+              <span className="px-4 py-2 bg-accent/10 text-accent rounded-full font-medium border border-accent/20">
                 {worksheet.grade}
               </span>
             </div>
 
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-base text-muted-foreground mb-8 leading-relaxed">
               {worksheet.description}
             </p>
 
             <div className="flex flex-col gap-3">
-              <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-lg h-14">
+              <Button size="lg" className="w-full text-base h-14">
                 <Download className="mr-2" />
                 Download PDF
               </Button>
@@ -91,24 +91,24 @@ const WorksheetDetail = () => {
             </div>
 
             {/* Features */}
-            <Card className="mt-8 shadow-card">
+            <Card className="mt-8 border-border/50">
               <CardContent className="p-6">
-                <h3 className="font-semibold text-lg mb-4">What's Included:</h3>
+                <h3 className="font-semibold text-lg mb-4 font-heading">What's Included:</h3>
                 <ul className="space-y-2 text-muted-foreground">
                   <li className="flex items-start">
-                    <span className="text-primary mr-2">✓</span>
+                    <span className="text-accent mr-2 text-xl">✓</span>
                     High-quality printable PDF format
                   </li>
                   <li className="flex items-start">
-                    <span className="text-primary mr-2">✓</span>
+                    <span className="text-accent mr-2 text-xl">✓</span>
                     Clear instructions and examples
                   </li>
                   <li className="flex items-start">
-                    <span className="text-primary mr-2">✓</span>
+                    <span className="text-accent mr-2 text-xl">✓</span>
                     Age-appropriate content
                   </li>
                   <li className="flex items-start">
-                    <span className="text-primary mr-2">✓</span>
+                    <span className="text-accent mr-2 text-xl">✓</span>
                     Answer key included
                   </li>
                 </ul>
@@ -118,20 +118,20 @@ const WorksheetDetail = () => {
         </div>
 
         {/* AdSense Placement */}
-        <div className="bg-muted/50 rounded-xl p-8 text-center border-2 border-dashed mb-8">
+        <div className="bg-muted/30 rounded-2xl p-8 text-center border-2 border-dashed border-border mb-8">
           <p className="text-muted-foreground">Advertisement Space</p>
         </div>
 
         {/* Related Worksheets */}
         <section className="mt-12">
-          <h2 className="text-3xl font-bold text-foreground mb-6">Related Worksheets</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-6 font-heading">Related Worksheets</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
-              <Card key={i} className="shadow-card hover:shadow-soft transition-all cursor-pointer">
+              <Card key={i} className="cursor-pointer border-border/50">
                 <CardContent className="p-0">
                   <div className="aspect-[4/3] bg-muted"></div>
                   <div className="p-4">
-                    <h3 className="font-semibold mb-2">Related Worksheet {i}</h3>
+                    <h3 className="font-semibold mb-2 font-heading">Related Worksheet {i}</h3>
                     <Button variant="outline" size="sm" className="w-full">
                       View Details
                     </Button>
