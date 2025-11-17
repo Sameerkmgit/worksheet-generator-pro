@@ -13,18 +13,22 @@ const categories = [
   { id: "class-1", title: "Class 1", icon: Star, color: "from-teal-500 to-teal-600", worksheets: 89 },
 ];
 
+import Header from "@/components/Header";
+
 const Home = () => {
   return (
     <div className="min-h-screen">
+      <Header />
+      
       {/* Hero Section */}
-      <section className="gradient-hero text-white py-20 px-4 relative overflow-hidden">
+      <section className="gradient-hero text-white py-20 px-6 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-40 h-40 bg-accent rounded-full blur-3xl"></div>
           <div className="absolute top-1/2 right-1/4 w-32 h-32 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-48 h-48 bg-accent rounded-full blur-3xl"></div>
         </div>
         
-        <div className="container mx-auto max-w-5xl relative z-10">
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in font-heading">
               SmartKidsWorksheets
@@ -52,8 +56,8 @@ const Home = () => {
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto max-w-5xl">
+      <section className="py-16 px-6">
+        <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-foreground mb-4 font-heading">Browse by Category</h2>
             <p className="text-xl text-muted-foreground">
@@ -64,9 +68,9 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category) => (
               <Link to={`/category/${category.id}`} key={category.id}>
-                <Card className="cursor-pointer group h-full border-border/50">
+                <Card className="cursor-pointer group h-full">
                   <CardHeader>
-                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                    <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                       <category.icon className="w-8 h-8 text-white" />
                     </div>
                     <CardTitle className="text-2xl group-hover:text-primary transition-colors font-heading">
@@ -86,8 +90,8 @@ const Home = () => {
       </section>
 
       {/* Featured Section */}
-      <section className="py-16 px-4 bg-accent/5">
-        <div className="container mx-auto max-w-5xl">
+      <section className="py-16 px-6 bg-accent/5">
+        <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-foreground mb-4 font-heading">Why Choose SmartKidsWorksheets?</h2>
           </div>
@@ -127,9 +131,9 @@ const Home = () => {
       </section>
 
       {/* AdSense Placement Area */}
-      <section className="py-8 px-4">
-        <div className="container mx-auto max-w-5xl">
-          <div className="bg-muted/30 rounded-2xl p-8 text-center border-2 border-dashed border-border">
+      <section className="py-8 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-secondary">
             <p className="text-muted-foreground">Advertisement Space</p>
           </div>
         </div>

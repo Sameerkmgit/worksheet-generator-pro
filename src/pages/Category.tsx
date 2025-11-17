@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import Header from "@/components/Header";
 
 // Mock data - in production this would come from your data source
 const worksheets = {
@@ -49,8 +50,9 @@ const Category = () => {
   const categoryTitle = categoryTitles[categoryId as string] || "Worksheets";
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="container mx-auto max-w-5xl">
+    <div className="min-h-screen">
+      <Header />
+      <div className="container mx-auto max-w-6xl py-8 px-6">
         <Link to="/">
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="mr-2" />
@@ -66,13 +68,13 @@ const Category = () => {
         </div>
 
         {/* AdSense Placement */}
-        <div className="bg-muted/30 rounded-2xl p-8 text-center border-2 border-dashed border-border mb-8">
+        <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-secondary mb-8">
           <p className="text-muted-foreground">Advertisement Space</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categoryWorksheets.map((worksheet) => (
-            <Card key={worksheet.id} className="overflow-hidden group border-border/50">
+            <Card key={worksheet.id} className="overflow-hidden group">
               <CardHeader className="p-0">
                 <div className="aspect-[4/3] overflow-hidden bg-muted">
                   <img 
