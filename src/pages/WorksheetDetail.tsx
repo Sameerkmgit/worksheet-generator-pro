@@ -86,6 +86,68 @@ const worksheetData: Record<string, any> = {
       { title: "Subtraction Worksheet 1", url: "/worksheet/4" },
     ],
   },
+  "20": {
+    id: 20,
+    title: "Alphabet Tracing Worksheet - Class 1 (A-Z Practice)",
+    category: "English",
+    grade: "Class 1",
+    description: "Free printable alphabet tracing worksheet for Class 1 students to practice writing uppercase and lowercase letters A-Z. Perfect for handwriting practice and letter recognition.",
+    preview: "/images/worksheets/alphabet_tracing_preview.jpg",
+    pdfUrl: "/pdfs/Alphabet_Tracing_Class1.pdf",
+    imageUrl: "/images/Alphabet_Tracing_Class1.jpg",
+    heading: "Alphabet Tracing Worksheet - Class 1",
+    intro: "Practice writing uppercase and lowercase letters with guided tracing activities. This worksheet helps Class 1 students develop fine motor skills and letter recognition.",
+    questions: [
+      "1) Trace the uppercase letter A three times: A A A",
+      "2) Trace the lowercase letter a three times: a a a",
+      "3) Trace the uppercase letter B three times: B B B",
+      "4) Trace the lowercase letter b three times: b b b",
+      "5) Trace the uppercase letter C three times: C C C",
+      "6) Trace the lowercase letter c three times: c c c",
+      "7) Practice writing your name using traced letters: _______________",
+      "8) Circle the letters you know: A B C D E F G H I J",
+      "9) Connect the dots to form the letter D",
+      "10) Color the picture that starts with letter 'A' (show apple, ball, cat)",
+    ],
+    skills: [
+      "Developing fine motor skills for writing",
+      "Learning correct letter formation for uppercase and lowercase letters",
+      "Building letter recognition and phonics awareness",
+      "Improving hand-eye coordination",
+      "Preparing for independent writing",
+    ],
+    usage: [
+      "Use with dotted letter guides for tracing practice",
+      "Encourage children to say the letter name and sound while tracing",
+      "Practice 2-3 letters per day rather than all at once",
+      "Use pencils with grips for better control",
+      "Celebrate progress with stickers or praise",
+    ],
+    faq: [
+      {
+        question: "What age group is this tracing worksheet for?",
+        answer: "This worksheet is designed for Class 1 students (around 5-7 years old) who are beginning to learn letter formation and handwriting.",
+      },
+      {
+        question: "How often should my child practice letter tracing?",
+        answer: "Short daily practice of 10-15 minutes works best. Focus on 2-3 letters per session rather than trying to complete the entire alphabet at once.",
+      },
+      {
+        question: "Can I print and reuse this worksheet?",
+        answer: "Yes, you may print this worksheet multiple times for home or classroom use. Laminating it allows children to trace with dry-erase markers for repeated practice.",
+      },
+    ],
+    seo: {
+      title: "Free Alphabet Tracing Worksheet for Class 1 | A-Z Letter Practice PDF",
+      description: "Download free printable alphabet tracing worksheets for Class 1 students. Practice uppercase and lowercase letters A-Z with guided tracing activities.",
+      keywords: "alphabet tracing worksheet class 1, letter tracing pdf, handwriting practice grade 1, free alphabet worksheets",
+    },
+    relatedWorksheets: [
+      { title: "Introduction to Multiplication", url: "/worksheet/3" },
+      { title: "Addition Worksheet 1", url: "/worksheet/1" },
+      { title: "Addition Worksheet 2", url: "/worksheet/2" },
+    ],
+  },
 };
 
 const WorksheetDetail = () => {
