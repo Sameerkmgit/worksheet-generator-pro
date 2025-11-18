@@ -160,11 +160,11 @@ const WorksheetDetail = () => {
                   </h2>
 
                   <ol className="list-decimal pl-6 space-y-3 mb-6">
-                    <li className="text-base">23 + 14 = ______</li>
-                    <li className="text-base">56 + 22 = ______</li>
-                    <li className="text-base">12 + 19 = ______</li>
-                    <li className="text-base">40 + 35 = ______</li>
-                    <li className="text-base">67 + 11 = ______</li>
+                    {worksheet.questions.map((question, index) => (
+                      <li key={index} className="text-base">
+                        {question.replace(/^\d+\)\s*/, '')}
+                      </li>
+                    ))}
                   </ol>
 
                   <div className="flex flex-wrap gap-3 mb-5">
