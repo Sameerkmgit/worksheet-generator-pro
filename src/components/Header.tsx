@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
-import { BookOpen, Menu } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { BookOpen, Menu, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const Header = () => {
+  const navigate = useNavigate();
   const navItems = [
     { label: "Home", path: "/" },
     { label: "Classes", path: "/category/class-1" },
@@ -16,8 +17,20 @@ const Header = () => {
     <header className="border-b border-gray-200 bg-card sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto max-w-[1140px] px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
+          <div className="flex items-center gap-4">
+            {/* Back Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate(-1)}
+              className="hover:bg-secondary/20"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center group-hover:scale-110 transition-transform">
               <BookOpen className="w-6 h-6 text-white" />
             </div>
@@ -25,6 +38,7 @@ const Header = () => {
               SmartKids<span className="text-foreground">Worksheets</span>
             </span>
           </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
