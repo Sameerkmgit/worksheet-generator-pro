@@ -57,6 +57,35 @@ const worksheetData: Record<string, any> = {
       { title: "Word Problems Worksheet", url: "/worksheet/4" },
     ],
   },
+  "3": {
+    id: 3,
+    title: "Introduction to Multiplication - Class 1",
+    category: "Math",
+    grade: "Class 1",
+    description: "Learn multiplication through repeated addition, skip counting, and simple word problems. Perfect for introducing Class 1 students to the concept of multiplication.",
+    preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800",
+    pdfUrl: "/pdfs/Math_Multiplication_Intro.pdf",
+    imageUrl: "/images/Math_Multiplication_Intro.jpg",
+    heading: "Introduction to Multiplication - Class 1",
+    intro: "Learn multiplication through repeated addition, skip counting, and simple word problems. This worksheet introduces young learners to the concept of multiplication in a fun and easy way.",
+    questions: [
+      "1) There are 3 baskets. Each basket has 2 apples. How many apples are there in total?",
+      "2) 2 + 2 + 2 = ? (This is the same as 3 groups of 2)",
+      "3) Count by 2s: 2, 4, 6, 8, ___",
+      "4) A bicycle has 2 wheels. How many wheels do 3 bicycles have?",
+      "5) Each child has 5 fingers on one hand. How many fingers do 2 hands have?",
+      "6) 2 × 1 = ?",
+      "7) 2 × 2 = ?",
+      "8) 2 × 3 = ?",
+      "9) 3 × 2 means '3 groups of 2.' Draw 3 groups of 2 dots.",
+      "10) 1 × 2 = 2, 2 × 2 = 4, 3 × 2 = ___",
+    ],
+    relatedWorksheets: [
+      { title: "Addition Worksheet 1", url: "/worksheet/1" },
+      { title: "Addition Worksheet 2", url: "/worksheet/2" },
+      { title: "Subtraction Worksheet 1", url: "/worksheet/4" },
+    ],
+  },
 };
 
 const WorksheetDetail = () => {
