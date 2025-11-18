@@ -1,7 +1,9 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Download, Printer, Share2 } from "lucide-react";
+import { Download, FileImage } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -9,12 +11,25 @@ import Footer from "@/components/Footer";
 const worksheetData: Record<string, any> = {
   "1": {
     id: 1,
-    title: "Addition Basics",
+    title: "Addition Basics Worksheet 1",
     category: "Math",
-    grade: "Class 1-2",
-    description: "Master the fundamentals of addition with this comprehensive worksheet. Perfect for young learners starting their math journey. Includes visual aids and step-by-step problems to build confidence.",
+    grade: "Class 3",
+    description: "Free printable 2-digit addition worksheet for Class 3 students. Perfect for school revision, homework, or extra practice at home.",
     preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800",
-    pdfUrl: "#",
+    pdfUrl: "/pdfs/Math_Addition_1.pdf",
+    imageUrl: "/images/Math_Addition_1.jpg",
+    questions: [
+      "1) 23 + 14 = ______",
+      "2) 56 + 22 = ______",
+      "3) 12 + 19 = ______",
+      "4) 40 + 35 = ______",
+      "5) 67 + 11 = ______",
+    ],
+    relatedWorksheets: [
+      { title: "Addition Worksheet 2", url: "/worksheet/2" },
+      { title: "Subtraction Worksheet 1", url: "/worksheet/3" },
+      { title: "Word Problems Worksheet", url: "/worksheet/4" },
+    ],
   },
   "2": {
     id: 2,
@@ -24,6 +39,9 @@ const worksheetData: Record<string, any> = {
     description: "Practice multiplication tables from 1 to 12. Designed to help students memorize and understand multiplication concepts through repetitive practice and engaging exercises.",
     preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800",
     pdfUrl: "#",
+    imageUrl: "#",
+    questions: [],
+    relatedWorksheets: [],
   },
 };
 
@@ -31,122 +49,178 @@ const WorksheetDetail = () => {
   const { worksheetId } = useParams<{ worksheetId: string }>();
   const worksheet = worksheetData[worksheetId || ""] || worksheetData["1"];
 
+  const pageUrl = `https://smartkidsworksheets.com/worksheet/${worksheetId}`;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": worksheet.title,
+    "description": worksheet.description,
+    "learningResourceType": "Worksheet",
+    "educationalLevel": `Primary school, ${worksheet.grade}`,
+    "inLanguage": "en",
+    "about": [worksheet.category, worksheet.grade, "Worksheets"],
+    "author": {
+      "@type": "Organization",
+      "name": "SmartKids Worksheets"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SmartKids Worksheets"
+    },
+    "keywords": [
+      `${worksheet.grade} ${worksheet.category} worksheet`,
+      "math worksheet for kids",
+      "free printable worksheets",
+      "SmartKids worksheets"
+    ],
+    "url": pageUrl
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>{worksheet.title} | Free Printable | SmartKids Worksheets</title>
+        <meta name="description" content={worksheet.description} />
+        <link rel="canonical" href={pageUrl} />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${worksheet.title} | Free Printable`} />
+        <meta property="og:description" content={worksheet.description} />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:image" content={worksheet.preview} />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${worksheet.title} | Free Printable`} />
+        <meta name="twitter:description" content={worksheet.description} />
+        <meta name="twitter:image" content={worksheet.preview} />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+      
       <Header />
-      <div className="flex-1">
-        <div className="container mx-auto max-w-[1140px] py-8 px-6">
-        <Link to={`/category/${worksheet.category.toLowerCase()}`}>
-          <Button variant="ghost" className="mb-6">
-            <ArrowLeft className="mr-2" />
-            Back to {worksheet.category}
-          </Button>
-        </Link>
+      
+      <main className="flex-1">
+        <div className="container mx-auto max-w-[1140px] py-6 px-6">
+          {/* Breadcrumb */}
+          <Breadcrumb className="mb-4">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to={`/category/${worksheet.category.toLowerCase()}`}>{worksheet.category} Worksheets</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{worksheet.title}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Preview */}
-          <div>
-            <Card className="overflow-hidden">
-              <CardContent className="p-0">
-                <img 
-                  src={worksheet.preview} 
-                  alt={worksheet.title}
-                  className="w-full h-auto"
-                />
-              </CardContent>
-            </Card>
-          </div>
+          {/* Title & Meta */}
+          <h1 className="text-3xl md:text-4xl font-bold text-primary mb-2 font-heading">
+            {worksheet.grade} {worksheet.category} – {worksheet.title}
+          </h1>
+          <p className="text-muted-foreground mb-6">
+            {worksheet.description}
+          </p>
 
-          {/* Details */}
-          <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-heading">
-              {worksheet.title}
-            </h1>
-            
-            <div className="flex flex-wrap gap-3 mb-6">
-              <span className="px-4 py-2 bg-primary/10 text-primary rounded-full font-medium border border-primary/20">
-                {worksheet.category}
-              </span>
-              <span className="px-4 py-2 bg-accent/10 text-accent rounded-full font-medium border border-accent/20">
-                {worksheet.grade}
-              </span>
-            </div>
+          {/* Main Layout Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            {/* Main Worksheet Card */}
+            <section className="lg:col-span-2">
+              <Card>
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-semibold font-heading mb-2">
+                    Worksheet: 2-Digit Addition Practice
+                  </h2>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Ask your child to solve each 2-digit sum without a calculator. You can print this page or download the PDF version for offline use.
+                  </p>
 
-            <p className="text-base text-muted-foreground mb-8 leading-relaxed">
-              {worksheet.description}
-            </p>
+                  {worksheet.questions && worksheet.questions.length > 0 && (
+                    <ol className="space-y-3 mb-6">
+                      {worksheet.questions.map((question: string, index: number) => (
+                        <li key={index} className="pb-3 border-b border-dashed border-border last:border-0">
+                          {question}
+                        </li>
+                      ))}
+                    </ol>
+                  )}
 
-            <div className="flex flex-col gap-3">
-              <Button size="lg" className="w-full text-base h-14">
-                <Download className="mr-2" />
-                Download PDF
-              </Button>
-              
-              <div className="grid grid-cols-2 gap-3">
-                <Button size="lg" variant="outline" className="h-12">
-                  <Printer className="mr-2" />
-                  Print
-                </Button>
-                <Button size="lg" variant="outline" className="h-12">
-                  <Share2 className="mr-2" />
-                  Share
-                </Button>
-              </div>
-            </div>
-
-            {/* Features */}
-            <Card className="mt-8">
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-lg mb-4 font-heading">What's Included:</h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2 text-xl">✓</span>
-                    High-quality printable PDF format
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2 text-xl">✓</span>
-                    Clear instructions and examples
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2 text-xl">✓</span>
-                    Age-appropriate content
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2 text-xl">✓</span>
-                    Answer key included
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* AdSense Placement */}
-        <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-border mb-8">
-          <p className="text-muted-foreground">Advertisement Space</p>
-        </div>
-
-        {/* Related Worksheets */}
-        <section className="mt-12">
-          <h2 className="text-3xl font-bold text-foreground mb-6 font-heading">Related Worksheets</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="cursor-pointer">
-                <CardContent className="p-0">
-                  <div className="aspect-[4/3] bg-muted"></div>
-                  <div className="p-5">
-                    <h3 className="font-semibold mb-2 font-heading">Related Worksheet {i}</h3>
-                    <Button variant="outline" size="sm" className="w-full">
-                      View Details
-                    </Button>
+                  {/* Download Section */}
+                  <div className="pt-4 border-t border-border">
+                    <div className="flex flex-wrap gap-3 mb-3">
+                      <Button asChild size="lg" className="rounded-full">
+                        <a href={worksheet.pdfUrl} download>
+                          <Download className="mr-2 h-4 w-4" />
+                          Download PDF
+                        </a>
+                      </Button>
+                      <Button asChild size="lg" variant="outline" className="rounded-full">
+                        <a href={worksheet.imageUrl} target="_blank" rel="noopener noreferrer">
+                          <FileImage className="mr-2 h-4 w-4" />
+                          View as Image
+                        </a>
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Tip: Print this worksheet on A4 paper for the best classroom or home-learning experience.
+                    </p>
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            </section>
+
+            {/* Sidebar */}
+            <aside className="lg:col-span-1">
+              <Card>
+                <CardContent className="p-5">
+                  <h3 className="text-lg font-semibold font-heading text-primary mb-3">
+                    More {worksheet.grade} {worksheet.category} Worksheets
+                  </h3>
+                  {worksheet.relatedWorksheets && worksheet.relatedWorksheets.length > 0 ? (
+                    <ul className="space-y-2">
+                      {worksheet.relatedWorksheets.map((related: any, index: number) => (
+                        <li key={index}>
+                          <Link 
+                            to={related.url} 
+                            className="text-sm text-primary hover:underline"
+                          >
+                            {related.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">No related worksheets available.</p>
+                  )}
+                </CardContent>
+              </Card>
+            </aside>
           </div>
-        </section>
+
+          {/* Extra SEO Text */}
+          <section className="text-sm text-muted-foreground leading-relaxed">
+            <p>
+              This {worksheet.grade} {worksheet.category.toLowerCase()} worksheet is designed to help children build confidence with 2-digit addition problems.
+              Regular practice with worksheets like this supports stronger number sense, mental math, and exam readiness. Parents and teachers
+              can use it for homework, classwork, or timed tests. Download the free PDF, print it, and let your child solve the sums independently.
+            </p>
+          </section>
         </div>
-      </div>
+      </main>
+      
       <Footer />
     </div>
   );
