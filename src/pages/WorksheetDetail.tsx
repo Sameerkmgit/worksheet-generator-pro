@@ -127,117 +127,156 @@ const WorksheetDetail = () => {
             </BreadcrumbList>
           </Breadcrumb>
 
-          {/* Worksheet Hero */}
-          <section className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-heading">
-              Worksheet: 2-Digit Addition Practice (Class 3)
-            </h1>
-            <p className="text-muted-foreground text-base leading-relaxed">
-              Ask your child to solve each 2-digit sum without a calculator. 
-              You can print this page or download the free PDF version for offline practice. 
-              This worksheet is ideal for Class 3 students who need extra practice with 2-digit addition.
-            </p>
-          </section>
+          {/* Heading & intro */}
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
+            Worksheet: 2-Digit Addition Practice (Class 3)
+          </h1>
+          <p className="text-muted-foreground text-base leading-relaxed mb-6">
+            Ask your child to solve each 2-digit sum without a calculator. You can print this page
+            or download the PDF version for offline use. Ideal for Class 3 students who need extra
+            practice with 2-digit addition.
+          </p>
 
-          {/* Worksheet Questions */}
-          <section className="mb-6">
-            <Card>
-              <CardContent className="p-6">
-                <ol className="space-y-4 text-base">
-                  <li className="pb-3 border-b border-dashed border-border last:border-0">23 + 14 = ______</li>
-                  <li className="pb-3 border-b border-dashed border-border last:border-0">56 + 22 = ______</li>
-                  <li className="pb-3 border-b border-dashed border-border last:border-0">12 + 19 = ______</li>
-                  <li className="pb-3 border-b border-dashed border-border last:border-0">40 + 35 = ______</li>
-                  <li className="pb-3 border-b border-dashed border-border last:border-0">67 + 11 = ______</li>
-                </ol>
-              </CardContent>
-            </Card>
-          </section>
+          {/* Two-column layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-[2.4fr_1fr] gap-8 items-start">
+            {/* LEFT: main worksheet content */}
+            <article className="space-y-6">
+              <Card>
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-semibold font-heading mb-4">
+                    Practice Questions
+                  </h2>
 
-          {/* Worksheet Actions */}
-          <section className="flex flex-wrap gap-3 mb-8">
-            <Button asChild size="lg" className="rounded-full">
-              <a href={worksheet.pdfUrl} download>
-                <Download className="mr-2 h-4 w-4" />
-                Download PDF
-              </a>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-full">
-              <a href={worksheet.imageUrl} target="_blank" rel="noopener noreferrer">
-                <FileImage className="mr-2 h-4 w-4" />
-                View as Image
-              </a>
-            </Button>
-          </section>
+                  <ol className="list-decimal pl-6 space-y-3 mb-6">
+                    <li className="text-base">23 + 14 = ______</li>
+                    <li className="text-base">56 + 22 = ______</li>
+                    <li className="text-base">12 + 19 = ______</li>
+                    <li className="text-base">40 + 35 = ______</li>
+                    <li className="text-base">67 + 11 = ______</li>
+                  </ol>
 
-          {/* Worksheet Details */}
-          <section className="mb-8">
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold font-heading mb-4 text-primary">
-                  Skills covered in this worksheet
-                </h2>
-                <ul className="space-y-2 mb-6 text-muted-foreground list-disc list-inside">
-                  <li>Adding two 2-digit numbers without regrouping in most sums</li>
-                  <li>Building confidence with vertical and horizontal addition</li>
-                  <li>Improving speed and accuracy with mental math</li>
-                  <li>Preparing for Class 3 math tests and school exams</li>
-                </ul>
-
-                <h2 className="text-xl font-semibold font-heading mb-4 text-primary">
-                  How parents and teachers can use this worksheet
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  Use this worksheet as a quick daily practice sheet, homework assignment, or revision tool 
-                  before a test. Encourage your child to say each sum aloud and check their answer. 
-                  You can also time them to gently build speed once they are comfortable.
-                </p>
-              </CardContent>
-            </Card>
-          </section>
-
-          {/* FAQ Section */}
-          <section>
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-semibold font-heading mb-6 text-primary">
-                  Frequently Asked Questions
-                </h2>
-
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold font-heading mb-2">
-                      What age group is this addition worksheet for?
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      This worksheet is designed for Class 3 students (around 7–9 years old), 
-                      but it can also be used for any child who is learning 2-digit addition.
-                    </p>
+                  <div className="flex flex-wrap gap-3 mb-5">
+                    <Button asChild size="lg" className="rounded-full">
+                      <a href={worksheet.pdfUrl} target="_blank" rel="noopener">
+                        <Download className="mr-2 h-4 w-4" />
+                        Download PDF
+                      </a>
+                    </Button>
+                    <Button asChild size="lg" variant="outline" className="rounded-full">
+                      <a href={worksheet.imageUrl} target="_blank" rel="noopener">
+                        <FileImage className="mr-2 h-4 w-4" />
+                        View as Image
+                      </a>
+                    </Button>
                   </div>
 
-                  <div>
-                    <h3 className="text-lg font-semibold font-heading mb-2">
-                      Can I print and share this worksheet?
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Yes, you can print this worksheet for classroom or home use. 
-                      Parents and teachers are free to use it for non-commercial educational purposes.
-                    </p>
+                  <p className="text-sm text-muted-foreground">
+                    Tip: Print this worksheet on A4 paper for the best classroom or home-learning experience.
+                    Students can solve directly on the sheet or copy the sums into their notebooks.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Skills & usage */}
+              <Card>
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-semibold font-heading mb-3">
+                    Skills covered in this worksheet
+                  </h2>
+                  <ul className="list-disc pl-5 space-y-2 mb-6 text-muted-foreground">
+                    <li>Adding two 2-digit numbers without regrouping in most sums</li>
+                    <li>Building confidence with vertical and horizontal addition</li>
+                    <li>Improving number sense and mental math strategies</li>
+                    <li>Preparation for Class 3 math tests and school exams</li>
+                  </ul>
+
+                  <h2 className="text-xl font-semibold font-heading mb-3">
+                    How parents and teachers can use this worksheet
+                  </h2>
+                  <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                    <li>Use as a quick daily practice sheet before or after a lesson.</li>
+                    <li>Send home as a homework assignment or revision sheet.</li>
+                    <li>Time your child to gently build speed once they are comfortable with each type of sum.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* FAQ */}
+              <Card>
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-semibold font-heading mb-5">
+                    Frequently Asked Questions
+                  </h2>
+
+                  <div className="space-y-5">
+                    <div>
+                      <h3 className="text-base font-semibold mb-1">
+                        What age group is this addition worksheet for?
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        This worksheet is designed for Class 3 students (around 7–9 years old),
+                        but it can also be used for any child who is learning 2-digit addition.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-base font-semibold mb-1">
+                        Can I print and share this worksheet?
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        Yes. You may print this worksheet for classroom use or home practice.
+                        It can be shared with parents, teachers, and tutors as part of non-commercial
+                        educational use.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-base font-semibold mb-1">
+                        How often should my child practice addition?
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        Short, regular practice works best. Even 10–15 minutes of focused addition
+                        practice a few times a week can significantly improve accuracy and confidence.
+                      </p>
+                    </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-lg font-semibold font-heading mb-2">
-                      How often should my child practice addition?
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Short, regular practice works best. Even 10–15 minutes of focused addition practice 
-                      a few times a week can significantly boost confidence and accuracy.
-                    </p>
+                  {/* SEO text block */}
+                  <p className="text-sm text-muted-foreground leading-relaxed mt-6 pt-6 border-t">
+                    This Class 3 math worksheet helps children master 2-digit addition by providing
+                    carefully chosen sums that build number fluency and accuracy. Parents can use this
+                    printable worksheet as part of a home-learning routine, while teachers can include it
+                    in their lesson plans, math centers, or test revision packs. Download the free PDF,
+                    print it, and let your child solve the sums independently or with guided support.
+                  </p>
+                </CardContent>
+              </Card>
+            </article>
+
+            {/* RIGHT: sidebar */}
+            <aside className="space-y-5">
+              <Card>
+                <CardContent className="p-5">
+                  <div className="rounded-lg border-2 border-dashed border-border bg-muted/30 p-4 text-center text-sm text-muted-foreground mb-5">
+                    Advertisement Space
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </section>
+
+                  <h2 className="text-lg font-semibold font-heading mb-3">
+                    More Class 3 Math Worksheets
+                  </h2>
+                  <ul className="space-y-2 text-sm">
+                    {worksheet.relatedWorksheets.map((related: any, index: number) => (
+                      <li key={index}>
+                        <Link to={related.url} className="text-primary hover:underline">
+                          {related.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </aside>
+          </div>
         </div>
       </main>
       
