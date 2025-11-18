@@ -18,6 +18,8 @@ const worksheetData: Record<string, any> = {
     preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800",
     pdfUrl: "/pdfs/Math_Addition_1.pdf",
     imageUrl: "/images/Math_Addition_1.jpg",
+    heading: "Worksheet: 2-Digit Addition Practice (Class 3)",
+    intro: "Ask your child to solve each 2-digit sum without a calculator. You can print this page or download the PDF version for offline use. Ideal for Class 3 students who need extra practice with 2-digit addition.",
     questions: [
       "1) 23 + 14 = ______",
       "2) 56 + 22 = ______",
@@ -33,15 +35,27 @@ const worksheetData: Record<string, any> = {
   },
   "2": {
     id: 2,
-    title: "Multiplication Tables",
+    title: "Addition Worksheet 2 – Free 2-Digit & 3-Digit Addition PDF",
     category: "Math",
-    grade: "Class 3-4",
-    description: "Practice multiplication tables from 1 to 12. Designed to help students memorize and understand multiplication concepts through repetitive practice and engaging exercises.",
-    preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800",
-    pdfUrl: "#",
-    imageUrl: "#",
-    questions: [],
-    relatedWorksheets: [],
+    grade: "Class 3",
+    description: "Free Class 3 math worksheet for kids to practice 2-digit and 3-digit addition problems. Printable and classroom-friendly.",
+    preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800",
+    pdfUrl: "/pdfs/Math_Addition_2.pdf",
+    imageUrl: "/images/Math_Addition_2.jpg",
+    heading: "Class 3 Math – Addition Worksheet 2",
+    intro: "Practice adding 2-digit and 3-digit numbers. This worksheet is perfect for quick revision, classroom practice, or homework.",
+    questions: [
+      "1) 13 + 44 = ______",
+      "2) 28 + 39 = ______",
+      "3) 50 + 27 = ______",
+      "4) 19 + 16 = ______",
+      "5) 77 + 12 = ______",
+    ],
+    relatedWorksheets: [
+      { title: "Addition Worksheet 1", url: "/worksheet/1" },
+      { title: "Subtraction Worksheet 1", url: "/worksheet/3" },
+      { title: "Word Problems Worksheet", url: "/worksheet/4" },
+    ],
   },
 };
 
@@ -129,12 +143,10 @@ const WorksheetDetail = () => {
 
           {/* Heading & intro */}
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
-            Worksheet: 2-Digit Addition Practice (Class 3)
+            {worksheet.heading || worksheet.title}
           </h1>
           <p className="text-muted-foreground text-base leading-relaxed mb-6">
-            Ask your child to solve each 2-digit sum without a calculator. You can print this page
-            or download the PDF version for offline use. Ideal for Class 3 students who need extra
-            practice with 2-digit addition.
+            {worksheet.intro || worksheet.description}
           </p>
 
           {/* Two-column layout */}
