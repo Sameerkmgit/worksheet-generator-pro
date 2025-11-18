@@ -11,10 +11,10 @@ import Footer from "@/components/Footer";
 const worksheetData: Record<string, any> = {
   "1": {
     id: 1,
-    title: "Addition Basics Worksheet 1",
+    title: "Addition Worksheet 1 – Free 2-Digit Addition PDF",
     category: "Math",
     grade: "Class 3",
-    description: "Free printable 2-digit addition worksheet for Class 3 students. Perfect for school revision, homework, or extra practice at home.",
+    description: "Free Class 3 2-digit addition worksheet with 5 practice sums. Perfect for homework, revision, and mental math. Download the printable PDF or use online.",
     preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800",
     pdfUrl: "/pdfs/Math_Addition_1.pdf",
     imageUrl: "/images/Math_Addition_1.jpg",
@@ -79,7 +79,7 @@ const WorksheetDetail = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>{worksheet.title} | Free Printable | SmartKids Worksheets</title>
+        <title>{worksheet.grade} {worksheet.title} | SmartKids Worksheets</title>
         <meta name="description" content={worksheet.description} />
         <link rel="canonical" href={pageUrl} />
         
