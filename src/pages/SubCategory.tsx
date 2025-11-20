@@ -145,16 +145,26 @@ const SubCategory = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category) => (
               <Link to={`/category/${grade}/${category.id}`} key={category.id}>
-                <Card className="cursor-pointer group h-full hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`} role="img" aria-label={`${category.title} icon`}>
-                      <category.icon className="w-8 h-8 text-white" aria-hidden="true" />
-                    </div>
-                    <CardTitle className="text-2xl group-hover:text-primary transition-colors font-heading">
+                <Card className="cursor-pointer group h-full hover:shadow-lg transition-shadow overflow-hidden">
+                  <CardHeader className="p-0">
+                    {category.imageUrl ? (
+                      <div className="aspect-video w-full overflow-hidden bg-muted">
+                        <img 
+                          src={category.imageUrl} 
+                          alt={`${category.title} worksheets`}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ) : (
+                      <div className={`aspect-video w-full bg-gradient-to-br ${category.color} flex items-center justify-center`} role="img" aria-label={`${category.title} icon`}>
+                        <category.icon className="w-16 h-16 text-white" aria-hidden="true" />
+                      </div>
+                    )}
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <CardTitle className="text-2xl mb-2 group-hover:text-primary transition-colors font-heading">
                       {category.title}
                     </CardTitle>
-                  </CardHeader>
-                  <CardContent>
                     <p className="text-muted-foreground text-base">
                       {category.description}
                     </p>
