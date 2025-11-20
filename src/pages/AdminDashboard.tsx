@@ -59,6 +59,22 @@ const AdminDashboard = () => {
     imageUrl: "",
   });
 
+  // Reset all data and reseed
+  const handleResetData = () => {
+    if (window.confirm("⚠️ This will DELETE ALL worksheets and categories and create fresh sample data. Are you sure?")) {
+      localStorage.removeItem('smartkids_worksheets');
+      localStorage.removeItem('smartkids_categories');
+      localStorage.removeItem('smartkids_worksheet_images');
+      seedInitialWorksheets();
+      loadWorksheets();
+      loadCategories();
+      toast({
+        title: "Data Reset Complete",
+        description: "Sample worksheets have been created. Check the filters now!",
+      });
+    }
+  };
+
   useEffect(() => {
     if (!isAdminAuthenticated()) {
       navigate("/dashboard-secure-2025");
@@ -323,10 +339,15 @@ const AdminDashboard = () => {
             <h1 className="text-2xl font-heading font-bold text-foreground">
               Admin Dashboard
             </h1>
-            <Button onClick={handleLogout} variant="outline">
-              <LogOut className="mr-2 h-4 w-4" />
-              Logout
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={handleResetData} variant="destructive" size="sm">
+                🔄 Reset Data
+              </Button>
+              <Button onClick={handleLogout} variant="outline">
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -791,8 +812,14 @@ const AdminDashboard = () => {
                   ))}
                 </div>
                 {getWorksheetsForFilters().length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    No worksheets found for this grade and subject combination.
+                  <div className="text-center py-12 bg-yellow-50 border-2 border-dashed border-yellow-300 rounded-lg">
+                    <p className="text-lg font-semibold mb-2">⚠️ No worksheets found</p>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Selected: {categoryGradeFilter} / {categorySubjectFilter}
+                    </p>
+                    <Button onClick={handleResetData} variant="default" size="sm">
+                      🔄 Click here to Reset & Create Sample Data
+                    </Button>
                   </div>
                 )}
               </CardContent>
