@@ -7,6 +7,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import SubCategory from "./pages/SubCategory";
 import Category from "./pages/Category";
+import AssignmentsLanding from "./pages/AssignmentsLanding";
 import WorksheetDetail from "./pages/WorksheetDetail";
 import AdminUpload from "./pages/AdminUpload";
 import NotFound from "./pages/NotFound";
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/category/:grade" element={<SubCategory />} />
+          <Route path="/category/:grade/assignments" element={<AssignmentsLanding />} />
           <Route path="/category/:grade/:subject" element={<Category />} />
           <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
