@@ -6,6 +6,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getWorksheetImageOverride } from "@/lib/worksheetStorage";
 
 // Helper function to generate dynamic FAQs
 const generateDynamicFAQs = (worksheet: any) => {
@@ -3276,6 +3277,9 @@ const worksheetData: Record<string, any> = {
 const WorksheetDetail = () => {
   const { worksheetId } = useParams<{ worksheetId: string }>();
   const worksheet = worksheetData[worksheetId || ""] || worksheetData["1"];
+  
+  // Get image override if exists
+  const displayImage = getWorksheetImageOverride(worksheetId || "") || worksheet.preview;
 
   const pageUrl = `https://smartkidsworksheets.com/worksheet/${worksheetId}`;
   const structuredData = {
@@ -3316,13 +3320,13 @@ const WorksheetDetail = () => {
         <meta property="og:title" content={`${worksheet.title} | Free Printable`} />
         <meta property="og:description" content={worksheet.description} />
         <meta property="og:url" content={pageUrl} />
-        <meta property="og:image" content={worksheet.preview} />
+        <meta property="og:image" content={displayImage} />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${worksheet.title} | Free Printable`} />
         <meta name="twitter:description" content={worksheet.description} />
-        <meta name="twitter:image" content={worksheet.preview} />
+        <meta name="twitter:image" content={displayImage} />
         
         {/* Structured Data */}
         <script type="application/ld+json">

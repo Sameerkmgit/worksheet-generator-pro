@@ -203,3 +203,25 @@ export const updateCategory = (id: string, data: Partial<CategoryData>): void =>
   );
   localStorage.setItem(CATEGORIES_KEY, JSON.stringify(updated));
 };
+
+// Worksheet Image Overrides
+const WORKSHEET_IMAGES_KEY = "smartkids_worksheet_images";
+
+export const getWorksheetImageOverride = (worksheetId: string): string | null => {
+  const overrides = localStorage.getItem(WORKSHEET_IMAGES_KEY);
+  if (!overrides) return null;
+  const parsed = JSON.parse(overrides);
+  return parsed[worksheetId] || null;
+};
+
+export const setWorksheetImageOverride = (worksheetId: string, imageUrl: string): void => {
+  const overrides = localStorage.getItem(WORKSHEET_IMAGES_KEY);
+  const parsed = overrides ? JSON.parse(overrides) : {};
+  parsed[worksheetId] = imageUrl;
+  localStorage.setItem(WORKSHEET_IMAGES_KEY, JSON.stringify(parsed));
+};
+
+export const getAllWorksheetImageOverrides = (): Record<string, string> => {
+  const overrides = localStorage.getItem(WORKSHEET_IMAGES_KEY);
+  return overrides ? JSON.parse(overrides) : {};
+};
