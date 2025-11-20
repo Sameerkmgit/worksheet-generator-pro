@@ -127,9 +127,36 @@ const AdminDashboard = () => {
     return categories.find(c => c.grade === categoryGradeFilter && c.id === `${categoryGradeFilter}-${categorySubjectFilter}`);
   };
 
+  const validateImageFile = (file: File): { valid: boolean; error?: string } => {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    
+    if (!allowedTypes.includes(file.type)) {
+      return { valid: false, error: 'Only JPEG, PNG, and WebP images allowed' };
+    }
+    
+    if (file.size > maxSize) {
+      return { valid: false, error: 'Image must be smaller than 5MB' };
+    }
+    
+    return { valid: true };
+  };
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    // Validate file
+    const validation = validateImageFile(file);
+    if (!validation.valid) {
+      toast({
+        title: "Invalid File",
+        description: validation.error,
+        variant: "destructive",
+      });
+      e.target.value = ''; // Clear the input
+      return;
+    }
 
     setIsUploading(true);
     
@@ -233,6 +260,17 @@ const AdminDashboard = () => {
       toast({
         title: "No Image Selected",
         description: "Please select an image first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file
+    const validation = validateImageFile(file);
+    if (!validation.valid) {
+      toast({
+        title: "Invalid File",
+        description: validation.error,
         variant: "destructive",
       });
       return;
