@@ -60,6 +60,24 @@ const Search = () => {
     setSearchParams(params);
   };
 
+  const handleGradeChange = (value: string) => {
+    setGradeFilter(value);
+    const params = new URLSearchParams();
+    if (searchQuery) params.set("q", searchQuery);
+    if (value !== "all") params.set("grade", value);
+    if (subjectFilter !== "all") params.set("subject", subjectFilter);
+    setSearchParams(params);
+  };
+
+  const handleSubjectChange = (value: string) => {
+    setSubjectFilter(value);
+    const params = new URLSearchParams();
+    if (searchQuery) params.set("q", searchQuery);
+    if (gradeFilter !== "all") params.set("grade", gradeFilter);
+    if (value !== "all") params.set("subject", value);
+    setSearchParams(params);
+  };
+
   const filteredWorksheets = allWorksheets.filter((worksheet) => {
     const query = searchParams.get("q")?.toLowerCase() || "";
     const grade = searchParams.get("grade") || "all";
@@ -119,7 +137,7 @@ const Search = () => {
                 <Filter className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm font-medium">Filters:</span>
               </div>
-              <Select value={gradeFilter} onValueChange={setGradeFilter}>
+              <Select value={gradeFilter} onValueChange={handleGradeChange}>
                 <SelectTrigger className="w-full sm:w-[180px]">
                   <SelectValue placeholder="All Grades" />
                 </SelectTrigger>
@@ -132,7 +150,7 @@ const Search = () => {
                   <SelectItem value="Grade 5">Grade 5</SelectItem>
                 </SelectContent>
               </Select>
-              <Select value={subjectFilter} onValueChange={setSubjectFilter}>
+              <Select value={subjectFilter} onValueChange={handleSubjectChange}>
                 <SelectTrigger className="w-full sm:w-[180px]">
                   <SelectValue placeholder="All Subjects" />
                 </SelectTrigger>
