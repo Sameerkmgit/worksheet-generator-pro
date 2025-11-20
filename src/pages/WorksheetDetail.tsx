@@ -2665,7 +2665,7 @@ const worksheetData: Record<string, any> = {
       keywords: "grade 1 gk, colors and shapes, color recognition, shape identification, printable worksheet",
     },
     relatedWorksheets: [
-      { title: "Body Parts", url: "/worksheet/73" },
+      { title: "Fruits & Vegetables", url: "/worksheet/72" },
       { title: "Animals & Their Babies", url: "/worksheet/71" },
     ],
   },
