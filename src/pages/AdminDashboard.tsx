@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ImageUploader from "@/components/ImageUploader";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import {
   isAdminAuthenticated,
   adminLogout,
@@ -111,14 +112,29 @@ const AdminDashboard = () => {
 
     setIsUploading(true);
     
-    // Convert image to base64
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
+    try {
+      // Upload to Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const fileName = `category-${categoryGradeFilter}-${categorySubjectFilter}-${Date.now()}.${fileExt}`;
+      const filePath = `categories/${fileName}`;
+
+      const { data, error } = await supabase.storage
+        .from('worksheet-images')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true
+        });
+
+      if (error) throw error;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('worksheet-images')
+        .getPublicUrl(filePath);
       
-      // Update the category immediately
+      // Update the category
       const categoryId = `${categoryGradeFilter}-${categorySubjectFilter}`;
-      updateCategory(categoryId, { imageUrl: base64String });
+      updateCategory(categoryId, { imageUrl: publicUrl });
       
       loadCategories();
       
@@ -126,10 +142,16 @@ const AdminDashboard = () => {
         title: "Image Uploaded",
         description: `Successfully updated ${categorySubjectFilter} image for ${categoryGradeFilter}`,
       });
-      
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast({
+        title: "Upload Failed",
+        description: "Failed to upload image. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsUploading(false);
-    };
-    reader.readAsDataURL(file);
+    }
   };
 
   const getFilteredCategories = () => {
@@ -170,7 +192,7 @@ const AdminDashboard = () => {
     }));
   };
 
-  const handleSaveWorksheetImage = (worksheetId: string | number) => {
+  const handleSaveWorksheetImage = async (worksheetId: string | number) => {
     const file = selectedImageFile[String(worksheetId)];
     if (!file) {
       toast({
@@ -181,20 +203,35 @@ const AdminDashboard = () => {
       return;
     }
 
-    // Convert image to base64
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
+    try {
+      // Upload to Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const fileName = `worksheet-${worksheetId}-${Date.now()}.${fileExt}`;
+      const filePath = `worksheets/${fileName}`;
+
+      const { data, error } = await supabase.storage
+        .from('worksheet-images')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true
+        });
+
+      if (error) throw error;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('worksheet-images')
+        .getPublicUrl(filePath);
       
       // Store the override
-      setWorksheetImageOverride(String(worksheetId), base64String);
+      setWorksheetImageOverride(String(worksheetId), publicUrl);
       
       // Mark as saved
       setSavedWorksheetIds(prev => new Set([...prev, String(worksheetId)]));
       
       toast({
         title: "✅ Image Saved Successfully!",
-        description: "Image will appear on the live site. Refresh the live page to see changes.",
+        description: "Image uploaded to cloud and will appear on the live site.",
         duration: 5000,
       });
       
@@ -211,9 +248,14 @@ const AdminDashboard = () => {
           return newSet;
         });
       }, 3000);
-    };
-    
-    reader.readAsDataURL(file);
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast({
+        title: "Upload Failed",
+        description: "Failed to upload image. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const getWorksheetsForFilters = () => {
