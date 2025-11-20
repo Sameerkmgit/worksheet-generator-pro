@@ -520,18 +520,18 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Grade Filter */}
-                <div className="flex items-center gap-4">
-                  <Label htmlFor="category-grade-filter" className="text-sm font-medium">
-                    Filter by Grade:
+                <div className="bg-muted/50 p-4 rounded-lg">
+                  <Label htmlFor="category-grade-filter" className="text-sm font-semibold mb-2 block">
+                    Select Grade to Manage:
                   </Label>
                   <Select
                     value={categoryGradeFilter}
                     onValueChange={setCategoryGradeFilter}
                   >
-                    <SelectTrigger id="category-grade-filter" className="w-[200px]">
+                    <SelectTrigger id="category-grade-filter" className="w-full md:w-[250px] bg-background">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-50">
                       <SelectItem value="grade-1">Grade 1</SelectItem>
                       <SelectItem value="grade-2">Grade 2</SelectItem>
                       <SelectItem value="grade-3">Grade 3</SelectItem>
@@ -580,7 +580,7 @@ const AdminDashboard = () => {
 
             {/* Category Edit Dialog */}
             <Dialog open={isCategoryDialogOpen} onOpenChange={setIsCategoryDialogOpen}>
-              <DialogContent className="max-w-2xl">
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle>Edit Category Image</DialogTitle>
                   <DialogDescription>
