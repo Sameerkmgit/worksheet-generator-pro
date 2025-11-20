@@ -28,6 +28,7 @@ const gradeTitles: Record<string, string> = {
 const Category = () => {
   const { grade, subject } = useParams();
   const [worksheets, setWorksheets] = useState<any[]>([]);
+  const [imageOverrides, setImageOverrides] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const loadWorksheets = async () => {
@@ -36,6 +37,16 @@ const Category = () => {
       const gradeNumber = gradeKey.split('-')[1];
       const gradeLabel = `Grade ${gradeNumber}`;
       const fetchedWorksheets = await getWorksheetsByGradeAndSubject(gradeLabel, subjectKey);
+      
+      // Load image overrides for all worksheets
+      const overrides: Record<string, string> = {};
+      for (const worksheet of fetchedWorksheets) {
+        const override = await getWorksheetImageOverride(worksheet.id.toString());
+        if (override) {
+          overrides[worksheet.id.toString()] = override;
+        }
+      }
+      setImageOverrides(overrides);
       setWorksheets(fetchedWorksheets);
     };
     loadWorksheets();
@@ -145,8 +156,7 @@ const Category = () => {
             ) : (
               worksheets.map((worksheet) => {
                 // Check if there's an override image for this worksheet
-                const overrideImage = getWorksheetImageOverride(worksheet.id.toString());
-                const displayImage = overrideImage || worksheet.imageUrl;
+                const displayImage = imageOverrides[worksheet.id.toString()] || worksheet.imageUrl;
                 
                 return (
                   <Card key={worksheet.id} className="hover:shadow-lg transition-shadow">
