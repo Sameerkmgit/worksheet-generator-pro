@@ -30,13 +30,15 @@ const Category = () => {
   const [worksheets, setWorksheets] = useState<any[]>([]);
 
   useEffect(() => {
-    // Fetch worksheets from storage
-    const gradeKey = grade || "";
-    const subjectKey = subject || "";
-    const gradeNumber = gradeKey.split('-')[1];
-    const gradeLabel = `Grade ${gradeNumber}`;
-    const fetchedWorksheets = getWorksheetsByGradeAndSubject(gradeLabel, subjectKey);
-    setWorksheets(fetchedWorksheets);
+    const loadWorksheets = async () => {
+      const gradeKey = grade || "";
+      const subjectKey = subject || "";
+      const gradeNumber = gradeKey.split('-')[1];
+      const gradeLabel = `Grade ${gradeNumber}`;
+      const fetchedWorksheets = await getWorksheetsByGradeAndSubject(gradeLabel, subjectKey);
+      setWorksheets(fetchedWorksheets);
+    };
+    loadWorksheets();
   }, [grade, subject]);
   
   const gradeTitle = gradeTitles[grade || ""] || "Grade";

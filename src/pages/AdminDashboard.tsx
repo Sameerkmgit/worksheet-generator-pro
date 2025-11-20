@@ -23,6 +23,7 @@ import {
   CategoryData,
   setWorksheetImageOverride,
   getWorksheetImageOverride,
+  getAllWorksheetImageOverrides,
   seedInitialWorksheets,
 } from "@/lib/worksheetStorage";
 import {
@@ -51,6 +52,8 @@ const AdminDashboard = () => {
   const [imageUpdateTrigger, setImageUpdateTrigger] = useState(0);
   const [selectedImageFile, setSelectedImageFile] = useState<{[key: string]: File | null}>({});
   const [savedWorksheetIds, setSavedWorksheetIds] = useState<Set<string>>(new Set());
+  const [categoryFilteredWorksheets, setCategoryFilteredWorksheets] = useState<WorksheetData[]>([]);
+  const [worksheetImageOverrides, setWorksheetImageOverrides] = useState<Record<string, string>>({});
   // Form state
   const [formData, setFormData] = useState({
     title: "",
@@ -92,13 +95,31 @@ const AdminDashboard = () => {
     filterWorksheets();
   }, [worksheets, filterGrade, filterSubject]);
 
-  const loadWorksheets = () => {
-    const data = getAllWorksheets();
+  // Load category-filtered worksheets
+  useEffect(() => {
+    const loadCategoryWorksheets = async () => {
+      const filtered = await getWorksheetsForFilters();
+      setCategoryFilteredWorksheets(filtered);
+    };
+    loadCategoryWorksheets();
+  }, [categoryGradeFilter, categorySubjectFilter, worksheets]);
+
+  // Load image overrides
+  useEffect(() => {
+    const loadImageOverrides = async () => {
+      const overrides = await getAllWorksheetImageOverrides();
+      setWorksheetImageOverrides(overrides);
+    };
+    loadImageOverrides();
+  }, [imageUpdateTrigger]);
+
+  const loadWorksheets = async () => {
+    const data = await getAllWorksheets();
     setWorksheets(data);
   };
 
-  const loadCategories = () => {
-    const data = getAllCategories();
+  const loadCategories = async () => {
+    const data = await getAllCategories();
     setCategories(data);
   };
 
@@ -272,9 +293,9 @@ const AdminDashboard = () => {
     }
   };
 
-  const getWorksheetsForFilters = () => {
+  const getWorksheetsForFilters = async () => {
     // Get ALL worksheets from storage
-    const allWorksheets = getAllWorksheets();
+    const allWorksheets = await getAllWorksheets();
     
     console.log('📊 Total worksheets:', allWorksheets.length);
     console.log('🔍 Filters - Grade:', categoryGradeFilter, 'Subject:', categorySubjectFilter);
@@ -835,20 +856,20 @@ const AdminDashboard = () => {
                     Showing worksheets for: <strong>{categoryGradeFilter}</strong> → <strong>{categorySubjectFilter}</strong>
                   </p>
                   <p className="text-sm text-blue-700 mt-1">
-                    Found: <strong>{getWorksheetsForFilters().length}</strong> worksheets
+                    Found: <strong>{categoryFilteredWorksheets.length}</strong> worksheets
                   </p>
                 </div>
 
                 {/* Worksheet Grid */}
-                {getWorksheetsForFilters().length > 0 ? (
+                {categoryFilteredWorksheets.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" key={imageUpdateTrigger}>
-                    {getWorksheetsForFilters().map((worksheet) => (
+                    {categoryFilteredWorksheets.map((worksheet) => (
                       <Card key={worksheet.id} className="overflow-hidden">
                          <CardContent className="p-4">
                            <h4 className="font-medium text-base mb-3">{worksheet.title}</h4>
                            
                            <ImageUploader
-                             currentImageUrl={getWorksheetImageOverride(String(worksheet.id)) || worksheet.imageUrl}
+                             currentImageUrl={worksheetImageOverrides[String(worksheet.id)] || worksheet.imageUrl}
                              onImageUpload={(file) => handleWorksheetImageSelect({ target: { files: [file] } } as any, worksheet.id)}
                              label="Worksheet Image"
                              worksheetId={String(worksheet.id)}

@@ -31,6 +31,38 @@ export interface CategoryData {
   worksheetCount?: number;
 }
 
+// Helper to convert DB row to WorksheetData
+const mapWorksheetFromDB = (w: any): WorksheetData => ({
+  id: w.id,
+  title: w.title,
+  description: w.description || '',
+  grade: w.grade,
+  subject: w.subject,
+  pdfUrl: w.pdf_url,
+  imageUrl: w.image_url || '',
+  heading: w.heading,
+  intro: w.intro,
+  questions: w.questions as any,
+  skills: w.skills,
+  usage: w.usage,
+  faq: w.faq as any,
+  seo: w.seo as any,
+  createdAt: w.created_at,
+  updatedAt: w.updated_at,
+});
+
+// Helper to convert CategoryData to DB format
+const mapCategoryFromDB = (c: any): CategoryData => ({
+  id: c.id,
+  name: c.name,
+  grade: c.grade,
+  subject: c.subject,
+  description: c.description,
+  icon: c.icon,
+  imageUrl: c.image_url,
+  worksheetCount: c.worksheet_count,
+});
+
 // Admin authentication - now uses Supabase Auth
 export const isAdminAuthenticated = async (): Promise<boolean> => {
   const { data: { user } } = await supabase.auth.getUser();
@@ -41,9 +73,19 @@ export const isAdminAuthenticated = async (): Promise<boolean> => {
     .select('role')
     .eq('user_id', user.id)
     .eq('role', 'admin')
-    .single();
+    .maybeSingle();
   
   return !!data;
+};
+
+// For backward compatibility with AdminLogin
+export const adminLogin = async (email: string, password: string): Promise<boolean> => {
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    console.error("Login error:", error);
+    return false;
+  }
+  return await isAdminAuthenticated();
 };
 
 export const adminLogout = async (): Promise<void> => {
@@ -126,8 +168,6 @@ export const seedInitialWorksheets = async (): Promise<void> => {
     { id: "103", title: "Monthly Test - All Subjects", description: "Comprehensive monthly test", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
     { id: "104", title: "Revision Sheet - Numbers & Words", description: "Revision worksheet", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
     { id: "105", title: "Homework Pack - Week 1", description: "Weekly homework", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // Additional grades and subjects can be added here similarly
   ];
 
   const dbWorksheets = worksheets.map(w => ({
@@ -159,31 +199,15 @@ export const seedInitialWorksheets = async (): Promise<void> => {
 export const getAllWorksheets = async (): Promise<WorksheetData[]> => {
   const { data, error } = await supabase
     .from('worksheets')
-    .select('*');
+    .select('*')
+    .order('created_at', { ascending: false });
 
   if (error) {
     console.error("Error fetching worksheets:", error);
     return [];
   }
 
-  return data.map(w => ({
-    id: w.id,
-    title: w.title,
-    description: w.description,
-    grade: w.grade,
-    subject: w.subject,
-    pdfUrl: w.pdf_url,
-    imageUrl: w.image_url,
-    heading: w.heading,
-    intro: w.intro,
-    questions: w.questions,
-    skills: w.skills,
-    usage: w.usage,
-    faq: w.faq,
-    seo: w.seo,
-    createdAt: w.created_at,
-    updatedAt: w.updated_at,
-  }));
+  return (data || []).map(mapWorksheetFromDB);
 };
 
 // Fetch worksheet by ID
@@ -199,32 +223,70 @@ export const getWorksheetById = async (id: string): Promise<WorksheetData | null
     return null;
   }
 
-  return {
-    id: data.id,
-    title: data.title,
-    description: data.description,
-    grade: data.grade,
-    subject: data.subject,
-    pdfUrl: data.pdf_url,
-    imageUrl: data.image_url,
-    heading: data.heading,
-    intro: data.intro,
-    questions: data.questions,
-    skills: data.skills,
-    usage: data.usage,
-    faq: data.faq,
-    seo: data.seo,
-    createdAt: data.created_at,
-    updatedAt: data.updated_at,
-  };
+  return mapWorksheetFromDB(data);
 };
 
-// Create or update a worksheet
-export const upsertWorksheet = async (worksheet: WorksheetData): Promise<boolean> => {
-  const { error } = await supabase
+// Get worksheets by grade
+export const getWorksheetsByGrade = async (grade: string): Promise<WorksheetData[]> => {
+  const { data, error } = await supabase
     .from('worksheets')
-    .upsert({
-      id: worksheet.id,
+    .select('*')
+    .ilike('grade', grade)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error("Error fetching worksheets by grade:", error);
+    return [];
+  }
+
+  return (data || []).map(mapWorksheetFromDB);
+};
+
+// Get worksheets by subject
+export const getWorksheetsBySubject = async (subject: string): Promise<WorksheetData[]> => {
+  const { data, error } = await supabase
+    .from('worksheets')
+    .select('*')
+    .ilike('subject', subject)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error("Error fetching worksheets by subject:", error);
+    return [];
+  }
+
+  return (data || []).map(mapWorksheetFromDB);
+};
+
+// Get worksheets by grade and subject
+export const getWorksheetsByGradeAndSubject = async (
+  grade: string,
+  subject: string
+): Promise<WorksheetData[]> => {
+  const { data, error } = await supabase
+    .from('worksheets')
+    .select('*')
+    .ilike('grade', grade)
+    .ilike('subject', subject)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error("Error fetching worksheets:", error);
+    return [];
+  }
+
+  return (data || []).map(mapWorksheetFromDB);
+};
+
+// Create a new worksheet
+export const createWorksheet = async (
+  worksheet: Omit<WorksheetData, "id" | "createdAt" | "updatedAt">
+): Promise<WorksheetData | null> => {
+  const newId = Date.now().toString();
+  const { data, error } = await supabase
+    .from('worksheets')
+    .insert({
+      id: newId,
       title: worksheet.title,
       description: worksheet.description,
       grade: worksheet.grade,
@@ -238,86 +300,212 @@ export const upsertWorksheet = async (worksheet: WorksheetData): Promise<boolean
       usage: worksheet.usage,
       faq: worksheet.faq,
       seo: worksheet.seo,
-      created_at: worksheet.createdAt,
-      updated_at: new Date().toISOString(),
-    });
+    })
+    .select()
+    .single();
 
-  if (error) {
-    console.error("Error upserting worksheet:", error);
-    return false;
+  if (error || !data) {
+    console.error("Error creating worksheet:", error);
+    return null;
   }
-  return true;
+
+  return mapWorksheetFromDB(data);
 };
 
-// Delete a worksheet by ID
+// Update a worksheet
+export const updateWorksheet = async (
+  id: string,
+  updates: Partial<WorksheetData>
+): Promise<WorksheetData | null> => {
+  const updateData: any = {};
+  if (updates.title) updateData.title = updates.title;
+  if (updates.description !== undefined) updateData.description = updates.description;
+  if (updates.grade) updateData.grade = updates.grade;
+  if (updates.subject) updateData.subject = updates.subject;
+  if (updates.pdfUrl) updateData.pdf_url = updates.pdfUrl;
+  if (updates.imageUrl !== undefined) updateData.image_url = updates.imageUrl;
+  if (updates.heading !== undefined) updateData.heading = updates.heading;
+  if (updates.intro !== undefined) updateData.intro = updates.intro;
+  if (updates.questions !== undefined) updateData.questions = updates.questions;
+  if (updates.skills !== undefined) updateData.skills = updates.skills;
+  if (updates.usage !== undefined) updateData.usage = updates.usage;
+  if (updates.faq !== undefined) updateData.faq = updates.faq;
+  if (updates.seo !== undefined) updateData.seo = updates.seo;
+
+  const { data, error } = await supabase
+    .from('worksheets')
+    .update(updateData)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error || !data) {
+    console.error("Error updating worksheet:", error);
+    return null;
+  }
+
+  return mapWorksheetFromDB(data);
+};
+
+// Delete a worksheet
 export const deleteWorksheet = async (id: string): Promise<boolean> => {
   const { error } = await supabase
     .from('worksheets')
     .delete()
     .eq('id', id);
 
-  if (error) {
-    console.error(`Error deleting worksheet with id ${id}:`, error);
-    return false;
-  }
-  return true;
+  return !error;
 };
 
-// Fetch all categories
-export const getAllCategories = async (): Promise<CategoryData[]> => {
-  const { data, error } = await supabase
-    .from('categories')
-    .select('*');
+// Default categories
+const getDefaultCategories = (): CategoryData[] => {
+  const subjects = [
+    { id: "math", name: "Math", icon: "📐", description: "Practice math problems" },
+    { id: "english", name: "English", icon: "📚", description: "Learn grammar and writing" },
+    { id: "science", name: "Science", icon: "🔬", description: "Explore science concepts" },
+    { id: "computer-science", name: "Computer Science", icon: "💻", description: "Learn digital literacy" },
+    { id: "assignments", name: "Assignments", icon: "📋", description: "Practice tests and assignments" },
+  ];
 
-  if (error) {
-    console.error("Error fetching categories:", error);
-    return [];
+  const grades = ["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5"];
+
+  const categories: CategoryData[] = [];
+  for (const grade of grades) {
+    for (const subject of subjects) {
+      categories.push({
+        id: `${grade.toLowerCase().replace(" ", "-")}-${subject.id}`,
+        name: subject.name,
+        grade,
+        subject: subject.id,
+        description: subject.description,
+        icon: subject.icon,
+        imageUrl: "",
+        worksheetCount: 0,
+      });
+    }
   }
 
-  return data.map(c => ({
+  return categories;
+};
+
+// Seed default categories
+const seedDefaultCategories = async () => {
+  const defaultCategories = getDefaultCategories();
+  const dbCategories = defaultCategories.map(c => ({
     id: c.id,
     name: c.name,
     grade: c.grade,
     subject: c.subject,
     description: c.description,
     icon: c.icon,
-    imageUrl: c.image_url,
-    worksheetCount: c.worksheet_count,
+    image_url: c.imageUrl,
+    worksheet_count: c.worksheetCount || 0,
   }));
+
+  await supabase.from('categories').insert(dbCategories);
 };
 
-// Create or update a category
-export const upsertCategory = async (category: CategoryData): Promise<boolean> => {
-  const { error } = await supabase
+// Fetch all categories
+export const getAllCategories = async (): Promise<CategoryData[]> => {
+  const { data, error } = await supabase
     .from('categories')
-    .upsert({
-      id: category.id,
-      name: category.name,
-      grade: category.grade,
-      subject: category.subject,
-      description: category.description,
-      icon: category.icon,
-      image_url: category.imageUrl,
-      worksheet_count: category.worksheetCount,
-    });
+    .select('*')
+    .order('grade', { ascending: true });
 
   if (error) {
-    console.error("Error upserting category:", error);
-    return false;
+    console.error("Error fetching categories:", error);
+    return [];
   }
-  return true;
+
+  if (!data || data.length === 0) {
+    await seedDefaultCategories();
+    const { data: newData } = await supabase.from('categories').select('*');
+    return (newData || []).map(mapCategoryFromDB);
+  }
+
+  return data.map(mapCategoryFromDB);
 };
 
-// Delete a category by ID
-export const deleteCategory = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
+// Get category by ID
+export const getCategoryById = async (id: string): Promise<CategoryData | undefined> => {
+  const { data } = await supabase
     .from('categories')
-    .delete()
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  return data ? mapCategoryFromDB(data) : undefined;
+};
+
+// Get categories by grade
+export const getCategoriesByGrade = async (grade: string): Promise<CategoryData[]> => {
+  const { data, error } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('grade', grade);
+
+  if (error) return [];
+  return (data || []).map(mapCategoryFromDB);
+};
+
+// Get category by grade and subject
+export const getCategoryByGradeAndSubject = async (
+  grade: string,
+  subject: string
+): Promise<CategoryData | undefined> => {
+  const { data } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('grade', grade)
+    .eq('subject', subject)
+    .single();
+
+  return data ? mapCategoryFromDB(data) : undefined;
+};
+
+// Update category
+export const updateCategory = async (id: string, updates: Partial<CategoryData>): Promise<void> => {
+  const updateData: any = {};
+  if (updates.name) updateData.name = updates.name;
+  if (updates.description !== undefined) updateData.description = updates.description;
+  if (updates.imageUrl !== undefined) updateData.image_url = updates.imageUrl;
+  if (updates.icon) updateData.icon = updates.icon;
+  if (updates.worksheetCount !== undefined) updateData.worksheet_count = updates.worksheetCount;
+
+  await supabase
+    .from('categories')
+    .update(updateData)
     .eq('id', id);
+};
 
-  if (error) {
-    console.error(`Error deleting category with id ${id}:`, error);
-    return false;
-  }
-  return true;
+// Worksheet image overrides
+export const getWorksheetImageOverride = async (worksheetId: string): Promise<string | null> => {
+  const { data } = await supabase
+    .from('worksheet_image_overrides')
+    .select('image_url')
+    .eq('worksheet_id', worksheetId)
+    .maybeSingle();
+
+  return data?.image_url || null;
+};
+
+export const setWorksheetImageOverride = async (worksheetId: string, imageUrl: string): Promise<void> => {
+  await supabase
+    .from('worksheet_image_overrides')
+    .upsert({
+      worksheet_id: worksheetId,
+      image_url: imageUrl,
+    });
+};
+
+export const getAllWorksheetImageOverrides = async (): Promise<Record<string, string>> => {
+  const { data } = await supabase
+    .from('worksheet_image_overrides')
+    .select('*');
+
+  const overrides: Record<string, string> = {};
+  (data || []).forEach(item => {
+    overrides[item.worksheet_id] = item.image_url;
+  });
+  return overrides;
 };

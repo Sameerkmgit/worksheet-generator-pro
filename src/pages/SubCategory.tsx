@@ -39,11 +39,12 @@ const SubCategory = () => {
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
-    if (grade) {
-      const gradeCategories = getCategoriesByGrade(grade);
-      
-      // Map categories to subcategory format with images
-      const mappedCategories = gradeCategories.map((cat) => {
+    const loadCategories = async () => {
+      if (grade) {
+        const gradeCategories = await getCategoriesByGrade(grade);
+        
+        // Map categories to subcategory format with images
+        const mappedCategories = gradeCategories.map((cat) => {
         const subjectId = cat.id.replace(`${grade}-`, "");
         const defaultCat = defaultSubCategories.find((d) => d.id === subjectId);
         
@@ -58,7 +59,9 @@ const SubCategory = () => {
       });
       
       setCategories(mappedCategories);
-    }
+      }
+    };
+    loadCategories();
   }, [grade]);
 
   const structuredData = {
