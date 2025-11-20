@@ -16,7 +16,6 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
       { id: 51, title: "Simple Subtraction (1-10)", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 1" },
       { id: 52, title: "Shapes & Patterns", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", category: "Math", grade: "Grade 1" },
       { id: 53, title: "Comparing Numbers (Greater/Less Than)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 1" },
-      { id: 54, title: "Skip Counting (2s, 5s, 10s)", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 1" },
     ],
     english: [
       { id: 20, title: "Alphabet Tracing", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 1" },
