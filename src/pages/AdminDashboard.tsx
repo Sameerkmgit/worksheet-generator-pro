@@ -137,7 +137,7 @@ const AdminDashboard = () => {
     navigate("/dashboard-secure-2025");
   };
 
-  const handleWorksheetImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, worksheetId: number) => {
+  const handleWorksheetImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, worksheetId: string | number) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -166,90 +166,15 @@ const AdminDashboard = () => {
   };
 
   const getWorksheetsForFilters = () => {
-    // Worksheet data organized by grade and subject
-    const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
-      "grade-1": {
-        math: [
-          { id: 3, title: "Introduction to Multiplication", preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800" },
-          { id: 40, title: "Grade 1 Addition Practice - Complete Worksheet", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400" },
-          { id: 50, title: "Counting & Number Recognition (1-20)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400" },
-          { id: 51, title: "Simple Subtraction (1-10)", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400" },
-          { id: 52, title: "Shapes & Patterns", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400" },
-          { id: 53, title: "Comparing Numbers (Greater/Less Than)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400" },
-        ],
-        english: [
-          { id: 20, title: "Alphabet Tracing", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400" },
-          { id: 14, title: "Letter Recognition", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400" },
-          { id: 41, title: "Alphabet Writing Practice (Letters A to M)", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" },
-          { id: 55, title: "Vowels & Consonants", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400" },
-          { id: 56, title: "CVC Words (Cat, Dog, Sun)", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" },
-          { id: 57, title: "Rhyming Words", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400" },
-          { id: 58, title: "Simple Sentences", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" },
-          { id: 59, title: "Sight Words (Dolch List)", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400" },
-        ],
-        science: [
-          { id: 30, title: "Animal Habitats", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400" },
-          { id: 60, title: "Parts of a Plant", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400" },
-        ],
-        "computer-science": [
-          { id: 200, title: "Introduction to Computers - Digital Literacy Basics", preview: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400" },
-        ],
-        assignments: [
-          { id: 31, title: "Grade 1 Practice Test", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400" },
-          { id: 75, title: "Weekly Test - Week 1", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400" },
-          { id: 76, title: "Monthly Test - Math & English", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400" },
-          { id: 77, title: "Revision Worksheet - Term 1", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400" },
-          { id: 201, title: "Animal Identification & Learning", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400" },
-        ],
-      },
-      "grade-2": {
-        math: [
-          { id: 17, title: "Subtraction Practice", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400" },
-          { id: 42, title: "Multiplication Tables (2 and 5)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400" },
-        ],
-        english: [
-          { id: 43, title: "Nouns and Verbs", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" },
-        ],
-        science: [],
-        "computer-science": [],
-        assignments: [],
-      },
-      "grade-3": {
-        math: [
-          { id: 44, title: "Division Practice", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400" },
-        ],
-        english: [
-          { id: 45, title: "Reading Comprehension", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" },
-        ],
-        science: [],
-        "computer-science": [],
-        assignments: [],
-      },
-      "grade-4": {
-        math: [
-          { id: 46, title: "Introduction to Fractions", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400" },
-        ],
-        english: [],
-        science: [
-          { id: 47, title: "Our Solar System", preview: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=400" },
-        ],
-        "computer-science": [],
-        assignments: [],
-      },
-      "grade-5": {
-        math: [
-          { id: 48, title: "Decimals and Place Value", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400" },
-        ],
-        english: [
-          { id: 49, title: "Essay Writing and Paragraph Structure", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" },
-        ],
-        science: [],
-        "computer-science": [],
-        assignments: [],
-      },
-    };
-
-    return worksheetsByGradeAndSubject[categoryGradeFilter]?.[categorySubjectFilter] || [];
+    // Get ALL worksheets from storage
+    const allWorksheets = getAllWorksheets();
+    
+    // Filter by selected grade and subject
+    return allWorksheets.filter(worksheet => {
+      const gradeMatch = worksheet.grade === categoryGradeFilter.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+      const subjectMatch = worksheet.subject.toLowerCase() === categorySubjectFilter.toLowerCase();
+      return gradeMatch && subjectMatch;
+    });
   };
 
   const resetForm = () => {
@@ -758,7 +683,7 @@ const AdminDashboard = () => {
                       <CardContent className="p-4">
                         <div className="aspect-video relative mb-3 rounded overflow-hidden bg-muted">
                           <img 
-                            src={getWorksheetImageOverride(String(worksheet.id)) || worksheet.preview} 
+                            src={getWorksheetImageOverride(String(worksheet.id)) || worksheet.imageUrl} 
                             alt={worksheet.title}
                             className="w-full h-full object-cover"
                           />
