@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import ImageUploader from "@/components/ImageUploader";
 import { useToast } from "@/hooks/use-toast";
 import {
   isAdminAuthenticated,
@@ -752,60 +753,41 @@ const AdminDashboard = () => {
                   {getWorksheetsForFilters().map((worksheet) => (
                     <Card key={worksheet.id} className="overflow-hidden">
                        <CardContent className="p-4">
-                         {/* Current Image Preview */}
-                         <div className="space-y-2 mb-4">
-                           <Label className="text-xs font-semibold text-muted-foreground">Current Image:</Label>
-                           <div className="aspect-video relative rounded overflow-hidden bg-muted border-2 border-border">
-                             <img 
-                               src={getWorksheetImageOverride(String(worksheet.id)) || worksheet.imageUrl} 
-                               alt={worksheet.title}
-                               className="w-full h-full object-cover"
-                             />
-                           </div>
-                         </div>
+                         <h4 className="font-medium text-base mb-3">{worksheet.title}</h4>
                          
-                         <h4 className="font-medium text-sm mb-3 line-clamp-2">{worksheet.title}</h4>
+                         <ImageUploader
+                           currentImageUrl={getWorksheetImageOverride(String(worksheet.id)) || worksheet.imageUrl}
+                           onImageUpload={(file) => handleWorksheetImageSelect({ target: { files: [file] } } as any, worksheet.id)}
+                           label="Worksheet Image"
+                           worksheetId={String(worksheet.id)}
+                         />
                          
-                         {/* Upload New Image Section */}
-                         <div className="space-y-3 p-3 bg-muted/50 rounded-lg">
-                           <Label htmlFor={`upload-${worksheet.id}`} className="text-xs font-semibold">
-                             Upload New Image:
-                           </Label>
-                           <Input
-                             type="file"
-                             accept="image/*"
-                             onChange={(e) => handleWorksheetImageSelect(e, worksheet.id)}
-                             className="text-xs cursor-pointer"
-                             id={`upload-${worksheet.id}`}
-                           />
+                         <div className="flex gap-2 mt-4">
+                           <Button
+                             size="sm"
+                             className="flex-1"
+                             onClick={() => handleSaveWorksheetImage(worksheet.id)}
+                             disabled={!selectedImageFile[String(worksheet.id)]}
+                           >
+                             {savedWorksheetIds.has(String(worksheet.id)) ? (
+                               <>✅ Saved!</>
+                             ) : (
+                               <>💾 Save Image</>
+                             )}
+                           </Button>
                            
-                           <div className="flex gap-2">
-                             <Button
-                               size="sm"
-                               className="flex-1"
-                               onClick={() => handleSaveWorksheetImage(worksheet.id)}
-                               disabled={!selectedImageFile[String(worksheet.id)]}
-                             >
-                               {savedWorksheetIds.has(String(worksheet.id)) ? (
-                                 <>✅ Saved!</>
-                               ) : (
-                                 <>💾 Save Image</>
-                               )}
-                             </Button>
-                             
-                             <Button
-                               size="sm"
-                               variant="outline"
-                               className="flex-1"
-                               onClick={() => {
-                                 const gradeSlug = categoryGradeFilter;
-                                 const subjectSlug = categorySubjectFilter;
-                                 window.open(`/category/${gradeSlug}/${subjectSlug}`, '_blank');
-                               }}
-                             >
-                               View Live →
-                             </Button>
-                           </div>
+                           <Button
+                             size="sm"
+                             variant="outline"
+                             className="flex-1"
+                             onClick={() => {
+                               const gradeSlug = categoryGradeFilter;
+                               const subjectSlug = categorySubjectFilter;
+                               window.open(`/category/${gradeSlug}/${subjectSlug}`, '_blank');
+                             }}
+                           >
+                             View Live →
+                           </Button>
                          </div>
                        </CardContent>
                     </Card>
