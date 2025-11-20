@@ -84,6 +84,7 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
     ],
     english: [
       { id: 27, title: "Advanced Grammar", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 5" },
+      { id: 49, title: "Essay Writing and Paragraph Structure", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 5" },
     ],
     science: [
       { id: 28, title: "Physics Basics", preview: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", category: "Science", grade: "Grade 5" },
