@@ -53,153 +53,143 @@ export const seedInitialWorksheets = (): void => {
   }
 
   const initialWorksheets: WorksheetData[] = [
-    // Grade 1 Math
-    {
-      id: "ws-g1-math-1",
-      title: "Numbers 1-20 - Counting and Writing",
-      description: "Practice counting and writing numbers from 1 to 20",
-      grade: "Grade 1",
-      subject: "math",
-      pdfUrl: "/worksheets/grade1-math-numbers1-20.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=300&fit=crop",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "ws-g1-math-2",
-      title: "Simple Addition - Numbers 1 to 10",
-      description: "Basic addition practice with single-digit numbers",
-      grade: "Grade 1",
-      subject: "math",
-      pdfUrl: "/worksheets/grade1-math-addition.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400&h=300&fit=crop",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    // Grade 1 English
-    {
-      id: "20",
-      title: "Alphabet Tracing",
-      description: "Practice tracing uppercase and lowercase letters A-Z",
-      grade: "Grade 1",
-      subject: "english",
-      pdfUrl: "/worksheets/grade1-english-alphabet-tracing.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "14",
-      title: "Letter Recognition",
-      description: "Identify and recognize uppercase and lowercase letters",
-      grade: "Grade 1",
-      subject: "english",
-      pdfUrl: "/worksheets/grade1-english-letter-recognition.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "41",
-      title: "Alphabet Writing Practice (Letters A to M)",
-      description: "Practice writing uppercase and lowercase letters A through M",
-      grade: "Grade 1",
-      subject: "english",
-      pdfUrl: "/worksheets/grade1-english-alphabet-writing.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "55",
-      title: "Vowels & Consonants",
-      description: "Learn to identify and differentiate between vowels and consonants",
-      grade: "Grade 1",
-      subject: "english",
-      pdfUrl: "/worksheets/grade1-english-vowels-consonants.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "56",
-      title: "CVC Words (Cat, Dog, Sun)",
-      description: "Practice reading and writing simple consonant-vowel-consonant words",
-      grade: "Grade 1",
-      subject: "english",
-      pdfUrl: "/worksheets/grade1-english-cvc-words.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "57",
-      title: "Rhyming Words",
-      description: "Identify and create rhyming word pairs",
-      grade: "Grade 1",
-      subject: "english",
-      pdfUrl: "/worksheets/grade1-english-rhyming-words.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "58",
-      title: "Simple Sentences",
-      description: "Practice forming and writing simple sentences",
-      grade: "Grade 1",
-      subject: "english",
-      pdfUrl: "/worksheets/grade1-english-simple-sentences.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "59",
-      title: "Sight Words (Dolch List)",
-      description: "Learn and practice common sight words from the Dolch list",
-      grade: "Grade 1",
-      subject: "english",
-      pdfUrl: "/worksheets/grade1-english-sight-words.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "ws-g1-eng-2",
-      title: "Sight Words Practice",
-      description: "Learn and practice common sight words for Grade 1",
-      grade: "Grade 1",
-      subject: "english",
-      pdfUrl: "/worksheets/grade1-english-sight-words.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    // Grade 2 Math
-    {
-      id: "ws-g2-math-1",
-      title: "Multiplication Tables - 2 and 5",
-      description: "Practice multiplication tables of 2 and 5",
-      grade: "Grade 2",
-      subject: "math",
-      pdfUrl: "/worksheets/grade2-math-multiplication.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=300&fit=crop",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    // Grade 2 English
-    {
-      id: "ws-g2-eng-1",
-      title: "Nouns and Verbs",
-      description: "Identify and practice nouns and verbs",
-      grade: "Grade 2",
-      subject: "english",
-      pdfUrl: "/worksheets/grade2-english-nouns-verbs.pdf",
-      imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
+    // GRADE 1 - MATH
+    { id: "3", title: "Introduction to Multiplication", description: "Learn multiplication basics", grade: "Grade 1", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "40", title: "Grade 1 Addition Practice - Complete Worksheet", description: "Comprehensive addition practice", grade: "Grade 1", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "50", title: "Counting & Number Recognition (1-20)", description: "Learn to count and recognize numbers", grade: "Grade 1", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "51", title: "Simple Subtraction (1-10)", description: "Basic subtraction practice", grade: "Grade 1", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "52", title: "Shapes & Patterns", description: "Identify shapes and patterns", grade: "Grade 1", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "53", title: "Comparing Numbers (Greater/Less Than)", description: "Compare numbers using symbols", grade: "Grade 1", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    
+    // GRADE 1 - ENGLISH
+    { id: "20", title: "Alphabet Tracing", description: "Practice tracing letters A-Z", grade: "Grade 1", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "14", title: "Letter Recognition", description: "Recognize uppercase and lowercase letters", grade: "Grade 1", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "41", title: "Alphabet Writing Practice (Letters A to M)", description: "Writing practice for letters A-M", grade: "Grade 1", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "55", title: "Vowels & Consonants", description: "Learn vowels and consonants", grade: "Grade 1", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "56", title: "CVC Words (Cat, Dog, Sun)", description: "Simple CVC word practice", grade: "Grade 1", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "57", title: "Rhyming Words", description: "Practice rhyming word pairs", grade: "Grade 1", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "58", title: "Simple Sentences", description: "Form simple sentences", grade: "Grade 1", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "59", title: "Sight Words (Dolch List)", description: "Learn common sight words", grade: "Grade 1", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    
+    // GRADE 1 - SCIENCE
+    { id: "30", title: "Animal Habitats", description: "Learn about where animals live", grade: "Grade 1", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "60", title: "Parts of a Plant", description: "Identify plant parts", grade: "Grade 1", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    
+    // GRADE 1 - COMPUTER SCIENCE
+    { id: "200", title: "Introduction to Computers - Digital Literacy Basics", description: "Learn computer basics", grade: "Grade 1", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    
+    // GRADE 1 - ASSIGNMENTS
+    { id: "31", title: "Grade 1 Practice Test", description: "Practice test for Grade 1", grade: "Grade 1", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "75", title: "Weekly Test - Week 1", description: "Week 1 practice test", grade: "Grade 1", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "76", title: "Monthly Test - Math & English", description: "Monthly assessment", grade: "Grade 1", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "77", title: "Revision Worksheet - Term 1", description: "Term 1 revision", grade: "Grade 1", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "201", title: "Animal Identification & Learning", description: "Learn to identify animals", grade: "Grade 1", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 2 - MATH
+    { id: "17", title: "Subtraction Practice", description: "Practice subtraction skills", grade: "Grade 2", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "42", title: "Multiplication Tables (2 and 5)", description: "Learn times tables", grade: "Grade 2", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "78", title: "2-Digit Addition & Subtraction", description: "Two-digit math practice", grade: "Grade 2", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "79", title: "Place Value (Tens & Ones)", description: "Understand place value", grade: "Grade 2", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "80", title: "Time (Hours & Minutes)", description: "Learn to tell time", grade: "Grade 2", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "81", title: "Money (Coins & Notes)", description: "Learn about money", grade: "Grade 2", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "82", title: "Measurement (Length & Weight)", description: "Learn measurement", grade: "Grade 2", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 2 - ENGLISH
+    { id: "18", title: "Word Building", description: "Build and create words", grade: "Grade 2", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "19", title: "Sentence Formation", description: "Form correct sentences", grade: "Grade 2", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "43", title: "Nouns and Verbs", description: "Learn parts of speech", grade: "Grade 2", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "83", title: "Adjectives & Describing Words", description: "Learn descriptive words", grade: "Grade 2", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "84", title: "Singular & Plural", description: "Learn singular and plural forms", grade: "Grade 2", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "85", title: "Punctuation Practice", description: "Practice punctuation marks", grade: "Grade 2", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "86", title: "Story Sequencing", description: "Arrange story events", grade: "Grade 2", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "87", title: "Simple Reading Comprehension", description: "Read and understand passages", grade: "Grade 2", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 2 - SCIENCE
+    { id: "32", title: "Plants & Growth", description: "Learn how plants grow", grade: "Grade 2", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "88", title: "Animal Classification", description: "Classify different animals", grade: "Grade 2", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "89", title: "Water Cycle Basics", description: "Understand the water cycle", grade: "Grade 2", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "90", title: "Healthy Food & Nutrition", description: "Learn about healthy eating", grade: "Grade 2", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "91", title: "Magnets & Materials", description: "Learn about magnets", grade: "Grade 2", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 2 - ASSIGNMENTS
+    { id: "33", title: "Grade 2 Weekly Test", description: "Weekly assessment", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "103", title: "Monthly Test - All Subjects", description: "Comprehensive monthly test", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "104", title: "Revision Sheet - Numbers & Words", description: "Revision worksheet", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "105", title: "Homework Pack - Week 1", description: "Weekly homework", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 3 - MATH
+    { id: "1", title: "Addition Worksheet 1", description: "Addition practice", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "2", title: "Addition Worksheet 2", description: "More addition practice", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "20m", title: "Multiplication Tables", description: "Practice times tables", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "44", title: "Division Practice", description: "Division exercises", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 3 - ENGLISH
+    { id: "21", title: "Grammar Basics", description: "Learn basic grammar", grade: "Grade 3", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "45", title: "Reading Comprehension", description: "Reading and understanding", grade: "Grade 3", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 3 - SCIENCE
+    { id: "22", title: "Water Cycle", description: "Learn about water cycle", grade: "Grade 3", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 3 - COMPUTER
+    { id: "111", title: "Parts of a Computer", description: "Learn computer parts", grade: "Grade 3", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "112", title: "Input & Output Devices", description: "Learn about devices", grade: "Grade 3", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "113", title: "Keyboard Practice", description: "Practice typing", grade: "Grade 3", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "114", title: "Using a Mouse", description: "Learn mouse skills", grade: "Grade 3", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "115", title: "Internet Safety Basics", description: "Stay safe online", grade: "Grade 3", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 3 - ASSIGNMENTS
+    { id: "34", title: "Grade 3 Practice Assignment", description: "Practice test", grade: "Grade 3", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "121", title: "Weekly Test - Math & Science", description: "Weekly assessment", grade: "Grade 3", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "122", title: "Monthly Assessment - All Subjects", description: "Monthly test", grade: "Grade 3", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "123", title: "Revision Worksheet - Term 2", description: "Term revision", grade: "Grade 3", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 4 - MATH
+    { id: "23", title: "Division Practice", description: "Division worksheets", grade: "Grade 4", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "46", title: "Introduction to Fractions", description: "Learn fractions", grade: "Grade 4", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 4 - ENGLISH
+    { id: "24", title: "Essay Writing", description: "Essay writing practice", grade: "Grade 4", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 4 - SCIENCE
+    { id: "25", title: "Solar System", description: "Learn about planets", grade: "Grade 4", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "47", title: "Our Solar System", description: "Explore the solar system", grade: "Grade 4", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 4 - COMPUTER
+    { id: "129", title: "MS Paint Basics", description: "Learn MS Paint", grade: "Grade 4", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "130", title: "File Management", description: "Organize files", grade: "Grade 4", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "131", title: "Introduction to MS Word", description: "Learn MS Word", grade: "Grade 4", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "132", title: "Email Basics", description: "Learn about email", grade: "Grade 4", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "133", title: "Computer Viruses & Safety", description: "Stay safe online", grade: "Grade 4", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 4 - ASSIGNMENTS
+    { id: "35", title: "Grade 4 Test Paper", description: "Test paper", grade: "Grade 4", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "139", title: "Weekly Quiz - English & Math", description: "Weekly quiz", grade: "Grade 4", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "140", title: "Monthly Test - Mathematics", description: "Monthly test", grade: "Grade 4", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "141", title: "Revision Pack - Mid-Term", description: "Mid-term revision", grade: "Grade 4", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 5 - MATH
+    { id: "26", title: "Fractions & Decimals", description: "Learn fractions and decimals", grade: "Grade 5", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "48", title: "Decimals and Place Value", description: "Master decimals", grade: "Grade 5", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 5 - ENGLISH
+    { id: "27", title: "Advanced Grammar", description: "Advanced grammar skills", grade: "Grade 5", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "49", title: "Essay Writing and Paragraph Structure", description: "Essay writing", grade: "Grade 5", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 5 - SCIENCE
+    { id: "28", title: "Physics Basics", description: "Introduction to physics", grade: "Grade 5", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 5 - COMPUTER
+    { id: "147", title: "MS PowerPoint Basics", description: "Learn PowerPoint", grade: "Grade 5", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "148", title: "Introduction to Spreadsheets", description: "Learn spreadsheets", grade: "Grade 5", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "149", title: "Coding Basics - Scratch", description: "Learn coding", grade: "Grade 5", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "150", title: "Internet & Search Engines", description: "Learn to search", grade: "Grade 5", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "151", title: "Cyber Security for Kids", description: "Online safety", grade: "Grade 5", subject: "computer", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 5 - ASSIGNMENTS
+    { id: "36", title: "Grade 5 Comprehensive Test", description: "Comprehensive test", grade: "Grade 5", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "157", title: "Pre-Board Examination", description: "Pre-board exam", grade: "Grade 5", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "158", title: "Final Revision - All Subjects", description: "Final revision", grade: "Grade 5", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "159", title: "Sample Paper - Term 1", description: "Sample paper", grade: "Grade 5", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
   ];
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(initialWorksheets));
