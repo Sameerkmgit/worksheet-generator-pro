@@ -9,9 +9,7 @@ const subCategories = [
   { id: "math", title: "Math", icon: Calculator, color: "from-primary to-primary-dark", description: "Addition, subtraction, multiplication, and more" },
   { id: "english", title: "English", icon: BookA, color: "from-green-400 to-green-500", description: "Reading, writing, grammar, and vocabulary" },
   { id: "science", title: "Science", icon: Microscope, color: "from-teal-400 to-teal-500", description: "Explore nature, experiments, and discoveries" },
-  { id: "hindi", title: "Hindi", icon: Languages, color: "from-purple-400 to-purple-500", description: "हिंदी वर्णमाला, शब्द, और व्याकरण" },
   { id: "computer", title: "Computer Science", icon: Monitor, color: "from-blue-400 to-blue-500", description: "Digital literacy and coding basics" },
-  { id: "gk", title: "General Knowledge", icon: BookOpen, color: "from-pink-400 to-pink-500", description: "World knowledge, current affairs, and trivia" },
   { id: "assignments", title: "Assignments", icon: ClipboardCheck, color: "from-orange-400 to-orange-500", description: "Practice assignments and tests" },
 ];
 
@@ -31,7 +29,7 @@ const SubCategory = () => {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": `${gradeTitle} Worksheets - All Subjects`,
-    "description": `Browse all ${gradeTitle} worksheets by subject: Math, English, Science, Hindi, Computer Science, General Knowledge, and Assignments.`,
+    "description": `Browse all ${gradeTitle} worksheets by subject: Math, English, Science, Computer Science, and Assignments.`,
     "url": `https://smartkidsworksheets.com/category/${grade}`,
   };
 
@@ -57,8 +55,8 @@ const SubCategory = () => {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>{gradeTitle} Worksheets - Math, English, Science, Hindi, Computer Science, GK | SmartKids Worksheets</title>
-        <meta name="description" content={`Free printable ${gradeTitle} worksheets. Browse by subject: Math, English, Science, Hindi, Computer Science, General Knowledge, and Assignments. Download and print for free.`} />
+        <title>{gradeTitle} Worksheets - Math, English, Science, Computer Science | SmartKids Worksheets</title>
+        <meta name="description" content={`Free printable ${gradeTitle} worksheets. Browse by subject: Math, English, Science, Computer Science, and Assignments. Download and print for free.`} />
         <link rel="canonical" href={`https://smartkidsworksheets.com/category/${grade}`} />
         
         <script type="application/ld+json">
