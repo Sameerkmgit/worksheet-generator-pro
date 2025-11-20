@@ -332,13 +332,28 @@ const WorksheetDetail = () => {
                     Practice Questions
                   </h2>
 
-                  <ol className="list-decimal pl-6 space-y-3 mb-6">
-                    {worksheet.questions.map((question, index) => (
-                      <li key={index} className="text-base">
-                        {question.replace(/^\d+\)\s*/, '')}
-                      </li>
-                    ))}
-                  </ol>
+                  <div className="space-y-4 mb-6">
+                    {worksheet.questions.map((question, index) => {
+                      // Skip empty strings
+                      if (!question.trim()) return null;
+                      
+                      // Render section headings as h3
+                      if (question.startsWith('SECTION') || question.startsWith('ANSWER KEY:')) {
+                        return (
+                          <h3 key={index} className="text-lg font-semibold font-heading mt-6 first:mt-0">
+                            {question}
+                          </h3>
+                        );
+                      }
+                      
+                      // Render questions as list items
+                      return (
+                        <div key={index} className="text-base pl-6">
+                          {question}
+                        </div>
+                      );
+                    })}
+                  </div>
 
                   <div className="flex flex-wrap gap-3 mb-5">
                     <Button asChild size="lg" className="rounded-full">
