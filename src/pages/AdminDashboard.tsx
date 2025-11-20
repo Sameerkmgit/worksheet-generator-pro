@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Edit, Trash2, LogOut, FileText, Filter } from "lucide-react";
+import { Plus, Edit, Trash2, LogOut, FileText, Filter, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,9 @@ import {
   updateWorksheet,
   deleteWorksheet,
   WorksheetData,
+  getAllCategories,
+  updateCategory,
+  CategoryData,
 } from "@/lib/worksheetStorage";
 import {
   Dialog,
@@ -35,6 +38,10 @@ const AdminDashboard = () => {
   const [filterSubject, setFilterSubject] = useState<string>("all");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingWorksheet, setEditingWorksheet] = useState<WorksheetData | null>(null);
+  const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<CategoryData | null>(null);
+  const [activeTab, setActiveTab] = useState<"worksheets" | "categories">("worksheets");
 
   // Form state
   const [formData, setFormData] = useState({
@@ -52,6 +59,7 @@ const AdminDashboard = () => {
       return;
     }
     loadWorksheets();
+    loadCategories();
   }, [navigate]);
 
   useEffect(() => {
@@ -61,6 +69,11 @@ const AdminDashboard = () => {
   const loadWorksheets = () => {
     const data = getAllWorksheets();
     setWorksheets(data);
+  };
+
+  const loadCategories = () => {
+    const data = getAllCategories();
+    setCategories(data);
   };
 
   const filterWorksheets = () => {
@@ -153,6 +166,34 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleEditCategory = (category: CategoryData) => {
+    setEditingCategory(category);
+    setIsCategoryDialogOpen(true);
+  };
+
+  const handleCategorySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingCategory) {
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+      
+      updateCategory(editingCategory.id, {
+        name: formData.get("name") as string,
+        description: formData.get("description") as string,
+        imageUrl: formData.get("imageUrl") as string,
+      });
+
+      toast({
+        title: "Category Updated",
+        description: "The category image has been successfully updated",
+      });
+
+      loadCategories();
+      setIsCategoryDialogOpen(false);
+      setEditingCategory(null);
+    }
+  };
+
   // Group worksheets by grade and subject
   const groupedWorksheets = filteredWorksheets.reduce((acc, worksheet) => {
     const key = `${worksheet.grade}-${worksheet.subject}`;
@@ -181,8 +222,30 @@ const AdminDashboard = () => {
       </header>
 
       <div className="container mx-auto max-w-7xl px-6 py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {/* Tabs */}
+        <div className="flex gap-2 mb-6 border-b border-border">
+          <Button
+            variant={activeTab === "worksheets" ? "default" : "ghost"}
+            onClick={() => setActiveTab("worksheets")}
+            className="rounded-b-none"
+          >
+            <FileText className="mr-2 h-4 w-4" />
+            Worksheets
+          </Button>
+          <Button
+            variant={activeTab === "categories" ? "default" : "ghost"}
+            onClick={() => setActiveTab("categories")}
+            className="rounded-b-none"
+          >
+            <ImageIcon className="mr-2 h-4 w-4" />
+            Categories
+          </Button>
+        </div>
+
+        {activeTab === "worksheets" && (
+          <>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader>
               <CardTitle className="text-lg">Total Worksheets</CardTitle>
@@ -438,6 +501,127 @@ const AdminDashboard = () => {
             })
           )}
         </div>
+          </>
+        )}
+
+        {activeTab === "categories" && (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Manage Category Images</CardTitle>
+                <CardDescription>
+                  Update images and descriptions for Math, English, Science, Computer Science, and Assignments
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {categories.map((category) => (
+                    <Card key={category.id} className="overflow-hidden">
+                      <div className="aspect-video w-full overflow-hidden bg-muted">
+                        <img
+                          src={category.imageUrl}
+                          alt={category.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-lg mb-2">{category.name}</h3>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {category.description}
+                        </p>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleEditCategory(category)}
+                          className="w-full"
+                        >
+                          <Edit className="mr-2 h-4 w-4" />
+                          Edit Image
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Category Edit Dialog */}
+            <Dialog open={isCategoryDialogOpen} onOpenChange={setIsCategoryDialogOpen}>
+              <DialogContent className="max-w-2xl">
+                <DialogHeader>
+                  <DialogTitle>Edit Category Image</DialogTitle>
+                  <DialogDescription>
+                    Update the image and details for {editingCategory?.name}
+                  </DialogDescription>
+                </DialogHeader>
+                {editingCategory && (
+                  <form onSubmit={handleCategorySubmit} className="space-y-4 mt-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="cat-name">Category Name</Label>
+                      <Input
+                        id="cat-name"
+                        name="name"
+                        defaultValue={editingCategory.name}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="cat-description">Description</Label>
+                      <Textarea
+                        id="cat-description"
+                        name="description"
+                        defaultValue={editingCategory.description}
+                        rows={2}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="cat-imageUrl">Image URL *</Label>
+                      <Input
+                        id="cat-imageUrl"
+                        name="imageUrl"
+                        type="url"
+                        defaultValue={editingCategory.imageUrl}
+                        placeholder="https://example.com/image.jpg"
+                        required
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Use Unsplash, Imgur, or Google Drive links. Recommended size: 400x300px
+                      </p>
+                    </div>
+
+                    {/* Preview */}
+                    <div className="space-y-2">
+                      <Label>Current Image Preview</Label>
+                      <div className="aspect-video w-full max-w-md overflow-hidden rounded-lg bg-muted">
+                        <img
+                          src={editingCategory.imageUrl}
+                          alt={editingCategory.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2 pt-4">
+                      <Button type="submit" className="flex-1">
+                        Update Category
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setIsCategoryDialogOpen(false)}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </form>
+                )}
+              </DialogContent>
+            </Dialog>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -11,8 +11,18 @@ export interface WorksheetData {
   updatedAt: string;
 }
 
+export interface CategoryData {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  icon: string;
+  updatedAt: string;
+}
+
 const STORAGE_KEY = "smartkids_worksheets";
 const ADMIN_KEY = "smartkids_admin_auth";
+const CATEGORIES_KEY = "smartkids_categories";
 
 // Admin authentication
 export const adminLogin = (password: string): boolean => {
@@ -95,4 +105,73 @@ export const getWorksheetsBySubject = (subject: string): WorksheetData[] => {
 
 export const getWorksheetsByGradeAndSubject = (grade: string, subject: string): WorksheetData[] => {
   return getAllWorksheets().filter(w => w.grade === grade && w.subject === subject);
+};
+
+// Category Management
+const getDefaultCategories = (): CategoryData[] => [
+  {
+    id: "math",
+    name: "Math",
+    description: "Numbers, calculations, and problem solving",
+    imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=300&fit=crop",
+    icon: "Calculator",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "english",
+    name: "English",
+    description: "Reading, writing, and language skills",
+    imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop",
+    icon: "BookOpen",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "science",
+    name: "Science",
+    description: "Experiments, nature, and discovery",
+    imageUrl: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&h=300&fit=crop",
+    icon: "FlaskConical",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "computer-science",
+    name: "Computer Science",
+    description: "Coding, technology, and digital skills",
+    imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop",
+    icon: "Monitor",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "assignments",
+    name: "Assignments",
+    description: "Practice tests and homework",
+    imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop",
+    icon: "ClipboardList",
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+export const getAllCategories = (): CategoryData[] => {
+  const stored = localStorage.getItem(CATEGORIES_KEY);
+  if (!stored) {
+    const defaults = getDefaultCategories();
+    localStorage.setItem(CATEGORIES_KEY, JSON.stringify(defaults));
+    return defaults;
+  }
+  return JSON.parse(stored);
+};
+
+export const getCategoryById = (id: string): CategoryData | undefined => {
+  const categories = getAllCategories();
+  return categories.find((c) => c.id === id);
+};
+
+export const updateCategory = (id: string, data: Partial<CategoryData>): void => {
+  const categories = getAllCategories();
+  const updated = categories.map((category) =>
+    category.id === id
+      ? { ...category, ...data, updatedAt: new Date().toISOString() }
+      : category
+  );
+  localStorage.setItem(CATEGORIES_KEY, JSON.stringify(updated));
 };
