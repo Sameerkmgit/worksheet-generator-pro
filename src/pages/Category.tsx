@@ -56,11 +56,11 @@ const worksheets = {
 };
 
 const categoryTitles: Record<string, string> = {
-  "class-1": "Class 1 Worksheets",
-  "class-2": "Class 2 Worksheets",
-  "class-3": "Class 3 Worksheets",
-  "class-4": "Class 4 Worksheets",
-  "class-5": "Class 5 Worksheets",
+  "class-1": "Grade 1 Worksheets",
+  "class-2": "Grade 2 Worksheets",
+  "class-3": "Grade 3 Worksheets",
+  "class-4": "Grade 4 Worksheets",
+  "class-5": "Grade 5 Worksheets",
   math: "Math Worksheets",
   english: "English Worksheets",
   science: "Science Worksheets",
@@ -73,7 +73,7 @@ const Category = () => {
   const categoryTitle = categoryTitles[categoryId as string] || "Worksheets";
 
   const pageUrl = `https://smartkidsworksheets.com/category/${categoryId}`;
-  const pageDescription = `Free printable ${categoryTitle} for Classes 1-5. Download PDF worksheets aligned with CBSE curriculum for classroom and home learning.`;
+  const pageDescription = `Free printable ${categoryTitle} for Grades 1-5. Download PDF worksheets aligned with CBSE curriculum for classroom and home learning.`;
   
   const structuredData = {
     "@context": "https://schema.org",
