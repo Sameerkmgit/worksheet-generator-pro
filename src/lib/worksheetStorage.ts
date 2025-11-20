@@ -45,6 +45,90 @@ export const adminLogout = (): void => {
   localStorage.removeItem(ADMIN_KEY);
 };
 
+// Seed initial worksheets if none exist
+export const seedInitialWorksheets = (): void => {
+  const existing = localStorage.getItem(STORAGE_KEY);
+  if (existing && JSON.parse(existing).length > 0) {
+    return; // Already has data
+  }
+
+  const initialWorksheets: WorksheetData[] = [
+    // Grade 1 Math
+    {
+      id: "ws-g1-math-1",
+      title: "Numbers 1-20 - Counting and Writing",
+      description: "Practice counting and writing numbers from 1 to 20",
+      grade: "Grade 1",
+      subject: "math",
+      pdfUrl: "/worksheets/grade1-math-numbers1-20.pdf",
+      imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=300&fit=crop",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: "ws-g1-math-2",
+      title: "Simple Addition - Numbers 1 to 10",
+      description: "Basic addition practice with single-digit numbers",
+      grade: "Grade 1",
+      subject: "math",
+      pdfUrl: "/worksheets/grade1-math-addition.pdf",
+      imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400&h=300&fit=crop",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    // Grade 1 English
+    {
+      id: "ws-g1-eng-1",
+      title: "Alphabet Tracing - Letters A to M",
+      description: "Practice tracing uppercase and lowercase letters",
+      grade: "Grade 1",
+      subject: "english",
+      pdfUrl: "/worksheets/grade1-english-alphabet.pdf",
+      imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: "ws-g1-eng-2",
+      title: "Sight Words Practice",
+      description: "Learn and practice common sight words for Grade 1",
+      grade: "Grade 1",
+      subject: "english",
+      pdfUrl: "/worksheets/grade1-english-sight-words.pdf",
+      imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    // Grade 2 Math
+    {
+      id: "ws-g2-math-1",
+      title: "Multiplication Tables - 2 and 5",
+      description: "Practice multiplication tables of 2 and 5",
+      grade: "Grade 2",
+      subject: "math",
+      pdfUrl: "/worksheets/grade2-math-multiplication.pdf",
+      imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=300&fit=crop",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    // Grade 2 English
+    {
+      id: "ws-g2-eng-1",
+      title: "Nouns and Verbs",
+      description: "Identify and practice nouns and verbs",
+      grade: "Grade 2",
+      subject: "english",
+      pdfUrl: "/worksheets/grade2-english-nouns-verbs.pdf",
+      imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+  ];
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(initialWorksheets));
+  console.log("✅ Seeded", initialWorksheets.length, "initial worksheets");
+};
+
 // Worksheet CRUD operations
 export const getAllWorksheets = (): WorksheetData[] => {
   const data = localStorage.getItem(STORAGE_KEY);

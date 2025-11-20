@@ -21,6 +21,7 @@ import {
   CategoryData,
   setWorksheetImageOverride,
   getWorksheetImageOverride,
+  seedInitialWorksheets,
 } from "@/lib/worksheetStorage";
 import {
   Dialog,
@@ -63,6 +64,8 @@ const AdminDashboard = () => {
       navigate("/dashboard-secure-2025");
       return;
     }
+    // Seed worksheets if none exist
+    seedInitialWorksheets();
     loadWorksheets();
     loadCategories();
   }, [navigate]);
