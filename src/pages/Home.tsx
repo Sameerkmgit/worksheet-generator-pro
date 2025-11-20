@@ -8,11 +8,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const categories = [
-  { id: "class-1", title: "Class 1", icon: GraduationCap, color: "from-blue-400 to-blue-500", worksheets: 89 },
-  { id: "class-2", title: "Class 2", icon: GraduationCap, color: "from-blue-500 to-blue-600", worksheets: 95 },
-  { id: "class-3", title: "Class 3", icon: GraduationCap, color: "from-indigo-400 to-indigo-500", worksheets: 102 },
-  { id: "class-4", title: "Class 4", icon: GraduationCap, color: "from-indigo-500 to-indigo-600", worksheets: 108 },
-  { id: "class-5", title: "Class 5", icon: GraduationCap, color: "from-purple-400 to-purple-500", worksheets: 115 },
+  { id: "class-1", title: "Grade 1", icon: GraduationCap, color: "from-blue-400 to-blue-500", worksheets: 89 },
+  { id: "class-2", title: "Grade 2", icon: GraduationCap, color: "from-blue-500 to-blue-600", worksheets: 95 },
+  { id: "class-3", title: "Grade 3", icon: GraduationCap, color: "from-indigo-400 to-indigo-500", worksheets: 102 },
+  { id: "class-4", title: "Grade 4", icon: GraduationCap, color: "from-indigo-500 to-indigo-600", worksheets: 108 },
+  { id: "class-5", title: "Grade 5", icon: GraduationCap, color: "from-purple-400 to-purple-500", worksheets: 115 },
   { id: "english", title: "English", icon: BookA, color: "from-green-400 to-green-500", worksheets: 128 },
   { id: "math", title: "Math", icon: Calculator, color: "from-primary to-primary-dark", worksheets: 145 },
   { id: "science", title: "Science", icon: Microscope, color: "from-teal-400 to-teal-500", worksheets: 98 },
@@ -24,7 +24,7 @@ const Home = () => {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     "name": "SmartKids Worksheets",
-    "description": "Free printable educational worksheets for Classes 1-5. Math, English, Science worksheets aligned with CBSE curriculum.",
+    "description": "Free printable educational worksheets for Grades 1-5. Math, English, Science worksheets aligned with CBSE curriculum.",
     "url": "https://smartkidsworksheets.com",
     "logo": "https://smartkidsworksheets.com/logo.png",
     "sameAs": [
@@ -55,8 +55,8 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Free Printable Worksheets for Classes 1-5 | SmartKids Worksheets</title>
-        <meta name="description" content="Download free printable educational worksheets for Classes 1-5. Math, English, Science worksheets aligned with CBSE curriculum. Perfect for homeschooling and classroom learning." />
+        <title>Free Printable Worksheets for Grades 1-5 | SmartKids Worksheets</title>
+        <meta name="description" content="Download free printable educational worksheets for Grades 1-5. Math, English, Science worksheets aligned with CBSE curriculum. Perfect for homeschooling and classroom learning." />
         <link rel="canonical" href="https://smartkidsworksheets.com/" />
         
         <script type="application/ld+json">
@@ -79,7 +79,7 @@ const Home = () => {
         <div className="container mx-auto max-w-[1140px] relative z-10">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in font-heading">
-              SmartKids Worksheets for Classes 1–5
+              SmartKids Worksheets for Grades 1–5
             </h1>
             <p className="text-xl md:text-2xl text-blue-50 mb-10 animate-fade-in max-w-3xl mx-auto">
               Free printable educational worksheets for young learners. Math, English, Science, and more – all designed to make learning fun and effective.

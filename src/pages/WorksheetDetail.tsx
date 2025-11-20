@@ -13,13 +13,13 @@ const worksheetData: Record<string, any> = {
     id: 1,
     title: "Addition Worksheet 1 – Free 2-Digit Addition PDF",
     category: "Math",
-    grade: "Class 3",
-    description: "Free Class 3 2-digit addition worksheet with 5 practice sums. Perfect for homework, revision, and mental math. Download the printable PDF or use online.",
+    grade: "Grade 3",
+    description: "Free Grade 3 2-digit addition worksheet with 5 practice sums. Perfect for homework, revision, and mental math. Download the printable PDF or use online.",
     preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800",
     pdfUrl: "/pdfs/Math_Addition_1.pdf",
     imageUrl: "/images/Math_Addition_1.jpg",
-    heading: "Worksheet: 2-Digit Addition Practice (Class 3)",
-    intro: "Ask your child to solve each 2-digit sum without a calculator. You can print this page or download the PDF version for offline use. Ideal for Class 3 students who need extra practice with 2-digit addition.",
+    heading: "Worksheet: 2-Digit Addition Practice (Grade 3)",
+    intro: "Ask your child to solve each 2-digit sum without a calculator. You can print this page or download the PDF version for offline use. Ideal for Grade 3 students who need extra practice with 2-digit addition.",
     questions: [
       "1) 23 + 14 = ______",
       "2) 56 + 22 = ______",
@@ -37,12 +37,12 @@ const worksheetData: Record<string, any> = {
     id: 2,
     title: "Addition Worksheet 2 – Free 2-Digit & 3-Digit Addition PDF",
     category: "Math",
-    grade: "Class 3",
-    description: "Free Class 3 math worksheet for kids to practice 2-digit and 3-digit addition problems. Printable and classroom-friendly.",
+    grade: "Grade 3",
+    description: "Free Grade 3 math worksheet for kids to practice 2-digit and 3-digit addition problems. Printable and classroom-friendly.",
     preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800",
     pdfUrl: "/pdfs/Math_Addition_2.pdf",
     imageUrl: "/images/Math_Addition_2.jpg",
-    heading: "Class 3 Math – Addition Worksheet 2",
+    heading: "Grade 3 Math – Addition Worksheet 2",
     intro: "Practice adding 2-digit and 3-digit numbers. This worksheet is perfect for quick revision, classroom practice, or homework.",
     questions: [
       "1) 13 + 44 = ______",
@@ -59,14 +59,14 @@ const worksheetData: Record<string, any> = {
   },
   "3": {
     id: 3,
-    title: "Introduction to Multiplication - Class 1",
+    title: "Introduction to Multiplication - Grade 1",
     category: "Math",
-    grade: "Class 1",
-    description: "Learn multiplication through repeated addition, skip counting, and simple word problems. Perfect for introducing Class 1 students to the concept of multiplication.",
+    grade: "Grade 1",
+    description: "Learn multiplication through repeated addition, skip counting, and simple word problems. Perfect for introducing Grade 1 students to the concept of multiplication.",
     preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800",
     pdfUrl: "/pdfs/Math_Multiplication_Intro.pdf",
     imageUrl: "/images/Math_Multiplication_Intro.jpg",
-    heading: "Introduction to Multiplication - Class 1",
+    heading: "Introduction to Multiplication - Grade 1",
     intro: "Learn multiplication through repeated addition, skip counting, and simple word problems. This worksheet introduces young learners to the concept of multiplication in a fun and easy way.",
     questions: [
       "1) There are 3 baskets. Each basket has 2 apples. How many apples are there in total?",
@@ -88,15 +88,15 @@ const worksheetData: Record<string, any> = {
   },
   "20": {
     id: 20,
-    title: "Alphabet Tracing Worksheet - Class 1 (A-Z Practice)",
+    title: "Alphabet Tracing Worksheet - Grade 1 (A-Z Practice)",
     category: "English",
-    grade: "Class 1",
-    description: "Free printable alphabet tracing worksheet for Class 1 students to practice writing uppercase and lowercase letters A-Z. Perfect for handwriting practice and letter recognition.",
+    grade: "Grade 1",
+    description: "Free printable alphabet tracing worksheet for Grade 1 students to practice writing uppercase and lowercase letters A-Z. Perfect for handwriting practice and letter recognition.",
     preview: "/images/worksheets/alphabet_tracing_preview.jpg",
     pdfUrl: "/pdfs/Alphabet_Tracing_Class1.pdf",
     imageUrl: "/images/Alphabet_Tracing_Class1.jpg",
-    heading: "Alphabet Tracing Worksheet - Class 1",
-    intro: "Practice writing uppercase and lowercase letters with guided tracing activities. This worksheet helps Class 1 students develop fine motor skills and letter recognition.",
+    heading: "Alphabet Tracing Worksheet - Grade 1",
+    intro: "Practice writing uppercase and lowercase letters with guided tracing activities. This worksheet helps Grade 1 students develop fine motor skills and letter recognition.",
     questions: [
       "1) Trace the uppercase letter A three times: A A A",
       "2) Trace the lowercase letter a three times: a a a",
@@ -126,7 +126,7 @@ const worksheetData: Record<string, any> = {
     faq: [
       {
         question: "What age group is this tracing worksheet for?",
-        answer: "This worksheet is designed for Class 1 students (around 5-7 years old) who are beginning to learn letter formation and handwriting.",
+        answer: "This worksheet is designed for Grade 1 students (around 5-7 years old) who are beginning to learn letter formation and handwriting.",
       },
       {
         question: "How often should my child practice letter tracing?",
@@ -138,9 +138,9 @@ const worksheetData: Record<string, any> = {
       },
     ],
     seo: {
-      title: "Free Alphabet Tracing Worksheet for Class 1 | A-Z Letter Practice PDF",
-      description: "Download free printable alphabet tracing worksheets for Class 1 students. Practice uppercase and lowercase letters A-Z with guided tracing activities.",
-      keywords: "alphabet tracing worksheet class 1, letter tracing pdf, handwriting practice grade 1, free alphabet worksheets",
+      title: "Free Alphabet Tracing Worksheet for Grade 1 | A-Z Letter Practice PDF",
+      description: "Download free printable alphabet tracing worksheets for Grade 1 students. Practice uppercase and lowercase letters A-Z with guided tracing activities.",
+      keywords: "alphabet tracing worksheet grade 1, letter tracing pdf, handwriting practice grade 1, free alphabet worksheets",
     },
     relatedWorksheets: [
       { title: "Introduction to Multiplication", url: "/worksheet/3" },
@@ -290,7 +290,7 @@ const WorksheetDetail = () => {
                     <li>Adding two 2-digit numbers without regrouping in most sums</li>
                     <li>Building confidence with vertical and horizontal addition</li>
                     <li>Improving number sense and mental math strategies</li>
-                    <li>Preparation for Class 3 math tests and school exams</li>
+                    <li>Preparation for Grade 3 math tests and school exams</li>
                   </ul>
 
                   <h2 className="text-xl font-semibold font-heading mb-3">
@@ -317,7 +317,7 @@ const WorksheetDetail = () => {
                         What age group is this addition worksheet for?
                       </h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">
-                        This worksheet is designed for Class 3 students (around 7–9 years old),
+                        This worksheet is designed for Grade 3 students (around 7–9 years old),
                         but it can also be used for any child who is learning 2-digit addition.
                       </p>
                     </div>
@@ -346,7 +346,7 @@ const WorksheetDetail = () => {
 
                   {/* SEO text block */}
                   <p className="text-sm text-muted-foreground leading-relaxed mt-6 pt-6 border-t">
-                    This Class 3 math worksheet helps children master 2-digit addition by providing
+                    This Grade 3 math worksheet helps children master 2-digit addition by providing
                     carefully chosen sums that build number fluency and accuracy. Parents can use this
                     printable worksheet as part of a home-learning routine, while teachers can include it
                     in their lesson plans, math centers, or test revision packs. Download the free PDF,
@@ -365,7 +365,7 @@ const WorksheetDetail = () => {
                   </div>
 
                   <h2 className="text-lg font-semibold font-heading mb-3">
-                    More Class 3 Math Worksheets
+                    More Grade 3 Math Worksheets
                   </h2>
                   <ul className="space-y-2 text-sm">
                     {worksheet.relatedWorksheets.map((related: any, index: number) => (

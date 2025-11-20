@@ -74,7 +74,7 @@ const AdminUpload = () => {
                 </Label>
                 <Input
                   id="title"
-                  placeholder="e.g., Addition Basics for Class 1"
+                  placeholder="e.g., Addition Basics for Grade 1"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="h-12"
@@ -97,11 +97,11 @@ const AdminUpload = () => {
                     <SelectItem value="science">Science</SelectItem>
                     <SelectItem value="word-search">Word Search</SelectItem>
                     <SelectItem value="coloring">Coloring Pages</SelectItem>
-                    <SelectItem value="class-1">Class 1</SelectItem>
-                    <SelectItem value="class-2">Class 2</SelectItem>
-                    <SelectItem value="class-3">Class 3</SelectItem>
-                    <SelectItem value="class-4">Class 4</SelectItem>
-                    <SelectItem value="class-5">Class 5</SelectItem>
+                    <SelectItem value="class-1">Grade 1</SelectItem>
+                    <SelectItem value="class-2">Grade 2</SelectItem>
+                    <SelectItem value="class-3">Grade 3</SelectItem>
+                    <SelectItem value="class-4">Grade 4</SelectItem>
+                    <SelectItem value="class-5">Grade 5</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

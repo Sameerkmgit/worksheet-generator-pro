@@ -10,7 +10,7 @@ const Footer = () => {
           <div>
             <h3 className="font-heading font-semibold text-lg mb-4">About Us</h3>
             <p className="text-sm opacity-90">
-              SmartKidsWorksheets provides free, high-quality educational worksheets for students from Class 1 to 5.
+              SmartKidsWorksheets provides free, high-quality educational worksheets for students from Grade 1 to 5.
             </p>
           </div>
 
