@@ -71,6 +71,7 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
     ],
     science: [
       { id: 25, title: "Solar System", preview: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", category: "Science", grade: "Grade 4" },
+      { id: 47, title: "Our Solar System", preview: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", category: "Science", grade: "Grade 4" },
     ],
     assignments: [
       { id: 35, title: "Grade 4 Test Paper", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 4" },
