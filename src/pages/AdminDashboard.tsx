@@ -39,11 +39,10 @@ const AdminDashboard = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingWorksheet, setEditingWorksheet] = useState<WorksheetData | null>(null);
   const [categories, setCategories] = useState<CategoryData[]>([]);
-  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<CategoryData | null>(null);
   const [activeTab, setActiveTab] = useState<"worksheets" | "categories">("worksheets");
   const [categoryGradeFilter, setCategoryGradeFilter] = useState<string>("grade-1");
-
+  const [categorySubjectFilter, setCategorySubjectFilter] = useState<string>("math");
+  const [isUploading, setIsUploading] = useState(false);
   // Form state
   const [formData, setFormData] = useState({
     title: "",
@@ -75,6 +74,37 @@ const AdminDashboard = () => {
   const loadCategories = () => {
     const data = getAllCategories();
     setCategories(data);
+  };
+
+  const getCurrentCategory = () => {
+    return categories.find(c => c.grade === categoryGradeFilter && c.id === `${categoryGradeFilter}-${categorySubjectFilter}`);
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    
+    // Convert image to base64
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      
+      // Update the category immediately
+      const categoryId = `${categoryGradeFilter}-${categorySubjectFilter}`;
+      updateCategory(categoryId, { imageUrl: base64String });
+      
+      loadCategories();
+      
+      toast({
+        title: "Image Uploaded",
+        description: `Successfully updated ${categorySubjectFilter} image for ${categoryGradeFilter}`,
+      });
+      
+      setIsUploading(false);
+    };
+    reader.readAsDataURL(file);
   };
 
   const getFilteredCategories = () => {
@@ -168,34 +198,6 @@ const AdminDashboard = () => {
     setIsDialogOpen(open);
     if (!open) {
       resetForm();
-    }
-  };
-
-  const handleEditCategory = (category: CategoryData) => {
-    setEditingCategory(category);
-    setIsCategoryDialogOpen(true);
-  };
-
-  const handleCategorySubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (editingCategory) {
-      const form = e.target as HTMLFormElement;
-      const formData = new FormData(form);
-      
-      updateCategory(editingCategory.id, {
-        name: formData.get("name") as string,
-        description: formData.get("description") as string,
-        imageUrl: formData.get("imageUrl") as string,
-      });
-
-      toast({
-        title: "Category Updated",
-        description: "The category image has been successfully updated",
-      });
-
-      loadCategories();
-      setIsCategoryDialogOpen(false);
-      setEditingCategory(null);
     }
   };
 
@@ -519,164 +521,108 @@ const AdminDashboard = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Grade Filter */}
-                <div className="bg-muted/50 p-4 rounded-lg">
-                  <div className="flex items-center justify-between mb-3">
-                    <Label htmlFor="category-grade-filter" className="text-sm font-semibold">
-                      Select Grade to Manage:
-                    </Label>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        loadCategories();
-                        toast({
-                          title: "Categories Refreshed",
-                          description: "Category data has been reloaded",
-                        });
-                      }}
-                    >
-                      Refresh
-                    </Button>
+                {/* Filters */}
+                <div className="bg-muted/50 p-6 rounded-lg space-y-4">
+                  <h3 className="font-semibold text-lg mb-4">Select Category to Update</h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="category-grade-filter">Grade</Label>
+                      <Select
+                        value={categoryGradeFilter}
+                        onValueChange={setCategoryGradeFilter}
+                      >
+                        <SelectTrigger id="category-grade-filter" className="bg-background">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="z-50">
+                          <SelectItem value="grade-1">Grade 1</SelectItem>
+                          <SelectItem value="grade-2">Grade 2</SelectItem>
+                          <SelectItem value="grade-3">Grade 3</SelectItem>
+                          <SelectItem value="grade-4">Grade 4</SelectItem>
+                          <SelectItem value="grade-5">Grade 5</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="category-subject-filter">Subject</Label>
+                      <Select
+                        value={categorySubjectFilter}
+                        onValueChange={setCategorySubjectFilter}
+                      >
+                        <SelectTrigger id="category-subject-filter" className="bg-background">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="z-50">
+                          <SelectItem value="math">Math</SelectItem>
+                          <SelectItem value="english">English</SelectItem>
+                          <SelectItem value="science">Science</SelectItem>
+                          <SelectItem value="computer-science">Computer Science</SelectItem>
+                          <SelectItem value="assignments">Assignments</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
-                  <Select
-                    value={categoryGradeFilter}
-                    onValueChange={setCategoryGradeFilter}
-                  >
-                    <SelectTrigger id="category-grade-filter" className="w-full md:w-[250px] bg-background">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-50">
-                      <SelectItem value="grade-1">Grade 1</SelectItem>
-                      <SelectItem value="grade-2">Grade 2</SelectItem>
-                      <SelectItem value="grade-3">Grade 3</SelectItem>
-                      <SelectItem value="grade-4">Grade 4</SelectItem>
-                      <SelectItem value="grade-5">Grade 5</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Showing {getFilteredCategories().length} categories for this grade
-                  </p>
+
+                  {/* Image Upload */}
+                  <div className="space-y-3 pt-4 border-t">
+                    <Label htmlFor="image-upload" className="text-sm font-medium">
+                      Upload Category Image
+                    </Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="image-upload"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        disabled={isUploading}
+                        className="flex-1"
+                      />
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          loadCategories();
+                          toast({
+                            title: "Categories Refreshed",
+                            description: "Category data has been reloaded",
+                          });
+                        }}
+                      >
+                        Refresh
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Upload an image for {categorySubjectFilter} in {categoryGradeFilter}. Recommended size: 400x300px
+                    </p>
+                  </div>
                 </div>
 
-                {/* Category Cards */}
-                {getFilteredCategories().length === 0 ? (
-                  <div className="text-center py-12 text-muted-foreground">
-                    <p>No categories found for this grade. Categories will be created automatically.</p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {getFilteredCategories().map((category) => (
-                      <Card key={category.id} className="overflow-hidden">
-                        <div className="aspect-video w-full overflow-hidden bg-muted">
-                          <img
-                            src={category.imageUrl}
-                            alt={category.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <CardContent className="p-4">
-                          <h3 className="font-semibold text-lg mb-2">
-                            {category.name}
-                            <span className="text-sm text-muted-foreground ml-2">
-                              ({category.grade?.replace("-", " ").replace(/\b\w/g, l => l.toUpperCase())})
-                            </span>
-                          </h3>
-                          <p className="text-sm text-muted-foreground mb-4">
-                            {category.description}
-                          </p>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleEditCategory(category)}
-                            className="w-full"
-                          >
-                            <Edit className="mr-2 h-4 w-4" />
-                            Edit Image
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Category Edit Dialog */}
-            <Dialog open={isCategoryDialogOpen} onOpenChange={setIsCategoryDialogOpen}>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>Edit Category Image</DialogTitle>
-                  <DialogDescription>
-                    Update the image and details for {editingCategory?.name} - {editingCategory?.grade?.replace("-", " ").replace(/\b\w/g, l => l.toUpperCase())}
-                  </DialogDescription>
-                </DialogHeader>
-                {editingCategory && (
-                  <form onSubmit={handleCategorySubmit} className="space-y-4 mt-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="cat-name">Category Name</Label>
-                      <Input
-                        id="cat-name"
-                        name="name"
-                        defaultValue={editingCategory.name}
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="cat-description">Description</Label>
-                      <Textarea
-                        id="cat-description"
-                        name="description"
-                        defaultValue={editingCategory.description}
-                        rows={2}
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="cat-imageUrl">Image URL *</Label>
-                      <Input
-                        id="cat-imageUrl"
-                        name="imageUrl"
-                        type="url"
-                        defaultValue={editingCategory.imageUrl}
-                        placeholder="https://example.com/image.jpg"
-                        required
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Use Unsplash, Imgur, or Google Drive links. Recommended size: 400x300px
-                      </p>
-                    </div>
-
-                    {/* Preview */}
-                    <div className="space-y-2">
-                      <Label>Current Image Preview</Label>
+                {/* Current Category Preview */}
+                {getCurrentCategory() && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Current Category</CardTitle>
+                      <CardDescription>
+                        {getCurrentCategory()?.name} - {categoryGradeFilter.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
                       <div className="aspect-video w-full max-w-md overflow-hidden rounded-lg bg-muted">
                         <img
-                          src={editingCategory.imageUrl}
-                          alt={editingCategory.name}
+                          src={getCurrentCategory()?.imageUrl}
+                          alt={getCurrentCategory()?.name}
                           className="w-full h-full object-cover"
                         />
                       </div>
-                    </div>
-
-                    <div className="flex gap-2 pt-4">
-                      <Button type="submit" className="flex-1">
-                        Update Category
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => setIsCategoryDialogOpen(false)}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </form>
+                      <p className="text-sm text-muted-foreground mt-4">
+                        {getCurrentCategory()?.description}
+                      </p>
+                    </CardContent>
+                  </Card>
                 )}
-              </DialogContent>
-            </Dialog>
+              </CardContent>
+            </Card>
           </div>
         )}
       </div>
