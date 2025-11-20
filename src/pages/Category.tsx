@@ -39,6 +39,7 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
       { id: 75, title: "Weekly Test - Week 1", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
       { id: 76, title: "Monthly Test - Math & English", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
       { id: 77, title: "Revision Worksheet - Term 1", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
+      { id: 201, title: "Animal Identification & Learning", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Assignments", grade: "Grade 1" },
     ],
   },
   "grade-2": {

@@ -29,6 +29,7 @@ const allWorksheets = [
   { id: 30, title: "Animal Habitats", category: "Science", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", keywords: ["animals", "habitats", "science", "nature"] },
   { id: 60, title: "Parts of a Plant", category: "Science", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", keywords: ["plants", "parts", "science", "nature"] },
   { id: 200, title: "Introduction to Computers - Digital Literacy Basics", category: "Computer Science", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400", keywords: ["computer", "digital", "literacy", "coding", "technology", "keyboard", "mouse", "safety"] },
+  { id: 201, title: "Animal Identification & Learning", category: "Assignments", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", keywords: ["animals", "revision", "practice", "identification", "learning", "fun"] },
   
   // Grade 2
   { id: 42, title: "Multiplication Tables (2 and 5)", category: "Math", grade: "Grade 2", preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=400", keywords: ["multiplication", "tables", "math", "times tables"] },
