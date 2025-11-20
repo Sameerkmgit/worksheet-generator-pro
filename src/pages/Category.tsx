@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getWorksheetImageOverride } from "@/lib/worksheetStorage";
 
 // Worksheet data organized by grade and subject
 const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
@@ -273,7 +274,7 @@ const Category = () => {
               <CardHeader className="p-0">
                 <div className="aspect-[4/3] overflow-hidden bg-muted">
                   <img 
-                    src={worksheet.preview} 
+                    src={getWorksheetImageOverride(String(worksheet.id)) || worksheet.preview} 
                     alt={`${worksheet.title} worksheet preview - Free printable PDF for ${gradeTitle} ${subjectTitle}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
