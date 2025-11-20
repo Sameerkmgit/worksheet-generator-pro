@@ -7,6 +7,42 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+// Helper function to generate dynamic FAQs
+const generateDynamicFAQs = (worksheet: any) => {
+  const topic = worksheet.title.split(' - ')[0].replace(`${worksheet.grade} `, '').replace(`${worksheet.category} - `, '');
+  const gradeNumber = worksheet.grade.replace('Grade ', '');
+  const ageRange = {
+    '1': '6-7',
+    '2': '7-8',
+    '3': '8-9',
+    '4': '9-10',
+    '5': '10-11'
+  }[gradeNumber] || '6-11';
+
+  return [
+    {
+      question: `What age group is this ${topic} worksheet for?`,
+      answer: `This worksheet is designed for ${worksheet.grade} students (around ${ageRange} years old), but it can also be used for any child who is learning ${topic.toLowerCase()}.`
+    },
+    {
+      question: "Can I print and share this worksheet?",
+      answer: "Yes. You may print this worksheet for classroom use or home practice. It can be shared with parents, teachers, and tutors as part of non-commercial educational use."
+    },
+    {
+      question: `How often should my child practice ${topic.toLowerCase()}?`,
+      answer: `Short, regular practice works best. Even 10-15 minutes of focused ${topic.toLowerCase()} practice a few times a week can significantly improve accuracy and confidence.`
+    }
+  ];
+};
+
+// Helper function to generate dynamic description
+const generateDescription = (worksheet: any) => {
+  const topic = worksheet.title.split(' - ')[0].replace(`${worksheet.grade} `, '').replace(`${worksheet.category} - `, '');
+  const contentType = worksheet.questions?.length > 10 ? 'exercises' : 'practice questions';
+  
+  return `This ${worksheet.grade} ${worksheet.category} worksheet helps children master ${topic.toLowerCase()} by providing carefully chosen ${contentType} that build skills and confidence. Parents can use this printable worksheet as part of a home-learning routine, while teachers can include it in their lesson plans, learning centers, or test revision packs. Download the free PDF, print it, and let your child practice independently or with guided support.`;
+};
+
 // Mock data - in production this would come from your data source
 const worksheetData: Record<string, any> = {
   "1": {
@@ -3769,19 +3805,30 @@ const WorksheetDetail = () => {
                     Skills covered in this worksheet
                   </h2>
                   <ul className="list-disc pl-5 space-y-2 mb-6 text-muted-foreground">
-                    <li>Adding two 2-digit numbers without regrouping in most sums</li>
-                    <li>Building confidence with vertical and horizontal addition</li>
-                    <li>Improving number sense and mental math strategies</li>
-                    <li>Preparation for Grade 3 math tests and school exams</li>
+                    {worksheet.skills?.map((skill: string, index: number) => (
+                      <li key={index}>{skill}</li>
+                    )) || (
+                      <>
+                        <li>Building foundational skills in {worksheet.category}</li>
+                        <li>Improving accuracy and confidence</li>
+                        <li>Practice for school tests and exams</li>
+                      </>
+                    )}
                   </ul>
 
                   <h2 className="text-xl font-semibold font-heading mb-3">
                     How parents and teachers can use this worksheet
                   </h2>
                   <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                    <li>Use as a quick daily practice sheet before or after a lesson.</li>
-                    <li>Send home as a homework assignment or revision sheet.</li>
-                    <li>Time your child to gently build speed once they are comfortable with each type of sum.</li>
+                    {worksheet.usage?.map((usage: string, index: number) => (
+                      <li key={index}>{usage}</li>
+                    )) || (
+                      <>
+                        <li>Use as a quick daily practice sheet before or after a lesson.</li>
+                        <li>Send home as a homework assignment or revision sheet.</li>
+                        <li>Time your child to gently build speed once they are comfortable with each type of problem.</li>
+                      </>
+                    )}
                   </ul>
                 </CardContent>
               </Card>
@@ -3794,45 +3841,21 @@ const WorksheetDetail = () => {
                   </h2>
 
                   <div className="space-y-5">
-                    <div>
-                      <h3 className="text-base font-semibold mb-1">
-                        What age group is this addition worksheet for?
-                      </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        This worksheet is designed for Grade 3 students (around 7–9 years old),
-                        but it can also be used for any child who is learning 2-digit addition.
-                      </p>
-                    </div>
-
-                    <div>
-                      <h3 className="text-base font-semibold mb-1">
-                        Can I print and share this worksheet?
-                      </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        Yes. You may print this worksheet for classroom use or home practice.
-                        It can be shared with parents, teachers, and tutors as part of non-commercial
-                        educational use.
-                      </p>
-                    </div>
-
-                    <div>
-                      <h3 className="text-base font-semibold mb-1">
-                        How often should my child practice addition?
-                      </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        Short, regular practice works best. Even 10–15 minutes of focused addition
-                        practice a few times a week can significantly improve accuracy and confidence.
-                      </p>
-                    </div>
+                    {(worksheet.faq || generateDynamicFAQs(worksheet)).map((faqItem: any, index: number) => (
+                      <div key={index}>
+                        <h3 className="text-base font-semibold mb-1">
+                          {faqItem.question}
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {faqItem.answer}
+                        </p>
+                      </div>
+                    ))}
                   </div>
 
                   {/* SEO text block */}
                   <p className="text-sm text-muted-foreground leading-relaxed mt-6 pt-6 border-t">
-                    This Grade 3 math worksheet helps children master 2-digit addition by providing
-                    carefully chosen sums that build number fluency and accuracy. Parents can use this
-                    printable worksheet as part of a home-learning routine, while teachers can include it
-                    in their lesson plans, math centers, or test revision packs. Download the free PDF,
-                    print it, and let your child solve the sums independently or with guided support.
+                    {generateDescription(worksheet)}
                   </p>
                 </CardContent>
               </Card>
