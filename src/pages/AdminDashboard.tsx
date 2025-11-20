@@ -45,6 +45,7 @@ const AdminDashboard = () => {
   const [categoryGradeFilter, setCategoryGradeFilter] = useState<string>("grade-1");
   const [categorySubjectFilter, setCategorySubjectFilter] = useState<string>("math");
   const [isUploading, setIsUploading] = useState(false);
+  const [imageUpdateTrigger, setImageUpdateTrigger] = useState(0);
   // Form state
   const [formData, setFormData] = useState({
     title: "",
@@ -153,8 +154,8 @@ const AdminDashboard = () => {
         description: "Worksheet image has been updated and will reflect on the live site",
       });
       
-      // Force re-render by toggling a state
-      loadCategories();
+      // Force re-render by updating trigger
+      setImageUpdateTrigger(prev => prev + 1);
     };
     
     reader.readAsDataURL(file);
@@ -747,7 +748,7 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent>
                 {/* Worksheet Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" key={imageUpdateTrigger}>
                   {getWorksheetsForFilters().map((worksheet) => (
                     <Card key={worksheet.id} className="overflow-hidden">
                       <CardContent className="p-4">
@@ -758,13 +759,16 @@ const AdminDashboard = () => {
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <h4 className="font-medium text-sm mb-2 line-clamp-2">{worksheet.title}</h4>
-                        <Input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleWorksheetImageUpload(e, worksheet.id)}
-                          className="text-xs"
-                        />
+                        <h4 className="font-medium text-sm mb-3 line-clamp-2">{worksheet.title}</h4>
+                        <div className="space-y-2">
+                          <Input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleWorksheetImageUpload(e, worksheet.id)}
+                            className="text-xs"
+                            id={`upload-${worksheet.id}`}
+                          />
+                        </div>
                       </CardContent>
                     </Card>
                   ))}
