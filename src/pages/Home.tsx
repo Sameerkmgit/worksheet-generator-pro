@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -19,12 +20,57 @@ const categories = [
 ];
 
 const Home = () => {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "SmartKids Worksheets",
+    "description": "Free printable educational worksheets for Classes 1-5. Math, English, Science worksheets aligned with CBSE curriculum.",
+    "url": "https://smartkidsworksheets.com",
+    "logo": "https://smartkidsworksheets.com/logo.png",
+    "sameAs": [
+      "https://facebook.com/smartkidsworksheets",
+      "https://twitter.com/smartkidsworksheets"
+    ],
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    }
+  };
+
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://smartkidsworksheets.com"
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Free Printable Worksheets for Classes 1-5 | SmartKids Worksheets</title>
+        <meta name="description" content="Download free printable educational worksheets for Classes 1-5. Math, English, Science worksheets aligned with CBSE curriculum. Perfect for homeschooling and classroom learning." />
+        <link rel="canonical" href="https://smartkidsworksheets.com/" />
+        
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbData)}
+        </script>
+      </Helmet>
+      
       <Header />
       
       {/* Hero Section */}
-      <section className="gradient-hero text-white py-24 px-6 relative overflow-hidden">
+      <section className="gradient-hero text-white py-24 px-6 relative overflow-hidden" aria-label="Hero section with introduction to SmartKids Worksheets">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-20 w-48 h-48 bg-accent rounded-full blur-3xl"></div>
           <div className="absolute bottom-20 right-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
@@ -70,10 +116,10 @@ const Home = () => {
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 px-6">
+      <section className="py-16 px-6" aria-labelledby="categories-heading">
         <div className="container mx-auto max-w-[1140px]">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4 font-heading">Explore by Category</h2>
+            <h2 id="categories-heading" className="text-4xl font-bold text-foreground mb-4 font-heading">Explore by Category</h2>
             <p className="text-lg text-muted-foreground">
               Choose from our comprehensive collection organized by class and subject
             </p>
@@ -84,9 +130,9 @@ const Home = () => {
               <Link to={`/category/${category.id}`} key={category.id}>
                 <Card className="cursor-pointer group h-full">
                   <CardHeader>
-                    <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                      <category.icon className="w-8 h-8 text-white" />
-                    </div>
+                <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`} role="img" aria-label={`${category.title} category icon`}>
+                  <category.icon className="w-8 h-8 text-white" aria-hidden="true" />
+                </div>
                     <CardTitle className="text-2xl group-hover:text-primary transition-colors font-heading">
                       {category.title}
                     </CardTitle>
@@ -104,17 +150,17 @@ const Home = () => {
       </section>
 
       {/* Featured Section */}
-      <section className="py-16 px-6 bg-secondary/10">
+      <section className="py-16 px-6 bg-secondary/10" aria-labelledby="features-heading">
         <div className="container mx-auto max-w-[1140px]">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4 font-heading">Why SmartKids Worksheets?</h2>
+            <h2 id="features-heading" className="text-4xl font-bold text-foreground mb-4 font-heading">Why SmartKids Worksheets?</h2>
             <p className="text-lg text-muted-foreground">Trusted by thousands of parents and teachers</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center bg-card p-6 rounded-lg shadow-card">
-              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20">
-                <FileText className="w-8 h-8 text-accent" />
+              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20" role="img" aria-label="Free worksheets icon">
+                <FileText className="w-8 h-8 text-accent" aria-hidden="true" />
               </div>
               <h3 className="text-xl font-semibold mb-3 font-heading">100% Free</h3>
               <p className="text-muted-foreground">
@@ -123,8 +169,8 @@ const Home = () => {
             </div>
 
             <div className="text-center bg-card p-6 rounded-lg shadow-card">
-              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20">
-                <Star className="w-8 h-8 text-accent" />
+              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20" role="img" aria-label="High quality icon">
+                <Star className="w-8 h-8 text-accent" aria-hidden="true" />
               </div>
               <h3 className="text-xl font-semibold mb-3 font-heading">High Quality</h3>
               <p className="text-muted-foreground">
@@ -133,8 +179,8 @@ const Home = () => {
             </div>
 
             <div className="text-center bg-card p-6 rounded-lg shadow-card">
-              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20">
-                <BookOpen className="w-8 h-8 text-accent" />
+              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20" role="img" aria-label="Curriculum aligned icon">
+                <BookOpen className="w-8 h-8 text-accent" aria-hidden="true" />
               </div>
               <h3 className="text-xl font-semibold mb-3 font-heading">Curriculum Aligned</h3>
               <p className="text-muted-foreground">
