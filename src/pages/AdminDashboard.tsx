@@ -42,6 +42,7 @@ const AdminDashboard = () => {
   const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<CategoryData | null>(null);
   const [activeTab, setActiveTab] = useState<"worksheets" | "categories">("worksheets");
+  const [categoryGradeFilter, setCategoryGradeFilter] = useState<string>("grade-1");
 
   // Form state
   const [formData, setFormData] = useState({
@@ -74,6 +75,10 @@ const AdminDashboard = () => {
   const loadCategories = () => {
     const data = getAllCategories();
     setCategories(data);
+  };
+
+  const getFilteredCategories = () => {
+    return categories.filter((c) => c.grade === categoryGradeFilter);
   };
 
   const filterWorksheets = () => {
@@ -510,12 +515,35 @@ const AdminDashboard = () => {
               <CardHeader>
                 <CardTitle>Manage Category Images</CardTitle>
                 <CardDescription>
-                  Update images and descriptions for Math, English, Science, Computer Science, and Assignments
+                  Update images and descriptions for each subject across all grades. Select a grade to view and edit category images.
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-6">
+                {/* Grade Filter */}
+                <div className="flex items-center gap-4">
+                  <Label htmlFor="category-grade-filter" className="text-sm font-medium">
+                    Filter by Grade:
+                  </Label>
+                  <Select
+                    value={categoryGradeFilter}
+                    onValueChange={setCategoryGradeFilter}
+                  >
+                    <SelectTrigger id="category-grade-filter" className="w-[200px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="grade-1">Grade 1</SelectItem>
+                      <SelectItem value="grade-2">Grade 2</SelectItem>
+                      <SelectItem value="grade-3">Grade 3</SelectItem>
+                      <SelectItem value="grade-4">Grade 4</SelectItem>
+                      <SelectItem value="grade-5">Grade 5</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Category Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {categories.map((category) => (
+                  {getFilteredCategories().map((category) => (
                     <Card key={category.id} className="overflow-hidden">
                       <div className="aspect-video w-full overflow-hidden bg-muted">
                         <img
@@ -525,7 +553,12 @@ const AdminDashboard = () => {
                         />
                       </div>
                       <CardContent className="p-4">
-                        <h3 className="font-semibold text-lg mb-2">{category.name}</h3>
+                        <h3 className="font-semibold text-lg mb-2">
+                          {category.name}
+                          <span className="text-sm text-muted-foreground ml-2">
+                            ({category.grade?.replace("-", " ").replace(/\b\w/g, l => l.toUpperCase())})
+                          </span>
+                        </h3>
                         <p className="text-sm text-muted-foreground mb-4">
                           {category.description}
                         </p>
@@ -551,7 +584,7 @@ const AdminDashboard = () => {
                 <DialogHeader>
                   <DialogTitle>Edit Category Image</DialogTitle>
                   <DialogDescription>
-                    Update the image and details for {editingCategory?.name}
+                    Update the image and details for {editingCategory?.name} - {editingCategory?.grade?.replace("-", " ").replace(/\b\w/g, l => l.toUpperCase())}
                   </DialogDescription>
                 </DialogHeader>
                 {editingCategory && (
