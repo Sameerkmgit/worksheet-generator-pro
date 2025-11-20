@@ -11,8 +11,7 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
   "grade-1": {
     math: [
       { id: 3, title: "Introduction to Multiplication", preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800", category: "Math", grade: "Grade 1" },
-      { id: 16, title: "Simple Addition", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 1" },
-      { id: 40, title: "Grade 1 Addition Practice - Numbers 1 to 10", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", category: "Math", grade: "Grade 1" },
+      { id: 40, title: "Grade 1 Addition Practice - Complete Worksheet", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", category: "Math", grade: "Grade 1" },
       { id: 50, title: "Counting & Number Recognition (1-20)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 1" },
       { id: 51, title: "Simple Subtraction (1-10)", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 1" },
       { id: 52, title: "Shapes & Patterns", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", category: "Math", grade: "Grade 1" },
