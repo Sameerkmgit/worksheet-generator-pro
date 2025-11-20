@@ -48,6 +48,7 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
       { id: 1, title: "Addition Worksheet 1", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800", category: "Math", grade: "Grade 3" },
       { id: 2, title: "Addition Worksheet 2", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800", category: "Math", grade: "Grade 3" },
       { id: 20, title: "Multiplication Tables", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 3" },
+      { id: 44, title: "Division Practice", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 3" },
     ],
     english: [
       { id: 21, title: "Grammar Basics", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 3" },
