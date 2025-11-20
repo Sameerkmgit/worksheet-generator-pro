@@ -521,9 +521,24 @@ const AdminDashboard = () => {
               <CardContent className="space-y-6">
                 {/* Grade Filter */}
                 <div className="bg-muted/50 p-4 rounded-lg">
-                  <Label htmlFor="category-grade-filter" className="text-sm font-semibold mb-2 block">
-                    Select Grade to Manage:
-                  </Label>
+                  <div className="flex items-center justify-between mb-3">
+                    <Label htmlFor="category-grade-filter" className="text-sm font-semibold">
+                      Select Grade to Manage:
+                    </Label>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        loadCategories();
+                        toast({
+                          title: "Categories Refreshed",
+                          description: "Category data has been reloaded",
+                        });
+                      }}
+                    >
+                      Refresh
+                    </Button>
+                  </div>
                   <Select
                     value={categoryGradeFilter}
                     onValueChange={setCategoryGradeFilter}
@@ -539,6 +554,9 @@ const AdminDashboard = () => {
                       <SelectItem value="grade-5">Grade 5</SelectItem>
                     </SelectContent>
                   </Select>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Showing {getFilteredCategories().length} categories for this grade
+                  </p>
                 </div>
 
                 {/* Category Cards */}
