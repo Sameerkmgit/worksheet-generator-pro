@@ -9,7 +9,7 @@ const subCategories = [
   { id: "math", title: "Math", icon: Calculator, color: "from-primary to-primary-dark", description: "Addition, subtraction, multiplication, and more" },
   { id: "english", title: "English", icon: BookA, color: "from-green-400 to-green-500", description: "Reading, writing, grammar, and vocabulary" },
   { id: "science", title: "Science", icon: Microscope, color: "from-teal-400 to-teal-500", description: "Explore nature, experiments, and discoveries" },
-  { id: "computer", title: "Computer Science", icon: Monitor, color: "from-blue-400 to-blue-500", description: "Digital literacy and coding basics" },
+  { id: "computer-science", title: "Computer Science", icon: Monitor, color: "from-blue-400 to-blue-500", description: "Digital literacy and coding basics" },
   { id: "assignments", title: "Assignments", icon: ClipboardCheck, color: "from-orange-400 to-orange-500", description: "Practice assignments and tests" },
 ];
 

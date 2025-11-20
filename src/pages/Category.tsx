@@ -31,6 +31,9 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
       { id: 30, title: "Animal Habitats", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 1" },
       { id: 60, title: "Parts of a Plant", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "Science", grade: "Grade 1" },
     ],
+    "computer-science": [
+      { id: 200, title: "Introduction to Computers - Digital Literacy Basics", preview: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400", category: "Computer Science", grade: "Grade 1" },
+    ],
     assignments: [
       { id: 31, title: "Grade 1 Practice Test", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
       { id: 75, title: "Weekly Test - Week 1", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
@@ -158,7 +161,7 @@ const subjectTitles: Record<string, string> = {
   math: "Math",
   english: "English",
   science: "Science",
-  computer: "Computer Science",
+  "computer-science": "Computer Science",
   assignments: "Assignments",
 };
 
