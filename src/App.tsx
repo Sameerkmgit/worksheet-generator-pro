@@ -34,7 +34,7 @@ const App = () => (
           <Route path="/category/:grade/:subject" element={<Category />} />
           <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/dashboard-secure-2025" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

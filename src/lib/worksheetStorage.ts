@@ -17,7 +17,7 @@ const ADMIN_KEY = "smartkids_admin_auth";
 // Admin authentication
 export const adminLogin = (password: string): boolean => {
   // Hardcoded password - change this for security
-  const ADMIN_PASSWORD = "smartkids2024";
+  const ADMIN_PASSWORD = "SmartK1ds@Learn2025!";
   
   if (password === ADMIN_PASSWORD) {
     localStorage.setItem(ADMIN_KEY, "authenticated");

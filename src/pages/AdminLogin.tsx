@@ -63,7 +63,7 @@ const AdminLogin = () => {
             </Button>
           </form>
           <p className="text-sm text-muted-foreground text-center mt-4">
-            Default password: smartkids2024
+            Contact administrator for password
           </p>
         </CardContent>
       </Card>
