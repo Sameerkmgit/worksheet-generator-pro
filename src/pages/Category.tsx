@@ -47,8 +47,6 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
       { id: 70, title: "Colors & Shapes", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", category: "General Knowledge", grade: "Grade 1" },
       { id: 71, title: "Animals & Their Babies", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "General Knowledge", grade: "Grade 1" },
       { id: 72, title: "Fruits & Vegetables", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "General Knowledge", grade: "Grade 1" },
-      { id: 73, title: "Body Parts", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "General Knowledge", grade: "Grade 1" },
-      { id: 74, title: "My Family", preview: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400", category: "General Knowledge", grade: "Grade 1" },
     ],
     assignments: [
       { id: 31, title: "Grade 1 Practice Test", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
@@ -83,7 +81,6 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
       { id: 89, title: "Water Cycle Basics", preview: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400", category: "Science", grade: "Grade 2" },
       { id: 90, title: "Healthy Food & Nutrition", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "Science", grade: "Grade 2" },
       { id: 91, title: "Magnets & Materials", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 2" },
-      { id: 92, title: "Human Body Parts", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 2" },
     ],
     hindi: [
       { id: 93, title: "दो अक्षर के शब्द (2-Letter Words)", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "Hindi", grade: "Grade 2" },
