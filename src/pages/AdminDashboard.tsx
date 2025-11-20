@@ -542,39 +542,45 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Category Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {getFilteredCategories().map((category) => (
-                    <Card key={category.id} className="overflow-hidden">
-                      <div className="aspect-video w-full overflow-hidden bg-muted">
-                        <img
-                          src={category.imageUrl}
-                          alt={category.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-lg mb-2">
-                          {category.name}
-                          <span className="text-sm text-muted-foreground ml-2">
-                            ({category.grade?.replace("-", " ").replace(/\b\w/g, l => l.toUpperCase())})
-                          </span>
-                        </h3>
-                        <p className="text-sm text-muted-foreground mb-4">
-                          {category.description}
-                        </p>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleEditCategory(category)}
-                          className="w-full"
-                        >
-                          <Edit className="mr-2 h-4 w-4" />
-                          Edit Image
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                {getFilteredCategories().length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground">
+                    <p>No categories found for this grade. Categories will be created automatically.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {getFilteredCategories().map((category) => (
+                      <Card key={category.id} className="overflow-hidden">
+                        <div className="aspect-video w-full overflow-hidden bg-muted">
+                          <img
+                            src={category.imageUrl}
+                            alt={category.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <CardContent className="p-4">
+                          <h3 className="font-semibold text-lg mb-2">
+                            {category.name}
+                            <span className="text-sm text-muted-foreground ml-2">
+                              ({category.grade?.replace("-", " ").replace(/\b\w/g, l => l.toUpperCase())})
+                            </span>
+                          </h3>
+                          <p className="text-sm text-muted-foreground mb-4">
+                            {category.description}
+                          </p>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleEditCategory(category)}
+                            className="w-full"
+                          >
+                            <Edit className="mr-2 h-4 w-4" />
+                            Edit Image
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
 
