@@ -6,74 +6,113 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+// Import unique worksheet images
+import mathCountingImg from "@/assets/math-counting-numbers.jpg";
+import mathAdditionImg from "@/assets/math-addition.jpg";
+import mathSubtractionImg from "@/assets/math-subtraction.jpg";
+import mathMultiplicationImg from "@/assets/math-multiplication.jpg";
+import mathDivisionImg from "@/assets/math-division.jpg";
+import mathShapesImg from "@/assets/math-shapes-geometry.jpg";
+import mathTimeImg from "@/assets/math-time-clocks.jpg";
+import mathMoneyImg from "@/assets/math-money.jpg";
+import mathFractionsImg from "@/assets/math-fractions.jpg";
+import mathDecimalsImg from "@/assets/math-decimals.jpg";
+import mathMeasurementImg from "@/assets/math-measurement.jpg";
+import mathPlaceValueImg from "@/assets/math-place-value.jpg";
+import englishAlphabetImg from "@/assets/english-alphabet-letters.jpg";
+import englishReadingImg from "@/assets/english-reading-books.jpg";
+import englishWritingImg from "@/assets/english-writing-practice.jpg";
+import englishGrammarImg from "@/assets/english-grammar.jpg";
+import englishVocabularyImg from "@/assets/english-vocabulary.jpg";
+import englishSentencesImg from "@/assets/english-sentences.jpg";
+import englishPunctuationImg from "@/assets/english-punctuation.jpg";
+import englishVowelsImg from "@/assets/english-vowels.jpg";
+import englishRhymingImg from "@/assets/english-rhyming.jpg";
+import englishComprehensionImg from "@/assets/english-comprehension.jpg";
+import englishEssayImg from "@/assets/english-essay-writing.jpg";
+import sciencePlantsImg from "@/assets/science-plants.jpg";
+import scienceAnimalsImg from "@/assets/science-animals.jpg";
+import scienceWaterCycleImg from "@/assets/science-water-cycle.jpg";
+import scienceNutritionImg from "@/assets/science-nutrition.jpg";
+import scienceSolarSystemImg from "@/assets/science-solar-system.jpg";
+import scienceExperimentsImg from "@/assets/science-experiments.jpg";
+import scienceHabitatsImg from "@/assets/science-habitats.jpg";
+import scienceMagnetsImg from "@/assets/science-magnets.jpg";
+import computerBasicsImg from "@/assets/computer-basics.jpg";
+import assignmentsHomeworkImg from "@/assets/assignments-homework.jpg";
+import assignmentsTestsImg from "@/assets/assignments-tests.jpg";
+import assignmentsRevisionImg from "@/assets/assignments-revision.jpg";
+import assignmentsPracticeImg from "@/assets/assignments-practice.jpg";
+
 // Worksheet data organized by grade and subject
 const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
   "grade-1": {
     math: [
-      { id: 3, title: "Introduction to Multiplication", preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800", category: "Math", grade: "Grade 1" },
-      { id: 40, title: "Grade 1 Addition Practice - Complete Worksheet", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", category: "Math", grade: "Grade 1" },
-      { id: 50, title: "Counting & Number Recognition (1-20)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 1" },
-      { id: 51, title: "Simple Subtraction (1-10)", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 1" },
-      { id: 52, title: "Shapes & Patterns", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", category: "Math", grade: "Grade 1" },
-      { id: 53, title: "Comparing Numbers (Greater/Less Than)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 1" },
+      { id: 3, title: "Introduction to Multiplication", preview: mathMultiplicationImg, category: "Math", grade: "Grade 1" },
+      { id: 40, title: "Grade 1 Addition Practice - Complete Worksheet", preview: mathAdditionImg, category: "Math", grade: "Grade 1" },
+      { id: 50, title: "Counting & Number Recognition (1-20)", preview: mathCountingImg, category: "Math", grade: "Grade 1" },
+      { id: 51, title: "Simple Subtraction (1-10)", preview: mathSubtractionImg, category: "Math", grade: "Grade 1" },
+      { id: 52, title: "Shapes & Patterns", preview: mathShapesImg, category: "Math", grade: "Grade 1" },
+      { id: 53, title: "Comparing Numbers (Greater/Less Than)", preview: mathCountingImg, category: "Math", grade: "Grade 1" },
     ],
     english: [
-      { id: 20, title: "Alphabet Tracing", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 1" },
-      { id: 14, title: "Letter Recognition", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 1" },
-      { id: 41, title: "Alphabet Writing Practice (Letters A to M)", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 1" },
-      { id: 55, title: "Vowels & Consonants", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 1" },
-      { id: 56, title: "CVC Words (Cat, Dog, Sun)", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 1" },
-      { id: 57, title: "Rhyming Words", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 1" },
-      { id: 58, title: "Simple Sentences", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 1" },
-      { id: 59, title: "Sight Words (Dolch List)", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 1" },
+      { id: 20, title: "Alphabet Tracing", preview: englishAlphabetImg, category: "English", grade: "Grade 1" },
+      { id: 14, title: "Letter Recognition", preview: englishAlphabetImg, category: "English", grade: "Grade 1" },
+      { id: 41, title: "Alphabet Writing Practice (Letters A to M)", preview: englishWritingImg, category: "English", grade: "Grade 1" },
+      { id: 55, title: "Vowels & Consonants", preview: englishVowelsImg, category: "English", grade: "Grade 1" },
+      { id: 56, title: "CVC Words (Cat, Dog, Sun)", preview: englishVocabularyImg, category: "English", grade: "Grade 1" },
+      { id: 57, title: "Rhyming Words", preview: englishRhymingImg, category: "English", grade: "Grade 1" },
+      { id: 58, title: "Simple Sentences", preview: englishSentencesImg, category: "English", grade: "Grade 1" },
+      { id: 59, title: "Sight Words (Dolch List)", preview: englishVocabularyImg, category: "English", grade: "Grade 1" },
     ],
     science: [
-      { id: 30, title: "Animal Habitats", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 1" },
-      { id: 60, title: "Parts of a Plant", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "Science", grade: "Grade 1" },
+      { id: 30, title: "Animal Habitats", preview: scienceHabitatsImg, category: "Science", grade: "Grade 1" },
+      { id: 60, title: "Parts of a Plant", preview: sciencePlantsImg, category: "Science", grade: "Grade 1" },
     ],
     "computer-science": [
-      { id: 200, title: "Introduction to Computers - Digital Literacy Basics", preview: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400", category: "Computer Science", grade: "Grade 1" },
+      { id: 200, title: "Introduction to Computers - Digital Literacy Basics", preview: computerBasicsImg, category: "Computer Science", grade: "Grade 1" },
     ],
     assignments: [
-      { id: 31, title: "Grade 1 Practice Test", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
-      { id: 75, title: "Weekly Test - Week 1", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
-      { id: 76, title: "Monthly Test - Math & English", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
-      { id: 77, title: "Revision Worksheet - Term 1", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
-      { id: 201, title: "Animal Identification & Learning", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Assignments", grade: "Grade 1" },
+      { id: 31, title: "Grade 1 Practice Test", preview: assignmentsTestsImg, category: "Assignments", grade: "Grade 1" },
+      { id: 75, title: "Weekly Test - Week 1", preview: assignmentsTestsImg, category: "Assignments", grade: "Grade 1" },
+      { id: 76, title: "Monthly Test - Math & English", preview: assignmentsTestsImg, category: "Assignments", grade: "Grade 1" },
+      { id: 77, title: "Revision Worksheet - Term 1", preview: assignmentsRevisionImg, category: "Assignments", grade: "Grade 1" },
+      { id: 201, title: "Animal Identification & Learning", preview: scienceAnimalsImg, category: "Assignments", grade: "Grade 1" },
     ],
   },
   "grade-2": {
     math: [
-      { id: 17, title: "Subtraction Practice", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 2" },
-      { id: 42, title: "Multiplication Tables (2 and 5)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 2" },
-      { id: 78, title: "2-Digit Addition & Subtraction", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 2" },
-      { id: 79, title: "Place Value (Tens & Ones)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 2" },
-      { id: 80, title: "Time (Hours & Minutes)", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", category: "Math", grade: "Grade 2" },
-      { id: 81, title: "Money (Coins & Notes)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 2" },
-      { id: 82, title: "Measurement (Length & Weight)", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 2" },
+      { id: 16, title: "Addition Practice", preview: mathAdditionImg, category: "Math", grade: "Grade 2" },
+      { id: 17, title: "Subtraction Practice", preview: mathSubtractionImg, category: "Math", grade: "Grade 2" },
+      { id: 42, title: "Multiplication Tables (2 and 5)", preview: mathMultiplicationImg, category: "Math", grade: "Grade 2" },
+      { id: 78, title: "2-Digit Addition & Subtraction", preview: mathAdditionImg, category: "Math", grade: "Grade 2" },
+      { id: 79, title: "Place Value (Tens & Ones)", preview: mathPlaceValueImg, category: "Math", grade: "Grade 2" },
+      { id: 80, title: "Time (Hours & Minutes)", preview: mathTimeImg, category: "Math", grade: "Grade 2" },
+      { id: 81, title: "Money (Coins & Notes)", preview: mathMoneyImg, category: "Math", grade: "Grade 2" },
+      { id: 82, title: "Measurement (Length & Weight)", preview: mathMeasurementImg, category: "Math", grade: "Grade 2" },
     ],
     english: [
-      { id: 18, title: "Word Building", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 2" },
-      { id: 19, title: "Sentence Formation", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 2" },
-      { id: 43, title: "Nouns and Verbs", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 2" },
-      { id: 83, title: "Adjectives & Describing Words", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 2" },
-      { id: 84, title: "Singular & Plural", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 2" },
-      { id: 85, title: "Punctuation Practice", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 2" },
-      { id: 86, title: "Story Sequencing", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 2" },
-      { id: 87, title: "Simple Reading Comprehension", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 2" },
+      { id: 18, title: "Word Building", preview: englishVocabularyImg, category: "English", grade: "Grade 2" },
+      { id: 19, title: "Sentence Formation", preview: englishSentencesImg, category: "English", grade: "Grade 2" },
+      { id: 43, title: "Nouns and Verbs", preview: englishGrammarImg, category: "English", grade: "Grade 2" },
+      { id: 83, title: "Adjectives & Describing Words", preview: englishGrammarImg, category: "English", grade: "Grade 2" },
+      { id: 84, title: "Singular & Plural", preview: englishGrammarImg, category: "English", grade: "Grade 2" },
+      { id: 85, title: "Punctuation Practice", preview: englishPunctuationImg, category: "English", grade: "Grade 2" },
+      { id: 86, title: "Story Sequencing", preview: englishComprehensionImg, category: "English", grade: "Grade 2" },
+      { id: 87, title: "Simple Reading Comprehension", preview: englishReadingImg, category: "English", grade: "Grade 2" },
     ],
     science: [
-      { id: 32, title: "Plants & Growth", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "Science", grade: "Grade 2" },
-      { id: 88, title: "Animal Classification", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 2" },
-      { id: 89, title: "Water Cycle Basics", preview: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400", category: "Science", grade: "Grade 2" },
-      { id: 90, title: "Healthy Food & Nutrition", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "Science", grade: "Grade 2" },
-      { id: 91, title: "Magnets & Materials", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 2" },
+      { id: 32, title: "Plants & Growth", preview: sciencePlantsImg, category: "Science", grade: "Grade 2" },
+      { id: 88, title: "Animal Classification", preview: scienceAnimalsImg, category: "Science", grade: "Grade 2" },
+      { id: 89, title: "Water Cycle Basics", preview: scienceWaterCycleImg, category: "Science", grade: "Grade 2" },
+      { id: 90, title: "Healthy Food & Nutrition", preview: scienceNutritionImg, category: "Science", grade: "Grade 2" },
+      { id: 91, title: "Magnets & Materials", preview: scienceMagnetsImg, category: "Science", grade: "Grade 2" },
     ],
     assignments: [
-      { id: 33, title: "Grade 2 Weekly Test", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 2" },
-      { id: 103, title: "Monthly Test - All Subjects", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 2" },
-      { id: 104, title: "Revision Sheet - Numbers & Words", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 2" },
-      { id: 105, title: "Homework Pack - Week 1", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 2" },
+      { id: 33, title: "Grade 2 Weekly Test", preview: assignmentsTestsImg, category: "Assignments", grade: "Grade 2" },
+      { id: 103, title: "Monthly Test - All Subjects", preview: assignmentsTestsImg, category: "Assignments", grade: "Grade 2" },
+      { id: 104, title: "Revision Sheet - Numbers & Words", preview: assignmentsRevisionImg, category: "Assignments", grade: "Grade 2" },
+      { id: 105, title: "Homework Pack - Week 1", preview: assignmentsHomeworkImg, category: "Assignments", grade: "Grade 2" },
     ],
   },
   "grade-3": {
