@@ -360,8 +360,9 @@ const WorksheetDetail = () => {
             <aside className="space-y-5">
               <Card>
                 <CardContent className="p-5">
-                  <div className="rounded-lg border-2 border-dashed border-border bg-muted/30 p-4 text-center text-sm text-muted-foreground mb-5">
-                    Advertisement Space
+                  <div className="rounded-lg border-2 border-dashed border-border bg-muted/30 p-4 text-center text-sm text-muted-foreground mb-5 min-h-[250px] flex items-center justify-center">
+                    {/* Google AdSense - Sidebar 300x250 - Replace with your ad code */}
+                    <p>Advertisement</p>
                   </div>
 
                   <h2 className="text-lg font-semibold font-heading mb-3">

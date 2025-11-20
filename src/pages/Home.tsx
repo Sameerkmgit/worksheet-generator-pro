@@ -69,6 +69,16 @@ const Home = () => {
       
       <Header />
       
+      {/* Header Banner Ad - 728x90 (responsive) */}
+      <section className="py-4 px-6 bg-background">
+        <div className="container mx-auto max-w-[1140px] flex justify-center">
+          <div className="bg-muted rounded-lg border border-dashed border-border flex items-center justify-center min-h-[90px] w-full max-w-[728px]">
+            {/* Google AdSense - Header Banner 728x90 - Replace with your ad code */}
+            <p className="text-muted-foreground text-sm">Advertisement</p>
+          </div>
+        </div>
+      </section>
+      
       {/* Hero Section */}
       <section className="gradient-hero text-white py-24 px-6 relative overflow-hidden" aria-label="Hero section with introduction to SmartKids Worksheets">
         <div className="absolute inset-0 opacity-10">
@@ -191,11 +201,12 @@ const Home = () => {
         </div>
       </section>
 
-      {/* AdSense Placement Area */}
+      {/* Mid-Page Ad - Between Sections (responsive) */}
       <section className="py-8 px-6">
         <div className="container mx-auto max-w-[1140px]">
           <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-border">
-            <p className="text-muted-foreground">Advertisement Space</p>
+            {/* Google AdSense - Mid-Page Banner - Replace with your ad code */}
+            <p className="text-muted-foreground">Advertisement</p>
           </div>
         </div>
       </section>

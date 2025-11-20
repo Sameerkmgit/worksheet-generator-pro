@@ -144,9 +144,10 @@ const Category = () => {
             </p>
           </div>
 
-          {/* AdSense Placement */}
+          {/* Category Page Header Ad (responsive) */}
           <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-border mb-8">
-            <p className="text-muted-foreground">Advertisement Space</p>
+            {/* Google AdSense - Category Header - Replace with your ad code */}
+            <p className="text-muted-foreground">Advertisement</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
