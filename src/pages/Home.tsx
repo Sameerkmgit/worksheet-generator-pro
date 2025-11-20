@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { Search, BookOpen, Palette, Calculator, Globe, FileText, Star, GraduationCap, BookA, Microscope, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,6 +17,15 @@ const categories = [
 ];
 
 const Home = () => {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
@@ -98,9 +108,11 @@ const Home = () => {
                   Browse Worksheets
                 </Button>
               </Link>
-              <Button size="lg" variant="accent" className="h-14 px-10 text-base font-semibold">
-                Download Free Pack
-              </Button>
+              <Link to="/packs">
+                <Button size="lg" variant="accent" className="h-14 px-10 text-base font-semibold">
+                  Download Free Pack
+                </Button>
+              </Link>
             </div>
             
             {/* Search Bar */}
@@ -109,9 +121,12 @@ const Home = () => {
                 <Input 
                   type="search" 
                   placeholder="Search by subject, grade, or topic..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                   className="border border-border bg-white text-foreground placeholder:text-muted-foreground h-12 text-base focus-visible:ring-2 focus-visible:ring-primary rounded-md"
                 />
-                <Button size="lg" className="h-12 px-8 text-base">
+                <Button size="lg" className="h-12 px-8 text-base" onClick={handleSearch}>
                   <Search className="mr-2" />
                   Search
                 </Button>

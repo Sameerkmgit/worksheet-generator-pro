@@ -10,6 +10,8 @@ import Category from "./pages/Category";
 import AssignmentsLanding from "./pages/AssignmentsLanding";
 import WorksheetDetail from "./pages/WorksheetDetail";
 import AdminUpload from "./pages/AdminUpload";
+import Search from "./pages/Search";
+import Packs from "./pages/Packs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +25,8 @@ const App = () => (
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/packs" element={<Packs />} />
           <Route path="/category/:grade" element={<SubCategory />} />
           <Route path="/category/:grade/assignments" element={<AssignmentsLanding />} />
           <Route path="/category/:grade/:subject" element={<Category />} />
