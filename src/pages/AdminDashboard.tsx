@@ -118,6 +118,8 @@ const AdminDashboard = () => {
       const fileName = `category-${categoryGradeFilter}-${categorySubjectFilter}-${Date.now()}.${fileExt}`;
       const filePath = `categories/${fileName}`;
 
+      console.log('🚀 Starting upload:', fileName);
+
       const { data, error } = await supabase.storage
         .from('worksheet-images')
         .upload(filePath, file, {
@@ -125,29 +127,40 @@ const AdminDashboard = () => {
           upsert: true
         });
 
-      if (error) throw error;
+      if (error) {
+        console.error('❌ Upload error:', error);
+        throw error;
+      }
+
+      console.log('✅ Upload successful:', data);
 
       // Get public URL
       const { data: { publicUrl } } = supabase.storage
         .from('worksheet-images')
         .getPublicUrl(filePath);
       
+      console.log('🔗 Public URL:', publicUrl);
+      
       // Update the category
       const categoryId = `${categoryGradeFilter}-${categorySubjectFilter}`;
       updateCategory(categoryId, { imageUrl: publicUrl });
       
+      // Force reload categories
       loadCategories();
+      
+      // Clear the file input
+      e.target.value = '';
       
       toast({
         title: "✅ Category Image Updated!",
-        description: `Successfully updated ${categorySubjectFilter} image for ${categoryGradeFilter}. The image is now live on the website.`,
+        description: `Successfully updated ${categorySubjectFilter} image for ${categoryGradeFilter}. Refresh the page to see changes.`,
         duration: 5000,
       });
     } catch (error) {
       console.error('Upload error:', error);
       toast({
-        title: "Upload Failed",
-        description: "Failed to upload image. Please try again.",
+        title: "❌ Upload Failed",
+        description: error instanceof Error ? error.message : "Failed to upload image. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -770,7 +783,7 @@ const AdminDashboard = () => {
 
                 {/* Current Category Preview */}
                 {getCurrentCategory()?.imageUrl ? (
-                  <Card>
+                  <Card key={getCurrentCategory()?.imageUrl}>
                     <CardHeader>
                       <CardTitle className="text-lg">✅ Current Category Image</CardTitle>
                       <CardDescription>
@@ -783,6 +796,7 @@ const AdminDashboard = () => {
                           src={getCurrentCategory()?.imageUrl}
                           alt={getCurrentCategory()?.name}
                           className="w-full h-full object-cover"
+                          key={getCurrentCategory()?.imageUrl}
                         />
                       </div>
                       <p className="text-sm text-muted-foreground mt-4">
@@ -790,6 +804,9 @@ const AdminDashboard = () => {
                       </p>
                       <p className="text-xs text-green-700 mt-2 font-semibold">
                         ✓ This image is currently live on the website
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        URL: {getCurrentCategory()?.imageUrl?.substring(0, 60)}...
                       </p>
                     </CardContent>
                   </Card>
