@@ -6,32 +6,61 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { adminLogin } from "@/lib/worksheetStorage";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const success = await adminLogin(email, password);
-    if (success) {
-      toast({
-        title: "Login Successful",
-        description: "Welcome to the Admin Dashboard",
+    if (isSignUp) {
+      // Handle signup
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard-secure-2025`
+        }
       });
-      navigate("/admin/dashboard");
+
+      if (error) {
+        toast({
+          title: "Signup Failed",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Account Created!",
+          description: "Please contact the administrator to grant you admin access with this email: " + email,
+        });
+        setIsSignUp(false);
+      }
     } else {
-      toast({
-        title: "Login Failed",
-        description: "Invalid credentials. Please try again.",
-        variant: "destructive",
+      // Handle login
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
-      setEmail("");
-      setPassword("");
+
+      if (error) {
+        toast({
+          title: "Login Failed",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Login Successful",
+          description: "Welcome to the Admin Dashboard",
+        });
+        navigate("/admin/dashboard");
+      }
     }
   };
 
@@ -42,13 +71,17 @@ const AdminLogin = () => {
           <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
             <Lock className="w-6 h-6 text-primary" />
           </div>
-          <CardTitle className="text-2xl font-heading">Admin Login</CardTitle>
+          <CardTitle className="text-2xl font-heading">
+            {isSignUp ? "Admin Signup" : "Admin Login"}
+          </CardTitle>
           <CardDescription>
-            Enter your password to access the admin dashboard
+            {isSignUp 
+              ? "Create an admin account to get started" 
+              : "Enter your credentials to access the admin dashboard"}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -74,12 +107,21 @@ const AdminLogin = () => {
               />
             </div>
             <Button type="submit" className="w-full h-12">
-              Login
+              {isSignUp ? "Sign Up" : "Login"}
             </Button>
           </form>
-          <p className="text-sm text-muted-foreground text-center mt-4">
-            Contact administrator for password
-          </p>
+          <div className="mt-4 text-center">
+            <Button
+              type="button"
+              variant="link"
+              onClick={() => setIsSignUp(!isSignUp)}
+              className="text-sm"
+            >
+              {isSignUp 
+                ? "Already have an account? Login" 
+                : "Don't have an account? Sign Up"}
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
