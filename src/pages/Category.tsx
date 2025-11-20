@@ -17,6 +17,7 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
     english: [
       { id: 20, title: "Alphabet Tracing", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 1" },
       { id: 14, title: "Letter Recognition", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 1" },
+      { id: 41, title: "Alphabet Writing Practice (Letters A to M)", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 1" },
     ],
     science: [
       { id: 30, title: "Animal Habitats", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 1" },
