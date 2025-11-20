@@ -510,12 +510,17 @@ export const getWorksheetImageOverride = async (worksheetId: string): Promise<st
 };
 
 export const setWorksheetImageOverride = async (worksheetId: string, imageUrl: string): Promise<void> => {
-  await supabase
+  const { error } = await supabase
     .from('worksheet_image_overrides')
     .upsert({
       worksheet_id: worksheetId,
       image_url: imageUrl,
     });
+  
+  if (error) {
+    console.error('Failed to save image override:', error);
+    throw new Error(`Failed to save image: ${error.message}`);
+  }
 };
 
 export const getAllWorksheetImageOverrides = async (): Promise<Record<string, string>> => {
