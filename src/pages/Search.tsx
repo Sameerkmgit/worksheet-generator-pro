@@ -13,8 +13,7 @@ import Footer from "@/components/Footer";
 const allWorksheets = [
   // Grade 1
   { id: 3, title: "Introduction to Multiplication", category: "Math", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800", keywords: ["multiplication", "math", "multiply"] },
-  { id: 16, title: "Simple Addition", category: "Math", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", keywords: ["addition", "math", "add", "plus"] },
-  { id: 40, title: "Grade 1 Addition Practice - Numbers 1 to 10", category: "Math", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", keywords: ["addition", "numbers", "practice", "math"] },
+  { id: 40, title: "Grade 1 Addition Practice - Complete Worksheet", category: "Math", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", keywords: ["addition", "numbers", "practice", "math", "complete"] },
   { id: 50, title: "Counting & Number Recognition (1-20)", category: "Math", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", keywords: ["counting", "numbers", "recognition", "math"] },
   { id: 51, title: "Simple Subtraction (1-10)", category: "Math", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", keywords: ["subtraction", "minus", "math"] },
   { id: 52, title: "Shapes & Patterns", category: "Math", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", keywords: ["shapes", "patterns", "geometry", "math"] },
