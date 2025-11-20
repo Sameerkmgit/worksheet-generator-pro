@@ -516,11 +516,11 @@ const AdminDashboard = () => {
                         <SelectValue placeholder="Select grade" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="grade-1">Grade 1</SelectItem>
-                        <SelectItem value="grade-2">Grade 2</SelectItem>
-                        <SelectItem value="grade-3">Grade 3</SelectItem>
-                        <SelectItem value="grade-4">Grade 4</SelectItem>
-                        <SelectItem value="grade-5">Grade 5</SelectItem>
+                        <SelectItem value="Grade 1">Grade 1</SelectItem>
+                        <SelectItem value="Grade 2">Grade 2</SelectItem>
+                        <SelectItem value="Grade 3">Grade 3</SelectItem>
+                        <SelectItem value="Grade 4">Grade 4</SelectItem>
+                        <SelectItem value="Grade 5">Grade 5</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -601,11 +601,11 @@ const AdminDashboard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Grades</SelectItem>
-                <SelectItem value="grade-1">Grade 1</SelectItem>
-                <SelectItem value="grade-2">Grade 2</SelectItem>
-                <SelectItem value="grade-3">Grade 3</SelectItem>
-                <SelectItem value="grade-4">Grade 4</SelectItem>
-                <SelectItem value="grade-5">Grade 5</SelectItem>
+                <SelectItem value="Grade 1">Grade 1</SelectItem>
+                <SelectItem value="Grade 2">Grade 2</SelectItem>
+                <SelectItem value="Grade 3">Grade 3</SelectItem>
+                <SelectItem value="Grade 4">Grade 4</SelectItem>
+                <SelectItem value="Grade 5">Grade 5</SelectItem>
               </SelectContent>
             </Select>
 
