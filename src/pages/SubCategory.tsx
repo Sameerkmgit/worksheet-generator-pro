@@ -4,8 +4,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getCategoriesByGrade } from "@/lib/worksheetStorage";
+import { useEffect, useState } from "react";
 
-const subCategories = [
+// Icon mapping
+const iconMap: Record<string, any> = {
+  "Calculator": Calculator,
+  "BookOpen": BookA,
+  "FlaskConical": Microscope,
+  "Monitor": Monitor,
+  "ClipboardList": ClipboardCheck,
+};
+
+// Default subcategories as fallback
+const defaultSubCategories = [
   { id: "math", title: "Math", icon: Calculator, color: "from-primary to-primary-dark", description: "Addition, subtraction, multiplication, and more" },
   { id: "english", title: "English", icon: BookA, color: "from-green-400 to-green-500", description: "Reading, writing, grammar, and vocabulary" },
   { id: "science", title: "Science", icon: Microscope, color: "from-teal-400 to-teal-500", description: "Explore nature, experiments, and discoveries" },
@@ -24,6 +36,30 @@ const gradeTitles: Record<string, string> = {
 const SubCategory = () => {
   const { grade } = useParams();
   const gradeTitle = gradeTitles[grade || ""] || "Grade";
+  const [categories, setCategories] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (grade) {
+      const gradeCategories = getCategoriesByGrade(grade);
+      
+      // Map categories to subcategory format with images
+      const mappedCategories = gradeCategories.map((cat) => {
+        const subjectId = cat.id.replace(`${grade}-`, "");
+        const defaultCat = defaultSubCategories.find((d) => d.id === subjectId);
+        
+        return {
+          id: subjectId,
+          title: cat.name,
+          icon: iconMap[cat.icon] || Calculator,
+          color: defaultCat?.color || "from-primary to-primary-dark",
+          description: cat.description,
+          imageUrl: cat.imageUrl, // Add image from category data
+        };
+      });
+      
+      setCategories(mappedCategories);
+    }
+  }, [grade]);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -107,7 +143,7 @@ const SubCategory = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {subCategories.map((category) => (
+            {categories.map((category) => (
               <Link to={`/category/${grade}/${category.id}`} key={category.id}>
                 <Card className="cursor-pointer group h-full hover:shadow-lg transition-shadow">
                   <CardHeader>

@@ -17,6 +17,7 @@ export interface CategoryData {
   description: string;
   imageUrl: string;
   icon: string;
+  grade?: string; // Optional: if set, this is grade-specific
   updatedAt: string;
 }
 
@@ -108,48 +109,65 @@ export const getWorksheetsByGradeAndSubject = (grade: string, subject: string): 
 };
 
 // Category Management
-const getDefaultCategories = (): CategoryData[] => [
-  {
-    id: "math",
-    name: "Math",
-    description: "Numbers, calculations, and problem solving",
-    imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=300&fit=crop",
-    icon: "Calculator",
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    id: "english",
-    name: "English",
-    description: "Reading, writing, and language skills",
-    imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop",
-    icon: "BookOpen",
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    id: "science",
-    name: "Science",
-    description: "Experiments, nature, and discovery",
-    imageUrl: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&h=300&fit=crop",
-    icon: "FlaskConical",
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    id: "computer-science",
-    name: "Computer Science",
-    description: "Coding, technology, and digital skills",
-    imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop",
-    icon: "Monitor",
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    id: "assignments",
-    name: "Assignments",
-    description: "Practice tests and homework",
-    imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop",
-    icon: "ClipboardList",
-    updatedAt: new Date().toISOString(),
-  },
-];
+const getDefaultCategories = (): CategoryData[] => {
+  const subjects = [
+    {
+      id: "math",
+      name: "Math",
+      description: "Numbers, calculations, and problem solving",
+      imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=300&fit=crop",
+      icon: "Calculator",
+    },
+    {
+      id: "english",
+      name: "English",
+      description: "Reading, writing, and language skills",
+      imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop",
+      icon: "BookOpen",
+    },
+    {
+      id: "science",
+      name: "Science",
+      description: "Experiments, nature, and discovery",
+      imageUrl: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&h=300&fit=crop",
+      icon: "FlaskConical",
+    },
+    {
+      id: "computer-science",
+      name: "Computer Science",
+      description: "Coding, technology, and digital skills",
+      imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop",
+      icon: "Monitor",
+    },
+    {
+      id: "assignments",
+      name: "Assignments",
+      description: "Practice tests and homework",
+      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop",
+      icon: "ClipboardList",
+    },
+  ];
+
+  const grades = ["grade-1", "grade-2", "grade-3", "grade-4", "grade-5"];
+  const categories: CategoryData[] = [];
+
+  // Create grade-specific categories for each subject
+  grades.forEach((grade) => {
+    subjects.forEach((subject) => {
+      categories.push({
+        id: `${grade}-${subject.id}`,
+        name: subject.name,
+        description: subject.description,
+        imageUrl: subject.imageUrl,
+        icon: subject.icon,
+        grade,
+        updatedAt: new Date().toISOString(),
+      });
+    });
+  });
+
+  return categories;
+};
 
 export const getAllCategories = (): CategoryData[] => {
   const stored = localStorage.getItem(CATEGORIES_KEY);
@@ -164,6 +182,16 @@ export const getAllCategories = (): CategoryData[] => {
 export const getCategoryById = (id: string): CategoryData | undefined => {
   const categories = getAllCategories();
   return categories.find((c) => c.id === id);
+};
+
+export const getCategoriesByGrade = (grade: string): CategoryData[] => {
+  const categories = getAllCategories();
+  return categories.filter((c) => c.grade === grade);
+};
+
+export const getCategoryByGradeAndSubject = (grade: string, subject: string): CategoryData | undefined => {
+  const categories = getAllCategories();
+  return categories.find((c) => c.id === `${grade}-${subject}`);
 };
 
 export const updateCategory = (id: string, data: Partial<CategoryData>): void => {
