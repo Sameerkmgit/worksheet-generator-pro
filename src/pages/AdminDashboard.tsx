@@ -139,8 +139,9 @@ const AdminDashboard = () => {
       loadCategories();
       
       toast({
-        title: "Image Uploaded",
-        description: `Successfully updated ${categorySubjectFilter} image for ${categoryGradeFilter}`,
+        title: "✅ Category Image Updated!",
+        description: `Successfully updated ${categorySubjectFilter} image for ${categoryGradeFilter}. The image is now live on the website.`,
+        duration: 5000,
       });
     } catch (error) {
       console.error('Upload error:', error);
@@ -733,39 +734,51 @@ const AdminDashboard = () => {
                   </div>
 
                   {/* Image Upload */}
-                  <div className="space-y-3 pt-4 border-t">
-                    <Label htmlFor="image-upload" className="text-sm font-medium">
-                      Upload Subject Category Image (This updates the category card image)
+                  <div className="space-y-4 pt-4 border-t">
+                    <Label htmlFor="image-upload" className="text-sm font-semibold text-lg">
+                      Upload Subject Category Image
                     </Label>
-                    <div className="space-y-3 pt-4 border-t">
-                    <Label htmlFor="image-upload" className="text-sm font-medium">
-                      Upload Subject Category Image (This updates the category card image)
-                    </Label>
-                    <Input
-                      id="image-upload"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      disabled={isUploading}
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      Upload an image for {categorySubjectFilter} in {categoryGradeFilter}. Recommended size: 400x300px
+                    <p className="text-sm text-muted-foreground">
+                      This updates the category card image for {categorySubjectFilter} in {categoryGradeFilter}. Recommended size: 400x300px
                     </p>
-                  </div>
+                    <div className="flex gap-3 items-end">
+                      <div className="flex-1">
+                        <Input
+                          id="image-upload"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          disabled={isUploading}
+                          className="cursor-pointer"
+                        />
+                      </div>
+                      <Button 
+                        onClick={() => document.getElementById('image-upload')?.click()}
+                        disabled={isUploading}
+                        size="lg"
+                      >
+                        {isUploading ? "Uploading..." : "Choose & Upload Image"}
+                      </Button>
+                    </div>
+                    {isUploading && (
+                      <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
+                        <p className="text-sm text-blue-700">⏳ Uploading image to cloud...</p>
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 {/* Current Category Preview */}
-                {getCurrentCategory() && (
+                {getCurrentCategory()?.imageUrl ? (
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-lg">Current Category</CardTitle>
+                      <CardTitle className="text-lg">✅ Current Category Image</CardTitle>
                       <CardDescription>
-                        {getCurrentCategory()?.name} - {categoryGradeFilter.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        {getCurrentCategory()?.name} - {categoryGradeFilter.replace('grade-', 'Grade ').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="aspect-video w-full max-w-md overflow-hidden rounded-lg bg-muted">
+                      <div className="aspect-video w-full max-w-md overflow-hidden rounded-lg bg-muted border-2 border-green-300">
                         <img
                           src={getCurrentCategory()?.imageUrl}
                           alt={getCurrentCategory()?.name}
@@ -775,8 +788,16 @@ const AdminDashboard = () => {
                       <p className="text-sm text-muted-foreground mt-4">
                         {getCurrentCategory()?.description}
                       </p>
+                      <p className="text-xs text-green-700 mt-2 font-semibold">
+                        ✓ This image is currently live on the website
+                      </p>
                     </CardContent>
                   </Card>
+                ) : (
+                  <div className="bg-amber-50 border border-amber-200 rounded-md p-6 text-center">
+                    <p className="text-amber-800 font-medium">📸 No image uploaded yet for this category</p>
+                    <p className="text-sm text-amber-600 mt-2">Upload an image above to see the preview here</p>
+                  </div>
                 )}
               </CardContent>
             </Card>
@@ -790,59 +811,74 @@ const AdminDashboard = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {/* Worksheet Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" key={imageUpdateTrigger}>
-                  {getWorksheetsForFilters().map((worksheet) => (
-                    <Card key={worksheet.id} className="overflow-hidden">
-                       <CardContent className="p-4">
-                         <h4 className="font-medium text-base mb-3">{worksheet.title}</h4>
-                         
-                         <ImageUploader
-                           currentImageUrl={getWorksheetImageOverride(String(worksheet.id)) || worksheet.imageUrl}
-                           onImageUpload={(file) => handleWorksheetImageSelect({ target: { files: [file] } } as any, worksheet.id)}
-                           label="Worksheet Image"
-                           worksheetId={String(worksheet.id)}
-                         />
-                         
-                         <div className="flex gap-2 mt-4">
-                           <Button
-                             size="sm"
-                             className="flex-1"
-                             onClick={() => handleSaveWorksheetImage(worksheet.id)}
-                             disabled={!selectedImageFile[String(worksheet.id)]}
-                           >
-                             {savedWorksheetIds.has(String(worksheet.id)) ? (
-                               <>✅ Saved!</>
-                             ) : (
-                               <>💾 Save Image</>
-                             )}
-                           </Button>
-                           
-                           <Button
-                             size="sm"
-                             variant="outline"
-                             className="flex-1"
-                             onClick={() => {
-                               const gradeSlug = categoryGradeFilter;
-                               const subjectSlug = categorySubjectFilter;
-                               window.open(`/category/${gradeSlug}/${subjectSlug}`, '_blank');
-                             }}
-                           >
-                             View Live →
-                           </Button>
-                         </div>
-                       </CardContent>
-                    </Card>
-                  ))}
+                {/* Debug Info */}
+                <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-md">
+                  <p className="text-sm font-semibold text-blue-900 mb-2">📊 Debug Info:</p>
+                  <p className="text-sm text-blue-700">
+                    Showing worksheets for: <strong>{categoryGradeFilter}</strong> → <strong>{categorySubjectFilter}</strong>
+                  </p>
+                  <p className="text-sm text-blue-700 mt-1">
+                    Found: <strong>{getWorksheetsForFilters().length}</strong> worksheets
+                  </p>
                 </div>
-                {getWorksheetsForFilters().length === 0 && (
-                  <div className="text-center py-12 bg-yellow-50 border-2 border-dashed border-yellow-300 rounded-lg">
-                    <p className="text-lg font-semibold mb-2">⚠️ No worksheets found</p>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Selected: {categoryGradeFilter} / {categorySubjectFilter}
+
+                {/* Worksheet Grid */}
+                {getWorksheetsForFilters().length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" key={imageUpdateTrigger}>
+                    {getWorksheetsForFilters().map((worksheet) => (
+                      <Card key={worksheet.id} className="overflow-hidden">
+                         <CardContent className="p-4">
+                           <h4 className="font-medium text-base mb-3">{worksheet.title}</h4>
+                           
+                           <ImageUploader
+                             currentImageUrl={getWorksheetImageOverride(String(worksheet.id)) || worksheet.imageUrl}
+                             onImageUpload={(file) => handleWorksheetImageSelect({ target: { files: [file] } } as any, worksheet.id)}
+                             label="Worksheet Image"
+                             worksheetId={String(worksheet.id)}
+                           />
+                           
+                           <div className="flex gap-2 mt-4">
+                             <Button
+                               size="sm"
+                               className="flex-1"
+                               onClick={() => handleSaveWorksheetImage(worksheet.id)}
+                               disabled={!selectedImageFile[String(worksheet.id)]}
+                             >
+                               {savedWorksheetIds.has(String(worksheet.id)) ? (
+                                 <>✅ Saved!</>
+                               ) : (
+                                 <>💾 Save Image</>
+                               )}
+                             </Button>
+                             
+                             <Button
+                               size="sm"
+                               variant="outline"
+                               className="flex-1"
+                               onClick={() => {
+                                 const gradeSlug = categoryGradeFilter;
+                                 const subjectSlug = categorySubjectFilter;
+                                 window.open(`/category/${gradeSlug}/${subjectSlug}`, '_blank');
+                               }}
+                             >
+                               View Live →
+                             </Button>
+                           </div>
+                         </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-16 bg-yellow-50 border-2 border-dashed border-yellow-400 rounded-lg">
+                    <p className="text-2xl font-bold text-yellow-800 mb-2">⚠️ No Worksheets Found</p>
+                    <p className="text-base text-yellow-700 mb-1">
+                      Selected filters: <strong>{categoryGradeFilter.replace('grade-', 'Grade ')}</strong> → <strong className="capitalize">{categorySubjectFilter}</strong>
                     </p>
-                    <Button onClick={handleResetData} variant="default" size="sm">
-                      🔄 Click here to Reset & Create Sample Data
+                    <p className="text-sm text-muted-foreground mb-6">
+                      No worksheets match these filters. Try resetting data or check if worksheets exist for this combination.
+                    </p>
+                    <Button onClick={handleResetData} variant="default" size="lg">
+                      🔄 Reset & Create Sample Data
                     </Button>
                   </div>
                 )}
