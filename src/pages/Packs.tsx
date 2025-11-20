@@ -24,8 +24,8 @@ const packs = [
       "Vowels & Consonants",
       "Parts of a Plant",
       "Animal Habitats",
-      "My Five Senses",
-      "Living vs Non-Living Things"
+      "Counting & Number Recognition",
+      "Simple Subtraction"
     ],
     color: "from-blue-400 to-blue-500",
     downloadUrl: "#grade-1-pack"

@@ -30,10 +30,6 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
     science: [
       { id: 30, title: "Animal Habitats", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 1" },
       { id: 60, title: "Parts of a Plant", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "Science", grade: "Grade 1" },
-      { id: 61, title: "My Five Senses", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 1" },
-      { id: 62, title: "Day & Night", preview: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400", category: "Science", grade: "Grade 1" },
-      { id: 63, title: "Living vs Non-Living Things", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 1" },
-      { id: 64, title: "Weather & Seasons", preview: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400", category: "Science", grade: "Grade 1" },
     ],
     hindi: [
       { id: 65, title: "हिंदी वर्णमाला (Hindi Alphabet)", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "Hindi", grade: "Grade 1" },
