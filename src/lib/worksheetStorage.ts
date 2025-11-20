@@ -228,10 +228,15 @@ export const getWorksheetById = async (id: string): Promise<WorksheetData | null
 
 // Get worksheets by grade
 export const getWorksheetsByGrade = async (grade: string): Promise<WorksheetData[]> => {
+  // Convert URL format (grade-1) to database format (Grade 1)
+  const gradeTitle = grade.split('-').map((word, index) => 
+    index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
+  ).join(' ');
+  
   const { data, error } = await supabase
     .from('worksheets')
     .select('*')
-    .ilike('grade', grade)
+    .ilike('grade', gradeTitle)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -263,10 +268,15 @@ export const getWorksheetsByGradeAndSubject = async (
   grade: string,
   subject: string
 ): Promise<WorksheetData[]> => {
+  // Convert URL format (grade-1) to database format (Grade 1)
+  const gradeTitle = grade.split('-').map((word, index) => 
+    index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
+  ).join(' ');
+  
   const { data, error } = await supabase
     .from('worksheets')
     .select('*')
-    .ilike('grade', grade)
+    .ilike('grade', gradeTitle)
     .ilike('subject', subject)
     .order('created_at', { ascending: false });
 
@@ -439,10 +449,15 @@ export const getCategoryById = async (id: string): Promise<CategoryData | undefi
 
 // Get categories by grade
 export const getCategoriesByGrade = async (grade: string): Promise<CategoryData[]> => {
+  // Convert URL format (grade-1) to database format (Grade 1)
+  const gradeTitle = grade.split('-').map((word, index) => 
+    index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
+  ).join(' ');
+  
   const { data, error } = await supabase
     .from('categories')
     .select('*')
-    .eq('grade', grade);
+    .eq('grade', gradeTitle);
 
   if (error) return [];
   return (data || []).map(mapCategoryFromDB);
@@ -453,10 +468,15 @@ export const getCategoryByGradeAndSubject = async (
   grade: string,
   subject: string
 ): Promise<CategoryData | undefined> => {
+  // Convert URL format (grade-1) to database format (Grade 1)
+  const gradeTitle = grade.split('-').map((word, index) => 
+    index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
+  ).join(' ');
+  
   const { data } = await supabase
     .from('categories')
     .select('*')
-    .eq('grade', grade)
+    .eq('grade', gradeTitle)
     .eq('subject', subject)
     .single();
 
