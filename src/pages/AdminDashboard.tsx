@@ -296,8 +296,8 @@ const AdminDashboard = () => {
         .from('worksheet-images')
         .getPublicUrl(filePath);
       
-      // Store the override
-      setWorksheetImageOverride(String(worksheetId), publicUrl);
+      // Store the override - AWAIT THIS!
+      await setWorksheetImageOverride(String(worksheetId), publicUrl);
       
       // Mark as saved
       setSavedWorksheetIds(prev => new Set([...prev, String(worksheetId)]));
