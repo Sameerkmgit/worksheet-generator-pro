@@ -29,6 +29,7 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
   "grade-2": {
     math: [
       { id: 17, title: "Subtraction Practice", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 2" },
+      { id: 42, title: "Multiplication Tables (2 and 5)", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 2" },
     ],
     english: [
       { id: 18, title: "Word Building", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 2" },
