@@ -9,14 +9,16 @@ import { useToast } from "@/hooks/use-toast";
 import { adminLogin } from "@/lib/worksheetStorage";
 
 const AdminLogin = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (adminLogin(password)) {
+    const success = await adminLogin(email, password);
+    if (success) {
       toast({
         title: "Login Successful",
         description: "Welcome to the Admin Dashboard",
@@ -25,9 +27,10 @@ const AdminLogin = () => {
     } else {
       toast({
         title: "Login Failed",
-        description: "Invalid password. Please try again.",
+        description: "Invalid credentials. Please try again.",
         variant: "destructive",
       });
+      setEmail("");
       setPassword("");
     }
   };
@@ -46,6 +49,18 @@ const AdminLogin = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter admin email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="h-12"
+                required
+              />
+            </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
