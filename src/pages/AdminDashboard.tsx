@@ -129,14 +129,14 @@ const AdminDashboard = () => {
 
   const validateImageFile = (file: File): { valid: boolean; error?: string } => {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 20 * 1024 * 1024; // 20MB
     
     if (!allowedTypes.includes(file.type)) {
       return { valid: false, error: 'Only JPEG, PNG, and WebP images allowed' };
     }
     
     if (file.size > maxSize) {
-      return { valid: false, error: 'Image must be smaller than 5MB' };
+      return { valid: false, error: 'Image must be smaller than 20MB' };
     }
     
     return { valid: true };
