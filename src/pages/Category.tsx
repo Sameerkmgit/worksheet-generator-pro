@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Download } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
@@ -71,8 +72,61 @@ const Category = () => {
   const categoryWorksheets = worksheets[categoryId as keyof typeof worksheets] || [];
   const categoryTitle = categoryTitles[categoryId as string] || "Worksheets";
 
+  const pageUrl = `https://smartkidsworksheets.com/category/${categoryId}`;
+  const pageDescription = `Free printable ${categoryTitle} for Classes 1-5. Download PDF worksheets aligned with CBSE curriculum for classroom and home learning.`;
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": categoryTitle,
+    "description": pageDescription,
+    "url": pageUrl,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "SmartKids Worksheets",
+      "url": "https://smartkidsworksheets.com"
+    }
+  };
+
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://smartkidsworksheets.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": categoryTitle,
+        "item": pageUrl
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>{categoryTitle} Worksheets - Free Printable PDFs | SmartKids Worksheets</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={pageUrl} />
+        
+        <meta property="og:title" content={`${categoryTitle} Worksheets - Free Printable PDFs`} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:type" content="website" />
+        
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbData)}
+        </script>
+      </Helmet>
+      
       <Header />
       <div className="flex-1">
         <div className="container mx-auto max-w-[1140px] py-8 px-6">
@@ -102,7 +156,7 @@ const Category = () => {
                 <div className="aspect-[4/3] overflow-hidden bg-muted">
                   <img 
                     src={worksheet.preview} 
-                    alt={worksheet.title}
+                    alt={`${worksheet.title} worksheet preview - Free printable PDF for ${categoryTitle}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
