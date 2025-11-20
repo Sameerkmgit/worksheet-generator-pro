@@ -10,6 +10,8 @@ import Category from "./pages/Category";
 import AssignmentsLanding from "./pages/AssignmentsLanding";
 import WorksheetDetail from "./pages/WorksheetDetail";
 import AdminUpload from "./pages/AdminUpload";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
 import Search from "./pages/Search";
 import Packs from "./pages/Packs";
 import NotFound from "./pages/NotFound";
@@ -32,6 +34,8 @@ const App = () => (
           <Route path="/category/:grade/:subject" element={<Category />} />
           <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
