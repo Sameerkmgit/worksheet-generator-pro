@@ -1,4 +1,6 @@
-// Worksheet storage utility functions using localStorage
+// Utility functions for managing worksheet and category data using Supabase
+import { supabase } from '@/integrations/supabase/client';
+
 export interface WorksheetData {
   id: string;
   title: string;
@@ -7,52 +9,60 @@ export interface WorksheetData {
   subject: string;
   pdfUrl: string;
   imageUrl: string;
+  heading?: string;
+  intro?: string;
+  questions?: any[];
+  skills?: string[];
+  usage?: string;
+  faq?: any[];
+  seo?: any;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export interface CategoryData {
   id: string;
   name: string;
-  description: string;
-  imageUrl: string;
-  icon: string;
-  grade?: string; // Optional: if set, this is grade-specific
-  updatedAt: string;
+  grade: string;
+  subject: string;
+  description?: string;
+  icon?: string;
+  imageUrl?: string;
+  worksheetCount?: number;
 }
 
-const STORAGE_KEY = "smartkids_worksheets";
-const ADMIN_KEY = "smartkids_admin_auth";
-const CATEGORIES_KEY = "smartkids_categories";
-
-// Admin authentication
-export const adminLogin = (password: string): boolean => {
-  // Hardcoded password - change this for security
-  const ADMIN_PASSWORD = "SmartK1ds@Learn2025!";
+// Admin authentication - now uses Supabase Auth
+export const isAdminAuthenticated = async (): Promise<boolean> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return false;
   
-  if (password === ADMIN_PASSWORD) {
-    localStorage.setItem(ADMIN_KEY, "authenticated");
-    return true;
-  }
-  return false;
+  const { data } = await supabase
+    .from('user_roles')
+    .select('role')
+    .eq('user_id', user.id)
+    .eq('role', 'admin')
+    .single();
+  
+  return !!data;
 };
 
-export const isAdminAuthenticated = (): boolean => {
-  return localStorage.getItem(ADMIN_KEY) === "authenticated";
-};
-
-export const adminLogout = (): void => {
-  localStorage.removeItem(ADMIN_KEY);
+export const adminLogout = async (): Promise<void> => {
+  await supabase.auth.signOut();
 };
 
 // Seed initial worksheets if none exist
-export const seedInitialWorksheets = (): void => {
-  const existing = localStorage.getItem(STORAGE_KEY);
-  if (existing && JSON.parse(existing).length > 0) {
-    return; // Already has data
+export const seedInitialWorksheets = async (): Promise<void> => {
+  const { data: existingWorksheets } = await supabase
+    .from('worksheets')
+    .select('id')
+    .limit(1);
+  
+  if (existingWorksheets && existingWorksheets.length > 0) {
+    console.log("Worksheets already seeded. Skipping.");
+    return;
   }
 
-  const initialWorksheets: WorksheetData[] = [
+  const worksheets: WorksheetData[] = [
     // GRADE 1 - MATH
     { id: "3", title: "Introduction to Multiplication", description: "Learn multiplication basics", grade: "Grade 1", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
     { id: "40", title: "Grade 1 Addition Practice - Complete Worksheet", description: "Comprehensive addition practice", grade: "Grade 1", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
@@ -117,262 +127,197 @@ export const seedInitialWorksheets = (): void => {
     { id: "104", title: "Revision Sheet - Numbers & Words", description: "Revision worksheet", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
     { id: "105", title: "Homework Pack - Week 1", description: "Weekly homework", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
 
-    // GRADE 3 - MATH
-    { id: "1", title: "Addition Worksheet 1", description: "Addition practice", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "2", title: "Addition Worksheet 2", description: "More addition practice", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "20m", title: "Multiplication Tables", description: "Practice times tables", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "44", title: "Division Practice", description: "Division exercises", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 3 - ENGLISH
-    { id: "21", title: "Grammar Basics", description: "Learn basic grammar", grade: "Grade 3", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "45", title: "Reading Comprehension", description: "Reading and understanding", grade: "Grade 3", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 3 - SCIENCE
-    { id: "22", title: "Water Cycle", description: "Learn about water cycle", grade: "Grade 3", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 3 - COMPUTER SCIENCE
-    { id: "111", title: "Parts of a Computer", description: "Learn computer parts", grade: "Grade 3", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "112", title: "Input & Output Devices", description: "Learn about devices", grade: "Grade 3", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "113", title: "Keyboard Practice", description: "Practice typing", grade: "Grade 3", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "114", title: "Using a Mouse", description: "Learn mouse skills", grade: "Grade 3", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "115", title: "Internet Safety Basics", description: "Stay safe online", grade: "Grade 3", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 3 - ASSIGNMENTS
-    { id: "34", title: "Grade 3 Practice Assignment", description: "Practice test", grade: "Grade 3", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "121", title: "Weekly Test - Math & Science", description: "Weekly assessment", grade: "Grade 3", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "122", title: "Monthly Assessment - All Subjects", description: "Monthly test", grade: "Grade 3", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "123", title: "Revision Worksheet - Term 2", description: "Term revision", grade: "Grade 3", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 4 - MATH
-    { id: "23", title: "Division Practice", description: "Division worksheets", grade: "Grade 4", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "46", title: "Introduction to Fractions", description: "Learn fractions", grade: "Grade 4", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 4 - ENGLISH
-    { id: "24", title: "Essay Writing", description: "Essay writing practice", grade: "Grade 4", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 4 - SCIENCE
-    { id: "25", title: "Solar System", description: "Learn about planets", grade: "Grade 4", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "47", title: "Our Solar System", description: "Explore the solar system", grade: "Grade 4", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 4 - COMPUTER SCIENCE
-    { id: "129", title: "MS Paint Basics", description: "Learn MS Paint", grade: "Grade 4", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "130", title: "File Management", description: "Organize files", grade: "Grade 4", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "131", title: "Introduction to MS Word", description: "Learn MS Word", grade: "Grade 4", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "132", title: "Email Basics", description: "Learn about email", grade: "Grade 4", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "133", title: "Computer Viruses & Safety", description: "Stay safe online", grade: "Grade 4", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 4 - ASSIGNMENTS
-    { id: "35", title: "Grade 4 Test Paper", description: "Test paper", grade: "Grade 4", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "139", title: "Weekly Quiz - English & Math", description: "Weekly quiz", grade: "Grade 4", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "140", title: "Monthly Test - Mathematics", description: "Monthly test", grade: "Grade 4", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "141", title: "Revision Pack - Mid-Term", description: "Mid-term revision", grade: "Grade 4", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 5 - MATH
-    { id: "26", title: "Fractions & Decimals", description: "Learn fractions and decimals", grade: "Grade 5", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "48", title: "Decimals and Place Value", description: "Master decimals", grade: "Grade 5", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 5 - ENGLISH
-    { id: "27", title: "Advanced Grammar", description: "Advanced grammar skills", grade: "Grade 5", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "49", title: "Essay Writing and Paragraph Structure", description: "Essay writing", grade: "Grade 5", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 5 - SCIENCE
-    { id: "28", title: "Physics Basics", description: "Introduction to physics", grade: "Grade 5", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 5 - COMPUTER SCIENCE
-    { id: "147", title: "MS PowerPoint Basics", description: "Learn PowerPoint", grade: "Grade 5", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "148", title: "Introduction to Spreadsheets", description: "Learn spreadsheets", grade: "Grade 5", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "149", title: "Coding Basics - Scratch", description: "Learn coding", grade: "Grade 5", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "150", title: "Internet & Search Engines", description: "Learn to search", grade: "Grade 5", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "151", title: "Cyber Security for Kids", description: "Online safety", grade: "Grade 5", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-
-    // GRADE 5 - ASSIGNMENTS
-    { id: "36", title: "Grade 5 Comprehensive Test", description: "Comprehensive test", grade: "Grade 5", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "157", title: "Pre-Board Examination", description: "Pre-board exam", grade: "Grade 5", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "158", title: "Final Revision - All Subjects", description: "Final revision", grade: "Grade 5", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: "159", title: "Sample Paper - Term 1", description: "Sample paper", grade: "Grade 5", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    // Additional grades and subjects can be added here similarly
   ];
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(initialWorksheets));
-  console.log("✅ Seeded", initialWorksheets.length, "initial worksheets");
+  const dbWorksheets = worksheets.map(w => ({
+    id: w.id,
+    title: w.title,
+    description: w.description,
+    grade: w.grade,
+    subject: w.subject,
+    pdf_url: w.pdfUrl,
+    image_url: w.imageUrl,
+    heading: w.heading,
+    intro: w.intro,
+    questions: w.questions,
+    skills: w.skills,
+    usage: w.usage,
+    faq: w.faq,
+    seo: w.seo,
+  }));
+
+  const { error } = await supabase.from('worksheets').insert(dbWorksheets);
+  if (error) {
+    console.error("Error seeding worksheets:", error);
+  } else {
+    console.log("Initial worksheets seeded successfully!");
+  }
 };
 
-// Worksheet CRUD operations
-export const getAllWorksheets = (): WorksheetData[] => {
-  const data = localStorage.getItem(STORAGE_KEY);
-  return data ? JSON.parse(data) : [];
+// Fetch all worksheets
+export const getAllWorksheets = async (): Promise<WorksheetData[]> => {
+  const { data, error } = await supabase
+    .from('worksheets')
+    .select('*');
+
+  if (error) {
+    console.error("Error fetching worksheets:", error);
+    return [];
+  }
+
+  return data.map(w => ({
+    id: w.id,
+    title: w.title,
+    description: w.description,
+    grade: w.grade,
+    subject: w.subject,
+    pdfUrl: w.pdf_url,
+    imageUrl: w.image_url,
+    heading: w.heading,
+    intro: w.intro,
+    questions: w.questions,
+    skills: w.skills,
+    usage: w.usage,
+    faq: w.faq,
+    seo: w.seo,
+    createdAt: w.created_at,
+    updatedAt: w.updated_at,
+  }));
 };
 
-export const getWorksheetById = (id: string): WorksheetData | null => {
-  const worksheets = getAllWorksheets();
-  return worksheets.find(w => w.id === id) || null;
-};
+// Fetch worksheet by ID
+export const getWorksheetById = async (id: string): Promise<WorksheetData | null> => {
+  const { data, error } = await supabase
+    .from('worksheets')
+    .select('*')
+    .eq('id', id)
+    .single();
 
-export const createWorksheet = (worksheet: Omit<WorksheetData, "id" | "createdAt" | "updatedAt">): WorksheetData => {
-  const worksheets = getAllWorksheets();
-  const newWorksheet: WorksheetData = {
-    ...worksheet,
-    id: Date.now().toString(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+  if (error) {
+    console.error(`Error fetching worksheet with id ${id}:`, error);
+    return null;
+  }
+
+  return {
+    id: data.id,
+    title: data.title,
+    description: data.description,
+    grade: data.grade,
+    subject: data.subject,
+    pdfUrl: data.pdf_url,
+    imageUrl: data.image_url,
+    heading: data.heading,
+    intro: data.intro,
+    questions: data.questions,
+    skills: data.skills,
+    usage: data.usage,
+    faq: data.faq,
+    seo: data.seo,
+    createdAt: data.created_at,
+    updatedAt: data.updated_at,
   };
-  worksheets.push(newWorksheet);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(worksheets));
-  return newWorksheet;
 };
 
-export const updateWorksheet = (id: string, updates: Partial<WorksheetData>): WorksheetData | null => {
-  const worksheets = getAllWorksheets();
-  const index = worksheets.findIndex(w => w.id === id);
-  
-  if (index === -1) return null;
-  
-  worksheets[index] = {
-    ...worksheets[index],
-    ...updates,
-    updatedAt: new Date().toISOString(),
-  };
-  
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(worksheets));
-  return worksheets[index];
-};
+// Create or update a worksheet
+export const upsertWorksheet = async (worksheet: WorksheetData): Promise<boolean> => {
+  const { error } = await supabase
+    .from('worksheets')
+    .upsert({
+      id: worksheet.id,
+      title: worksheet.title,
+      description: worksheet.description,
+      grade: worksheet.grade,
+      subject: worksheet.subject,
+      pdf_url: worksheet.pdfUrl,
+      image_url: worksheet.imageUrl,
+      heading: worksheet.heading,
+      intro: worksheet.intro,
+      questions: worksheet.questions,
+      skills: worksheet.skills,
+      usage: worksheet.usage,
+      faq: worksheet.faq,
+      seo: worksheet.seo,
+      created_at: worksheet.createdAt,
+      updated_at: new Date().toISOString(),
+    });
 
-export const deleteWorksheet = (id: string): boolean => {
-  const worksheets = getAllWorksheets();
-  const filtered = worksheets.filter(w => w.id !== id);
-  
-  if (filtered.length === worksheets.length) return false;
-  
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+  if (error) {
+    console.error("Error upserting worksheet:", error);
+    return false;
+  }
   return true;
 };
 
-// Get worksheets organized by grade and subject
-export const getWorksheetsByGrade = (grade: string): WorksheetData[] => {
-  return getAllWorksheets().filter(w => w.grade === grade);
-};
+// Delete a worksheet by ID
+export const deleteWorksheet = async (id: string): Promise<boolean> => {
+  const { error } = await supabase
+    .from('worksheets')
+    .delete()
+    .eq('id', id);
 
-export const getWorksheetsBySubject = (subject: string): WorksheetData[] => {
-  return getAllWorksheets().filter(w => w.subject === subject);
-};
-
-export const getWorksheetsByGradeAndSubject = (grade: string, subject: string): WorksheetData[] => {
-  return getAllWorksheets().filter(w => w.grade === grade && w.subject === subject);
-};
-
-// Category Management
-const getDefaultCategories = (): CategoryData[] => {
-  const subjects = [
-    {
-      id: "math",
-      name: "Math",
-      description: "Numbers, calculations, and problem solving",
-      imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=300&fit=crop",
-      icon: "Calculator",
-    },
-    {
-      id: "english",
-      name: "English",
-      description: "Reading, writing, and language skills",
-      imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop",
-      icon: "BookOpen",
-    },
-    {
-      id: "science",
-      name: "Science",
-      description: "Experiments, nature, and discovery",
-      imageUrl: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&h=300&fit=crop",
-      icon: "FlaskConical",
-    },
-    {
-      id: "computer-science",
-      name: "Computer Science",
-      description: "Coding, technology, and digital skills",
-      imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop",
-      icon: "Monitor",
-    },
-    {
-      id: "assignments",
-      name: "Assignments",
-      description: "Practice tests and homework",
-      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop",
-      icon: "ClipboardList",
-    },
-  ];
-
-  const grades = ["grade-1", "grade-2", "grade-3", "grade-4", "grade-5"];
-  const categories: CategoryData[] = [];
-
-  // Create grade-specific categories for each subject
-  grades.forEach((grade) => {
-    subjects.forEach((subject) => {
-      categories.push({
-        id: `${grade}-${subject.id}`,
-        name: subject.name,
-        description: subject.description,
-        imageUrl: subject.imageUrl,
-        icon: subject.icon,
-        grade,
-        updatedAt: new Date().toISOString(),
-      });
-    });
-  });
-
-  return categories;
-};
-
-export const getAllCategories = (): CategoryData[] => {
-  const stored = localStorage.getItem(CATEGORIES_KEY);
-  if (!stored) {
-    const defaults = getDefaultCategories();
-    localStorage.setItem(CATEGORIES_KEY, JSON.stringify(defaults));
-    return defaults;
+  if (error) {
+    console.error(`Error deleting worksheet with id ${id}:`, error);
+    return false;
   }
-  return JSON.parse(stored);
+  return true;
 };
 
-export const getCategoryById = (id: string): CategoryData | undefined => {
-  const categories = getAllCategories();
-  return categories.find((c) => c.id === id);
+// Fetch all categories
+export const getAllCategories = async (): Promise<CategoryData[]> => {
+  const { data, error } = await supabase
+    .from('categories')
+    .select('*');
+
+  if (error) {
+    console.error("Error fetching categories:", error);
+    return [];
+  }
+
+  return data.map(c => ({
+    id: c.id,
+    name: c.name,
+    grade: c.grade,
+    subject: c.subject,
+    description: c.description,
+    icon: c.icon,
+    imageUrl: c.image_url,
+    worksheetCount: c.worksheet_count,
+  }));
 };
 
-export const getCategoriesByGrade = (grade: string): CategoryData[] => {
-  const categories = getAllCategories();
-  return categories.filter((c) => c.grade === grade);
+// Create or update a category
+export const upsertCategory = async (category: CategoryData): Promise<boolean> => {
+  const { error } = await supabase
+    .from('categories')
+    .upsert({
+      id: category.id,
+      name: category.name,
+      grade: category.grade,
+      subject: category.subject,
+      description: category.description,
+      icon: category.icon,
+      image_url: category.imageUrl,
+      worksheet_count: category.worksheetCount,
+    });
+
+  if (error) {
+    console.error("Error upserting category:", error);
+    return false;
+  }
+  return true;
 };
 
-export const getCategoryByGradeAndSubject = (grade: string, subject: string): CategoryData | undefined => {
-  const categories = getAllCategories();
-  return categories.find((c) => c.id === `${grade}-${subject}`);
-};
+// Delete a category by ID
+export const deleteCategory = async (id: string): Promise<boolean> => {
+  const { error } = await supabase
+    .from('categories')
+    .delete()
+    .eq('id', id);
 
-export const updateCategory = (id: string, data: Partial<CategoryData>): void => {
-  const categories = getAllCategories();
-  const updated = categories.map((category) =>
-    category.id === id
-      ? { ...category, ...data, updatedAt: new Date().toISOString() }
-      : category
-  );
-  localStorage.setItem(CATEGORIES_KEY, JSON.stringify(updated));
-};
-
-// Worksheet Image Overrides
-const WORKSHEET_IMAGES_KEY = "smartkids_worksheet_images";
-
-export const getWorksheetImageOverride = (worksheetId: string): string | null => {
-  const overrides = localStorage.getItem(WORKSHEET_IMAGES_KEY);
-  if (!overrides) return null;
-  const parsed = JSON.parse(overrides);
-  return parsed[worksheetId] || null;
-};
-
-export const setWorksheetImageOverride = (worksheetId: string, imageUrl: string): void => {
-  const overrides = localStorage.getItem(WORKSHEET_IMAGES_KEY);
-  const parsed = overrides ? JSON.parse(overrides) : {};
-  parsed[worksheetId] = imageUrl;
-  localStorage.setItem(WORKSHEET_IMAGES_KEY, JSON.stringify(parsed));
-};
-
-export const getAllWorksheetImageOverrides = (): Record<string, string> => {
-  const overrides = localStorage.getItem(WORKSHEET_IMAGES_KEY);
-  return overrides ? JSON.parse(overrides) : {};
+  if (error) {
+    console.error(`Error deleting category with id ${id}:`, error);
+    return false;
+  }
+  return true;
 };

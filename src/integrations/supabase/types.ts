@@ -14,16 +14,188 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          grade: string
+          icon: string | null
+          id: string
+          image_url: string | null
+          name: string
+          subject: string
+          updated_at: string | null
+          worksheet_count: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          grade: string
+          icon?: string | null
+          id: string
+          image_url?: string | null
+          name: string
+          subject: string
+          updated_at?: string | null
+          worksheet_count?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          grade?: string
+          icon?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          subject?: string
+          updated_at?: string | null
+          worksheet_count?: number | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      worksheet_image_overrides: {
+        Row: {
+          created_at: string | null
+          image_url: string
+          updated_at: string | null
+          worksheet_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          image_url: string
+          updated_at?: string | null
+          worksheet_id: string
+        }
+        Update: {
+          created_at?: string | null
+          image_url?: string
+          updated_at?: string | null
+          worksheet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worksheet_image_overrides_worksheet_id_fkey"
+            columns: ["worksheet_id"]
+            isOneToOne: true
+            referencedRelation: "worksheets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      worksheets: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          faq: Json | null
+          grade: string
+          heading: string | null
+          id: string
+          image_url: string | null
+          intro: string | null
+          pdf_url: string
+          questions: Json | null
+          seo: Json | null
+          skills: string[] | null
+          subject: string
+          title: string
+          updated_at: string | null
+          usage: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          faq?: Json | null
+          grade: string
+          heading?: string | null
+          id: string
+          image_url?: string | null
+          intro?: string | null
+          pdf_url: string
+          questions?: Json | null
+          seo?: Json | null
+          skills?: string[] | null
+          subject: string
+          title: string
+          updated_at?: string | null
+          usage?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          faq?: Json | null
+          grade?: string
+          heading?: string | null
+          id?: string
+          image_url?: string | null
+          intro?: string | null
+          pdf_url?: string
+          questions?: Json | null
+          seo?: Json | null
+          skills?: string[] | null
+          subject?: string
+          title?: string
+          updated_at?: string | null
+          usage?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +322,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
