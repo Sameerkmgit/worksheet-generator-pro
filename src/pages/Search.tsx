@@ -23,6 +23,10 @@ const allWorksheets = [
   { id: 14, title: "Letter Recognition", category: "English", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", keywords: ["letters", "recognition", "alphabet", "english"] },
   { id: 41, title: "Alphabet Writing Practice (Letters A to M)", category: "English", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", keywords: ["alphabet", "writing", "letters", "english"] },
   { id: 55, title: "Vowels & Consonants", category: "English", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", keywords: ["vowels", "consonants", "letters", "english"] },
+  { id: 56, title: "CVC Words (Cat, Dog, Sun)", category: "English", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", keywords: ["CVC", "words", "phonics", "reading", "english"] },
+  { id: 57, title: "Rhyming Words", category: "English", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", keywords: ["rhyming", "words", "phonics", "english"] },
+  { id: 58, title: "Simple Sentences", category: "English", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", keywords: ["sentences", "writing", "grammar", "english"] },
+  { id: 59, title: "Sight Words (Dolch List)", category: "English", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", keywords: ["sight words", "dolch", "reading", "english"] },
   { id: 30, title: "Animal Habitats", category: "Science", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", keywords: ["animals", "habitats", "science", "nature"] },
   { id: 60, title: "Parts of a Plant", category: "Science", grade: "Grade 1", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", keywords: ["plants", "parts", "science", "nature"] },
   
