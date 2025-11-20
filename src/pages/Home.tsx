@@ -8,15 +8,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const categories = [
-  { id: "class-1", title: "Grade 1", icon: GraduationCap, color: "from-blue-400 to-blue-500", worksheets: 89 },
-  { id: "class-2", title: "Grade 2", icon: GraduationCap, color: "from-blue-500 to-blue-600", worksheets: 95 },
-  { id: "class-3", title: "Grade 3", icon: GraduationCap, color: "from-indigo-400 to-indigo-500", worksheets: 102 },
-  { id: "class-4", title: "Grade 4", icon: GraduationCap, color: "from-indigo-500 to-indigo-600", worksheets: 108 },
-  { id: "class-5", title: "Grade 5", icon: GraduationCap, color: "from-purple-400 to-purple-500", worksheets: 115 },
-  { id: "english", title: "English", icon: BookA, color: "from-green-400 to-green-500", worksheets: 128 },
-  { id: "math", title: "Math", icon: Calculator, color: "from-primary to-primary-dark", worksheets: 145 },
-  { id: "science", title: "Science", icon: Microscope, color: "from-teal-400 to-teal-500", worksheets: 98 },
-  { id: "others", title: "Others", icon: Sparkles, color: "from-pink-400 to-pink-500", worksheets: 156 },
+  { id: "grade-1", title: "Grade 1", icon: GraduationCap, color: "from-blue-400 to-blue-500", worksheets: 89 },
+  { id: "grade-2", title: "Grade 2", icon: GraduationCap, color: "from-blue-500 to-blue-600", worksheets: 95 },
+  { id: "grade-3", title: "Grade 3", icon: GraduationCap, color: "from-indigo-400 to-indigo-500", worksheets: 102 },
+  { id: "grade-4", title: "Grade 4", icon: GraduationCap, color: "from-indigo-500 to-indigo-600", worksheets: 108 },
+  { id: "grade-5", title: "Grade 5", icon: GraduationCap, color: "from-purple-400 to-purple-500", worksheets: 115 },
 ];
 
 const Home = () => {
@@ -97,7 +93,7 @@ const Home = () => {
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in mb-10">
-              <Link to="/category/class-1">
+              <Link to="/category/grade-1">
                 <Button size="lg" className="h-14 px-10 text-base font-semibold">
                   Browse Worksheets
                 </Button>

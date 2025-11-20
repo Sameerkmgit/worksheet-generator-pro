@@ -6,79 +6,116 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-// Mock data - in production this would come from your data source
-const worksheets = {
-  "class-1": [
-    { id: 14, title: "Alphabet Tracing", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "class-1" },
-    { id: 15, title: "Number Recognition", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "class-1" },
-    { id: 16, title: "Simple Addition", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "class-1" },
-  ],
-  "class-2": [
-    { id: 17, title: "Word Building", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "class-2" },
-    { id: 18, title: "Subtraction Practice", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "class-2" },
-    { id: 19, title: "Sentence Formation", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "class-2" },
-  ],
-  "class-3": [
-    { id: 20, title: "Multiplication Tables", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "class-3" },
-    { id: 21, title: "Grammar Basics", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "class-3" },
-    { id: 22, title: "Plant Life", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "class-3" },
-  ],
-  "class-4": [
-    { id: 23, title: "Division Practice", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "class-4" },
-    { id: 24, title: "Essay Writing", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "class-4" },
-    { id: 25, title: "Solar System", preview: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", category: "class-4" },
-  ],
-  "class-5": [
-    { id: 26, title: "Fractions & Decimals", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "class-5" },
-    { id: 27, title: "Advanced Grammar", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "class-5" },
-    { id: 28, title: "Physics Basics", preview: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", category: "class-5" },
-  ],
-  math: [
-    { id: 1, title: "Addition Basics", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "math" },
-    { id: 2, title: "Multiplication Tables", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "math" },
-    { id: 3, title: "Geometry Shapes", preview: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400", category: "math" },
-  ],
-  english: [
-    { id: 4, title: "Vocabulary Builder", preview: "https://images.unsplash.com/photo-503676260728-1c00da094a0b?w=400", category: "english" },
-    { id: 5, title: "Grammar Practice", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "english" },
-    { id: 6, title: "Reading Comprehension", preview: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400", category: "english" },
-  ],
-  science: [
-    { id: 7, title: "Solar System", preview: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", category: "science" },
-    { id: 8, title: "Plant Life Cycle", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "science" },
-    { id: 9, title: "Water Cycle", preview: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400", category: "science" },
-  ],
-  others: [
-    { id: 10, title: "Animals Word Search", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "others" },
-    { id: 11, title: "Colors Worksheet", preview: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400", category: "others" },
-    { id: 12, title: "Drawing Practice", preview: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?w=400", category: "others" },
-  ],
+// Worksheet data organized by grade and subject
+const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
+  "grade-1": {
+    math: [
+      { id: 3, title: "Introduction to Multiplication", preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800", category: "Math", grade: "Grade 1" },
+      { id: 16, title: "Simple Addition", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 1" },
+    ],
+    english: [
+      { id: 20, title: "Alphabet Tracing", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 1" },
+      { id: 14, title: "Letter Recognition", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 1" },
+    ],
+    science: [
+      { id: 30, title: "Animal Habitats", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", category: "Science", grade: "Grade 1" },
+    ],
+    assignments: [
+      { id: 31, title: "Grade 1 Practice Test", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 1" },
+    ],
+  },
+  "grade-2": {
+    math: [
+      { id: 17, title: "Subtraction Practice", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 2" },
+    ],
+    english: [
+      { id: 18, title: "Word Building", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 2" },
+      { id: 19, title: "Sentence Formation", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 2" },
+    ],
+    science: [
+      { id: 32, title: "Plants & Growth", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "Science", grade: "Grade 2" },
+    ],
+    assignments: [
+      { id: 33, title: "Grade 2 Weekly Test", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 2" },
+    ],
+  },
+  "grade-3": {
+    math: [
+      { id: 1, title: "Addition Worksheet 1", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800", category: "Math", grade: "Grade 3" },
+      { id: 2, title: "Addition Worksheet 2", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800", category: "Math", grade: "Grade 3" },
+      { id: 20, title: "Multiplication Tables", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 3" },
+    ],
+    english: [
+      { id: 21, title: "Grammar Basics", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 3" },
+    ],
+    science: [
+      { id: 22, title: "Plant Life", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "Science", grade: "Grade 3" },
+    ],
+    assignments: [
+      { id: 34, title: "Grade 3 Practice Assignment", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 3" },
+    ],
+  },
+  "grade-4": {
+    math: [
+      { id: 23, title: "Division Practice", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", category: "Math", grade: "Grade 4" },
+    ],
+    english: [
+      { id: 24, title: "Essay Writing", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 4" },
+    ],
+    science: [
+      { id: 25, title: "Solar System", preview: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", category: "Science", grade: "Grade 4" },
+    ],
+    assignments: [
+      { id: 35, title: "Grade 4 Test Paper", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 4" },
+    ],
+  },
+  "grade-5": {
+    math: [
+      { id: 26, title: "Fractions & Decimals", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", category: "Math", grade: "Grade 5" },
+    ],
+    english: [
+      { id: 27, title: "Advanced Grammar", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 5" },
+    ],
+    science: [
+      { id: 28, title: "Physics Basics", preview: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", category: "Science", grade: "Grade 5" },
+    ],
+    assignments: [
+      { id: 36, title: "Grade 5 Comprehensive Test", preview: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", category: "Assignments", grade: "Grade 5" },
+    ],
+  },
 };
 
-const categoryTitles: Record<string, string> = {
-  "class-1": "Grade 1 Worksheets",
-  "class-2": "Grade 2 Worksheets",
-  "class-3": "Grade 3 Worksheets",
-  "class-4": "Grade 4 Worksheets",
-  "class-5": "Grade 5 Worksheets",
-  math: "Math Worksheets",
-  english: "English Worksheets",
-  science: "Science Worksheets",
-  others: "Other Worksheets",
+const subjectTitles: Record<string, string> = {
+  math: "Math",
+  english: "English",
+  science: "Science",
+  assignments: "Assignments",
+};
+
+const gradeTitles: Record<string, string> = {
+  "grade-1": "Grade 1",
+  "grade-2": "Grade 2",
+  "grade-3": "Grade 3",
+  "grade-4": "Grade 4",
+  "grade-5": "Grade 5",
 };
 
 const Category = () => {
-  const { categoryId } = useParams<{ categoryId: string }>();
-  const categoryWorksheets = worksheets[categoryId as keyof typeof worksheets] || [];
-  const categoryTitle = categoryTitles[categoryId as string] || "Worksheets";
+  const { grade, subject } = useParams();
+  const categoryWorksheets = worksheetsByGradeAndSubject[grade || ""]?.[subject || ""] || [];
+  
+  const gradeTitle = gradeTitles[grade || ""] || "Grade";
+  const subjectTitle = subjectTitles[subject || ""] || "Worksheets";
+  const pageTitle = `${gradeTitle} ${subjectTitle}`;
+  
+  const pageDescription = `Free printable ${pageTitle.toLowerCase()} worksheets. Download and print for classroom or home learning.`;
 
-  const pageUrl = `https://smartkidsworksheets.com/category/${categoryId}`;
-  const pageDescription = `Free printable ${categoryTitle} for Grades 1-5. Download PDF worksheets aligned with CBSE curriculum for classroom and home learning.`;
+  const pageUrl = `https://smartkidsworksheets.com/category/${grade}/${subject}`;
   
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": categoryTitle,
+    "name": pageTitle,
     "description": pageDescription,
     "url": pageUrl,
     "isPartOf": {
@@ -101,7 +138,13 @@ const Category = () => {
       {
         "@type": "ListItem",
         "position": 2,
-        "name": categoryTitle,
+        "name": gradeTitle,
+        "item": `https://smartkidsworksheets.com/category/${grade}`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": subjectTitle,
         "item": pageUrl
       }
     ]
@@ -110,11 +153,11 @@ const Category = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>{categoryTitle} Worksheets - Free Printable PDFs | SmartKids Worksheets</title>
+        <title>{pageTitle} Worksheets - Free Printable PDFs | SmartKids Worksheets</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
         
-        <meta property="og:title" content={`${categoryTitle} Worksheets - Free Printable PDFs`} />
+        <meta property="og:title" content={`${pageTitle} Worksheets - Free Printable PDFs`} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="website" />
@@ -130,15 +173,15 @@ const Category = () => {
       <Header />
       <div className="flex-1">
         <div className="container mx-auto max-w-[1140px] py-8 px-6">
-          <Link to="/">
+          <Link to={`/category/${grade}`}>
             <Button variant="ghost" className="mb-6">
               <ArrowLeft className="mr-2" />
-              Back to Home
+              Back to {gradeTitle}
             </Button>
           </Link>
 
           <div className="mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-heading">{categoryTitle}</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-heading">{pageTitle} Worksheets</h1>
             <p className="text-lg text-muted-foreground">
               Explore our collection of {categoryWorksheets.length} high-quality worksheets
             </p>
@@ -157,7 +200,7 @@ const Category = () => {
                 <div className="aspect-[4/3] overflow-hidden bg-muted">
                   <img 
                     src={worksheet.preview} 
-                    alt={`${worksheet.title} worksheet preview - Free printable PDF for ${categoryTitle}`}
+                    alt={`${worksheet.title} worksheet preview - Free printable PDF for ${gradeTitle} ${subjectTitle}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
