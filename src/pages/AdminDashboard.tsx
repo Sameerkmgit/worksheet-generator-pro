@@ -200,18 +200,38 @@ const AdminDashboard = () => {
     // Get ALL worksheets from storage
     const allWorksheets = getAllWorksheets();
     
-    // Normalize grade filter: "grade-1" -> "Grade 1"
-    const normalizedGrade = categoryGradeFilter
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+    console.log('📊 Total worksheets:', allWorksheets.length);
+    console.log('🔍 Filters - Grade:', categoryGradeFilter, 'Subject:', categorySubjectFilter);
+    
+    if (allWorksheets.length === 0) {
+      console.log('❌ No worksheets in storage');
+      return [];
+    }
+    
+    // Normalize grade filter: "grade-1" -> "Grade 1", "grade-2" -> "Grade 2", etc.
+    const gradeNum = categoryGradeFilter.replace('grade-', '');
+    const normalizedGrade = `Grade ${gradeNum}`;
+    
+    console.log('🔄 Normalized grade:', normalizedGrade);
     
     // Filter by selected grade and subject
-    return allWorksheets.filter(worksheet => {
-      const gradeMatch = worksheet.grade === normalizedGrade;
-      const subjectMatch = worksheet.subject.toLowerCase() === categorySubjectFilter.toLowerCase();
+    const filtered = allWorksheets.filter(worksheet => {
+      // Case-insensitive comparison for both grade and subject
+      const worksheetGrade = worksheet.grade?.toString().toLowerCase().trim();
+      const filterGrade = normalizedGrade.toLowerCase().trim();
+      const gradeMatch = worksheetGrade === filterGrade;
+      
+      const worksheetSubject = worksheet.subject?.toString().toLowerCase().trim();
+      const filterSubject = categorySubjectFilter.toLowerCase().trim();
+      const subjectMatch = worksheetSubject === filterSubject;
+      
+      console.log(`Worksheet: "${worksheet.title}" | Grade: "${worksheet.grade}" (${gradeMatch}) | Subject: "${worksheet.subject}" (${subjectMatch})`);
+      
       return gradeMatch && subjectMatch;
     });
+    
+    console.log(`✅ Found ${filtered.length} matching worksheets`);
+    return filtered;
   };
 
   const resetForm = () => {
