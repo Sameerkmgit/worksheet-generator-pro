@@ -304,8 +304,9 @@ const AdminDashboard = () => {
       
       toast({
         title: "✅ Image Saved Successfully!",
-        description: "Image uploaded to cloud and will appear on the live site.",
-        duration: 5000,
+        description: `"${file.name}" is now in cloud storage and will appear on the live site within a few seconds. No credits were used.`,
+        duration: 8000,
+        className: "bg-green-50 border-green-500",
       });
       
       console.log(`✅ Image saved for worksheet ID: ${worksheetId}`);
@@ -321,12 +322,20 @@ const AdminDashboard = () => {
           return newSet;
         });
       }, 3000);
-    } catch (error) {
-      console.error('Upload error:', error);
+    } catch (error: any) {
+      console.error('❌ Error saving worksheet image:', error);
+      console.error('Error details:', {
+        worksheetId,
+        fileName: file.name,
+        fileSize: file.size,
+        errorMessage: error.message,
+        errorStack: error.stack
+      });
       toast({
-        title: "Upload Failed",
-        description: "Failed to upload image. Please try again.",
+        title: "❌ Upload Failed",
+        description: `Error: ${error.message || "Failed to save image"}. Check browser console for details.`,
         variant: "destructive",
+        duration: 10000,
       });
     }
   };
@@ -887,6 +896,16 @@ const AdminDashboard = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                {/* Info Banner - No Credits Required */}
+                <div className="mb-4 p-4 bg-green-50 border-2 border-green-500 rounded-lg">
+                  <p className="text-sm font-bold text-green-800 flex items-center gap-2">
+                    ✅ <span className="text-base">FREE FEATURE - No Credits Required!</span>
+                  </p>
+                  <p className="text-sm text-green-700 mt-1">
+                    Upload as many worksheet images as you need. This is a backend storage operation that doesn't consume any Lovable credits.
+                  </p>
+                </div>
+
                 {/* Debug Info */}
                 <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-md">
                   <p className="text-sm font-semibold text-blue-900 mb-2">📊 Debug Info:</p>
