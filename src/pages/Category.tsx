@@ -34,6 +34,7 @@ const worksheetsByGradeAndSubject: Record<string, Record<string, any[]>> = {
     english: [
       { id: 18, title: "Word Building", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", category: "English", grade: "Grade 2" },
       { id: 19, title: "Sentence Formation", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 2" },
+      { id: 43, title: "Nouns and Verbs", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", category: "English", grade: "Grade 2" },
     ],
     science: [
       { id: 32, title: "Plants & Growth", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", category: "Science", grade: "Grade 2" },
