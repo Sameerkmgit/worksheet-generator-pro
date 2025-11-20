@@ -48,7 +48,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     if (!isAdminAuthenticated()) {
-      navigate("/admin/login");
+      navigate("/dashboard-secure-2025");
       return;
     }
     loadWorksheets();
@@ -83,7 +83,7 @@ const AdminDashboard = () => {
       title: "Logged Out",
       description: "You have been successfully logged out",
     });
-    navigate("/admin/login");
+    navigate("/dashboard-secure-2025");
   };
 
   const resetForm = () => {
