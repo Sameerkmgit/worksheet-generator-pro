@@ -631,7 +631,7 @@ const AdminDashboard = () => {
               <CardHeader>
                 <CardTitle>Manage Category Images</CardTitle>
                 <CardDescription>
-                  Update images and descriptions for each subject across all grades. Select a grade to view and edit category images.
+                  Update the main subject category images (e.g., the "Math" or "English" card images shown on grade pages).
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -682,7 +682,7 @@ const AdminDashboard = () => {
                   {/* Image Upload */}
                   <div className="space-y-3 pt-4 border-t">
                     <Label htmlFor="image-upload" className="text-sm font-medium">
-                      Upload Category Image
+                      Upload Subject Category Image (This updates the category card image)
                     </Label>
                     <div className="flex gap-2">
                       <Input
@@ -739,11 +739,11 @@ const AdminDashboard = () => {
             </Card>
 
             {/* Worksheet Image Management */}
-            <Card>
+            <Card className="mt-8">
               <CardHeader>
-                <CardTitle>Manage Individual Worksheet Images</CardTitle>
+                <CardTitle>📝 Manage Individual Worksheet Images</CardTitle>
                 <CardDescription>
-                  Upload custom images for individual worksheets. Images will instantly reflect on the live site.
+                  Upload custom images for each worksheet below. These images appear on worksheet cards and detail pages. Select grade and subject above, then upload images for each worksheet.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -761,11 +761,14 @@ const AdminDashboard = () => {
                         </div>
                         <h4 className="font-medium text-sm mb-3 line-clamp-2">{worksheet.title}</h4>
                         <div className="space-y-2">
+                          <Label htmlFor={`upload-${worksheet.id}`} className="text-xs text-muted-foreground">
+                            Click to upload new image:
+                          </Label>
                           <Input
                             type="file"
                             accept="image/*"
                             onChange={(e) => handleWorksheetImageUpload(e, worksheet.id)}
-                            className="text-xs"
+                            className="text-xs cursor-pointer"
                             id={`upload-${worksheet.id}`}
                           />
                         </div>
