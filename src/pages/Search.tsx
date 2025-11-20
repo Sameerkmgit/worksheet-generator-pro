@@ -161,8 +161,8 @@ const Search = () => {
                   <SelectItem value="math">Math</SelectItem>
                   <SelectItem value="english">English</SelectItem>
                   <SelectItem value="science">Science</SelectItem>
-                  <SelectItem value="hindi">Hindi</SelectItem>
-                  <SelectItem value="general knowledge">General Knowledge</SelectItem>
+                  <SelectItem value="computer science">Computer Science</SelectItem>
+                  <SelectItem value="assignments">Assignments</SelectItem>
                 </SelectContent>
               </Select>
             </div>
