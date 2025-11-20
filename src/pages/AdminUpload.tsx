@@ -14,14 +14,15 @@ const AdminUpload = () => {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [grade, setGrade] = useState("");
+  const [subject, setSubject] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [previewFile, setPreviewFile] = useState<File | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!title || !category || !pdfFile || !previewFile) {
+    if (!title || !grade || !subject || !pdfFile || !previewFile) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields and upload both files.",
@@ -39,7 +40,8 @@ const AdminUpload = () => {
     // Reset form
     setTitle("");
     setDescription("");
-    setCategory("");
+    setGrade("");
+    setSubject("");
     setPdfFile(null);
     setPreviewFile(null);
   };
@@ -82,26 +84,39 @@ const AdminUpload = () => {
                 />
               </div>
 
-              {/* Category */}
+              {/* Grade */}
               <div className="space-y-2">
-                <Label htmlFor="category" className="text-base font-semibold">
-                  Category *
+                <Label htmlFor="grade" className="text-base font-semibold">
+                  Grade *
                 </Label>
-                <Select value={category} onValueChange={setCategory} required>
+                <Select value={grade} onValueChange={setGrade} required>
                   <SelectTrigger className="h-12">
-                    <SelectValue placeholder="Select a category" />
+                    <SelectValue placeholder="Select a grade" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="grade-1">Grade 1</SelectItem>
+                    <SelectItem value="grade-2">Grade 2</SelectItem>
+                    <SelectItem value="grade-3">Grade 3</SelectItem>
+                    <SelectItem value="grade-4">Grade 4</SelectItem>
+                    <SelectItem value="grade-5">Grade 5</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Subject */}
+              <div className="space-y-2">
+                <Label htmlFor="subject" className="text-base font-semibold">
+                  Subject *
+                </Label>
+                <Select value={subject} onValueChange={setSubject} required>
+                  <SelectTrigger className="h-12">
+                    <SelectValue placeholder="Select a subject" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="math">Math</SelectItem>
                     <SelectItem value="english">English</SelectItem>
                     <SelectItem value="science">Science</SelectItem>
-                    <SelectItem value="word-search">Word Search</SelectItem>
-                    <SelectItem value="coloring">Coloring Pages</SelectItem>
-                    <SelectItem value="class-1">Grade 1</SelectItem>
-                    <SelectItem value="class-2">Grade 2</SelectItem>
-                    <SelectItem value="class-3">Grade 3</SelectItem>
-                    <SelectItem value="class-4">Grade 4</SelectItem>
-                    <SelectItem value="class-5">Grade 5</SelectItem>
+                    <SelectItem value="assignments">Assignments</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

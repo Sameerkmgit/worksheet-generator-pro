@@ -32,18 +32,28 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/category/math" className="opacity-90 hover:opacity-100 transition-opacity">
-                  Math
+                <Link to="/category/grade-1" className="opacity-90 hover:opacity-100 transition-opacity">
+                  Grade 1
                 </Link>
               </li>
               <li>
-                <Link to="/category/english" className="opacity-90 hover:opacity-100 transition-opacity">
-                  English
+                <Link to="/category/grade-2" className="opacity-90 hover:opacity-100 transition-opacity">
+                  Grade 2
                 </Link>
               </li>
               <li>
-                <Link to="/category/science" className="opacity-90 hover:opacity-100 transition-opacity">
-                  Science
+                <Link to="/category/grade-3" className="opacity-90 hover:opacity-100 transition-opacity">
+                  Grade 3
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/grade-4" className="opacity-90 hover:opacity-100 transition-opacity">
+                  Grade 4
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/grade-5" className="opacity-90 hover:opacity-100 transition-opacity">
+                  Grade 5
                 </Link>
               </li>
             </ul>
