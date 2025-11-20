@@ -150,9 +150,13 @@ const AdminDashboard = () => {
       setWorksheetImageOverride(String(worksheetId), base64String);
       
       toast({
-        title: "Image Updated",
-        description: "Worksheet image has been updated and will reflect on the live site",
+        title: "✅ Image Uploaded Successfully!",
+        description: "Image saved. REFRESH the live site page to see changes.",
+        duration: 5000,
       });
+      
+      console.log(`✅ Image uploaded for worksheet ID: ${worksheetId}`);
+      console.log(`🔍 Stored in localStorage with key: ${String(worksheetId)}`);
       
       // Force re-render by updating trigger
       setImageUpdateTrigger(prev => prev + 1);
@@ -760,7 +764,7 @@ const AdminDashboard = () => {
                           />
                         </div>
                         <h4 className="font-medium text-sm mb-3 line-clamp-2">{worksheet.title}</h4>
-                        <div className="space-y-2">
+                         <div className="space-y-2">
                           <Label htmlFor={`upload-${worksheet.id}`} className="text-xs text-muted-foreground">
                             Click to upload new image:
                           </Label>
@@ -771,6 +775,18 @@ const AdminDashboard = () => {
                             className="text-xs cursor-pointer"
                             id={`upload-${worksheet.id}`}
                           />
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="w-full text-xs"
+                            onClick={() => {
+                              const gradeSlug = categoryGradeFilter;
+                              const subjectSlug = categorySubjectFilter;
+                              window.open(`/category/${gradeSlug}/${subjectSlug}`, '_blank');
+                            }}
+                          >
+                            View Live Page →
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>
