@@ -20,11 +20,34 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (isForgotPassword) {
+      // Handle password reset
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/dashboard-secure-2025`,
+      });
+
+      if (error) {
+        toast({
+          title: "Reset Failed",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Check Your Email",
+          description: "Password reset link has been sent to your email address.",
+        });
+        setIsForgotPassword(false);
+      }
+      return;
+    }
     
     if (isSignUp) {
       // Validate password strength
@@ -91,12 +114,14 @@ const AdminLogin = () => {
             <Lock className="w-6 h-6 text-primary" />
           </div>
           <CardTitle className="text-2xl font-heading">
-            {isSignUp ? "Admin Signup" : "Admin Login"}
+            {isForgotPassword ? "Reset Password" : isSignUp ? "Admin Signup" : "Admin Login"}
           </CardTitle>
           <CardDescription>
-            {isSignUp 
-              ? "Create an admin account to get started" 
-              : "Enter your credentials to access the admin dashboard"}
+            {isForgotPassword 
+              ? "Enter your email to receive a password reset link"
+              : isSignUp 
+                ? "Create an admin account to get started" 
+                : "Enter your credentials to access the admin dashboard"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -113,32 +138,49 @@ const AdminLogin = () => {
                 required
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter admin password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="h-12"
-                required
-              />
-            </div>
+            {!isForgotPassword && (
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter admin password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-12"
+                  required
+                />
+              </div>
+            )}
             <Button type="submit" className="w-full h-12">
-              {isSignUp ? "Sign Up" : "Login"}
+              {isForgotPassword ? "Send Reset Link" : isSignUp ? "Sign Up" : "Login"}
             </Button>
           </form>
-          <div className="mt-4 text-center">
+          <div className="mt-4 text-center space-y-2">
+            {!isForgotPassword && (
+              <Button
+                type="button"
+                variant="link"
+                onClick={() => setIsSignUp(!isSignUp)}
+                className="text-sm block w-full"
+              >
+                {isSignUp 
+                  ? "Already have an account? Login" 
+                  : "Don't have an account? Sign Up"}
+              </Button>
+            )}
             <Button
               type="button"
               variant="link"
-              onClick={() => setIsSignUp(!isSignUp)}
-              className="text-sm"
+              onClick={() => {
+                setIsForgotPassword(!isForgotPassword);
+                setIsSignUp(false);
+              }}
+              className="text-sm block w-full"
             >
-              {isSignUp 
-                ? "Already have an account? Login" 
-                : "Don't have an account? Sign Up"}
+              {isForgotPassword 
+                ? "Back to Login" 
+                : "Forgot Password?"}
             </Button>
           </div>
         </CardContent>
