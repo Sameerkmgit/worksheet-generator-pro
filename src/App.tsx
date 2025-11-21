@@ -12,6 +12,7 @@ import WorksheetDetail from "./pages/WorksheetDetail";
 import AdminUpload from "./pages/AdminUpload";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
+import ResetPassword from "./pages/ResetPassword";
 import Search from "./pages/Search";
 import Packs from "./pages/Packs";
 import NotFound from "./pages/NotFound";
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
           <Route path="/dashboard-secure-2025" element={<AdminLogin />} />
+          <Route path="/admin/reset-password" element={<ResetPassword />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

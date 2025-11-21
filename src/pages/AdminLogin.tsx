@@ -30,7 +30,7 @@ const AdminLogin = () => {
     if (isForgotPassword) {
       // Handle password reset
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/dashboard-secure-2025`,
+        redirectTo: `${window.location.origin}/admin/reset-password`,
       });
 
       if (error) {
