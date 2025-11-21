@@ -81,14 +81,18 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    if (!isAdminAuthenticated()) {
-      navigate("/dashboard-secure-2025");
-      return;
-    }
-    // Seed worksheets if none exist
-    seedInitialWorksheets();
-    loadWorksheets();
-    loadCategories();
+    const checkAuth = async () => {
+      const isAdmin = await isAdminAuthenticated();
+      if (!isAdmin) {
+        navigate("/dashboard-secure-2025");
+        return;
+      }
+      // Seed worksheets if none exist
+      seedInitialWorksheets();
+      loadWorksheets();
+      loadCategories();
+    };
+    checkAuth();
   }, [navigate]);
 
   useEffect(() => {
