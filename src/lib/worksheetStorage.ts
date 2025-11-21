@@ -1,5 +1,20 @@
 // Utility functions for managing worksheet and category data using Supabase
 import { supabase } from '@/integrations/supabase/client';
+import { z } from 'zod';
+
+// Validation schema for worksheet data
+const worksheetSchema = z.object({
+  title: z.string().trim().min(1, "Title is required").max(200, "Title must be less than 200 characters"),
+  description: z.string().max(1000, "Description must be less than 1000 characters").optional(),
+  grade: z.enum(["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5"], {
+    errorMap: () => ({ message: "Invalid grade level" })
+  }),
+  subject: z.enum(["math", "english", "science", "computer-science", "assignments"], {
+    errorMap: () => ({ message: "Invalid subject" })
+  }),
+  pdfUrl: z.string().url("Invalid PDF URL"),
+  imageUrl: z.string().url("Invalid image URL").optional().or(z.literal("")),
+});
 
 export interface WorksheetData {
   id: string;
@@ -292,12 +307,30 @@ export const getWorksheetsByGradeAndSubject = async (
 export const createWorksheet = async (
   worksheet: Omit<WorksheetData, "id" | "createdAt" | "updatedAt">
 ): Promise<WorksheetData | null> => {
+  // Validate input data
+  try {
+    worksheetSchema.parse({
+      title: worksheet.title,
+      description: worksheet.description,
+      grade: worksheet.grade,
+      subject: worksheet.subject,
+      pdfUrl: worksheet.pdfUrl,
+      imageUrl: worksheet.imageUrl,
+    });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error("Validation error:", error.errors);
+      throw new Error(error.errors[0].message);
+    }
+    throw error;
+  }
+
   const newId = Date.now().toString();
   const { data, error } = await supabase
     .from('worksheets')
     .insert({
       id: newId,
-      title: worksheet.title,
+      title: worksheet.title.trim(),
       description: worksheet.description,
       grade: worksheet.grade,
       subject: worksheet.subject,
@@ -327,8 +360,29 @@ export const updateWorksheet = async (
   id: string,
   updates: Partial<WorksheetData>
 ): Promise<WorksheetData | null> => {
+  // Validate input data if key fields are being updated
+  if (updates.title || updates.grade || updates.subject || updates.pdfUrl || updates.imageUrl) {
+    try {
+      const validationData: any = {};
+      if (updates.title) validationData.title = updates.title;
+      if (updates.grade) validationData.grade = updates.grade;
+      if (updates.subject) validationData.subject = updates.subject;
+      if (updates.pdfUrl) validationData.pdfUrl = updates.pdfUrl;
+      if (updates.imageUrl !== undefined) validationData.imageUrl = updates.imageUrl;
+      
+      // Only validate provided fields
+      worksheetSchema.partial().parse(validationData);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error("Validation error:", error.errors);
+        throw new Error(error.errors[0].message);
+      }
+      throw error;
+    }
+  }
+
   const updateData: any = {};
-  if (updates.title) updateData.title = updates.title;
+  if (updates.title) updateData.title = updates.title.trim();
   if (updates.description !== undefined) updateData.description = updates.description;
   if (updates.grade) updateData.grade = updates.grade;
   if (updates.subject) updateData.subject = updates.subject;
