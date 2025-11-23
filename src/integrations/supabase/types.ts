@@ -134,6 +134,7 @@ export type Database = {
           id: string
           image_url: string | null
           intro: string | null
+          is_archived: boolean | null
           pdf_url: string
           questions: Json | null
           seo: Json | null
@@ -152,6 +153,7 @@ export type Database = {
           id: string
           image_url?: string | null
           intro?: string | null
+          is_archived?: boolean | null
           pdf_url: string
           questions?: Json | null
           seo?: Json | null
@@ -170,6 +172,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           intro?: string | null
+          is_archived?: boolean | null
           pdf_url?: string
           questions?: Json | null
           seo?: Json | null
