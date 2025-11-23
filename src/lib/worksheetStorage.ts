@@ -210,11 +210,12 @@ export const seedInitialWorksheets = async (): Promise<void> => {
   }
 };
 
-// Fetch all worksheets
+// Fetch all worksheets (excluding archived)
 export const getAllWorksheets = async (): Promise<WorksheetData[]> => {
   const { data, error } = await supabase
     .from('worksheets')
     .select('*')
+    .eq('is_archived', false)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -241,7 +242,7 @@ export const getWorksheetById = async (id: string): Promise<WorksheetData | null
   return mapWorksheetFromDB(data);
 };
 
-// Get worksheets by grade
+// Get worksheets by grade (excluding archived)
 export const getWorksheetsByGrade = async (grade: string): Promise<WorksheetData[]> => {
   // Convert URL format (grade-1) to database format (Grade 1)
   const gradeTitle = grade.split('-').map((word, index) => 
@@ -252,6 +253,7 @@ export const getWorksheetsByGrade = async (grade: string): Promise<WorksheetData
     .from('worksheets')
     .select('*')
     .ilike('grade', gradeTitle)
+    .eq('is_archived', false)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -262,12 +264,13 @@ export const getWorksheetsByGrade = async (grade: string): Promise<WorksheetData
   return (data || []).map(mapWorksheetFromDB);
 };
 
-// Get worksheets by subject
+// Get worksheets by subject (excluding archived)
 export const getWorksheetsBySubject = async (subject: string): Promise<WorksheetData[]> => {
   const { data, error } = await supabase
     .from('worksheets')
     .select('*')
     .ilike('subject', subject)
+    .eq('is_archived', false)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -278,7 +281,7 @@ export const getWorksheetsBySubject = async (subject: string): Promise<Worksheet
   return (data || []).map(mapWorksheetFromDB);
 };
 
-// Get worksheets by grade and subject
+// Get worksheets by grade and subject (excluding archived)
 export const getWorksheetsByGradeAndSubject = async (
   grade: string,
   subject: string
@@ -293,6 +296,7 @@ export const getWorksheetsByGradeAndSubject = async (
     .select('*')
     .ilike('grade', gradeTitle)
     .ilike('subject', subject)
+    .eq('is_archived', false)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -411,11 +415,11 @@ export const updateWorksheet = async (
   return mapWorksheetFromDB(data);
 };
 
-// Delete a worksheet
+// Soft delete a worksheet (set is_archived = true)
 export const deleteWorksheet = async (id: string): Promise<boolean> => {
   const { error } = await supabase
     .from('worksheets')
-    .delete()
+    .update({ is_archived: true })
     .eq('id', id);
 
   return !error;
