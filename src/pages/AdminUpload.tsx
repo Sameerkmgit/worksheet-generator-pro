@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Upload, FileText, Image, CheckCircle } from "lucide-react";
+import { Upload, FileText, Image, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminUpload = () => {
   const { toast } = useToast();
@@ -18,32 +19,107 @@ const AdminUpload = () => {
   const [subject, setSubject] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [previewFile, setPreviewFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!title || !grade || !subject || !pdfFile || !previewFile) {
+    if (!title || !grade || !subject || !pdfFile) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields and upload both files.",
+        description: "Please fill in title, grade, subject, and PDF file.",
         variant: "destructive",
       });
       return;
     }
 
-    // In production, this would upload to your backend/storage
-    toast({
-      title: "Success!",
-      description: "Worksheet uploaded successfully.",
-    });
+    setIsUploading(true);
 
-    // Reset form
-    setTitle("");
-    setDescription("");
-    setGrade("");
-    setSubject("");
-    setPdfFile(null);
-    setPreviewFile(null);
+    try {
+      // Upload PDF to Supabase Storage
+      const pdfFileName = `${Date.now()}-${pdfFile.name}`;
+      const { data: pdfData, error: pdfError } = await supabase.storage
+        .from('worksheet-images')
+        .upload(pdfFileName, pdfFile, {
+          contentType: 'application/pdf',
+          upsert: false
+        });
+
+      if (pdfError) throw pdfError;
+
+      const { data: { publicUrl: pdfUrl } } = supabase.storage
+        .from('worksheet-images')
+        .getPublicUrl(pdfFileName);
+
+      // Upload preview image if provided
+      let imageUrl = null;
+      if (previewFile) {
+        const imageFileName = `${Date.now()}-${previewFile.name}`;
+        const { data: imageData, error: imageError } = await supabase.storage
+          .from('worksheet-images')
+          .upload(imageFileName, previewFile, {
+            contentType: previewFile.type,
+            upsert: false
+          });
+
+        if (imageError) throw imageError;
+
+        const { data: { publicUrl: imagePublicUrl } } = supabase.storage
+          .from('worksheet-images')
+          .getPublicUrl(imageFileName);
+        
+        imageUrl = imagePublicUrl;
+      }
+
+      // Convert grade from "grade-1" to "Grade 1"
+      const gradeTitle = grade.split('-').map((word, index) => 
+        index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
+      ).join(' ');
+
+      // Insert worksheet into database
+      const { error: insertError } = await supabase
+        .from('worksheets')
+        .insert({
+          id: `worksheet-${Date.now()}`,
+          title,
+          description: description || null,
+          grade: gradeTitle,
+          subject,
+          pdf_url: pdfUrl,
+          image_url: imageUrl
+        });
+
+      if (insertError) throw insertError;
+
+      toast({
+        title: "Success!",
+        description: "Worksheet added successfully.",
+      });
+
+      // Reset form
+      setTitle("");
+      setDescription("");
+      setGrade("");
+      setSubject("");
+      setPdfFile(null);
+      setPreviewFile(null);
+      
+      // Reset file inputs
+      const pdfInput = document.getElementById('pdf') as HTMLInputElement;
+      const previewInput = document.getElementById('preview') as HTMLInputElement;
+      if (pdfInput) pdfInput.value = '';
+      if (previewInput) previewInput.value = '';
+
+    } catch (error: any) {
+      console.error('Upload error:', error);
+      toast({
+        title: "Upload Failed",
+        description: error.message || "Failed to upload worksheet. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -116,6 +192,7 @@ const AdminUpload = () => {
                     <SelectItem value="math">Math</SelectItem>
                     <SelectItem value="english">English</SelectItem>
                     <SelectItem value="science">Science</SelectItem>
+                    <SelectItem value="computer-science">Computer Science</SelectItem>
                     <SelectItem value="assignments">Assignments</SelectItem>
                   </SelectContent>
                 </Select>
@@ -169,16 +246,15 @@ const AdminUpload = () => {
               {/* Preview Image Upload */}
               <div className="space-y-2">
                 <Label htmlFor="preview" className="text-base font-semibold">
-                  Preview Image (JPG) *
+                  Preview Image (Optional)
                 </Label>
                 <div className="border-2 border-dashed rounded-lg border-border p-6 text-center hover:border-primary transition-colors">
                   <input
                     id="preview"
                     type="file"
-                    accept=".jpg,.jpeg"
+                    accept=".jpg,.jpeg,.png,.webp"
                     onChange={(e) => setPreviewFile(e.target.files?.[0] || null)}
                     className="hidden"
-                    required
                   />
                   <label htmlFor="preview" className="cursor-pointer">
                     <Image className="w-12 h-12 mx-auto mb-3 text-primary" />
@@ -189,17 +265,26 @@ const AdminUpload = () => {
                       </div>
                     ) : (
                       <div>
-                        <p className="font-medium text-foreground mb-1">Click to upload JPG</p>
-                        <p className="text-sm text-muted-foreground">or drag and drop</p>
+                        <p className="font-medium text-foreground mb-1">Click to upload image</p>
+                        <p className="text-sm text-muted-foreground">JPG, PNG, or WebP</p>
                       </div>
                     )}
                   </label>
                 </div>
               </div>
 
-              <Button type="submit" size="lg" className="w-full h-14 text-base">
-                <Upload className="mr-2" />
-                Upload Worksheet
+              <Button type="submit" size="lg" className="w-full h-14 text-base" disabled={isUploading}>
+                {isUploading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Uploading...
+                  </>
+                ) : (
+                  <>
+                    <Upload className="mr-2" />
+                    Upload Worksheet
+                  </>
+                )}
               </Button>
             </form>
           </CardContent>
