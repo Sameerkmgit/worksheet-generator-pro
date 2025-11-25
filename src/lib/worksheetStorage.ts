@@ -24,6 +24,7 @@ export interface WorksheetData {
   subject: string;
   pdfUrl: string;
   imageUrl: string;
+  content?: string;
   heading?: string;
   intro?: string;
   questions?: any[];
@@ -55,6 +56,7 @@ const mapWorksheetFromDB = (w: any): WorksheetData => ({
   subject: w.subject,
   pdfUrl: w.pdf_url,
   imageUrl: w.image_url || '',
+  content: w.content || '',
   heading: w.heading,
   intro: w.intro,
   questions: w.questions as any,
@@ -410,6 +412,7 @@ export const createWorksheet = async (
       subject: worksheet.subject,
       pdf_url: worksheet.pdfUrl,
       image_url: worksheet.imageUrl,
+      content: worksheet.content,
       heading: worksheet.heading,
       intro: worksheet.intro,
       questions: worksheet.questions,
@@ -462,6 +465,7 @@ export const updateWorksheet = async (
   if (updates.subject) updateData.subject = updates.subject;
   if (updates.pdfUrl) updateData.pdf_url = updates.pdfUrl;
   if (updates.imageUrl !== undefined) updateData.image_url = updates.imageUrl;
+  if (updates.content !== undefined) updateData.content = updates.content;
   if (updates.heading !== undefined) updateData.heading = updates.heading;
   if (updates.intro !== undefined) updateData.intro = updates.intro;
   if (updates.questions !== undefined) updateData.questions = updates.questions;
