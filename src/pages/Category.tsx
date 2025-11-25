@@ -185,7 +185,7 @@ const Category = () => {
                         </Link>
                       </Button>
                       <Button variant="outline" asChild>
-                        <a href={worksheet.pdfUrl} download>
+                        <a href={worksheet.pdfUrl} target="_blank" rel="noopener noreferrer">
                           <Download className="h-4 w-4 mr-2" />
                           Download
                         </a>
