@@ -31,6 +31,10 @@ const Category = () => {
   const [imageOverrides, setImageOverrides] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    // Reset worksheets when route changes to avoid showing stale data
+    setWorksheets([]);
+    setImageOverrides({});
+    
     const loadWorksheets = async () => {
       const gradeKey = grade || "";
       const subjectKey = subject || "";
