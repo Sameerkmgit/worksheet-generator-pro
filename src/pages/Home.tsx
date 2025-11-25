@@ -1,24 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, BookOpen, Palette, Calculator, Globe, FileText, Star, GraduationCap, BookA, Microscope, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getWorksheetCountsByGrade } from "@/lib/getWorksheetCounts";
 
-const categories = [
-  { id: "grade-1", title: "Grade 1", icon: GraduationCap, color: "from-blue-400 to-blue-500", worksheets: 89 },
-  { id: "grade-2", title: "Grade 2", icon: GraduationCap, color: "from-blue-500 to-blue-600", worksheets: 95 },
-  { id: "grade-3", title: "Grade 3", icon: GraduationCap, color: "from-indigo-400 to-indigo-500", worksheets: 102 },
-  { id: "grade-4", title: "Grade 4", icon: GraduationCap, color: "from-indigo-500 to-indigo-600", worksheets: 108 },
-  { id: "grade-5", title: "Grade 5", icon: GraduationCap, color: "from-purple-400 to-purple-500", worksheets: 115 },
+const baseCategories = [
+  { id: "grade-1", title: "Grade 1", dbGrade: "Grade 1", icon: GraduationCap, color: "from-blue-400 to-blue-500" },
+  { id: "grade-2", title: "Grade 2", dbGrade: "Grade 2", icon: GraduationCap, color: "from-blue-500 to-blue-600" },
+  { id: "grade-3", title: "Grade 3", dbGrade: "Grade 3", icon: GraduationCap, color: "from-indigo-400 to-indigo-500" },
+  { id: "grade-4", title: "Grade 4", dbGrade: "Grade 4", icon: GraduationCap, color: "from-indigo-500 to-indigo-600" },
+  { id: "grade-5", title: "Grade 5", dbGrade: "Grade 5", icon: GraduationCap, color: "from-purple-400 to-purple-500" },
 ];
 
 const Home = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [categories, setCategories] = useState(baseCategories.map(cat => ({ ...cat, worksheets: 0 })));
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadWorksheetCounts = async () => {
+      setIsLoading(true);
+      const counts = await getWorksheetCountsByGrade();
+      
+      const updatedCategories = baseCategories.map(cat => ({
+        ...cat,
+        worksheets: counts[cat.dbGrade] || 0
+      }));
+      
+      setCategories(updatedCategories);
+      setIsLoading(false);
+    };
+    
+    loadWorksheetCounts();
+  }, []);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -147,25 +168,40 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-            {categories.map((category) => (
-              <Link to={`/category/${category.id}`} key={category.id}>
-                <Card className="cursor-pointer group h-full">
+            {isLoading ? (
+              // Loading skeletons
+              Array.from({ length: 5 }).map((_, index) => (
+                <Card key={index} className="h-full">
                   <CardHeader>
-                <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`} role="img" aria-label={`${category.title} category icon`}>
-                  <category.icon className="w-8 h-8 text-white" aria-hidden="true" />
-                </div>
-                    <CardTitle className="text-2xl group-hover:text-primary transition-colors font-heading">
-                      {category.title}
-                    </CardTitle>
+                    <Skeleton className="w-16 h-16 rounded-lg mb-4" />
+                    <Skeleton className="h-8 w-32" />
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground text-base">
-                      {category.worksheets} worksheets available
-                    </p>
+                    <Skeleton className="h-5 w-40" />
                   </CardContent>
                 </Card>
-              </Link>
-            ))}
+              ))
+            ) : (
+              categories.map((category) => (
+                <Link to={`/category/${category.id}`} key={category.id}>
+                  <Card className="cursor-pointer group h-full">
+                    <CardHeader>
+                  <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`} role="img" aria-label={`${category.title} category icon`}>
+                    <category.icon className="w-8 h-8 text-white" aria-hidden="true" />
+                  </div>
+                      <CardTitle className="text-2xl group-hover:text-primary transition-colors font-heading">
+                        {category.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground text-base">
+                        {category.worksheets} worksheets available
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </section>

@@ -34,9 +34,7 @@ const Category = () => {
     const loadWorksheets = async () => {
       const gradeKey = grade || "";
       const subjectKey = subject || "";
-      const gradeNumber = gradeKey.split('-')[1];
-      const gradeLabel = `Grade ${gradeNumber}`;
-      const fetchedWorksheets = await getWorksheetsByGradeAndSubject(gradeLabel, subjectKey);
+      const fetchedWorksheets = await getWorksheetsByGradeAndSubject(gradeKey, subjectKey);
       
       // Load image overrides for all worksheets
       const overrides: Record<string, string> = {};
