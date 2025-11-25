@@ -192,15 +192,9 @@ const WorksheetDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - Main Content */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Worksheet Preview Image */}
+              {/* Worksheet Details */}
               <Card>
                 <CardContent className="p-6">
-                  <img
-                    src={imageUrl}
-                    alt={worksheet.title}
-                    className="w-full rounded-lg shadow-md mb-6"
-                  />
-                  
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
                     <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
                       {worksheet.grade}
