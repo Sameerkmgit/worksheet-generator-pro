@@ -29,27 +29,35 @@ const Category = () => {
   const { grade, subject } = useParams();
   const [worksheets, setWorksheets] = useState<any[]>([]);
   const [imageOverrides, setImageOverrides] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Reset worksheets when route changes to avoid showing stale data
+    // Reset state and start loading when route params change
     setWorksheets([]);
     setImageOverrides({});
+    setLoading(true);
     
     const loadWorksheets = async () => {
-      const gradeKey = grade || "";
-      const subjectKey = subject || "";
-      const fetchedWorksheets = await getWorksheetsByGradeAndSubject(gradeKey, subjectKey);
-      
-      // Load image overrides for all worksheets
-      const overrides: Record<string, string> = {};
-      for (const worksheet of fetchedWorksheets) {
-        const override = await getWorksheetImageOverride(worksheet.id.toString());
-        if (override) {
-          overrides[worksheet.id.toString()] = override;
+      try {
+        const gradeKey = grade || "";
+        const subjectKey = subject || "";
+        const fetchedWorksheets = await getWorksheetsByGradeAndSubject(gradeKey, subjectKey);
+        
+        // Load image overrides for all worksheets
+        const overrides: Record<string, string> = {};
+        for (const worksheet of fetchedWorksheets) {
+          const override = await getWorksheetImageOverride(worksheet.id.toString());
+          if (override) {
+            overrides[worksheet.id.toString()] = override;
+          }
         }
+        setImageOverrides(overrides);
+        setWorksheets(fetchedWorksheets);
+      } catch (error) {
+        console.error("Error loading worksheets:", error);
+      } finally {
+        setLoading(false);
       }
-      setImageOverrides(overrides);
-      setWorksheets(fetchedWorksheets);
     };
     loadWorksheets();
   }, [grade, subject]);
@@ -149,7 +157,14 @@ const Category = () => {
         {/* Worksheets Grid */}
         <section className="py-16 px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-            {worksheets.length === 0 ? (
+            {loading ? (
+              <div className="col-span-full text-center py-12">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                  <p className="text-muted-foreground text-lg">Loading worksheets...</p>
+                </div>
+              </div>
+            ) : worksheets.length === 0 ? (
               <div className="col-span-full text-center py-12">
                 <p className="text-muted-foreground text-lg">
                   No worksheets available for this category yet. Check back soon!
