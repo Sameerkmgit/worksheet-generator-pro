@@ -65,17 +65,14 @@ const AdminDashboard = () => {
   });
 
   // Reset all data and reseed
-  const handleResetData = () => {
-    if (window.confirm("⚠️ This will DELETE ALL worksheets and categories and create fresh sample data. Are you sure?")) {
-      localStorage.removeItem('smartkids_worksheets');
-      localStorage.removeItem('smartkids_categories');
-      localStorage.removeItem('smartkids_worksheet_images');
-      seedInitialWorksheets();
+  const handleResetData = async () => {
+    if (window.confirm("⚠️ This will seed missing worksheets from Grades 1-5. Your uploaded worksheets will NOT be deleted. Continue?")) {
+      await seedInitialWorksheets();
       loadWorksheets();
       loadCategories();
       toast({
-        title: "Data Reset Complete",
-        description: "Sample worksheets have been created. Check the filters now!",
+        title: "Seeding Complete",
+        description: "Missing default worksheets have been added to the database.",
       });
     }
   };
@@ -469,8 +466,8 @@ const AdminDashboard = () => {
               Admin Dashboard
             </h1>
             <div className="flex gap-2">
-              <Button onClick={handleResetData} variant="destructive" size="sm">
-                🔄 Reset Data
+              <Button onClick={handleResetData} variant="secondary" size="sm">
+                🌱 Seed Missing Worksheets
               </Button>
               <Button onClick={handleLogout} variant="outline">
                 <LogOut className="mr-2 h-4 w-4" />
