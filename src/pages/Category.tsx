@@ -1,11 +1,11 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Download } from "lucide-react";
+import { ArrowLeft, FolderOpen } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getWorksheetsByGradeAndSubject, getWorksheetImageOverride } from "@/lib/worksheetStorage";
+import { getWorksheetCategoriesByGradeAndSubject, WorksheetCategoryData } from "@/lib/worksheetStorage";
 import { useState, useEffect } from "react";
 
 const subjectTitles: Record<string, string> = {
@@ -27,39 +27,27 @@ const gradeTitles: Record<string, string> = {
 
 const Category = () => {
   const { grade, subject } = useParams();
-  const [worksheets, setWorksheets] = useState<any[]>([]);
-  const [imageOverrides, setImageOverrides] = useState<Record<string, string>>({});
+  const [categories, setCategories] = useState<WorksheetCategoryData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Reset state and start loading when route params change
-    setWorksheets([]);
-    setImageOverrides({});
+    setCategories([]);
     setLoading(true);
     
-    const loadWorksheets = async () => {
+    const loadCategories = async () => {
       try {
         const gradeKey = grade || "";
         const subjectKey = subject || "";
-        const fetchedWorksheets = await getWorksheetsByGradeAndSubject(gradeKey, subjectKey);
-        
-        // Load image overrides for all worksheets
-        const overrides: Record<string, string> = {};
-        for (const worksheet of fetchedWorksheets) {
-          const override = await getWorksheetImageOverride(worksheet.id.toString());
-          if (override) {
-            overrides[worksheet.id.toString()] = override;
-          }
-        }
-        setImageOverrides(overrides);
-        setWorksheets(fetchedWorksheets);
+        const fetchedCategories = await getWorksheetCategoriesByGradeAndSubject(gradeKey, subjectKey);
+        setCategories(fetchedCategories);
       } catch (error) {
-        console.error("Error loading worksheets:", error);
+        console.error("Error loading categories:", error);
       } finally {
         setLoading(false);
       }
     };
-    loadWorksheets();
+    loadCategories();
   }, [grade, subject]);
   
   const gradeTitle = gradeTitles[grade || ""] || "Grade";
@@ -154,61 +142,47 @@ const Category = () => {
           </div>
         </section>
 
-        {/* Worksheets Grid */}
+        {/* Categories Grid */}
         <section className="py-16 px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {loading ? (
               <div className="col-span-full text-center py-12">
                 <div className="flex flex-col items-center gap-4">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                  <p className="text-muted-foreground text-lg">Loading worksheets...</p>
+                  <p className="text-muted-foreground text-lg">Loading categories...</p>
                 </div>
               </div>
-            ) : worksheets.length === 0 ? (
+            ) : categories.length === 0 ? (
               <div className="col-span-full text-center py-12">
                 <p className="text-muted-foreground text-lg">
-                  No worksheets available for this category yet. Check back soon!
+                  No categories available for this subject yet. Check back soon!
                 </p>
               </div>
             ) : (
-              worksheets.map((worksheet) => {
-                // Check if there's an override image for this worksheet
-                const displayImage = imageOverrides[worksheet.id.toString()] || worksheet.imageUrl;
-                
-                return (
-                  <Card key={worksheet.id} className="hover:shadow-lg transition-shadow">
-                    <CardHeader className="p-0">
-                      <div className="aspect-video relative overflow-hidden rounded-t-lg">
-                        <img
-                          src={displayImage}
-                          alt={worksheet.title}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
+              categories.map((category) => (
+                <Card key={category.id} className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 rounded-lg bg-primary/10">
+                        <FolderOpen className="h-6 w-6 text-primary" />
                       </div>
-                    </CardHeader>
-                    <CardContent className="p-6">
-                      <CardTitle className="text-xl mb-2 line-clamp-2">{worksheet.title}</CardTitle>
-                      <p className="text-muted-foreground text-sm line-clamp-2">
-                        {worksheet.description}
-                      </p>
-                    </CardContent>
-                    <CardFooter className="p-6 pt-0 flex gap-2">
-                      <Button asChild className="flex-1">
-                        <Link to={`/worksheet/${worksheet.id}`}>
-                          View Details
-                        </Link>
-                      </Button>
-                      <Button variant="outline" asChild>
-                        <a href={worksheet.pdfUrl} target="_blank" rel="noopener noreferrer">
-                          <Download className="h-4 w-4 mr-2" />
-                          Download
-                        </a>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                );
-              })
+                      <CardTitle className="text-xl">{category.title}</CardTitle>
+                    </div>
+                    {category.description && (
+                      <CardDescription className="text-sm">
+                        {category.description}
+                      </CardDescription>
+                    )}
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <Button asChild className="w-full">
+                      <Link to={`/category/${grade}/${subject}/${category.id}`}>
+                        View Worksheets
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))
             )}
           </div>
         </section>
