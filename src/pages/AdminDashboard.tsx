@@ -391,26 +391,33 @@ const AdminDashboard = () => {
     setEditingWorksheet(null);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (editingWorksheet) {
       // Update existing worksheet
-      updateWorksheet(editingWorksheet.id, formData);
+      await updateWorksheet(editingWorksheet.id, formData);
       toast({
         title: "Worksheet Updated",
         description: "The worksheet has been successfully updated",
       });
     } else {
       // Create new worksheet
-      createWorksheet(formData);
+      await createWorksheet(formData);
       toast({
-        title: "Worksheet Created",
-        description: "New worksheet has been added successfully",
+        title: "✅ Worksheet Created!",
+        description: `"${formData.title}" has been added. Go to Categories tab to upload its image.`,
+        duration: 6000,
       });
     }
 
-    loadWorksheets();
+    // Reload all worksheets
+    await loadWorksheets();
+    
+    // Force reload category worksheets immediately
+    const filtered = await getWorksheetsForFilters();
+    setCategoryFilteredWorksheets(filtered);
+    
     setIsDialogOpen(false);
     resetForm();
   };
