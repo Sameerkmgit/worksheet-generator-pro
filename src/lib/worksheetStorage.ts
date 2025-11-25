@@ -109,16 +109,8 @@ export const adminLogout = async (): Promise<void> => {
 
 // Seed initial worksheets if none exist
 export const seedInitialWorksheets = async (): Promise<void> => {
-  const { data: existingWorksheets } = await supabase
-    .from('worksheets')
-    .select('id')
-    .limit(1);
+  console.log("🌱 Starting worksheet seeding...");
   
-  if (existingWorksheets && existingWorksheets.length > 0) {
-    console.log("Worksheets already seeded. Skipping.");
-    return;
-  }
-
   const worksheets: WorksheetData[] = [
     // GRADE 1 - MATH
     { id: "3", title: "Introduction to Multiplication", description: "Learn multiplication basics", grade: "Grade 1", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
@@ -183,9 +175,86 @@ export const seedInitialWorksheets = async (): Promise<void> => {
     { id: "103", title: "Monthly Test - All Subjects", description: "Comprehensive monthly test", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
     { id: "104", title: "Revision Sheet - Numbers & Words", description: "Revision worksheet", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
     { id: "105", title: "Homework Pack - Week 1", description: "Weekly homework", grade: "Grade 2", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 3 - MATH
+    { id: "301", title: "Division Practice", description: "Learn division basics", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "302", title: "Multiplication (3-Digit)", description: "Advanced multiplication", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "303", title: "Fractions Basics", description: "Introduction to fractions", grade: "Grade 3", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 3 - ENGLISH
+    { id: "304", title: "Reading Comprehension", description: "Advanced reading practice", grade: "Grade 3", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "305", title: "Grammar & Tenses", description: "Learn verb tenses", grade: "Grade 3", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 3 - SCIENCE
+    { id: "306", title: "Solar System", description: "Learn about planets", grade: "Grade 3", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "307", title: "States of Matter", description: "Solid, liquid, gas", grade: "Grade 3", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 3 - COMPUTER SCIENCE
+    { id: "308", title: "Basic Coding Concepts", description: "Introduction to programming", grade: "Grade 3", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 3 - ASSIGNMENTS
+    { id: "309", title: "Grade 3 Monthly Test", description: "Comprehensive assessment", grade: "Grade 3", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 4 - MATH
+    { id: "401", title: "Introduction to Fractions", description: "Learn fraction basics", grade: "Grade 4", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "402", title: "Decimals & Place Value", description: "Understand decimals", grade: "Grade 4", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 4 - ENGLISH
+    { id: "403", title: "Essay Writing Basics", description: "Learn essay structure", grade: "Grade 4", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 4 - SCIENCE
+    { id: "404", title: "Our Solar System", description: "Planets and astronomy", grade: "Grade 4", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "405", title: "Human Body Systems", description: "Learn body systems", grade: "Grade 4", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 4 - COMPUTER SCIENCE
+    { id: "406", title: "Internet Safety", description: "Online safety basics", grade: "Grade 4", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 4 - ASSIGNMENTS
+    { id: "407", title: "Grade 4 Revision Pack", description: "Complete revision", grade: "Grade 4", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 5 - MATH
+    { id: "501", title: "Decimals and Place Value", description: "Advanced decimal operations", grade: "Grade 5", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "502", title: "Percentages & Ratios", description: "Learn percentages", grade: "Grade 5", subject: "math", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 5 - ENGLISH
+    { id: "503", title: "Essay Writing and Paragraph Structure", description: "Advanced writing skills", grade: "Grade 5", subject: "english", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 5 - SCIENCE
+    { id: "504", title: "Ecosystems & Food Chains", description: "Environmental science", grade: "Grade 5", subject: "science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 5 - COMPUTER SCIENCE
+    { id: "505", title: "Advanced Coding Concepts", description: "Programming fundamentals", grade: "Grade 5", subject: "computer-science", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+
+    // GRADE 5 - ASSIGNMENTS
+    { id: "506", title: "Grade 5 Final Assessment", description: "Year-end assessment", grade: "Grade 5", subject: "assignments", pdfUrl: "/worksheets/placeholder.pdf", imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
   ];
 
-  const dbWorksheets = worksheets.map(w => ({
+  // Fetch existing worksheets to check what's already in the database
+  const { data: existingWorksheets } = await supabase
+    .from('worksheets')
+    .select('title, grade, subject');
+  
+  const existingSet = new Set(
+    (existingWorksheets || []).map(w => `${w.title}|${w.grade}|${w.subject}`)
+  );
+  
+  console.log(`📊 Found ${existingWorksheets?.length || 0} existing worksheets in database`);
+  
+  // Filter to only worksheets that don't exist yet
+  const newWorksheets = worksheets.filter(w => {
+    const key = `${w.title}|${w.grade}|${w.subject}`;
+    return !existingSet.has(key);
+  });
+  
+  console.log(`✨ Found ${newWorksheets.length} new worksheets to add`);
+  
+  if (newWorksheets.length === 0) {
+    console.log("✅ All worksheets already exist. No seeding needed.");
+    return;
+  }
+  
+  // Transform to database format
+  const dbWorksheets = newWorksheets.map(w => ({
     id: w.id,
     title: w.title,
     description: w.description,
@@ -202,11 +271,12 @@ export const seedInitialWorksheets = async (): Promise<void> => {
     seo: w.seo,
   }));
 
+  // Insert only new worksheets
   const { error } = await supabase.from('worksheets').insert(dbWorksheets);
   if (error) {
-    console.error("Error seeding worksheets:", error);
+    console.error("❌ Error seeding worksheets:", error);
   } else {
-    console.log("Initial worksheets seeded successfully!");
+    console.log(`✅ Successfully added ${newWorksheets.length} new worksheets!`);
   }
 };
 
