@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Edit, Trash2, LogOut, FileText, Filter, Image as ImageIcon } from "lucide-react";
+import { Plus, Edit, Trash2, LogOut, FileText, Filter, Image as ImageIcon, FolderPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,11 @@ import {
   getWorksheetImageOverride,
   getAllWorksheetImageOverrides,
   seedInitialWorksheets,
+  getAllWorksheetCategories,
+  getWorksheetCategoriesByGradeAndSubject,
+  createWorksheetCategory,
+  deleteWorksheetCategory,
+  WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
 import {
   Dialog,
@@ -45,7 +50,8 @@ const AdminDashboard = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingWorksheet, setEditingWorksheet] = useState<WorksheetData | null>(null);
   const [categories, setCategories] = useState<CategoryData[]>([]);
-  const [activeTab, setActiveTab] = useState<"worksheets" | "categories">("worksheets");
+  const [worksheetCategories, setWorksheetCategories] = useState<WorksheetCategoryData[]>([]);
+  const [activeTab, setActiveTab] = useState<"worksheets" | "categories" | "worksheet-categories">("worksheets");
   const [categoryGradeFilter, setCategoryGradeFilter] = useState<string>("grade-1");
   const [categorySubjectFilter, setCategorySubjectFilter] = useState<string>("math");
   const [isUploading, setIsUploading] = useState(false);
@@ -54,12 +60,20 @@ const AdminDashboard = () => {
   const [savedWorksheetIds, setSavedWorksheetIds] = useState<Set<string>>(new Set());
   const [categoryFilteredWorksheets, setCategoryFilteredWorksheets] = useState<WorksheetData[]>([]);
   const [worksheetImageOverrides, setWorksheetImageOverrides] = useState<Record<string, string>>({});
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
+  const [newCategoryData, setNewCategoryData] = useState({
+    title: "",
+    description: "",
+    grade: "",
+    subject: "",
+  });
   // Form state
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     grade: "",
     subject: "",
+    categoryId: "",
     pdfUrl: "",
     imageUrl: "",
     content: "",
@@ -89,6 +103,7 @@ const AdminDashboard = () => {
       seedInitialWorksheets();
       loadWorksheets();
       loadCategories();
+      loadWorksheetCategories();
     };
     checkAuth();
   }, [navigate]);
@@ -123,6 +138,16 @@ const AdminDashboard = () => {
   const loadCategories = async () => {
     const data = await getAllCategories();
     setCategories(data);
+  };
+
+  const loadWorksheetCategories = async () => {
+    const data = await getAllWorksheetCategories();
+    setWorksheetCategories(data);
+  };
+
+  const loadImageOverrides = async () => {
+    const overrides = await getAllWorksheetImageOverrides();
+    setWorksheetImageOverrides(overrides);
   };
 
   const getCurrentCategory = () => {
@@ -386,6 +411,7 @@ const AdminDashboard = () => {
       description: "",
       grade: "",
       subject: "",
+      categoryId: "",
       pdfUrl: "",
       imageUrl: "",
       content: "",
@@ -431,6 +457,7 @@ const AdminDashboard = () => {
       description: worksheet.description,
       grade: worksheet.grade,
       subject: worksheet.subject,
+      categoryId: worksheet.categoryId || "",
       pdfUrl: worksheet.pdfUrl,
       imageUrl: worksheet.imageUrl,
       content: worksheet.content || "",
@@ -453,6 +480,58 @@ const AdminDashboard = () => {
     setIsDialogOpen(open);
     if (!open) {
       resetForm();
+    }
+  };
+
+  const handleCreateCategory = async () => {
+    if (!newCategoryData.title || !newCategoryData.grade || !newCategoryData.subject) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const created = await createWorksheetCategory(newCategoryData);
+    if (created) {
+      toast({
+        title: "Success",
+        description: "Category created successfully",
+      });
+      loadWorksheetCategories();
+      setIsCategoryDialogOpen(false);
+      setNewCategoryData({
+        title: "",
+        description: "",
+        grade: "",
+        subject: "",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to create category",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteCategory = async (id: string, title: string) => {
+    if (window.confirm(`Delete category "${title}"? Worksheets will not be deleted.`)) {
+      const success = await deleteWorksheetCategory(id);
+      if (success) {
+        toast({
+          title: "Success",
+          description: "Category deleted successfully",
+        });
+        loadWorksheetCategories();
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to delete category",
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -506,6 +585,14 @@ const AdminDashboard = () => {
           >
             <ImageIcon className="mr-2 h-4 w-4" />
             Categories
+          </Button>
+          <Button
+            variant={activeTab === "worksheet-categories" ? "default" : "ghost"}
+            onClick={() => setActiveTab("worksheet-categories")}
+            className="rounded-b-none"
+          >
+            <FolderPlus className="mr-2 h-4 w-4" />
+            Worksheet Categories
           </Button>
         </div>
 
@@ -623,6 +710,42 @@ const AdminDashboard = () => {
                       </SelectContent>
                     </Select>
                   </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="category">Category</Label>
+                  <div className="flex gap-2">
+                    <Select
+                      value={formData.categoryId}
+                      onValueChange={(value) => setFormData({ ...formData, categoryId: value })}
+                    >
+                      <SelectTrigger className="flex-1">
+                        <SelectValue placeholder="Select category (optional)" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">No Category</SelectItem>
+                        {worksheetCategories
+                          .filter(c => c.grade === formData.grade && c.subject === formData.subject)
+                          .map(category => (
+                            <SelectItem key={category.id} value={category.id}>
+                              {category.title}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      onClick={() => setIsCategoryDialogOpen(true)}
+                      title="Create new category"
+                    >
+                      <FolderPlus className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Categories help organize multiple worksheets on the same topic
+                  </p>
                 </div>
 
                 <div className="space-y-2">
@@ -1002,6 +1125,151 @@ const AdminDashboard = () => {
                     </Button>
                   </div>
                 )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {activeTab === "worksheet-categories" && (
+          <div>
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Manage Worksheet Categories</CardTitle>
+                    <CardDescription>
+                      Create categories to organize multiple worksheets on the same topic
+                    </CardDescription>
+                  </div>
+                  <Dialog open={isCategoryDialogOpen} onOpenChange={setIsCategoryDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button>
+                        <Plus className="mr-2 h-4 w-4" />
+                        New Category
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Create New Category</DialogTitle>
+                        <DialogDescription>
+                          Categories help organize worksheets by topic (e.g., Addition, Subtraction, Comprehension)
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4 mt-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="categoryTitle">Category Title *</Label>
+                          <Input
+                            id="categoryTitle"
+                            value={newCategoryData.title}
+                            onChange={(e) => setNewCategoryData({ ...newCategoryData, title: e.target.value })}
+                            placeholder="e.g., Addition, Comprehension, etc."
+                            required
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="categoryDescription">Description</Label>
+                          <Textarea
+                            id="categoryDescription"
+                            value={newCategoryData.description || ""}
+                            onChange={(e) => setNewCategoryData({ ...newCategoryData, description: e.target.value })}
+                            placeholder="Brief description (optional)"
+                            rows={2}
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="categoryGrade">Grade *</Label>
+                            <Select
+                              value={newCategoryData.grade}
+                              onValueChange={(value) => setNewCategoryData({ ...newCategoryData, grade: value })}
+                              required
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select grade" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Grade 1">Grade 1</SelectItem>
+                                <SelectItem value="Grade 2">Grade 2</SelectItem>
+                                <SelectItem value="Grade 3">Grade 3</SelectItem>
+                                <SelectItem value="Grade 4">Grade 4</SelectItem>
+                                <SelectItem value="Grade 5">Grade 5</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="categorySubject">Subject *</Label>
+                            <Select
+                              value={newCategoryData.subject}
+                              onValueChange={(value) => setNewCategoryData({ ...newCategoryData, subject: value })}
+                              required
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select subject" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="math">Math</SelectItem>
+                                <SelectItem value="english">English</SelectItem>
+                                <SelectItem value="science">Science</SelectItem>
+                                <SelectItem value="computer-science">Computer Science</SelectItem>
+                                <SelectItem value="assignments">Assignments</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                        <div className="flex gap-2 pt-4">
+                          <Button onClick={handleCreateCategory} className="flex-1">
+                            Create Category
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => setIsCategoryDialogOpen(false)}
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5"].map(grade => (
+                    <div key={grade}>
+                      <h3 className="text-lg font-semibold mb-3">{grade}</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {worksheetCategories
+                          .filter(c => c.grade === grade)
+                          .map(category => (
+                            <Card key={category.id}>
+                              <CardContent className="p-4">
+                                <div className="flex items-start justify-between">
+                                  <div className="flex-1">
+                                    <h4 className="font-semibold">{category.title}</h4>
+                                    <p className="text-sm text-muted-foreground capitalize">{category.subject}</p>
+                                    {category.description && (
+                                      <p className="text-sm text-muted-foreground mt-1">{category.description}</p>
+                                    )}
+                                  </div>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => handleDeleteCategory(category.id, category.title)}
+                                  >
+                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                  </Button>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          ))}
+                        {worksheetCategories.filter(c => c.grade === grade).length === 0 && (
+                          <p className="text-sm text-muted-foreground col-span-full">No categories yet for {grade}</p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
           </div>

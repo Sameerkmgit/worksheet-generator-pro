@@ -95,6 +95,36 @@ export type Database = {
         }
         Relationships: []
       }
+      worksheet_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          grade: string
+          id: string
+          subject: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          grade: string
+          id?: string
+          subject: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          grade?: string
+          id?: string
+          subject?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       worksheet_image_overrides: {
         Row: {
           created_at: string | null
@@ -126,6 +156,7 @@ export type Database = {
       }
       worksheets: {
         Row: {
+          category_id: string | null
           content: string | null
           created_at: string | null
           description: string | null
@@ -146,6 +177,7 @@ export type Database = {
           usage: string | null
         }
         Insert: {
+          category_id?: string | null
           content?: string | null
           created_at?: string | null
           description?: string | null
@@ -166,6 +198,7 @@ export type Database = {
           usage?: string | null
         }
         Update: {
+          category_id?: string | null
           content?: string | null
           created_at?: string | null
           description?: string | null
@@ -185,7 +218,15 @@ export type Database = {
           updated_at?: string | null
           usage?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "worksheets_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "worksheet_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

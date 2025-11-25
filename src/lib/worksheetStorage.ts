@@ -32,6 +32,17 @@ export interface WorksheetData {
   usage?: string;
   faq?: any[];
   seo?: any;
+  categoryId?: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface WorksheetCategoryData {
+  id: string;
+  grade: string;
+  subject: string;
+  title: string;
+  description?: string;
   createdAt: string;
   updatedAt?: string;
 }
@@ -64,8 +75,20 @@ const mapWorksheetFromDB = (w: any): WorksheetData => ({
   usage: w.usage,
   faq: w.faq as any,
   seo: w.seo as any,
+  categoryId: w.category_id,
   createdAt: w.created_at,
   updatedAt: w.updated_at,
+});
+
+// Helper to convert DB row to WorksheetCategoryData
+const mapWorksheetCategoryFromDB = (c: any): WorksheetCategoryData => ({
+  id: c.id,
+  grade: c.grade,
+  subject: c.subject,
+  title: c.title,
+  description: c.description,
+  createdAt: c.created_at,
+  updatedAt: c.updated_at,
 });
 
 // Helper to convert CategoryData to DB format
@@ -413,6 +436,7 @@ export const createWorksheet = async (
       pdf_url: worksheet.pdfUrl,
       image_url: worksheet.imageUrl,
       content: worksheet.content,
+      category_id: worksheet.categoryId,
       heading: worksheet.heading,
       intro: worksheet.intro,
       questions: worksheet.questions,
@@ -466,6 +490,7 @@ export const updateWorksheet = async (
   if (updates.pdfUrl) updateData.pdf_url = updates.pdfUrl;
   if (updates.imageUrl !== undefined) updateData.image_url = updates.imageUrl;
   if (updates.content !== undefined) updateData.content = updates.content;
+  if (updates.categoryId !== undefined) updateData.category_id = updates.categoryId;
   if (updates.heading !== undefined) updateData.heading = updates.heading;
   if (updates.intro !== undefined) updateData.intro = updates.intro;
   if (updates.questions !== undefined) updateData.questions = updates.questions;
@@ -497,6 +522,151 @@ export const deleteWorksheet = async (id: string): Promise<boolean> => {
     .eq('id', id);
 
   return !error;
+};
+
+// ==================== Worksheet Category Functions ====================
+
+// Get all worksheet categories
+export const getAllWorksheetCategories = async (): Promise<WorksheetCategoryData[]> => {
+  const { data, error } = await supabase
+    .from('worksheet_categories')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error || !data) {
+    console.error("Error fetching worksheet categories:", error);
+    return [];
+  }
+
+  return data.map(mapWorksheetCategoryFromDB);
+};
+
+// Get worksheet categories by grade
+export const getWorksheetCategoriesByGrade = async (grade: string): Promise<WorksheetCategoryData[]> => {
+  const { data, error } = await supabase
+    .from('worksheet_categories')
+    .select('*')
+    .eq('grade', grade)
+    .order('created_at', { ascending: false });
+
+  if (error || !data) {
+    console.error("Error fetching worksheet categories by grade:", error);
+    return [];
+  }
+
+  return data.map(mapWorksheetCategoryFromDB);
+};
+
+// Get worksheet categories by grade and subject
+export const getWorksheetCategoriesByGradeAndSubject = async (
+  grade: string,
+  subject: string
+): Promise<WorksheetCategoryData[]> => {
+  const { data, error } = await supabase
+    .from('worksheet_categories')
+    .select('*')
+    .eq('grade', grade)
+    .eq('subject', subject)
+    .order('created_at', { ascending: false });
+
+  if (error || !data) {
+    console.error("Error fetching worksheet categories by grade and subject:", error);
+    return [];
+  }
+
+  return data.map(mapWorksheetCategoryFromDB);
+};
+
+// Get worksheet category by ID
+export const getWorksheetCategoryById = async (id: string): Promise<WorksheetCategoryData | null> => {
+  const { data, error } = await supabase
+    .from('worksheet_categories')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error || !data) {
+    console.error("Error fetching worksheet category by ID:", error);
+    return null;
+  }
+
+  return mapWorksheetCategoryFromDB(data);
+};
+
+// Create a new worksheet category
+export const createWorksheetCategory = async (
+  category: Omit<WorksheetCategoryData, "id" | "createdAt" | "updatedAt">
+): Promise<WorksheetCategoryData | null> => {
+  const { data, error } = await supabase
+    .from('worksheet_categories')
+    .insert({
+      grade: category.grade,
+      subject: category.subject,
+      title: category.title.trim(),
+      description: category.description,
+    })
+    .select()
+    .single();
+
+  if (error || !data) {
+    console.error("Error creating worksheet category:", error);
+    return null;
+  }
+
+  return mapWorksheetCategoryFromDB(data);
+};
+
+// Update a worksheet category
+export const updateWorksheetCategory = async (
+  id: string,
+  updates: Partial<WorksheetCategoryData>
+): Promise<WorksheetCategoryData | null> => {
+  const updateData: any = {};
+  if (updates.grade) updateData.grade = updates.grade;
+  if (updates.subject) updateData.subject = updates.subject;
+  if (updates.title) updateData.title = updates.title.trim();
+  if (updates.description !== undefined) updateData.description = updates.description;
+
+  const { data, error } = await supabase
+    .from('worksheet_categories')
+    .update(updateData)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error || !data) {
+    console.error("Error updating worksheet category:", error);
+    return null;
+  }
+
+  return mapWorksheetCategoryFromDB(data);
+};
+
+// Delete a worksheet category
+export const deleteWorksheetCategory = async (id: string): Promise<boolean> => {
+  const { error } = await supabase
+    .from('worksheet_categories')
+    .delete()
+    .eq('id', id);
+
+  return !error;
+};
+
+// Get worksheets by category ID
+export const getWorksheetsByCategoryId = async (categoryId: string): Promise<WorksheetData[]> => {
+  const { data, error } = await supabase
+    .from('worksheets')
+    .select('*')
+    .eq('category_id', categoryId)
+    .eq('is_archived', false)
+    .order('created_at', { ascending: false });
+
+  if (error || !data) {
+    console.error("Error fetching worksheets by category ID:", error);
+    return [];
+  }
+
+  return data.map(mapWorksheetFromDB);
 };
 
 // Default categories
