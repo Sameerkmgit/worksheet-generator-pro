@@ -7,6 +7,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import SubCategory from "./pages/SubCategory";
 import Category from "./pages/Category";
+import CategoryWorksheets from "./pages/CategoryWorksheets";
 import AssignmentsLanding from "./pages/AssignmentsLanding";
 import WorksheetDetail from "./pages/WorksheetDetail";
 import AdminUpload from "./pages/AdminUpload";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/category/:grade" element={<SubCategory />} />
           <Route path="/category/:grade/assignments" element={<AssignmentsLanding />} />
           <Route path="/category/:grade/:subject" element={<Category />} />
+          <Route path="/category/:grade/:subject/:categoryId" element={<CategoryWorksheets />} />
           <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
           <Route path="/dashboard-secure-2025" element={<AdminLogin />} />
