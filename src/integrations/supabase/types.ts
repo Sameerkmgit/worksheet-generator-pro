@@ -126,6 +126,7 @@ export type Database = {
       }
       worksheets: {
         Row: {
+          content: string | null
           created_at: string | null
           description: string | null
           faq: Json | null
@@ -145,6 +146,7 @@ export type Database = {
           usage: string | null
         }
         Insert: {
+          content?: string | null
           created_at?: string | null
           description?: string | null
           faq?: Json | null
@@ -164,6 +166,7 @@ export type Database = {
           usage?: string | null
         }
         Update: {
+          content?: string | null
           created_at?: string | null
           description?: string | null
           faq?: Json | null

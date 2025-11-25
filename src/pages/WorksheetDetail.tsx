@@ -239,6 +239,20 @@ const WorksheetDetail = () => {
                 </Card>
               )}
 
+              {/* Practice Questions Section */}
+              {worksheet.content && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Practice Questions</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-muted-foreground leading-relaxed whitespace-pre-line">
+                      {worksheet.content}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* Questions/Content Section */}
               {worksheet.questions && Array.isArray(worksheet.questions) && worksheet.questions.length > 0 && (
                 <Card>

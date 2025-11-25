@@ -62,6 +62,7 @@ const AdminDashboard = () => {
     subject: "",
     pdfUrl: "",
     imageUrl: "",
+    content: "",
   });
 
   // Reset all data and reseed
@@ -387,6 +388,7 @@ const AdminDashboard = () => {
       subject: "",
       pdfUrl: "",
       imageUrl: "",
+      content: "",
     });
     setEditingWorksheet(null);
   };
@@ -431,6 +433,7 @@ const AdminDashboard = () => {
       subject: worksheet.subject,
       pdfUrl: worksheet.pdfUrl,
       imageUrl: worksheet.imageUrl,
+      content: worksheet.content || "",
     });
     setIsDialogOpen(true);
   };
@@ -649,6 +652,20 @@ const AdminDashboard = () => {
                   />
                   <p className="text-xs text-muted-foreground">
                     Use an image hosting service like Imgur or Google Drive
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="content">Worksheet Content (questions)</Label>
+                  <Textarea
+                    id="content"
+                    value={formData.content}
+                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                    placeholder="Paste your worksheet questions here, one per line..."
+                    rows={8}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Optional: Add the actual questions to display on the worksheet page
                   </p>
                 </div>
 
