@@ -49,7 +49,7 @@ const App = () => {
             <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />
 
             {/* ASSIGNMENTS */}
-            <Route path="/category/:grade/assignments" element={<AssignmentsLanding />} />
+            <Route path="/assignments/:grade" element={<AssignmentsLanding />} />
 
             {/* ADMIN */}
             <Route path="/admin/upload" element={<AdminUpload />} />
