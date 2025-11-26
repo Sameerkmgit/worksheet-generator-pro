@@ -78,6 +78,20 @@ const AdminDashboard = () => {
     imageUrl: "",
     content: "",
   });
+  const [categoryOptions, setCategoryOptions] = useState<WorksheetCategoryData[]>([]);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
+
+  // Helper function to normalize subject for DB queries
+  const normalizeSubject = (subject: string): string => {
+    const subjectMap: Record<string, string> = {
+      'math': 'Math',
+      'english': 'English',
+      'science': 'Science',
+      'computer-science': 'Computer Science',
+      'assignments': 'Assignments'
+    };
+    return subjectMap[subject] || subject;
+  };
 
   // Reset all data and reseed
   const handleResetData = async () => {
@@ -129,6 +143,42 @@ const AdminDashboard = () => {
     };
     loadImageOverrides();
   }, [imageUpdateTrigger]);
+
+  // Fetch categories when grade or subject changes
+  useEffect(() => {
+    const fetchCategories = async () => {
+      if (!formData.grade || !formData.subject) {
+        setCategoryOptions([]);
+        return;
+      }
+
+      setIsCategoriesLoading(true);
+      try {
+        const normalizedSubject = normalizeSubject(formData.subject);
+        console.log(`Fetching categories for grade="${formData.grade}", subject="${normalizedSubject}"`);
+        
+        const categories = await getWorksheetCategoriesByGradeAndSubject(
+          formData.grade,
+          normalizedSubject
+        );
+        
+        console.log(`Fetched ${categories.length} categories:`, categories.map(c => c.title));
+        setCategoryOptions(categories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        setCategoryOptions([]);
+        toast({
+          title: "Error",
+          description: "Failed to load categories",
+          variant: "destructive",
+        });
+      } finally {
+        setIsCategoriesLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, [formData.grade, formData.subject]);
 
   const loadWorksheets = async () => {
     const data = await getAllWorksheets();
@@ -724,19 +774,24 @@ const AdminDashboard = () => {
                     <Select
                       value={formData.categoryId}
                       onValueChange={(value) => setFormData({ ...formData, categoryId: value })}
+                      disabled={!formData.grade || !formData.subject || isCategoriesLoading}
                     >
                       <SelectTrigger className="flex-1">
-                        <SelectValue placeholder="Select category (optional)" />
+                        <SelectValue placeholder={
+                          isCategoriesLoading 
+                            ? "Loading categories..." 
+                            : !formData.grade || !formData.subject
+                            ? "Select grade and subject first"
+                            : "Select category (optional)"
+                        } />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="none">No Category</SelectItem>
-                        {worksheetCategories
-                          .filter(c => c.grade === formData.grade && c.subject === formData.subject)
-                          .map(category => (
-                            <SelectItem key={category.id} value={category.id}>
-                              {category.title}
-                            </SelectItem>
-                          ))}
+                        {categoryOptions.map(category => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.title}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <Button
