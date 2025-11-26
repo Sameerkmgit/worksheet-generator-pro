@@ -147,7 +147,7 @@ const SubCategory = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category) => (
-              <Link to={`/category/${grade}/${category.id}`} key={category.id}>
+              <Link to={`/categories/${grade}/${category.id}`} key={category.id}>
                 <Card className="cursor-pointer group h-full hover:shadow-lg transition-shadow overflow-hidden">
                   <CardHeader className="p-0">
                     {category.imageUrl ? (
