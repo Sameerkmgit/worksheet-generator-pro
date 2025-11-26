@@ -33,9 +33,13 @@ const App = () => (
           <Route path="/packs" element={<Packs />} />
           <Route path="/category/:grade" element={<SubCategory />} />
           <Route path="/category/:grade/assignments" element={<AssignmentsLanding />} />
+          {/* New clean routes */}
+          <Route path="/categories/:grade/:subject" element={<Category />} />
+          <Route path="/category/:categoryId" element={<CategoryWorksheets />} />
+          <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />
+          {/* Legacy routes for backwards compatibility */}
           <Route path="/category/:grade/:subject" element={<Category />} />
           <Route path="/category/:grade/:subject/:categoryId" element={<CategoryWorksheets />} />
-          <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
           <Route path="/dashboard-secure-2025" element={<AdminLogin />} />
           <Route path="/admin/reset-password" element={<ResetPassword />} />

@@ -13,10 +13,22 @@ import {
 } from "@/lib/worksheetStorage";
 
 const CategoryWorksheets = () => {
-  const { categoryId } = useParams();
+  const { categoryId, grade: gradeParam, subject: subjectParam } = useParams();
   const [worksheets, setWorksheets] = useState<WorksheetData[]>([]);
   const [category, setCategory] = useState<WorksheetCategoryData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Normalize subject from DB format to URL slug
+  const subjectToSlug = (subject: string): string => {
+    const slugMap: Record<string, string> = {
+      'Math': 'math',
+      'English': 'english',
+      'Science': 'science',
+      'Computer Science': 'computer-science',
+      'Assignments': 'assignments',
+    };
+    return slugMap[subject] || subject.toLowerCase().replace(/\s+/g, '-');
+  };
 
   useEffect(() => {
     setWorksheets([]);
@@ -25,12 +37,15 @@ const CategoryWorksheets = () => {
     
     const loadData = async () => {
       try {
-        if (!categoryId) return;
+        const effectiveCategoryId = categoryId || '';
+        if (!effectiveCategoryId) return;
         
-        const categoryData = await getWorksheetCategoryById(categoryId);
+        console.log(`Loading category: ${effectiveCategoryId}`);
+        const categoryData = await getWorksheetCategoryById(effectiveCategoryId);
         setCategory(categoryData);
         
-        const worksheetsData = await getWorksheetsByCategoryId(categoryId);
+        const worksheetsData = await getWorksheetsByCategoryId(effectiveCategoryId);
+        console.log(`Loaded ${worksheetsData.length} worksheets`);
         setWorksheets(worksheetsData);
       } catch (error) {
         console.error("Error loading worksheets:", error);
@@ -39,10 +54,10 @@ const CategoryWorksheets = () => {
       }
     };
     loadData();
-  }, [categoryId]);
+  }, [categoryId, gradeParam, subjectParam]);
 
   const gradeSlug = category?.grade.toLowerCase().replace(' ', '-') || '';
-  const subjectSlug = category?.subject || '';
+  const subjectSlug = category ? subjectToSlug(category.subject) : '';
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -59,7 +74,7 @@ const CategoryWorksheets = () => {
                 {category?.grade}
               </Link>
               <span>/</span>
-              <Link to={`/category/${gradeSlug}/${subjectSlug}`} className="hover:text-primary capitalize">
+              <Link to={`/categories/${gradeSlug}/${subjectSlug}`} className="hover:text-primary capitalize">
                 {category?.subject}
               </Link>
               <span>/</span>

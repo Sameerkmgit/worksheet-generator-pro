@@ -30,6 +30,30 @@ const Category = () => {
   const [categories, setCategories] = useState<WorksheetCategoryData[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Normalize grade from URL slug to DB format
+  const normalizeGrade = (gradeSlug: string): string => {
+    const gradeMap: Record<string, string> = {
+      'grade-1': 'Grade 1',
+      'grade-2': 'Grade 2',
+      'grade-3': 'Grade 3',
+      'grade-4': 'Grade 4',
+      'grade-5': 'Grade 5',
+    };
+    return gradeMap[gradeSlug] || gradeSlug;
+  };
+
+  // Normalize subject from URL slug to DB format
+  const normalizeSubject = (subjectSlug: string): string => {
+    const subjectMap: Record<string, string> = {
+      'math': 'Math',
+      'english': 'English',
+      'science': 'Science',
+      'computer-science': 'Computer Science',
+      'assignments': 'Assignments',
+    };
+    return subjectMap[subjectSlug] || subjectSlug;
+  };
+
   useEffect(() => {
     // Reset state and start loading when route params change
     setCategories([]);
@@ -37,9 +61,11 @@ const Category = () => {
     
     const loadCategories = async () => {
       try {
-        const gradeKey = grade || "";
-        const subjectKey = subject || "";
+        const gradeKey = normalizeGrade(grade || "");
+        const subjectKey = normalizeSubject(subject || "");
+        console.log(`Loading categories for grade="${gradeKey}", subject="${subjectKey}"`);
         const fetchedCategories = await getWorksheetCategoriesByGradeAndSubject(gradeKey, subjectKey);
+        console.log(`Loaded ${fetchedCategories.length} categories`);
         setCategories(fetchedCategories);
       } catch (error) {
         console.error("Error loading categories:", error);
@@ -176,7 +202,7 @@ const Category = () => {
                   </CardHeader>
                   <CardContent className="pt-0">
                     <Button asChild className="w-full">
-                      <Link to={`/category/${grade}/${subject}/${category.id}`}>
+                      <Link to={`/category/${category.id}`}>
                         View Worksheets
                       </Link>
                     </Button>
