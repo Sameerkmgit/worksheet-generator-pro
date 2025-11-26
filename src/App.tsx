@@ -39,9 +39,6 @@ const App = () => {
             <Route path="/search" element={<Search />} />
             <Route path="/packs" element={<Packs />} />
 
-            {/* SUBJECT LANDING PAGE */}
-            <Route path="/category/:grade" element={<SubCategory />} />
-
             {/* CATEGORY LIST (Math, English, etc.) */}
             <Route path="/categories/:grade/:subject" element={<Category />} />
 
