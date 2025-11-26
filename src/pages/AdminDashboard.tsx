@@ -73,7 +73,7 @@ const AdminDashboard = () => {
     description: "",
     grade: "",
     subject: "",
-    categoryId: "",
+    categoryId: "none",
     pdfUrl: "",
     imageUrl: "",
     content: "",
@@ -411,7 +411,7 @@ const AdminDashboard = () => {
       description: "",
       grade: "",
       subject: "",
-      categoryId: "",
+      categoryId: "none",
       pdfUrl: "",
       imageUrl: "",
       content: "",
@@ -422,16 +422,22 @@ const AdminDashboard = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Prepare data, treating "none" as empty categoryId
+    const submitData = {
+      ...formData,
+      categoryId: formData.categoryId === "none" ? "" : formData.categoryId,
+    };
+
     if (editingWorksheet) {
       // Update existing worksheet
-      await updateWorksheet(editingWorksheet.id, formData);
+      await updateWorksheet(editingWorksheet.id, submitData);
       toast({
         title: "Worksheet Updated",
         description: "The worksheet has been successfully updated",
       });
     } else {
       // Create new worksheet
-      await createWorksheet(formData);
+      await createWorksheet(submitData);
       toast({
         title: "✅ Worksheet Created!",
         description: `"${formData.title}" has been added. Go to Categories tab to upload its image.`,
@@ -457,7 +463,7 @@ const AdminDashboard = () => {
       description: worksheet.description,
       grade: worksheet.grade,
       subject: worksheet.subject,
-      categoryId: worksheet.categoryId || "",
+      categoryId: worksheet.categoryId || "none",
       pdfUrl: worksheet.pdfUrl,
       imageUrl: worksheet.imageUrl,
       content: worksheet.content || "",
@@ -723,7 +729,7 @@ const AdminDashboard = () => {
                         <SelectValue placeholder="Select category (optional)" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">No Category</SelectItem>
+                        <SelectItem value="none">No Category</SelectItem>
                         {worksheetCategories
                           .filter(c => c.grade === formData.grade && c.subject === formData.subject)
                           .map(category => (
