@@ -124,7 +124,7 @@ const Home = () => {
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in mb-10">
-              <Link to="/category/grade-1">
+              <Link to="/categories/grade-1/math">
                 <Button size="lg" className="h-14 px-10 text-base font-semibold">
                   Browse Worksheets
                 </Button>
@@ -183,7 +183,7 @@ const Home = () => {
               ))
             ) : (
               categories.map((category) => (
-                <Link to={`/category/${category.id}`} key={category.id}>
+                <Link to={`/categories/${category.id}/math`} key={category.id}>
                   <Card className="cursor-pointer group h-full">
                     <CardHeader>
                   <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`} role="img" aria-label={`${category.title} category icon`}>
