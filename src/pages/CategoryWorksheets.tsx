@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Download, Eye } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { 
-  getWorksheetsByCategoryId, 
+import {
+  getWorksheetsByCategoryId,
   getWorksheetCategoryById,
+  getWorksheetsByGradeAndSubject,
   WorksheetData,
-  WorksheetCategoryData 
+  WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
 
 const CategoryWorksheets = () => {
@@ -34,25 +35,49 @@ const CategoryWorksheets = () => {
     setWorksheets([]);
     setCategory(null);
     setLoading(true);
-    
+
     const loadData = async () => {
       try {
-        const effectiveCategoryId = categoryId || '';
+        const effectiveCategoryId = categoryId || "";
         if (!effectiveCategoryId) return;
-        
+
         console.log(`Loading category: ${effectiveCategoryId}`);
         const categoryData = await getWorksheetCategoryById(effectiveCategoryId);
         setCategory(categoryData);
-        
-        const worksheetsData = await getWorksheetsByCategoryId(effectiveCategoryId);
-        console.log(`Loaded ${worksheetsData.length} worksheets`);
-        setWorksheets(worksheetsData);
+
+        // First try: worksheets directly tied to this category
+        let worksheetsData = await getWorksheetsByCategoryId(effectiveCategoryId);
+        console.log(
+          `Loaded ${worksheetsData?.length || 0} worksheets by category_id`
+        );
+
+        // Fallback: if no direct matches, load by grade + subject
+        if ((!worksheetsData || worksheetsData.length === 0) && categoryData) {
+          const gradeSlug = categoryData.grade
+            .toLowerCase()
+            .replace(/\s+/g, "-"); // "Grade 1" -> "grade-1"
+
+          console.log(
+            `No direct worksheets found, falling back to grade+subject: grade=${gradeSlug}, subject=${categoryData.subject}`
+          );
+
+          worksheetsData = await getWorksheetsByGradeAndSubject(
+            gradeSlug,
+            categoryData.subject
+          );
+          console.log(
+            `Loaded ${worksheetsData?.length || 0} worksheets by grade+subject fallback`
+          );
+        }
+
+        setWorksheets(worksheetsData || []);
       } catch (error) {
         console.error("Error loading worksheets:", error);
       } finally {
         setLoading(false);
       }
     };
+
     loadData();
   }, [categoryId, gradeParam, subjectParam]);
 
