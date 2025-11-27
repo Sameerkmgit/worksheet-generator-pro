@@ -51,13 +51,15 @@ const App = () => {
             {/* ASSIGNMENTS */}
             <Route path="/assignments/:grade" element={<AssignmentsLanding />} />
 
-            {/* ADMIN */}
+            {/* ADMIN ROUTES */}
             <Route path="/admin/upload" element={<AdminUpload />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/reset-password" element={<ResetPassword />} />
+            {/* Obscured secure entry URL – goes to admin login */}
+            <Route path="/dashboard-secure-2025" element={<AdminLogin />} />
 
-            {/* 404 FALLBACK */}
+            {/* FALLBACK – keep this last */}
             <Route path="*" element={<NotFound />} />
 
           </Routes>
