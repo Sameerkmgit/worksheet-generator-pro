@@ -183,7 +183,11 @@ const Search = () => {
                 <Card key={worksheet.id} className="group cursor-pointer">
                   <CardHeader>
                     <img
-                      src={worksheet.preview}
+                      src={worksheet.preview || "/fallback.png"}
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800";
+                      }}
                       alt={worksheet.title}
                       className="w-full h-48 object-cover rounded-lg mb-4"
                     />
