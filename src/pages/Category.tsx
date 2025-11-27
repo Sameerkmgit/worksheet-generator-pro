@@ -58,13 +58,21 @@ const Category = () => {
     // Reset state and start loading when route params change
     setCategories([]);
     setLoading(true);
-    
+
     const loadCategories = async () => {
       try {
-        const gradeKey = normalizeGrade(grade || "");
-        const subjectKey = normalizeSubject(subject || "");
-        console.log(`Loading categories for grade="${gradeKey}", subject="${subjectKey}"`);
-        const fetchedCategories = await getWorksheetCategoriesByGradeAndSubject(gradeKey, subjectKey);
+        const gradeSlug = grade || "";
+        const subjectSlug = subject || "";
+
+        console.log(
+          `Loading categories for grade=${gradeSlug}, subject=${subjectSlug}`
+        );
+
+        const fetchedCategories = await getWorksheetCategoriesByGradeAndSubject(
+          gradeSlug,
+          subjectSlug
+        );
+
         console.log(`Loaded ${fetchedCategories.length} categories`);
         setCategories(fetchedCategories);
       } catch (error) {
@@ -73,6 +81,7 @@ const Category = () => {
         setLoading(false);
       }
     };
+
     loadCategories();
   }, [grade, subject]);
   

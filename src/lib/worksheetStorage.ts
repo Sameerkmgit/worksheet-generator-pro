@@ -559,18 +559,38 @@ export const getWorksheetCategoriesByGrade = async (grade: string): Promise<Work
 
 // Get worksheet categories by grade and subject
 export const getWorksheetCategoriesByGradeAndSubject = async (
-  grade: string,
-  subject: string
+  gradeSlug: string,
+  subjectSlug: string
 ): Promise<WorksheetCategoryData[]> => {
+  // Convert URL slug "grade-1" -> "Grade 1"
+  const gradeTitle = gradeSlug
+    .split("-")
+    .map((word, index) =>
+      index === 0
+        ? word.charAt(0).toUpperCase() + word.slice(1)
+        : word
+    )
+    .join(" ");
+
+  // Handle both "math" and "Math", "computer-science" and "Computer Science"
+  const humanSubject = subjectSlug
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+
   const { data, error } = await supabase
-    .from('worksheet_categories')
-    .select('*')
-    .eq('grade', grade)
-    .eq('subject', subject)
-    .order('created_at', { ascending: false });
+    .from("worksheet_categories")
+    .select("*")
+    .eq("grade", gradeTitle)
+    // Support either "math" or "Math" stored in DB
+    .in("subject", [subjectSlug, humanSubject])
+    .order("created_at", { ascending: false });
 
   if (error || !data) {
-    console.error("Error fetching worksheet categories by grade and subject:", error);
+    console.error(
+      "Error fetching worksheet categories by grade and subject:",
+      error
+    );
     return [];
   }
 
