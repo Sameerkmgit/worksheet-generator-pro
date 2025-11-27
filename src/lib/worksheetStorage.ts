@@ -58,16 +58,39 @@ export interface CategoryData {
   worksheetCount?: number;
 }
 
+// Default subject-based worksheet images (used when image_url is missing/empty)
+const SUBJECT_IMAGE_FALLBACKS: Record<string, string> = {
+  math: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800",
+  english: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800",
+  science: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=800",
+  "computer-science": "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800",
+  assignments: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800",
+  default: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800",
+};
+
+// Helper to always return a usable image URL for a worksheet row
+const getWorksheetImageUrlFromRow = (w: any): string => {
+  const direct = (w.image_url ?? "").trim();
+  if (direct) return direct;
+
+  const subjectKey = (w.subject ?? "").toLowerCase();
+  return (
+    SUBJECT_IMAGE_FALLBACKS[subjectKey] ??
+    SUBJECT_IMAGE_FALLBACKS.default
+  );
+};
+
 // Helper to convert DB row to WorksheetData
 const mapWorksheetFromDB = (w: any): WorksheetData => ({
   id: w.id,
   title: w.title,
-  description: w.description || '',
+  description: w.description || "",
   grade: w.grade,
   subject: w.subject,
   pdfUrl: w.pdf_url,
-  imageUrl: w.image_url || '',
-  content: w.content || '',
+  // Always use a valid image URL (DB value or subject-based fallback)
+  imageUrl: getWorksheetImageUrlFromRow(w),
+  content: w.content || "",
   heading: w.heading,
   intro: w.intro,
   questions: w.questions as any,
