@@ -138,7 +138,11 @@ const CategoryWorksheets = () => {
                   <Card key={worksheet.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="aspect-[4/3] overflow-hidden bg-muted">
                       <img
-                        src={worksheet.imageUrl}
+                        src={worksheet.imageUrl || "/fallback.png"}
+                        onError={(e) => {
+                          e.currentTarget.src =
+                            "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800";
+                        }}
                         alt={worksheet.title}
                         className="w-full h-full object-cover"
                       />
