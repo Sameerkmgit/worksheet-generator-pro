@@ -9,6 +9,7 @@ import {
   getWorksheetsByCategoryId,
   getWorksheetCategoryById,
   getWorksheetsByGradeAndSubject,
+  getWorksheetCardImage,
   WorksheetData,
   WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
@@ -137,15 +138,24 @@ const CategoryWorksheets = () => {
                 {worksheets.map((worksheet) => (
                   <Card key={worksheet.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="aspect-[4/3] overflow-hidden bg-muted">
-                      <img
-                        src={worksheet.imageUrl || "/fallback.png"}
-                        onError={(e) => {
-                          e.currentTarget.src =
-                            "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800";
-                        }}
-                        alt={worksheet.title}
-                        className="w-full h-full object-cover"
-                      />
+                      {(() => {
+                        const imageSrc = getWorksheetCardImage(worksheet);
+                        return (
+                          <img
+                            src={imageSrc}
+                            alt={worksheet.title}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              // if the custom URL fails, fall back once to the subject image
+                              const target = e.currentTarget as HTMLImageElement;
+                              const fallback = getWorksheetCardImage({ ...worksheet, imageUrl: "" });
+                              if (target.src !== fallback) {
+                                target.src = fallback;
+                              }
+                            }}
+                          />
+                        );
+                      })()}
                     </div>
                     <CardContent className="p-6">
                       <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">

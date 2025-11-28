@@ -8,6 +8,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getWorksheetCardImage, WorksheetData } from "@/lib/worksheetStorage";
 
 // Import all worksheet data from Category page structure
 const allWorksheets = [
@@ -182,15 +183,31 @@ const Search = () => {
               {filteredWorksheets.map((worksheet) => (
                 <Card key={worksheet.id} className="group cursor-pointer">
                   <CardHeader>
-                    <img
-                      src={worksheet.preview || "/fallback.png"}
-                      onError={(e) => {
-                        e.currentTarget.src =
-                          "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800";
-                      }}
-                      alt={worksheet.title}
-                      className="w-full h-48 object-cover rounded-lg mb-4"
-                    />
+                    {(() => {
+                      // Convert the old worksheet format to WorksheetData for the helper
+                      const worksheetData: Partial<WorksheetData> = {
+                        imageUrl: worksheet.preview || "",
+                        subject: worksheet.category,
+                        title: worksheet.title,
+                        id: worksheet.id.toString(),
+                      } as WorksheetData;
+                      const imageSrc = getWorksheetCardImage(worksheetData as WorksheetData);
+                      return (
+                        <img
+                          src={imageSrc}
+                          alt={worksheet.title}
+                          className="w-full h-48 object-cover rounded-lg mb-4"
+                          onError={(e) => {
+                            // if the custom URL fails, fall back once to the subject image
+                            const target = e.currentTarget as HTMLImageElement;
+                            const fallback = getWorksheetCardImage({ ...worksheetData, imageUrl: "" } as WorksheetData);
+                            if (target.src !== fallback) {
+                              target.src = fallback;
+                            }
+                          }}
+                        />
+                      );
+                    })()}
                     <CardTitle className="text-xl group-hover:text-primary transition-colors font-heading">
                       {worksheet.title}
                     </CardTitle>
