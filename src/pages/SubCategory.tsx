@@ -1,28 +1,36 @@
+// src/pages/SubCategory.tsx
 import { useParams, Link } from "react-router-dom";
-import { Calculator, BookA, Microscope, ClipboardCheck, Languages, Monitor, BookOpen } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Helmet } from "react-helmet-async";
+import { FolderOpen } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getCategoriesByGrade } from "@/lib/worksheetStorage";
-import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
-// Icon mapping
-const iconMap: Record<string, any> = {
-  "Calculator": Calculator,
-  "BookOpen": BookA,
-  "FlaskConical": Microscope,
-  "Monitor": Monitor,
-  "ClipboardList": ClipboardCheck,
-};
-
-// Default subcategories as fallback
-const defaultSubCategories = [
-  { id: "math", title: "Math", icon: Calculator, color: "from-primary to-primary-dark", description: "Addition, subtraction, multiplication, and more" },
-  { id: "english", title: "English", icon: BookA, color: "from-green-400 to-green-500", description: "Reading, writing, grammar, and vocabulary" },
-  { id: "science", title: "Science", icon: Microscope, color: "from-teal-400 to-teal-500", description: "Explore nature, experiments, and discoveries" },
-  { id: "computer-science", title: "Computer Science", icon: Monitor, color: "from-blue-400 to-blue-500", description: "Digital literacy and coding basics" },
-  { id: "assignments", title: "Assignments", icon: ClipboardCheck, color: "from-orange-400 to-orange-500", description: "Practice assignments and tests" },
+const subjectList = [
+  {
+    id: "math",
+    name: "Math",
+    description: "Practice numbers, operations, shapes and patterns.",
+  },
+  {
+    id: "english",
+    name: "English",
+    description: "Improve reading, writing, grammar and vocabulary.",
+  },
+  {
+    id: "science",
+    name: "Science",
+    description: "Explore science concepts with fun worksheets.",
+  },
+  {
+    id: "computer-science",
+    name: "Computer Science",
+    description: "Build digital literacy and computer skills.",
+  },
+  {
+    id: "assignments",
+    name: "Assignments",
+    description: "Revision packs, tests and practice papers.",
+  },
 ];
 
 const gradeTitles: Record<string, string> = {
@@ -34,160 +42,77 @@ const gradeTitles: Record<string, string> = {
 };
 
 const SubCategory = () => {
-  const { grade } = useParams();
-  const gradeTitle = gradeTitles[grade || ""] || "Grade";
-  const [categories, setCategories] = useState<any[]>([]);
+  const { grade } = useParams<{ grade: string }>();
 
-  useEffect(() => {
-    const loadCategories = async () => {
-      if (grade) {
-        const gradeCategories = await getCategoriesByGrade(grade);
-        
-        // Map categories to subcategory format with images
-        const mappedCategories = gradeCategories.map((cat) => {
-        const subjectId = cat.id.replace(`${grade}-`, "");
-        const defaultCat = defaultSubCategories.find((d) => d.id === subjectId);
-        
-        return {
-          id: subjectId,
-          title: cat.name,
-          icon: iconMap[cat.icon] || Calculator,
-          color: defaultCat?.color || "from-primary to-primary-dark",
-          description: cat.description,
-          imageUrl: cat.imageUrl, // Add image from category data
-        };
-      });
-      
-      setCategories(mappedCategories);
-      }
-    };
-    loadCategories();
-  }, [grade]);
+  const gradeSlug = grade || "grade-1";
+  const gradeTitle = gradeTitles[gradeSlug] || "Grade";
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": `${gradeTitle} Worksheets - All Subjects`,
-    "description": `Browse all ${gradeTitle} worksheets by subject: Math, English, Science, Computer Science, and Assignments.`,
-    "url": `https://smartkidsworksheets.com/category/${grade}`,
-  };
-
-  const breadcrumbData = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://smartkidsworksheets.com"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": gradeTitle,
-        "item": `https://smartkidsworksheets.com/category/${grade}`
-      }
-    ]
-  };
+  const pageTitle = `${gradeTitle} Worksheets by Subject`;
+  const pageDescription = `Browse ${gradeTitle.toLowerCase()} worksheets organized by subject – Math, English, Science, Computer Science and Assignments.`;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
-        <title>{gradeTitle} Worksheets - Math, English, Science, Computer Science | SmartKids Worksheets</title>
-        <meta name="description" content={`Free printable ${gradeTitle} worksheets. Browse by subject: Math, English, Science, Computer Science, and Assignments. Download and print for free.`} />
-        <link rel="canonical" href={`https://smartkidsworksheets.com/category/${grade}`} />
-        
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbData)}
-        </script>
+        <title>{pageTitle} | SmartKids Worksheets</title>
+        <meta name="description" content={pageDescription} />
       </Helmet>
-      
-      <Header />
-      
-      {/* Header Banner Ad */}
-      <section className="py-4 px-6 bg-background">
-        <div className="container mx-auto max-w-[1140px] flex justify-center">
-          <div className="bg-muted rounded-lg border border-dashed border-border flex items-center justify-center min-h-[90px] w-full max-w-[728px]">
-            {/* Google AdSense - Header Banner 728x90 - Replace with your ad code */}
-            <p className="text-muted-foreground text-sm">Advertisement</p>
-          </div>
-        </div>
-      </section>
-      
-      {/* Hero Section */}
-      <section className="gradient-hero text-white py-16 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-accent rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto max-w-[1140px] relative z-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center font-heading">
-            {gradeTitle} Worksheets
-          </h1>
-          <p className="text-xl text-blue-50 text-center max-w-2xl mx-auto">
-            Choose a subject to explore free printable worksheets for {gradeTitle}
-          </p>
-        </div>
-      </section>
 
-      {/* Subcategories Section */}
-      <section className="py-16 px-6">
-        <div className="container mx-auto max-w-[1140px]">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4 font-heading">Select a Subject</h2>
-            <p className="text-lg text-muted-foreground">
-              Browse {gradeTitle} worksheets organized by subject
+      <Header />
+
+      <main className="flex-1">
+        {/* Hero */}
+        <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-12">
+          <div className="max-w-7xl mx-auto px-4">
+            <p className="text-sm text-muted-foreground mb-2">
+              Home / {gradeTitle}
+            </p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
+              {gradeTitle} Worksheets
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl">
+              Choose a subject to explore free printable {gradeTitle.toLowerCase()} worksheets.
             </p>
           </div>
+        </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category) => (
-              <Link to={`/categories/${grade}/${category.id}`} key={category.id}>
-                <Card className="cursor-pointer group h-full hover:shadow-lg transition-shadow overflow-hidden">
-                  <CardHeader className="p-0">
-                    {category.imageUrl ? (
-                      <div className="aspect-video w-full overflow-hidden bg-muted">
-                        <img 
-                          src={category.imageUrl} 
-                          alt={`${category.title} worksheets`}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    ) : (
-                      <div className={`aspect-video w-full bg-gradient-to-br ${category.color} flex items-center justify-center`} role="img" aria-label={`${category.title} icon`}>
-                        <category.icon className="w-16 h-16 text-white" aria-hidden="true" />
-                      </div>
-                    )}
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <CardTitle className="text-2xl mb-2 group-hover:text-primary transition-colors font-heading">
-                      {category.title}
-                    </CardTitle>
-                    <p className="text-muted-foreground text-base">
-                      {category.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+        {/* Subjects grid */}
+        <section className="py-16 px-4">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl font-semibold mb-6 text-foreground">
+              Select a Subject
+            </h2>
 
-      {/* Mid-Page Ad */}
-      <section className="py-8 px-6">
-        <div className="container mx-auto max-w-[1140px]">
-          <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-border">
-            {/* Google AdSense - Mid-Page Banner - Replace with your ad code */}
-            <p className="text-muted-foreground">Advertisement</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {subjectList.map((subject) => (
+                <div
+                  key={subject.id}
+                  className="bg-card border rounded-2xl shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className="p-6 flex items-start gap-4">
+                    <div className="p-3 rounded-xl bg-primary/10">
+                      <FolderOpen className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-1">
+                        {subject.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        {subject.description}
+                      </p>
+                      <Link
+                        to={`/categories/${gradeSlug}/${subject.id}`}
+                        className="inline-flex items-center text-primary font-medium hover:underline"
+                      >
+                        View {subject.name} worksheets
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>
