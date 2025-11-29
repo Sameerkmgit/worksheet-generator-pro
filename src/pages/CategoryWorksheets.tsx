@@ -142,7 +142,7 @@ const CategoryWorksheets = () => {
                 {worksheets.map((worksheet) => (
                   <Card key={worksheet.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="aspect-[4/3] overflow-hidden bg-muted flex items-stretch">
-                      <iframe src={worksheet.pdfUrl} title={worksheet.title} className="w-full h-full border-0" />
+                      <iframe src={getPdfEmbedUrl(worksheet.pdfUrl)} title={worksheet.title} className="w-full h-full border-0" />
                     </div>
                     <CardContent className="p-6">
                       <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">{worksheet.title}</h3>
