@@ -1,37 +1,11 @@
 // src/pages/SubCategory.tsx
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FolderOpen } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
-
-const subjectList = [
-  {
-    id: "math",
-    name: "Math",
-    description: "Practice numbers, operations, shapes and patterns.",
-  },
-  {
-    id: "english",
-    name: "English",
-    description: "Improve reading, writing, grammar and vocabulary.",
-  },
-  {
-    id: "science",
-    name: "Science",
-    description: "Explore science concepts with fun worksheets.",
-  },
-  {
-    id: "computer-science",
-    name: "Computer Science",
-    description: "Build digital literacy and computer skills.",
-  },
-  {
-    id: "assignments",
-    name: "Assignments",
-    description: "Revision packs, tests and practice papers.",
-  },
-];
+import { getCategoriesByGrade, CategoryData } from "@/lib/worksheetStorage";
 
 const gradeTitles: Record<string, string> = {
   "grade-1": "Grade 1",
@@ -43,9 +17,21 @@ const gradeTitles: Record<string, string> = {
 
 const SubCategory = () => {
   const { grade } = useParams<{ grade: string }>();
+  const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const gradeSlug = grade || "grade-1";
   const gradeTitle = gradeTitles[gradeSlug] || "Grade";
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      setLoading(true);
+      const data = await getCategoriesByGrade(gradeSlug);
+      setCategories(data);
+      setLoading(false);
+    };
+    loadCategories();
+  }, [gradeSlug]);
 
   const pageTitle = `${gradeTitle} Worksheets by Subject`;
   const pageDescription = `Browse ${gradeTitle.toLowerCase()} worksheets organized by subject – Math, English, Science, Computer Science and Assignments.`;
@@ -82,34 +68,51 @@ const SubCategory = () => {
               Select a Subject
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {subjectList.map((subject) => (
-                <div
-                  key={subject.id}
-                  className="bg-card border rounded-2xl shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <div className="p-6 flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-primary/10">
-                      <FolderOpen className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
+            {loading ? (
+              <div className="text-center py-12">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                  <p className="text-muted-foreground text-lg">Loading subjects...</p>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {categories.map((category) => (
+                  <div
+                    key={category.id}
+                    className="bg-card border rounded-2xl shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+                  >
+                    {category.imageUrl ? (
+                      <div className="aspect-[16/9] overflow-hidden bg-muted">
+                        <img
+                          src={category.imageUrl}
+                          alt={category.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="aspect-[16/9] bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center">
+                        <FolderOpen className="h-16 w-16 text-primary/30" />
+                      </div>
+                    )}
+                    <div className="p-6">
                       <h3 className="text-xl font-semibold mb-1">
-                        {subject.name}
+                        {category.name}
                       </h3>
                       <p className="text-sm text-muted-foreground mb-4">
-                        {subject.description}
+                        {category.description}
                       </p>
                       <Link
-                        to={`/categories/${gradeSlug}/${subject.id}`}
+                        to={`/categories/${gradeSlug}/${category.subject}`}
                         className="inline-flex items-center text-primary font-medium hover:underline"
                       >
-                        View {subject.name} worksheets
+                        View {category.name} worksheets
                       </Link>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </main>
