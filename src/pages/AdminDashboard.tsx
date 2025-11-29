@@ -595,6 +595,25 @@ const AdminDashboard = () => {
     return acc;
   }, {} as Record<string, WorksheetData[]>);
 
+  // Further group by category within each grade-subject group
+  const groupedByCategory = (worksheets: WorksheetData[]) => {
+    return worksheets.reduce((acc, worksheet) => {
+      const categoryId = worksheet.categoryId || 'uncategorized';
+      if (!acc[categoryId]) {
+        acc[categoryId] = [];
+      }
+      acc[categoryId].push(worksheet);
+      return acc;
+    }, {} as Record<string, WorksheetData[]>);
+  };
+
+  // Get category title by ID
+  const getCategoryTitle = (categoryId: string): string => {
+    if (categoryId === 'uncategorized') return 'Uncategorized';
+    const category = worksheetCategories.find(cat => cat.id === categoryId);
+    return category?.title || 'Unknown Category';
+  };
+
   return (
     <div className="min-h-screen bg-secondary/5">
       {/* Header */}
@@ -887,48 +906,62 @@ const AdminDashboard = () => {
               const [grade, subject] = key.split("-");
               const gradeLabel = grade.charAt(0).toUpperCase() + grade.slice(1).replace("-", " ");
               const subjectLabel = subject.charAt(0).toUpperCase() + subject.slice(1).replace("-", " ");
+              
+              // Group worksheets by category
+              const categorizedWorksheets = groupedByCategory(items);
 
               return (
-                <div key={key}>
-                  <h2 className="text-xl font-heading font-semibold mb-4">
+                <div key={key} className="space-y-6">
+                  <h2 className="text-xl font-heading font-semibold mb-4 pb-2 border-b-2">
                     {gradeLabel} - {subjectLabel} ({items.length})
                   </h2>
-                  <div className="grid grid-cols-1 gap-4">
-                    {items.map((worksheet) => (
-                      <Card key={worksheet.id} className="hover:shadow-soft transition-shadow">
-                        <CardContent className="p-6">
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-lg mb-2">{worksheet.title}</h3>
-                              <p className="text-muted-foreground text-sm mb-4">
-                                {worksheet.description}
-                              </p>
-                              <div className="flex gap-4 text-xs text-muted-foreground">
-                                <span>Created: {new Date(worksheet.createdAt).toLocaleDateString()}</span>
-                                <span>Updated: {new Date(worksheet.updatedAt).toLocaleDateString()}</span>
+                  
+                  {/* Display worksheets grouped by category */}
+                  {Object.entries(categorizedWorksheets).map(([categoryId, categoryWorksheets]) => (
+                    <div key={categoryId} className="ml-4">
+                      <h3 className="text-lg font-semibold mb-3 text-primary flex items-center gap-2">
+                        <span className="w-2 h-2 bg-primary rounded-full"></span>
+                        {getCategoryTitle(categoryId)} ({categoryWorksheets.length})
+                      </h3>
+                      
+                      <div className="grid grid-cols-1 gap-4 ml-6">
+                        {categoryWorksheets.map((worksheet) => (
+                          <Card key={worksheet.id} className="hover:shadow-soft transition-shadow">
+                            <CardContent className="p-6">
+                              <div className="flex items-start justify-between gap-4">
+                                <div className="flex-1">
+                                  <h4 className="font-semibold text-lg mb-2">{worksheet.title}</h4>
+                                  <p className="text-muted-foreground text-sm mb-4">
+                                    {worksheet.description}
+                                  </p>
+                                  <div className="flex gap-4 text-xs text-muted-foreground">
+                                    <span>Created: {new Date(worksheet.createdAt).toLocaleDateString()}</span>
+                                    <span>Updated: {new Date(worksheet.updatedAt).toLocaleDateString()}</span>
+                                  </div>
+                                </div>
+                                <div className="flex gap-2">
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => handleEdit(worksheet)}
+                                  >
+                                    <Edit className="h-4 w-4" />
+                                  </Button>
+                                  <Button
+                                    variant="destructive"
+                                    size="sm"
+                                    onClick={() => handleDelete(worksheet.id, worksheet.title)}
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
                               </div>
-                            </div>
-                            <div className="flex gap-2">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => handleEdit(worksheet)}
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="destructive"
-                                size="sm"
-                                onClick={() => handleDelete(worksheet.id, worksheet.title)}
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               );
             })
