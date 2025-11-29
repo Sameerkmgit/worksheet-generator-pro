@@ -18,7 +18,6 @@ const AdminUpload = () => {
   const [grade, setGrade] = useState("");
   const [subject, setSubject] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
-  const [previewFile, setPreviewFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,26 +50,6 @@ const AdminUpload = () => {
         .from('worksheet-images')
         .getPublicUrl(pdfFileName);
 
-      // Upload preview image if provided
-      let imageUrl = null;
-      if (previewFile) {
-        const imageFileName = `${Date.now()}-${previewFile.name}`;
-        const { data: imageData, error: imageError } = await supabase.storage
-          .from('worksheet-images')
-          .upload(imageFileName, previewFile, {
-            contentType: previewFile.type,
-            upsert: false
-          });
-
-        if (imageError) throw imageError;
-
-        const { data: { publicUrl: imagePublicUrl } } = supabase.storage
-          .from('worksheet-images')
-          .getPublicUrl(imageFileName);
-        
-        imageUrl = imagePublicUrl;
-      }
-
       // Convert grade from "grade-1" to "Grade 1"
       const gradeTitle = grade.split('-').map((word, index) => 
         index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
@@ -85,8 +64,7 @@ const AdminUpload = () => {
           description: description || null,
           grade: gradeTitle,
           subject,
-          pdf_url: pdfUrl,
-          image_url: imageUrl
+          pdf_url: pdfUrl
         });
 
       if (insertError) throw insertError;
@@ -102,13 +80,10 @@ const AdminUpload = () => {
       setGrade("");
       setSubject("");
       setPdfFile(null);
-      setPreviewFile(null);
       
       // Reset file inputs
       const pdfInput = document.getElementById('pdf') as HTMLInputElement;
-      const previewInput = document.getElementById('preview') as HTMLInputElement;
       if (pdfInput) pdfInput.value = '';
-      if (previewInput) previewInput.value = '';
 
     } catch (error: any) {
       console.error('Upload error:', error);
@@ -237,36 +212,6 @@ const AdminUpload = () => {
                       <div>
                         <p className="font-medium text-foreground mb-1">Click to upload PDF</p>
                         <p className="text-sm text-muted-foreground">or drag and drop</p>
-                      </div>
-                    )}
-                  </label>
-                </div>
-              </div>
-
-              {/* Preview Image Upload */}
-              <div className="space-y-2">
-                <Label htmlFor="preview" className="text-base font-semibold">
-                  Preview Image (Optional)
-                </Label>
-                <div className="border-2 border-dashed rounded-lg border-border p-6 text-center hover:border-primary transition-colors">
-                  <input
-                    id="preview"
-                    type="file"
-                    accept=".jpg,.jpeg,.png,.webp"
-                    onChange={(e) => setPreviewFile(e.target.files?.[0] || null)}
-                    className="hidden"
-                  />
-                  <label htmlFor="preview" className="cursor-pointer">
-                    <Image className="w-12 h-12 mx-auto mb-3 text-primary" />
-                    {previewFile ? (
-                      <div className="flex items-center justify-center gap-2 text-accent">
-                        <CheckCircle className="w-5 h-5" />
-                        <span className="font-medium">{previewFile.name}</span>
-                      </div>
-                    ) : (
-                      <div>
-                        <p className="font-medium text-foreground mb-1">Click to upload image</p>
-                        <p className="text-sm text-muted-foreground">JPG, PNG, or WebP</p>
                       </div>
                     )}
                   </label>
