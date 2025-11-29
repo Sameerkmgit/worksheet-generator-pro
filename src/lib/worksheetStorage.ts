@@ -23,7 +23,7 @@ export interface WorksheetData {
   grade: string;
   subject: string;
   pdfUrl: string;
-  imageUrl: string;
+  imageUrl?: string;
   content?: string;
   heading?: string;
   intro?: string;
