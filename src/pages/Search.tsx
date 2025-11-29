@@ -162,8 +162,8 @@ const Search = () => {
                 <SelectContent>
                   <SelectItem value="all">All Subjects</SelectItem>
                   <SelectItem value="math">Math</SelectItem>
-                  <SelectItem value="english">English</SelectItem>
                   <SelectItem value="science">Science</SelectItem>
+                  <SelectItem value="english">English</SelectItem>
                   <SelectItem value="computer science">Computer Science</SelectItem>
                   <SelectItem value="assignments">Assignments</SelectItem>
                 </SelectContent>
