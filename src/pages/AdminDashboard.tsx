@@ -75,7 +75,6 @@ const AdminDashboard = () => {
     subject: "",
     categoryId: "none",
     pdfUrl: "",
-    imageUrl: "",
     content: "",
   });
   const [categoryOptions, setCategoryOptions] = useState<WorksheetCategoryData[]>([]);
@@ -463,7 +462,6 @@ const AdminDashboard = () => {
       subject: "",
       categoryId: "none",
       pdfUrl: "",
-      imageUrl: "",
       content: "",
     });
     setEditingWorksheet(null);
@@ -515,7 +513,6 @@ const AdminDashboard = () => {
       subject: worksheet.subject,
       categoryId: worksheet.categoryId || "none",
       pdfUrl: worksheet.pdfUrl,
-      imageUrl: worksheet.imageUrl,
       content: worksheet.content || "",
     });
     setIsDialogOpen(true);
@@ -821,21 +818,6 @@ const AdminDashboard = () => {
                   />
                   <p className="text-xs text-muted-foreground">
                     Use Google Drive, Dropbox, or any direct PDF link
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="imageUrl">Preview Image URL *</Label>
-                  <Input
-                    id="imageUrl"
-                    type="url"
-                    value={formData.imageUrl}
-                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                    placeholder="https://example.com/image.jpg"
-                    required
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Use an image hosting service like Imgur or Google Drive
                   </p>
                 </div>
 
