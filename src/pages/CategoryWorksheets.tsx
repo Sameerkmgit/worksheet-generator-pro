@@ -137,25 +137,12 @@ const CategoryWorksheets = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {worksheets.map((worksheet) => (
                   <Card key={worksheet.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="aspect-[4/3] overflow-hidden bg-muted">
-                      {(() => {
-                        const imageSrc = getWorksheetCardImage(worksheet);
-                        return (
-                          <img
-                            src={imageSrc}
-                            alt={worksheet.title}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              // if the custom URL fails, fall back once to the subject image
-                              const target = e.currentTarget as HTMLImageElement;
-                              const fallback = getWorksheetCardImage({ ...worksheet, imageUrl: "" });
-                              if (target.src !== fallback) {
-                                target.src = fallback;
-                              }
-                            }}
-                          />
-                        );
-                      })()}
+                    <div className="aspect-[4/3] overflow-hidden bg-muted flex items-stretch">
+                      <iframe
+                        src={worksheet.pdfUrl}
+                        title={worksheet.title}
+                        className="w-full h-full border-0"
+                      />
                     </div>
                     <CardContent className="p-6">
                       <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">
