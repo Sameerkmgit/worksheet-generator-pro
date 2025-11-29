@@ -39,7 +39,10 @@ const App = () => {
             <Route path="/search" element={<Search />} />
             <Route path="/packs" element={<Packs />} />
 
-            {/* CATEGORY LIST (Math, English, etc.) */}
+            {/* GRADE → SUBJECT LIST */}
+            <Route path="/categories/:grade" element={<SubCategory />} />
+
+            {/* SUBJECT → TOPIC CATEGORIES */}
             <Route path="/categories/:grade/:subject" element={<Category />} />
 
             {/* WORKSHEETS INSIDE CATEGORY (Addition, Shapes, etc.) */}
