@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Card, CardContent } from "@components/ui/card";
-import { Button } from "@components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Download, Eye } from "lucide-react";
-import Header from "@components/Header";
-import Footer from "@components/Footer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import {
   getWorksheetsByCategoryId,
   getWorksheetCategoryById,
@@ -147,19 +147,12 @@ const CategoryWorksheets = () => {
                     <CardContent className="p-6">
                       <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">{worksheet.title}</h3>
                       <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{worksheet.description}</p>
-                      <div className="flex gap-2">
-                        <Button asChild variant="default" className="flex-1">
-                          <Link to={`/worksheet/${worksheet.id}`}>
-                            <Eye className="mr-2 h-4 w-4" />
-                            View Details
-                          </Link>
-                        </Button>
-                        <Button asChild variant="outline" size="icon">
-                          <a href={worksheet.pdfUrl} target="_blank" rel="noopener noreferrer" title="Download PDF">
-                            <Download className="h-4 w-4" />
-                          </a>
-                        </Button>
-                      </div>
+                      <Button asChild variant="default" className="w-full">
+                        <Link to={`/worksheet/${worksheet.id}`}>
+                          <Eye className="mr-2 h-4 w-4" />
+                          View Details
+                        </Link>
+                      </Button>
                     </CardContent>
                   </Card>
                 ))}
