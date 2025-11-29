@@ -27,7 +27,16 @@ const SubCategory = () => {
     const loadCategories = async () => {
       setLoading(true);
       const data = await getCategoriesByGrade(gradeSlug);
-      setCategories(data);
+      
+      // Define subject order: Math, Science, English, Computer Science, Assignments
+      const subjectOrder = ['math', 'science', 'english', 'computer-science', 'assignments'];
+      const sortedData = data.sort((a, b) => {
+        const orderA = subjectOrder.indexOf(a.subject.toLowerCase());
+        const orderB = subjectOrder.indexOf(b.subject.toLowerCase());
+        return orderA - orderB;
+      });
+      
+      setCategories(sortedData);
       setLoading(false);
     };
     loadCategories();
