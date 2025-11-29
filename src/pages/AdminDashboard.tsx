@@ -70,7 +70,6 @@ const AdminDashboard = () => {
   // Form state
   const [formData, setFormData] = useState({
     title: "",
-    description: "",
     grade: "",
     subject: "",
     categoryId: "none",
@@ -457,7 +456,6 @@ const AdminDashboard = () => {
   const resetForm = () => {
     setFormData({
       title: "",
-      description: "",
       grade: "",
       subject: "",
       categoryId: "none",
@@ -508,7 +506,6 @@ const AdminDashboard = () => {
     setEditingWorksheet(worksheet);
     setFormData({
       title: worksheet.title,
-      description: worksheet.description,
       grade: worksheet.grade,
       subject: worksheet.subject,
       categoryId: worksheet.categoryId || "none",
