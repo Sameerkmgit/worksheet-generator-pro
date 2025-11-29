@@ -29,10 +29,19 @@ const SubCategory = () => {
       const data = await getCategoriesByGrade(gradeSlug);
       
       // Define subject order: Math, Science, English, Computer Science, Assignments
-      const subjectOrder = ['math', 'science', 'english', 'computer-science', 'assignments'];
+      const subjectOrder: Record<string, number> = {
+        'math': 1,
+        'science': 2,
+        'english': 3,
+        'computer-science': 4,
+        'assignments': 5
+      };
+      
       const sortedData = data.sort((a, b) => {
-        const orderA = subjectOrder.indexOf(a.subject.toLowerCase());
-        const orderB = subjectOrder.indexOf(b.subject.toLowerCase());
+        const normalizedA = a.subject.toLowerCase().replace(/\s+/g, '-');
+        const normalizedB = b.subject.toLowerCase().replace(/\s+/g, '-');
+        const orderA = subjectOrder[normalizedA] || 999;
+        const orderB = subjectOrder[normalizedB] || 999;
         return orderA - orderB;
       });
       
