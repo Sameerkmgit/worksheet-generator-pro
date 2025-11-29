@@ -192,33 +192,6 @@ const WorksheetDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - Main Content */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Worksheet Details */}
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                    <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
-                      {worksheet.grade}
-                    </span>
-                    <span className="bg-secondary/10 text-secondary-foreground px-3 py-1 rounded-full">
-                      {worksheet.subject}
-                    </span>
-                  </div>
-
-                  <h1 className="text-3xl md:text-4xl font-bold mb-4">{worksheet.title}</h1>
-                  
-                  <p className="text-lg text-muted-foreground mb-6">
-                    {worksheet.description}
-                  </p>
-
-                  <Button size="lg" className="w-full md:w-auto" asChild>
-                    <a href={worksheet.pdfUrl} target="_blank" rel="noopener noreferrer">
-                      <Download className="mr-2 h-5 w-5" />
-                      Download PDF
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-
               {/* Introduction Section */}
               {worksheet.intro && (
                 <Card>
@@ -246,6 +219,33 @@ const WorksheetDetail = () => {
                   </CardContent>
                 </Card>
               )}
+
+              {/* Worksheet Details */}
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+                    <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
+                      {worksheet.grade}
+                    </span>
+                    <span className="bg-secondary/10 text-secondary-foreground px-3 py-1 rounded-full">
+                      {worksheet.subject}
+                    </span>
+                  </div>
+
+                  <h1 className="text-3xl md:text-4xl font-bold mb-4">{worksheet.title}</h1>
+                  
+                  <p className="text-lg text-muted-foreground mb-6">
+                    {worksheet.description}
+                  </p>
+
+                  <Button size="lg" className="w-full md:w-auto" asChild>
+                    <a href={worksheet.pdfUrl} target="_blank" rel="noopener noreferrer">
+                      <Download className="mr-2 h-5 w-5" />
+                      Download PDF
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
 
               {/* Questions/Content Section */}
               {worksheet.questions && Array.isArray(worksheet.questions) && worksheet.questions.length > 0 && (
