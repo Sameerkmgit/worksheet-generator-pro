@@ -7,23 +7,24 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, ExternalLink, Search } from "lucide-react";
 import { format } from "date-fns";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface Worksheet {
   id: string;
   grade: string;
-  grade_number: number;
   subject: string;
-  file_name: string;
-  drive_url: string;
+  title: string;
+  pdf_url: string;
   created_at: string;
 }
 
 const WorksheetsBrowser = () => {
-  const [grades, setGrades] = useState<number[]>([]);
+  const [grades, setGrades] = useState<string[]>([]);
   const [subjects, setSubjects] = useState<string[]>([]);
   const [worksheets, setWorksheets] = useState<Worksheet[]>([]);
   
-  const [selectedGrade, setSelectedGrade] = useState<number | null>(null);
+  const [selectedGrade, setSelectedGrade] = useState<string | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   
@@ -38,16 +39,15 @@ const WorksheetsBrowser = () => {
       setLoadingGrades(true);
       setError(null);
       try {
-        const { data, error: queryError } = await (supabase
-          .from("worksheets") as any)
-          .select("grade_number")
-          .eq("is_active", true)
-          .order("grade_number", { ascending: true });
+        const { data, error: queryError } = await supabase
+          .from("worksheets")
+          .select("grade")
+          .eq("is_archived", false);
 
         if (queryError) throw queryError;
 
-        const gradeNumbers: number[] = (data || []).map((d: any) => d.grade_number);
-        const uniqueGrades: number[] = Array.from(new Set(gradeNumbers)).sort((a, b) => a - b);
+        const gradeList: string[] = (data || []).map((d) => d.grade);
+        const uniqueGrades: string[] = Array.from(new Set(gradeList)).sort();
         setGrades(uniqueGrades);
         
         if (uniqueGrades.length > 0) {
@@ -71,15 +71,15 @@ const WorksheetsBrowser = () => {
       setLoadingSubjects(true);
       setError(null);
       try {
-        const { data, error: queryError } = await (supabase
-          .from("worksheets") as any)
+        const { data, error: queryError } = await supabase
+          .from("worksheets")
           .select("subject")
-          .eq("grade_number", selectedGrade)
-          .eq("is_active", true);
+          .eq("grade", selectedGrade)
+          .eq("is_archived", false);
 
         if (queryError) throw queryError;
 
-        const subjectList: string[] = (data || []).map((d: any) => d.subject);
+        const subjectList: string[] = (data || []).map((d) => d.subject);
         const uniqueSubjects: string[] = Array.from(new Set(subjectList)).sort();
         setSubjects(uniqueSubjects);
         
@@ -109,17 +109,17 @@ const WorksheetsBrowser = () => {
       setLoadingWorksheets(true);
       setError(null);
       try {
-        let query = (supabase
-          .from("worksheets") as any)
-          .select("id, grade, grade_number, subject, file_name, drive_url, created_at")
-          .eq("grade_number", selectedGrade)
+        let query = supabase
+          .from("worksheets")
+          .select("id, grade, subject, title, pdf_url, created_at")
+          .eq("grade", selectedGrade)
           .eq("subject", selectedSubject)
-          .eq("is_active", true)
+          .eq("is_archived", false)
           .order("created_at", { ascending: false })
-          .order("file_name", { ascending: true });
+          .order("title", { ascending: true });
 
         if (searchTerm.trim()) {
-          query = query.ilike("file_name", `%${searchTerm.trim()}%`);
+          query = query.ilike("title", `%${searchTerm.trim()}%`);
         }
 
         const { data, error: queryError } = await query;
@@ -153,10 +153,12 @@ const WorksheetsBrowser = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background">
+        <Header />
+        
         <div className="container mx-auto px-4 py-8 max-w-6xl">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">SmartKidsHub Worksheets</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-2 font-heading">SmartKidsHub Worksheets</h1>
             <p className="text-muted-foreground">Browse worksheets by Grade and Subject</p>
           </div>
 
@@ -166,8 +168,8 @@ const WorksheetsBrowser = () => {
             <div className="flex-1 min-w-[150px]">
               <label className="block text-sm font-medium text-foreground mb-1">Grade</label>
               <Select
-                value={selectedGrade?.toString() || ""}
-                onValueChange={(val) => setSelectedGrade(parseInt(val))}
+                value={selectedGrade || ""}
+                onValueChange={setSelectedGrade}
                 disabled={loadingGrades || grades.length === 0}
               >
                 <SelectTrigger>
@@ -175,8 +177,8 @@ const WorksheetsBrowser = () => {
                 </SelectTrigger>
                 <SelectContent>
                   {grades.map((g) => (
-                    <SelectItem key={g} value={g.toString()}>
-                      Grade {g}
+                    <SelectItem key={g} value={g}>
+                      {g}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -211,7 +213,7 @@ const WorksheetsBrowser = () => {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="text"
-                  placeholder="Search by filename…"
+                  placeholder="Search by title…"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
@@ -248,9 +250,9 @@ const WorksheetsBrowser = () => {
                 <Card key={worksheet.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4">
                     <div className="flex-1">
-                      <h3 className="font-medium text-foreground">{worksheet.file_name}</h3>
+                      <h3 className="font-medium text-foreground">{worksheet.title}</h3>
                       <p className="text-sm text-muted-foreground">
-                        Grade {worksheet.grade_number} · {worksheet.subject}
+                        {worksheet.grade} · {worksheet.subject}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         Added on {formatDate(worksheet.created_at)}
@@ -259,7 +261,7 @@ const WorksheetsBrowser = () => {
                     <Button
                       variant="default"
                       size="sm"
-                      onClick={() => window.open(worksheet.drive_url, "_blank", "noopener,noreferrer")}
+                      onClick={() => window.open(worksheet.pdf_url, "_blank", "noopener,noreferrer")}
                     >
                       <ExternalLink className="h-4 w-4 mr-2" />
                       View / Download
@@ -270,6 +272,8 @@ const WorksheetsBrowser = () => {
             </div>
           )}
         </div>
+        
+        <Footer />
       </div>
     </>
   );
