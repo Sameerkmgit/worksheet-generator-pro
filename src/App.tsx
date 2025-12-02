@@ -19,6 +19,7 @@ import ResetPassword from "./pages/ResetPassword";
 import AssignmentsLanding from "./pages/AssignmentsLanding";
 import Packs from "./pages/Packs";
 import Search from "./pages/Search";
+import WorksheetsBrowser from "./pages/WorksheetsBrowser";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
             <Route path="/packs" element={<Packs />} />
+            <Route path="/worksheets" element={<WorksheetsBrowser />} />
 
             {/* GRADE → SUBJECT LIST */}
             <Route path="/categories/:grade" element={<SubCategory />} />
