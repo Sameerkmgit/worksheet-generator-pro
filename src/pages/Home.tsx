@@ -124,7 +124,7 @@ const Home = () => {
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in mb-10">
-              <Link to="/categories/grade-1">
+              <Link to="/worksheets">
                 <Button size="lg" className="h-14 px-10 text-base font-semibold">
                   Browse Worksheets
                 </Button>
