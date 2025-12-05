@@ -7,11 +7,11 @@ const Header = () => {
   const navigate = useNavigate();
   const navItems = [
     { label: "Home", path: "/" },
-    { label: "Grade 1", path: "/category/grade-1" },
-    { label: "Grade 2", path: "/category/grade-2" },
-    { label: "Grade 3", path: "/category/grade-3" },
-    { label: "Grade 4", path: "/category/grade-4" },
-    { label: "Grade 5", path: "/category/grade-5" },
+    { label: "Grade 1", path: "/categories/grade-1" },
+    { label: "Grade 2", path: "/categories/grade-2" },
+    { label: "Grade 3", path: "/categories/grade-3" },
+    { label: "Grade 4", path: "/categories/grade-4" },
+    { label: "Grade 5", path: "/categories/grade-5" },
   ];
 
   return (
