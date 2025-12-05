@@ -162,7 +162,7 @@ const Category = () => {
         <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-12">
           <div className="max-w-7xl mx-auto px-4">
             <Link 
-              to={`/category/${grade}`}
+              to={`/categories/${grade}`}
               className="inline-flex items-center text-primary hover:text-primary/80 mb-6 transition-colors"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
