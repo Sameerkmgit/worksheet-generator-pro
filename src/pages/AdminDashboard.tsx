@@ -543,7 +543,13 @@ const AdminDashboard = () => {
       return;
     }
 
-    const created = await createWorksheetCategory(newCategoryData);
+    // Normalize the subject to proper case for consistency
+    const normalizedCategoryData = {
+      ...newCategoryData,
+      subject: normalizeSubject(newCategoryData.subject),
+    };
+
+    const created = await createWorksheetCategory(normalizedCategoryData);
     if (created) {
       toast({
         title: "Success",
