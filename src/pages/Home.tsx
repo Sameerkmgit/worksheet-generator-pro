@@ -50,19 +50,18 @@ const Home = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
-    "name": "WizKids Worksheets",
+    "name": "WizKidsHub Worksheets",
     "description": "Free printable educational worksheets for Grades 1-5. Math, English, Science worksheets aligned with CBSE curriculum.",
-    "url": "https://wizkidsworksheets.com",
-    "logo": "https://wizkidsworksheets.com/logo.png",
+    "url": "https://wizkidshubworksheets.com",
+    "logo": "https://wizkidshubworksheets.com/logo.png",
     "sameAs": [
-      "https://facebook.com/wizkidsworksheets",
-      "https://twitter.com/wizkidsworksheets"
+      "https://facebook.com/wizkidshubworksheets",
+      "https://twitter.com/wizkidshubworksheets"
     ],
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock"
+      "priceCurrency": "INR"
     }
   };
 
@@ -74,7 +73,7 @@ const Home = () => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://wizkidsworksheets.com"
+        "item": "https://wizkidshubworksheets.com"
       }
     ]
   };
@@ -82,9 +81,9 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Free Printable Worksheets for Grades 1-5 | WizKids Worksheets</title>
+        <title>Free Printable Worksheets for Grades 1-5 | WizKidsHub Worksheets</title>
         <meta name="description" content="Download free printable educational worksheets for Grades 1-5. Math, English, Science worksheets aligned with CBSE curriculum. Perfect for homeschooling and classroom learning." />
-        <link rel="canonical" href="https://wizkidsworksheets.com/" />
+        <link rel="canonical" href="https://wizkidshubworksheets.com/" />
         
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
@@ -107,7 +106,7 @@ const Home = () => {
       </section>
       
       {/* Hero Section */}
-      <section className="gradient-hero text-white py-24 px-6 relative overflow-hidden" aria-label="Hero section with introduction to WizKids Worksheets">
+      <section className="gradient-hero text-white py-24 px-6 relative overflow-hidden" aria-label="Hero section with introduction to WizKidsHub Worksheets">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-20 w-48 h-48 bg-accent rounded-full blur-3xl"></div>
           <div className="absolute bottom-20 right-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
@@ -116,7 +115,7 @@ const Home = () => {
         <div className="container mx-auto max-w-[1140px] relative z-10">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in font-heading">
-              WizKids Worksheets for Grades 1–5
+              WizKidsHub Worksheets for Grades 1–5
             </h1>
             <p className="text-xl md:text-2xl text-blue-50 mb-10 animate-fade-in max-w-3xl mx-auto">
               Free printable educational worksheets for young learners. Math, English, Science, and more – all designed to make learning fun and effective.
@@ -210,7 +209,7 @@ const Home = () => {
       <section className="py-16 px-6 bg-secondary/10" aria-labelledby="features-heading">
         <div className="container mx-auto max-w-[1140px]">
           <div className="text-center mb-12">
-            <h2 id="features-heading" className="text-4xl font-bold text-foreground mb-4 font-heading">Why WizKids Worksheets?</h2>
+            <h2 id="features-heading" className="text-4xl font-bold text-foreground mb-4 font-heading">Why WizKidsHub Worksheets?</h2>
             <p className="text-lg text-muted-foreground">Trusted by thousands of parents and teachers</p>
           </div>
 

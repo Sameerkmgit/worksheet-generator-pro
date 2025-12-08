@@ -91,7 +91,7 @@ const Category = () => {
   
   const pageDescription = `Free printable ${pageTitle.toLowerCase()} worksheets. Download and print for classroom or home learning.`;
 
-  const pageUrl = `https://wizkidsworksheets.com/category/${grade}/${subject}`;
+  const pageUrl = `https://wizkidshubworksheets.com/category/${grade}/${subject}`;
   
   const structuredData = {
     "@context": "https://schema.org",
@@ -101,8 +101,8 @@ const Category = () => {
     "url": pageUrl,
     "isPartOf": {
       "@type": "WebSite",
-      "name": "WizKids Worksheets",
-      "url": "https://wizkidsworksheets.com"
+      "name": "WizKidsHub Worksheets",
+      "url": "https://wizkidshubworksheets.com"
     }
   };
 
@@ -114,13 +114,13 @@ const Category = () => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://wizkidsworksheets.com"
+        "item": "https://wizkidshubworksheets.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": gradeTitle,
-        "item": `https://wizkidsworksheets.com/category/${grade}`
+        "item": `https://wizkidshubworksheets.com/category/${grade}`
       },
       {
         "@type": "ListItem",
@@ -134,7 +134,7 @@ const Category = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>{pageTitle} Worksheets - Free Printable PDFs | WizKids Worksheets</title>
+        <title>{pageTitle} Worksheets - Free Printable PDFs | WizKidsHub Worksheets</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
         <script type="application/ld+json">

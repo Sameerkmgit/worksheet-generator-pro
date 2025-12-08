@@ -148,7 +148,7 @@ const WorksheetsBrowser = () => {
   return (
     <>
       <Helmet>
-        <title>Browse Worksheets | WizKidsHub</title>
+        <title>Browse Worksheets | WizKidsHub Worksheets</title>
         <meta name="description" content="Browse and download worksheets by grade and subject" />
       </Helmet>
 
@@ -158,7 +158,7 @@ const WorksheetsBrowser = () => {
         <div className="container mx-auto px-4 py-8 max-w-6xl">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2 font-heading">WizKidsHub Worksheets</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-2 font-heading">WizKidsHub Worksheets Browser</h1>
             <p className="text-muted-foreground">Browse worksheets by Grade and Subject</p>
           </div>
 
