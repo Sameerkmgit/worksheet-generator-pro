@@ -639,7 +639,7 @@ export const getWorksheetCategoryById = async (id: string): Promise<WorksheetCat
 // Create a new worksheet category
 export const createWorksheetCategory = async (
   category: Omit<WorksheetCategoryData, "id" | "createdAt" | "updatedAt">
-): Promise<WorksheetCategoryData | null> => {
+): Promise<{ data: WorksheetCategoryData | null; error: string | null }> => {
   const { data, error } = await supabase
     .from('worksheet_categories')
     .insert({
@@ -651,12 +651,15 @@ export const createWorksheetCategory = async (
     .select()
     .single();
 
-  if (error || !data) {
+  if (error) {
     console.error("Error creating worksheet category:", error);
-    return null;
+    if (error.code === '23505') {
+      return { data: null, error: `A category with title "${category.title}" already exists for ${category.grade} ${category.subject}` };
+    }
+    return { data: null, error: error.message };
   }
 
-  return mapWorksheetCategoryFromDB(data);
+  return { data: mapWorksheetCategoryFromDB(data), error: null };
 };
 
 // Update a worksheet category
