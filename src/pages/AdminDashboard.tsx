@@ -549,8 +549,8 @@ const AdminDashboard = () => {
       subject: normalizeSubject(newCategoryData.subject),
     };
 
-    const created = await createWorksheetCategory(normalizedCategoryData);
-    if (created) {
+    const result = await createWorksheetCategory(normalizedCategoryData);
+    if (result.data) {
       toast({
         title: "Success",
         description: "Category created successfully",
@@ -566,7 +566,7 @@ const AdminDashboard = () => {
     } else {
       toast({
         title: "Error",
-        description: "Failed to create category",
+        description: result.error || "Failed to create category",
         variant: "destructive",
       });
     }
