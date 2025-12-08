@@ -88,25 +88,22 @@ const WorksheetDetail = () => {
 
   const pageTitle = `${worksheet.title} - Free Printable PDF`;
   const pageDescription = worksheet.description || `Download free ${worksheet.grade} ${worksheet.subject} worksheet: ${worksheet.title}. Perfect for classroom and home learning.`;
-  const pageUrl = `https://wizkidsworksheets.com/worksheet/${worksheetId}`;
+  const pageUrl = `https://wizkidshubworksheets.com/worksheet/${worksheetId}`;
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LearningResource",
     "name": worksheet.title,
     "description": pageDescription,
-    "url": pageUrl,
     "educationalLevel": worksheet.grade,
     "learningResourceType": "Worksheet",
-    "about": {
-      "@type": "Thing",
-      "name": worksheet.subject
-    },
     "isAccessibleForFree": true,
+    "inLanguage": "en",
+    "url": pageUrl,
     "publisher": {
       "@type": "Organization",
-      "name": "WizKids Worksheets",
-      "url": "https://wizkidsworksheets.com"
+      "name": "WizKidsHub Worksheets",
+      "url": "https://wizkidshubworksheets.com"
     }
   };
 
@@ -118,19 +115,19 @@ const WorksheetDetail = () => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://wizkidsworksheets.com"
+        "item": "https://wizkidshubworksheets.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": worksheet.grade,
-        "item": `https://wizkidsworksheets.com/category/${worksheet.grade.toLowerCase().replace(' ', '-')}`
+        "item": `https://wizkidshubworksheets.com/category/${worksheet.grade.toLowerCase().replace(' ', '-')}`
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": worksheet.subject,
-        "item": `https://wizkidsworksheets.com/category/${worksheet.grade.toLowerCase().replace(' ', '-')}/${worksheet.subject.toLowerCase().replace(' ', '-')}`
+        "item": `https://wizkidshubworksheets.com/category/${worksheet.grade.toLowerCase().replace(' ', '-')}/${worksheet.subject.toLowerCase().replace(' ', '-')}`
       },
       {
         "@type": "ListItem",
@@ -144,7 +141,7 @@ const WorksheetDetail = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>{pageTitle} | WizKids Worksheets</title>
+        <title>{pageTitle} | WizKidsHub Worksheets</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content={pageTitle} />

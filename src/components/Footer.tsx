@@ -18,7 +18,7 @@ const Footer = () => {
           <div>
             <h3 className="font-heading font-semibold text-lg mb-4">About Us</h3>
             <p className="text-sm opacity-90">
-              WizKidsWorksheets provides free, high-quality educational worksheets for students from Grade 1 to 5.
+              WizKidsHubWorksheets provides free, high-quality educational worksheets for students from Grade 1 to 5.
             </p>
           </div>
 
@@ -125,7 +125,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/20 pt-8 text-center text-sm opacity-90">
-          <p>© 2024 WizKidsWorksheets. All rights reserved.</p>
+          <p>© 2024 WizKidsHubWorksheets. All rights reserved.</p>
         </div>
       </div>
     </footer>
