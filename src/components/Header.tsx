@@ -36,7 +36,7 @@ const Header = () => {
               <BookOpen className="w-6 h-6 text-white" />
             </div>
             <span className="text-xl font-bold font-heading text-primary">
-              SmartKids<span className="text-foreground">Worksheets</span>
+              WizKids<span className="text-foreground">Worksheets</span>
             </span>
           </Link>
           </div>

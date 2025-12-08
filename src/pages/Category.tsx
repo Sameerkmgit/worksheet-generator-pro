@@ -91,7 +91,7 @@ const Category = () => {
   
   const pageDescription = `Free printable ${pageTitle.toLowerCase()} worksheets. Download and print for classroom or home learning.`;
 
-  const pageUrl = `https://smartkidsworksheets.com/category/${grade}/${subject}`;
+  const pageUrl = `https://wizkidsworksheets.com/category/${grade}/${subject}`;
   
   const structuredData = {
     "@context": "https://schema.org",
@@ -101,8 +101,8 @@ const Category = () => {
     "url": pageUrl,
     "isPartOf": {
       "@type": "WebSite",
-      "name": "SmartKids Worksheets",
-      "url": "https://smartkidsworksheets.com"
+      "name": "WizKids Worksheets",
+      "url": "https://wizkidsworksheets.com"
     }
   };
 
@@ -114,13 +114,13 @@ const Category = () => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://smartkidsworksheets.com"
+        "item": "https://wizkidsworksheets.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": gradeTitle,
-        "item": `https://smartkidsworksheets.com/category/${grade}`
+        "item": `https://wizkidsworksheets.com/category/${grade}`
       },
       {
         "@type": "ListItem",
@@ -134,7 +134,7 @@ const Category = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>{pageTitle} Worksheets - Free Printable PDFs | SmartKids Worksheets</title>
+        <title>{pageTitle} Worksheets - Free Printable PDFs | WizKids Worksheets</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
         <script type="application/ld+json">
