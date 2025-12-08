@@ -57,7 +57,7 @@ const SubCategory = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
-        <title>{pageTitle} | SmartKids Worksheets</title>
+        <title>{pageTitle} | WizKids Worksheets</title>
         <meta name="description" content={pageDescription} />
       </Helmet>
 

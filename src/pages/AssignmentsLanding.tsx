@@ -57,7 +57,7 @@ const AssignmentsLanding = () => {
   const gradeTitle = gradeTitles[grade || ""] || "Grade";
   const pageTitle = `${gradeTitle} Assignments`;
   const pageDescription = `Practice tests, quizzes, and homework sheets for ${gradeTitle}. Download free printable assignments to reinforce learning and track progress.`;
-  const pageUrl = `https://smartkidsworksheets.com/category/${grade}/assignments`;
+  const pageUrl = `https://wizkidsworksheets.com/category/${grade}/assignments`;
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -67,8 +67,8 @@ const AssignmentsLanding = () => {
     "url": pageUrl,
     "isPartOf": {
       "@type": "WebSite",
-      "name": "SmartKids Worksheets",
-      "url": "https://smartkidsworksheets.com"
+      "name": "WizKids Worksheets",
+      "url": "https://wizkidsworksheets.com"
     }
   };
 
@@ -80,13 +80,13 @@ const AssignmentsLanding = () => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://smartkidsworksheets.com"
+        "item": "https://wizkidsworksheets.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": gradeTitle,
-        "item": `https://smartkidsworksheets.com/category/${grade}`
+        "item": `https://wizkidsworksheets.com/category/${grade}`
       },
       {
         "@type": "ListItem",
@@ -100,7 +100,7 @@ const AssignmentsLanding = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>{pageTitle} - Practice Tests & Quizzes | SmartKids Worksheets</title>
+        <title>{pageTitle} - Practice Tests & Quizzes | WizKids Worksheets</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
         

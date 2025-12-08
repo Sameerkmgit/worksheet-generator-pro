@@ -102,9 +102,9 @@ const Search = () => {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Search Worksheets | SmartKids Worksheets</title>
+        <title>Search Worksheets | WizKids Worksheets</title>
         <meta name="description" content="Search for educational worksheets by keyword, grade, and subject. Find the perfect printable worksheet for your child." />
-        <link rel="canonical" href="https://smartkidsworksheets.com/search" />
+        <link rel="canonical" href="https://wizkidsworksheets.com/search" />
       </Helmet>
 
       <Header />
