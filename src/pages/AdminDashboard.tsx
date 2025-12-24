@@ -1041,9 +1041,6 @@ const AdminDashboard = () => {
                     <p className="text-sm text-muted-foreground">
                       This updates the category card image for {categorySubjectFilter} in {categoryGradeFilter}. Recommended size: 400x300px
                     </p>
-                    <p className="text-xs text-blue-600 font-mono bg-blue-50 p-2 rounded">
-                      Connected to: {import.meta.env.VITE_SUPABASE_URL}
-                    </p>
                     <div className="flex gap-3 items-end">
                       <div className="flex-1">
                         <Input
