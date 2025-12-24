@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { ScrollToTop } from "./components/ScrollToTop";
 import Home from "./pages/Home";
@@ -58,9 +58,10 @@ const App = () => {
             <Route path="/assignments/:grade" element={<AssignmentsLanding />} />
 
             {/* ADMIN ROUTES */}
+            <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
             <Route path="/admin/upload" element={<AdminUpload />} />
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
             <Route path="/admin/reset-password" element={<ResetPassword />} />
             {/* Obscured secure entry URL – goes to admin login */}
             <Route path="/dashboard-secure-2025" element={<AdminLogin />} />
