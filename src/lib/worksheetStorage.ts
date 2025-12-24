@@ -842,10 +842,15 @@ export const updateCategory = async (id: string, updates: Partial<CategoryData>)
   if (updates.icon) updateData.icon = updates.icon;
   if (updates.worksheetCount !== undefined) updateData.worksheet_count = updates.worksheetCount;
 
-  await supabase
+  const { error } = await supabase
     .from('worksheet_categories')
     .update(updateData)
     .eq('id', id);
+
+  if (error) {
+    console.error('Error updating category:', error);
+    throw new Error(error.message);
+  }
 };
 
 // Worksheet image overrides
