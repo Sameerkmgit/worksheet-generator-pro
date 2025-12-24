@@ -8,6 +8,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import Category from "./pages/Category";
 import CategoryWorksheets from "./pages/CategoryWorksheets";
+import SubcategoryWorksheets from "./pages/SubcategoryWorksheets";
 import WorksheetDetail from "./pages/WorksheetDetail";
 import SubCategory from "./pages/SubCategory";
 
@@ -44,8 +45,11 @@ const App = () => {
             {/* GRADE → CATEGORY LIST (fetches from worksheet_categories) */}
             <Route path="/categories/:gradeSlug" element={<Category />} />
 
-            {/* WORKSHEETS INSIDE CATEGORY (Addition, Shapes, etc.) */}
+            {/* WORKSHEETS INSIDE CATEGORY (shows subcategories/topics first) */}
             <Route path="/category/:categoryId" element={<CategoryWorksheets />} />
+
+            {/* WORKSHEETS INSIDE SUBCATEGORY (specific topic) */}
+            <Route path="/subcategory/:subcategoryId" element={<SubcategoryWorksheets />} />
 
             {/* WORKSHEET DETAIL */}
             <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />

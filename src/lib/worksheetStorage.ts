@@ -47,6 +47,17 @@ export interface WorksheetCategoryData {
   updatedAt?: string;
 }
 
+export interface SubcategoryData {
+  id: string;
+  categoryId: string;
+  title: string;
+  slug: string;
+  sortOrder: number;
+  isArchived: boolean;
+  createdAt: string;
+  updatedAt?: string;
+}
+
 export interface CategoryData {
   id: string;
   name: string;
@@ -124,6 +135,18 @@ const mapCategoryFromDB = (c: any): CategoryData => ({
   icon: c.icon,
   imageUrl: c.image_url,
   worksheetCount: c.worksheet_count,
+});
+
+// Helper to convert DB row to SubcategoryData
+const mapSubcategoryFromDB = (s: any): SubcategoryData => ({
+  id: s.id,
+  categoryId: s.category_id,
+  title: s.title,
+  slug: s.slug,
+  sortOrder: s.sort_order,
+  isArchived: s.is_archived,
+  createdAt: s.created_at,
+  updatedAt: s.updated_at,
 });
 
 // Admin authentication - now uses Supabase Auth
@@ -858,4 +881,56 @@ export const getAllWorksheetImageOverrides = async (): Promise<Record<string, st
     overrides[item.worksheet_id] = item.image_url;
   });
   return overrides;
+};
+
+// =========== SUBCATEGORY FUNCTIONS ===========
+
+// Get subcategories by category ID
+export const getSubcategoriesByCategoryId = async (categoryId: string): Promise<SubcategoryData[]> => {
+  const { data, error } = await supabase
+    .from('worksheet_subcategories')
+    .select('*')
+    .eq('category_id', categoryId)
+    .eq('is_archived', false)
+    .order('sort_order', { ascending: true });
+
+  if (error || !data) {
+    console.error("Error fetching subcategories by category ID:", error);
+    return [];
+  }
+
+  return data.map(mapSubcategoryFromDB);
+};
+
+// Get subcategory by ID
+export const getSubcategoryById = async (id: string): Promise<SubcategoryData | null> => {
+  const { data, error } = await supabase
+    .from('worksheet_subcategories')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error || !data) {
+    console.error("Error fetching subcategory by ID:", error);
+    return null;
+  }
+
+  return mapSubcategoryFromDB(data);
+};
+
+// Get worksheets by subcategory ID
+export const getWorksheetsBySubcategoryId = async (subcategoryId: string): Promise<WorksheetData[]> => {
+  const { data, error } = await supabase
+    .from('worksheets')
+    .select('*')
+    .eq('subcategory_id', subcategoryId)
+    .eq('is_archived', false)
+    .order('created_at', { ascending: false });
+
+  if (error || !data) {
+    console.error("Error fetching worksheets by subcategory ID:", error);
+    return [];
+  }
+
+  return data.map(mapWorksheetFromDB);
 };
