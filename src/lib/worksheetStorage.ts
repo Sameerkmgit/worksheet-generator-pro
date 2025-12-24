@@ -43,6 +43,7 @@ export interface WorksheetCategoryData {
   subject: string;
   title: string;
   description?: string;
+  imageUrl?: string;
   createdAt: string;
   updatedAt?: string;
 }
@@ -121,6 +122,7 @@ const mapWorksheetCategoryFromDB = (c: any): WorksheetCategoryData => ({
   subject: c.subject,
   title: c.title,
   description: c.description,
+  imageUrl: c.image_url,
   createdAt: c.created_at,
   updatedAt: c.updated_at,
 });
