@@ -267,12 +267,12 @@ const AdminDashboard = () => {
       
       // Find the actual category by grade and subject
       const category = await getCategoryByGradeAndSubject(categoryGradeFilter, categorySubjectFilter);
-      if (category) {
-        await updateCategory(category.id, { imageUrl: publicUrl });
-        console.log('✅ Category updated with image:', category.id);
-      } else {
-        console.error('❌ Category not found for:', categoryGradeFilter, categorySubjectFilter);
+      if (!category) {
+        throw new Error(`Category not found for ${categoryGradeFilter} / ${categorySubjectFilter}`);
       }
+
+      await updateCategory(category.id, { imageUrl: publicUrl });
+      console.log('✅ Category updated with image:', category.id);
       
       // Force reload categories
       loadCategories();

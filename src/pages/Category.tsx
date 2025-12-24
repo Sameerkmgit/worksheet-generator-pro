@@ -14,6 +14,7 @@ interface WorksheetCategory {
   subject: string;
   grade: string;
   description?: string | null;
+  image_url?: string | null;
 }
 
 const gradeTitles: Record<string, string> = {
@@ -42,7 +43,7 @@ const Category = () => {
 
         const { data, error } = await supabase
           .from("worksheet_categories")
-          .select("id,title,subject,grade,description")
+          .select("id,title,subject,grade,description,image_url")
           .eq("grade", gradeNumber)
           .order("subject");
 
@@ -169,7 +170,22 @@ const Category = () => {
               </div>
             ) : (
               categories.map((category) => (
-                <Card key={category.id} className="hover:shadow-lg transition-shadow">
+                <Card key={category.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  {category.image_url ? (
+                    <div className="aspect-[16/9] overflow-hidden bg-muted">
+                      <img
+                        src={category.image_url}
+                        alt={`${gradeTitle} ${category.subject} worksheets category image`}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : (
+                    <div className="aspect-[16/9] bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                      <FolderOpen className="h-14 w-14 text-primary/40" />
+                    </div>
+                  )}
+
                   <CardHeader>
                     <div className="flex items-center gap-3 mb-2">
                       <div className="p-2 rounded-lg bg-primary/10">
@@ -177,9 +193,7 @@ const Category = () => {
                       </div>
                       <CardTitle className="text-xl">{category.title}</CardTitle>
                     </div>
-                    <CardDescription className="text-sm">
-                      {category.subject}
-                    </CardDescription>
+                    <CardDescription className="text-sm">{category.subject}</CardDescription>
                     {category.description && (
                       <CardDescription className="text-sm mt-1">
                         {category.description}
@@ -188,9 +202,7 @@ const Category = () => {
                   </CardHeader>
                   <CardContent className="pt-0">
                     <Button asChild className="w-full">
-                      <Link to={`/category/${category.id}`}>
-                        View Worksheets
-                      </Link>
+                      <Link to={`/category/${category.id}`}>View Worksheets</Link>
                     </Button>
                   </CardContent>
                 </Card>
