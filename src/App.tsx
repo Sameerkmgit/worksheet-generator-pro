@@ -41,11 +41,8 @@ const App = () => {
             <Route path="/packs" element={<Packs />} />
             <Route path="/worksheets" element={<WorksheetsBrowser />} />
 
-            {/* GRADE → SUBJECT LIST */}
-            <Route path="/categories/:grade" element={<SubCategory />} />
-
-            {/* SUBJECT → TOPIC CATEGORIES */}
-            <Route path="/categories/:grade/:subject" element={<Category />} />
+            {/* GRADE → CATEGORY LIST (fetches from worksheet_categories) */}
+            <Route path="/categories/:gradeSlug" element={<Category />} />
 
             {/* WORKSHEETS INSIDE CATEGORY (Addition, Shapes, etc.) */}
             <Route path="/category/:categoryId" element={<CategoryWorksheets />} />
