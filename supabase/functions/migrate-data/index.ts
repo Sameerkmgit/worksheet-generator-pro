@@ -13,7 +13,7 @@ serve(async (req) => {
 
   try {
     // Source Supabase (where data exists)
-    const sourceUrl = "https://dhhbqbtnucpyrxyevx.supabase.co";
+    const sourceUrl = "https://dhhbqbtnucpyrxyevxh.supabase.co";
     const sourceServiceKey = Deno.env.get('SOURCE_SUPABASE_SERVICE_ROLE_KEY');
     
     if (!sourceServiceKey) {
