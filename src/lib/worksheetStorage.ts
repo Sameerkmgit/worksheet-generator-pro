@@ -822,13 +822,20 @@ export const getCategoryByGradeAndSubject = async (
 ): Promise<CategoryData | undefined> => {
   // Convert URL format (grade-1) to database format (1)
   const gradeNum = grade.replace('grade-', '');
+  // Normalize subject: convert hyphens to spaces for DB lookup
+  const normalizedSubject = subject.replace(/-/g, ' ');
   
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('worksheet_categories')
     .select('*')
     .eq('grade', gradeNum)
-    .eq('subject', subject)
+    .ilike('subject', normalizedSubject)
     .maybeSingle();
+
+  if (error) {
+    console.error('Error fetching category by grade and subject:', error);
+    return undefined;
+  }
 
   return data ? mapCategoryFromDB(data) : undefined;
 };
