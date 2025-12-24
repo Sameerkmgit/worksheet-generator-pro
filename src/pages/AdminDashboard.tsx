@@ -427,18 +427,15 @@ const AdminDashboard = () => {
       return [];
     }
     
-    // Normalize grade filter: "grade-1" -> "Grade 1", "grade-2" -> "Grade 2", etc.
+    // Normalize grade filter: "grade-1" -> "1"
     const gradeNum = categoryGradeFilter.replace('grade-', '');
-    const normalizedGrade = `Grade ${gradeNum}`;
     
-    console.log('🔄 Normalized grade:', normalizedGrade);
+    console.log('🔄 Normalized grade:', gradeNum);
     
     // Filter by selected grade and subject
     const filtered = allWorksheets.filter(worksheet => {
-      // Case-insensitive comparison for both grade and subject
-      const worksheetGrade = worksheet.grade?.toString().toLowerCase().trim();
-      const filterGrade = normalizedGrade.toLowerCase().trim();
-      const gradeMatch = worksheetGrade === filterGrade;
+      const worksheetGrade = worksheet.grade?.toString().trim();
+      const gradeMatch = worksheetGrade === gradeNum;
       
       const worksheetSubject = worksheet.subject?.toString().toLowerCase().trim();
       const filterSubject = categorySubjectFilter.toLowerCase().trim();
@@ -746,11 +743,11 @@ const AdminDashboard = () => {
                         <SelectValue placeholder="Select grade" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Grade 1">Grade 1</SelectItem>
-                        <SelectItem value="Grade 2">Grade 2</SelectItem>
-                        <SelectItem value="Grade 3">Grade 3</SelectItem>
-                        <SelectItem value="Grade 4">Grade 4</SelectItem>
-                        <SelectItem value="Grade 5">Grade 5</SelectItem>
+                        <SelectItem value="1">Grade 1</SelectItem>
+                        <SelectItem value="2">Grade 2</SelectItem>
+                        <SelectItem value="3">Grade 3</SelectItem>
+                        <SelectItem value="4">Grade 4</SelectItem>
+                        <SelectItem value="5">Grade 5</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -871,11 +868,11 @@ const AdminDashboard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Grades</SelectItem>
-                <SelectItem value="Grade 1">Grade 1</SelectItem>
-                <SelectItem value="Grade 2">Grade 2</SelectItem>
-                <SelectItem value="Grade 3">Grade 3</SelectItem>
-                <SelectItem value="Grade 4">Grade 4</SelectItem>
-                <SelectItem value="Grade 5">Grade 5</SelectItem>
+                <SelectItem value="1">Grade 1</SelectItem>
+                <SelectItem value="2">Grade 2</SelectItem>
+                <SelectItem value="3">Grade 3</SelectItem>
+                <SelectItem value="4">Grade 4</SelectItem>
+                <SelectItem value="5">Grade 5</SelectItem>
               </SelectContent>
             </Select>
 
@@ -1256,11 +1253,11 @@ const AdminDashboard = () => {
                                 <SelectValue placeholder="Select grade" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="Grade 1">Grade 1</SelectItem>
-                                <SelectItem value="Grade 2">Grade 2</SelectItem>
-                                <SelectItem value="Grade 3">Grade 3</SelectItem>
-                                <SelectItem value="Grade 4">Grade 4</SelectItem>
-                                <SelectItem value="Grade 5">Grade 5</SelectItem>
+                                <SelectItem value="1">Grade 1</SelectItem>
+                                <SelectItem value="2">Grade 2</SelectItem>
+                                <SelectItem value="3">Grade 3</SelectItem>
+                                <SelectItem value="4">Grade 4</SelectItem>
+                                <SelectItem value="5">Grade 5</SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
@@ -1303,9 +1300,9 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
-                  {["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5"].map(grade => (
+                  {["1", "2", "3", "4", "5"].map(grade => (
                     <div key={grade}>
-                      <h3 className="text-lg font-semibold mb-3">{grade}</h3>
+                      <h3 className="text-lg font-semibold mb-3">Grade {grade}</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {worksheetCategories
                           .filter(c => c.grade === grade)

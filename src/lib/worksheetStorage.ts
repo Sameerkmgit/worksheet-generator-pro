@@ -6,7 +6,7 @@ import { z } from 'zod';
 const worksheetSchema = z.object({
   title: z.string().trim().min(1, "Title is required").max(200, "Title must be less than 200 characters"),
   description: z.string().max(1000, "Description must be less than 1000 characters").optional(),
-  grade: z.enum(["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5"], {
+  grade: z.enum(["1", "2", "3", "4", "5"], {
     errorMap: () => ({ message: "Invalid grade level" })
   }),
   subject: z.enum(["math", "english", "science", "computer-science", "assignments"], {
@@ -362,15 +362,13 @@ export const getWorksheetById = async (id: string): Promise<WorksheetData | null
 
 // Get worksheets by grade (excluding archived)
 export const getWorksheetsByGrade = async (grade: string): Promise<WorksheetData[]> => {
-  // Convert URL format (grade-1) to database format (Grade 1)
-  const gradeTitle = grade.split('-').map((word, index) => 
-    index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
-  ).join(' ');
+  // Convert URL format (grade-1) to database format (1)
+  const gradeNum = grade.replace('grade-', '');
   
   const { data, error } = await supabase
     .from('worksheets')
     .select('*')
-    .ilike('grade', gradeTitle)
+    .eq('grade', gradeNum)
     .eq('is_archived', false)
     .order('created_at', { ascending: false });
 
@@ -404,16 +402,14 @@ export const getWorksheetsByGradeAndSubject = async (
   grade: string,
   subject: string
 ): Promise<WorksheetData[]> => {
-  // Convert URL format (grade-1) to database format (Grade 1)
-  const gradeTitle = grade.split('-').map((word, index) => 
-    index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
-  ).join(' ');
+  // Convert URL format (grade-1) to database format (1)
+  const gradeNum = grade.replace('grade-', '');
   
   const { data, error } = await supabase
     .from('worksheets')
     .select('*')
-    .ilike('grade', gradeTitle)
-    .ilike('subject', subject)
+    .eq('grade', gradeNum)
+    .eq('subject', subject)
     .eq('is_archived', false)
     .order('created_at', { ascending: false });
 
@@ -566,10 +562,13 @@ export const getAllWorksheetCategories = async (): Promise<WorksheetCategoryData
 
 // Get worksheet categories by grade
 export const getWorksheetCategoriesByGrade = async (grade: string): Promise<WorksheetCategoryData[]> => {
+  // Convert URL format (grade-1) to database format (1)
+  const gradeNum = grade.replace('grade-', '');
+  
   const { data, error } = await supabase
     .from('worksheet_categories')
     .select('*')
-    .eq('grade', grade)
+    .eq('grade', gradeNum)
     .order('created_at', { ascending: false });
 
   if (error || !data) {
@@ -585,28 +584,14 @@ export const getWorksheetCategoriesByGradeAndSubject = async (
   gradeSlug: string,
   subjectSlug: string
 ): Promise<WorksheetCategoryData[]> => {
-  // Convert URL slug "grade-1" -> "Grade 1"
-  const gradeTitle = gradeSlug
-    .split("-")
-    .map((word, index) =>
-      index === 0
-        ? word.charAt(0).toUpperCase() + word.slice(1)
-        : word
-    )
-    .join(" ");
-
-  // Handle both "math" and "Math", "computer-science" and "Computer Science"
-  const humanSubject = subjectSlug
-    .split("-")
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
+  // Convert URL slug "grade-1" -> "1"
+  const gradeNum = gradeSlug.replace('grade-', '');
 
   const { data, error } = await supabase
     .from("worksheet_categories")
     .select("*")
-    .eq("grade", gradeTitle)
-    // Support either "math" or "Math" stored in DB
-    .in("subject", [subjectSlug, humanSubject])
+    .eq("grade", gradeNum)
+    .eq("subject", subjectSlug)
     .order("created_at", { ascending: false });
 
   if (error || !data) {
@@ -725,13 +710,13 @@ const getDefaultCategories = (): CategoryData[] => {
     { id: "assignments", name: "Assignments", icon: "📋", description: "Practice tests and assignments" },
   ];
 
-  const grades = ["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5"];
+  const grades = ["1", "2", "3", "4", "5"];
 
   const categories: CategoryData[] = [];
   for (const grade of grades) {
     for (const subject of subjects) {
       categories.push({
-        id: `${grade.toLowerCase().replace(" ", "-")}-${subject.id}`,
+        id: `grade-${grade}-${subject.id}`,
         name: subject.name,
         grade,
         subject: subject.id,
@@ -750,23 +735,19 @@ const getDefaultCategories = (): CategoryData[] => {
 const seedDefaultCategories = async () => {
   const defaultCategories = getDefaultCategories();
   const dbCategories = defaultCategories.map(c => ({
-    id: c.id,
-    name: c.name,
     grade: c.grade,
     subject: c.subject,
+    title: c.name,
     description: c.description,
-    icon: c.icon,
-    image_url: c.imageUrl,
-    worksheet_count: c.worksheetCount || 0,
   }));
 
-  await supabase.from('categories').insert(dbCategories);
+  await supabase.from('worksheet_categories').insert(dbCategories);
 };
 
 // Fetch all categories
 export const getAllCategories = async (): Promise<CategoryData[]> => {
   const { data, error } = await supabase
-    .from('categories')
+    .from('worksheet_categories')
     .select('*')
     .order('grade', { ascending: true });
 
@@ -777,7 +758,7 @@ export const getAllCategories = async (): Promise<CategoryData[]> => {
 
   if (!data || data.length === 0) {
     await seedDefaultCategories();
-    const { data: newData } = await supabase.from('categories').select('*');
+    const { data: newData } = await supabase.from('worksheet_categories').select('*');
     return (newData || []).map(mapCategoryFromDB);
   }
 
@@ -787,25 +768,23 @@ export const getAllCategories = async (): Promise<CategoryData[]> => {
 // Get category by ID
 export const getCategoryById = async (id: string): Promise<CategoryData | undefined> => {
   const { data } = await supabase
-    .from('categories')
+    .from('worksheet_categories')
     .select('*')
     .eq('id', id)
-    .single();
+    .maybeSingle();
 
   return data ? mapCategoryFromDB(data) : undefined;
 };
 
 // Get categories by grade
 export const getCategoriesByGrade = async (grade: string): Promise<CategoryData[]> => {
-  // Convert URL format (grade-1) to database format (Grade 1)
-  const gradeTitle = grade.split('-').map((word, index) => 
-    index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
-  ).join(' ');
+  // Convert URL format (grade-1) to database format (1)
+  const gradeNum = grade.replace('grade-', '');
   
   const { data, error } = await supabase
-    .from('categories')
+    .from('worksheet_categories')
     .select('*')
-    .eq('grade', gradeTitle);
+    .eq('grade', gradeNum);
 
   if (error) return [];
   return (data || []).map(mapCategoryFromDB);
@@ -816,17 +795,15 @@ export const getCategoryByGradeAndSubject = async (
   grade: string,
   subject: string
 ): Promise<CategoryData | undefined> => {
-  // Convert URL format (grade-1) to database format (Grade 1)
-  const gradeTitle = grade.split('-').map((word, index) => 
-    index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
-  ).join(' ');
+  // Convert URL format (grade-1) to database format (1)
+  const gradeNum = grade.replace('grade-', '');
   
   const { data } = await supabase
-    .from('categories')
+    .from('worksheet_categories')
     .select('*')
-    .eq('grade', gradeTitle)
+    .eq('grade', gradeNum)
     .eq('subject', subject)
-    .single();
+    .maybeSingle();
 
   return data ? mapCategoryFromDB(data) : undefined;
 };
@@ -841,7 +818,7 @@ export const updateCategory = async (id: string, updates: Partial<CategoryData>)
   if (updates.worksheetCount !== undefined) updateData.worksheet_count = updates.worksheetCount;
 
   await supabase
-    .from('categories')
+    .from('worksheet_categories')
     .update(updateData)
     .eq('id', id);
 };
