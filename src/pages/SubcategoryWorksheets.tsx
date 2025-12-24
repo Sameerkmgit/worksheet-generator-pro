@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Eye, FolderOpen } from "lucide-react";
+import { Eye } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import {
-  getWorksheetsByCategoryId,
+  getWorksheetsBySubcategoryId,
+  getSubcategoryById,
   getWorksheetCategoryById,
-  getSubcategoriesByCategoryId,
   getWorksheetCardImage,
   WorksheetData,
-  WorksheetCategoryData,
   SubcategoryData,
+  WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
 
 // Helper: turn Google Drive links into embeddable preview links
@@ -27,62 +27,46 @@ const getPdfEmbedUrl = (pdfUrl: string): string => {
   return pdfUrl;
 };
 
-const CategoryWorksheets = () => {
-  const { categoryId } = useParams();
+const SubcategoryWorksheets = () => {
+  const { subcategoryId } = useParams();
   const [worksheets, setWorksheets] = useState<WorksheetData[]>([]);
-  const [subcategories, setSubcategories] = useState<SubcategoryData[]>([]);
+  const [subcategory, setSubcategory] = useState<SubcategoryData | null>(null);
   const [category, setCategory] = useState<WorksheetCategoryData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Normalize subject from DB format to URL slug
-  const subjectToSlug = (subject: string): string => {
-    const slugMap: Record<string, string> = {
-      Math: "math",
-      English: "english",
-      Science: "science",
-      "Computer Science": "computer-science",
-      Assignments: "assignments",
-    };
-    return slugMap[subject] || subject.toLowerCase().replace(/\s+/g, "-");
-  };
-
   useEffect(() => {
     setWorksheets([]);
-    setSubcategories([]);
+    setSubcategory(null);
     setCategory(null);
     setLoading(true);
 
     const loadData = async () => {
       try {
-        const effectiveCategoryId = categoryId || "";
-        if (!effectiveCategoryId) return;
+        if (!subcategoryId) return;
 
-        const categoryData = await getWorksheetCategoryById(effectiveCategoryId);
-        setCategory(categoryData);
+        const subcatData = await getSubcategoryById(subcategoryId);
+        setSubcategory(subcatData);
 
-        // Fetch subcategories first
-        const subcatsData = await getSubcategoriesByCategoryId(effectiveCategoryId);
-        setSubcategories(subcatsData);
+        if (subcatData?.categoryId) {
+          const categoryData = await getWorksheetCategoryById(subcatData.categoryId);
+          setCategory(categoryData);
+        }
 
-        // Also fetch worksheets without subcategory for fallback display
-        const worksheetsData = await getWorksheetsByCategoryId(effectiveCategoryId);
+        const worksheetsData = await getWorksheetsBySubcategoryId(subcategoryId);
         setWorksheets(worksheetsData || []);
       } catch (error) {
-        console.error("Error loading category data:", error);
+        console.error("Error loading subcategory worksheets:", error);
       } finally {
         setLoading(false);
       }
     };
 
     loadData();
-  }, [categoryId]);
+  }, [subcategoryId]);
 
   const gradeSlug = category?.grade ? `grade-${category.grade}` : "";
-  const subjectSlug = category ? subjectToSlug(category.subject) : "";
-  const hasSubcategories = subcategories.length > 0;
-
-  const pageTitle = category?.title || "Worksheets";
-  const pageDescription = `Browse ${category?.title} worksheets for Grade ${category?.grade}.`;
+  const pageTitle = subcategory?.title || "Worksheets";
+  const pageDescription = `Browse ${pageTitle} worksheets for ${category?.subject || "this subject"}.`;
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -106,74 +90,41 @@ const CategoryWorksheets = () => {
                 Grade {category?.grade}
               </Link>
               <span>/</span>
-              <span className="text-foreground">{category?.title}</span>
+              <Link to={`/category/${category?.id}`} className="hover:text-primary capitalize">
+                {category?.title}
+              </Link>
+              <span>/</span>
+              <span className="text-foreground">{subcategory?.title}</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-              {category?.title}
+              {pageTitle}
             </h1>
-            {category?.description && (
-              <p className="text-lg text-muted-foreground max-w-3xl">{category.description}</p>
-            )}
+            <p className="text-lg text-muted-foreground max-w-3xl">
+              {worksheets.length} worksheet{worksheets.length !== 1 ? "s" : ""} available
+            </p>
           </div>
         </section>
 
-        {/* Content Section */}
+        {/* Worksheets Grid */}
         <section className="py-16 px-4">
           <div className="max-w-7xl mx-auto">
             {loading ? (
               <div className="text-center py-12">
                 <div className="flex flex-col items-center gap-4">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                  <p className="text-muted-foreground text-lg">Loading...</p>
+                  <p className="text-muted-foreground text-lg">Loading worksheets...</p>
                 </div>
               </div>
-            ) : hasSubcategories ? (
-              // Show subcategories (topics) first
-              <>
-                <h2 className="text-2xl font-semibold mb-6 text-foreground">
-                  Topics in {category?.title}
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {subcategories.map((subcat) => (
-                    <Card
-                      key={subcat.id}
-                      className="hover:shadow-lg transition-shadow overflow-hidden"
-                    >
-                      <div className="aspect-[16/9] bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                        <FolderOpen className="h-16 w-16 text-primary/40" />
-                      </div>
-                      <CardContent className="p-6">
-                        <h3 className="font-heading font-semibold text-xl mb-2">
-                          {subcat.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm mb-4">
-                          View all {subcat.title.toLowerCase()} worksheets
-                        </p>
-                        <Button asChild variant="default" className="w-full">
-                          <Link to={`/subcategory/${subcat.id}`}>
-                            <Eye className="mr-2 h-4 w-4" />
-                            View Worksheets
-                          </Link>
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </>
             ) : worksheets.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-muted-foreground text-lg">
-                  No worksheets available in this category yet. Check back soon!
+                  No worksheets available in this topic yet. Check back soon!
                 </p>
               </div>
             ) : (
-              // Fallback: show worksheets directly if no subcategories
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {worksheets.map((worksheet) => (
-                  <Card
-                    key={worksheet.id}
-                    className="overflow-hidden hover:shadow-lg transition-shadow"
-                  >
+                  <Card key={worksheet.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="aspect-[4/3] overflow-hidden bg-muted flex items-stretch">
                       <iframe
                         src={getPdfEmbedUrl(worksheet.pdfUrl)}
@@ -208,4 +159,4 @@ const CategoryWorksheets = () => {
   );
 };
 
-export default CategoryWorksheets;
+export default SubcategoryWorksheets;
