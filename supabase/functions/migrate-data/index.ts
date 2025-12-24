@@ -13,7 +13,7 @@ serve(async (req) => {
 
   try {
     // Source Supabase (where data exists)
-    const sourceUrl = "https://dhhbqbtnucpyrxyevxh.supabase.co";
+    const sourceUrl = "https://dhhbqbqtnucpyrxvyevx.supabase.co";
     const sourceServiceKey = Deno.env.get('SOURCE_SUPABASE_SERVICE_ROLE_KEY');
     
     if (!sourceServiceKey) {
@@ -50,9 +50,22 @@ serve(async (req) => {
 
     if (categories && categories.length > 0) {
       for (const category of categories) {
+        // Map source schema to target schema
+        // Source has: id, name, grade, subject, description, is_archived, created_at, updated_at
+        // Target has: id, title, grade, subject, description, created_at, updated_at
+        const mappedCategory = {
+          id: category.id,
+          title: category.name || category.title, // Map 'name' to 'title'
+          grade: category.grade,
+          subject: category.subject,
+          description: category.description,
+          created_at: category.created_at,
+          updated_at: category.updated_at,
+        };
+        
         const { error: catInsertError } = await targetClient
           .from('worksheet_categories')
-          .upsert(category, { onConflict: 'id' });
+          .upsert(mappedCategory, { onConflict: 'id' });
 
         if (catInsertError) {
           results.worksheet_categories.errors.push(`Category ${category.id}: ${catInsertError.message}`);
