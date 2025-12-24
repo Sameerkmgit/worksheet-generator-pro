@@ -32,14 +32,8 @@ const Category = () => {
 
   // Normalize grade from URL slug to DB format
   const normalizeGrade = (gradeSlug: string): string => {
-    const gradeMap: Record<string, string> = {
-      'grade-1': 'Grade 1',
-      'grade-2': 'Grade 2',
-      'grade-3': 'Grade 3',
-      'grade-4': 'Grade 4',
-      'grade-5': 'Grade 5',
-    };
-    return gradeMap[gradeSlug] || gradeSlug;
+    // Convert "grade-1" -> "1"
+    return gradeSlug.replace('grade-', '');
   };
 
   // Normalize subject from URL slug to DB format
