@@ -5,17 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getWorksheetCategoriesByGradeAndSubject, WorksheetCategoryData } from "@/lib/worksheetStorage";
+import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
 
-const subjectTitles: Record<string, string> = {
-  math: "Math",
-  english: "English",
-  science: "Science",
-  "computer-science": "Computer Science",
-  computer: "Computer Science",
-  assignments: "Assignments",
-};
+interface WorksheetCategory {
+  id: string;
+  title: string;
+  subject: string;
+  grade: string;
+  description?: string | null;
+}
 
 const gradeTitles: Record<string, string> = {
   "grade-1": "Grade 1",
@@ -26,49 +25,34 @@ const gradeTitles: Record<string, string> = {
 };
 
 const Category = () => {
-  const { grade, subject } = useParams();
-  const [categories, setCategories] = useState<WorksheetCategoryData[]>([]);
+  const { gradeSlug } = useParams();
+  const [categories, setCategories] = useState<WorksheetCategory[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Normalize grade from URL slug to DB format
-  const normalizeGrade = (gradeSlug: string): string => {
-    // Convert "grade-1" -> "1"
-    return gradeSlug.replace('grade-', '');
-  };
-
-  // Normalize subject from URL slug to DB format
-  const normalizeSubject = (subjectSlug: string): string => {
-    const subjectMap: Record<string, string> = {
-      'math': 'Math',
-      'english': 'English',
-      'science': 'Science',
-      'computer-science': 'Computer Science',
-      'assignments': 'Assignments',
-    };
-    return subjectMap[subjectSlug] || subjectSlug;
-  };
+  // Parse grade number from slug (grade-1 -> 1)
+  const gradeNumber = gradeSlug?.replace('grade-', '') || '';
 
   useEffect(() => {
-    // Reset state and start loading when route params change
     setCategories([]);
     setLoading(true);
 
     const loadCategories = async () => {
       try {
-        const gradeSlug = grade || "";
-        const subjectSlug = subject || "";
+        console.log(`Loading categories for grade=${gradeNumber}`);
 
-        console.log(
-          `Loading categories for grade=${gradeSlug}, subject=${subjectSlug}`
-        );
+        const { data, error } = await supabase
+          .from("worksheet_categories")
+          .select("id,title,subject,grade,description")
+          .eq("grade", gradeNumber)
+          .order("subject");
 
-        const fetchedCategories = await getWorksheetCategoriesByGradeAndSubject(
-          gradeSlug,
-          subjectSlug
-        );
+        if (error) {
+          console.error("Error fetching categories:", error);
+          return;
+        }
 
-        console.log(`Loaded ${fetchedCategories.length} categories`);
-        setCategories(fetchedCategories);
+        console.log(`Loaded ${data?.length || 0} categories`);
+        setCategories(data || []);
       } catch (error) {
         console.error("Error loading categories:", error);
       } finally {
@@ -76,16 +60,19 @@ const Category = () => {
       }
     };
 
-    loadCategories();
-  }, [grade, subject]);
+    if (gradeNumber) {
+      loadCategories();
+    } else {
+      setLoading(false);
+    }
+  }, [gradeNumber]);
   
-  const gradeTitle = gradeTitles[grade || ""] || "Grade";
-  const subjectTitle = subjectTitles[subject || ""] || "Worksheets";
-  const pageTitle = `${gradeTitle} ${subjectTitle}`;
+  const gradeTitle = gradeTitles[gradeSlug || ""] || `Grade ${gradeNumber}`;
+  const pageTitle = `${gradeTitle} Worksheets`;
   
-  const pageDescription = `Free printable ${pageTitle.toLowerCase()} worksheets. Download and print for classroom or home learning.`;
+  const pageDescription = `Free printable ${gradeTitle.toLowerCase()} worksheets. Download and print for classroom or home learning.`;
 
-  const pageUrl = `https://wizkidshubworksheets.com/category/${grade}/${subject}`;
+  const pageUrl = `https://wizkidshubworksheets.com/categories/${gradeSlug}`;
   
   const structuredData = {
     "@context": "https://schema.org",
@@ -114,12 +101,6 @@ const Category = () => {
         "@type": "ListItem",
         "position": 2,
         "name": gradeTitle,
-        "item": `https://wizkidshubworksheets.com/category/${grade}`
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": subjectTitle,
         "item": pageUrl
       }
     ]
@@ -128,7 +109,7 @@ const Category = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>{pageTitle} Worksheets - Free Printable PDFs | WizKidsHub Worksheets</title>
+        <title>{pageTitle} - Free Printable PDFs | WizKidsHub Worksheets</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
         <script type="application/ld+json">
@@ -146,7 +127,6 @@ const Category = () => {
         <div className="w-full bg-gray-100 py-4">
           <div className="max-w-7xl mx-auto px-4">
             <div className="bg-gray-200 h-24 flex items-center justify-center rounded">
-              {/* Google AdSense code will go here - GA-XXXXX */}
               <span className="text-gray-500">Advertisement</span>
             </div>
           </div>
@@ -156,14 +136,14 @@ const Category = () => {
         <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-12">
           <div className="max-w-7xl mx-auto px-4">
             <Link 
-              to={`/categories/${grade}`}
+              to="/"
               className="inline-flex items-center text-primary hover:text-primary/80 mb-6 transition-colors"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to {gradeTitle}
+              Back to Home
             </Link>
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-              {pageTitle} Worksheets
+              {pageTitle}
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl">
               {pageDescription}
@@ -184,7 +164,7 @@ const Category = () => {
             ) : categories.length === 0 ? (
               <div className="col-span-full text-center py-12">
                 <p className="text-muted-foreground text-lg">
-                  No categories available for this subject yet. Check back soon!
+                  No categories available for this grade yet. Check back soon!
                 </p>
               </div>
             ) : (
@@ -197,8 +177,11 @@ const Category = () => {
                       </div>
                       <CardTitle className="text-xl">{category.title}</CardTitle>
                     </div>
+                    <CardDescription className="text-sm">
+                      {category.subject}
+                    </CardDescription>
                     {category.description && (
-                      <CardDescription className="text-sm">
+                      <CardDescription className="text-sm mt-1">
                         {category.description}
                       </CardDescription>
                     )}
@@ -220,7 +203,6 @@ const Category = () => {
         <div className="w-full bg-gray-100 py-4">
           <div className="max-w-7xl mx-auto px-4">
             <div className="bg-gray-200 h-24 flex items-center justify-center rounded">
-              {/* Google AdSense code will go here - GA-XXXXX */}
               <span className="text-gray-500">Advertisement</span>
             </div>
           </div>
