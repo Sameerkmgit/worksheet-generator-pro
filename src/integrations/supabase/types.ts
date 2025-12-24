@@ -101,6 +101,7 @@ export type Database = {
           description: string | null
           grade: string
           id: string
+          image_url: string | null
           subject: string
           title: string
           updated_at: string
@@ -110,6 +111,7 @@ export type Database = {
           description?: string | null
           grade: string
           id?: string
+          image_url?: string | null
           subject: string
           title: string
           updated_at?: string
@@ -119,6 +121,7 @@ export type Database = {
           description?: string | null
           grade?: string
           id?: string
+          image_url?: string | null
           subject?: string
           title?: string
           updated_at?: string

@@ -20,6 +20,7 @@ import {
   WorksheetData,
   getAllCategories,
   updateCategory,
+  getCategoryByGradeAndSubject,
   CategoryData,
   setWorksheetImageOverride,
   getWorksheetImageOverride,
@@ -264,9 +265,14 @@ const AdminDashboard = () => {
       
       console.log('🔗 Public URL:', publicUrl);
       
-      // Update the category
-      const categoryId = `${categoryGradeFilter}-${categorySubjectFilter}`;
-      updateCategory(categoryId, { imageUrl: publicUrl });
+      // Find the actual category by grade and subject
+      const category = await getCategoryByGradeAndSubject(categoryGradeFilter, categorySubjectFilter);
+      if (category) {
+        await updateCategory(category.id, { imageUrl: publicUrl });
+        console.log('✅ Category updated with image:', category.id);
+      } else {
+        console.error('❌ Category not found for:', categoryGradeFilter, categorySubjectFilter);
+      }
       
       // Force reload categories
       loadCategories();
