@@ -154,6 +154,47 @@ export type Database = {
           },
         ]
       }
+      worksheet_subcategories: {
+        Row: {
+          category_id: string
+          created_at: string
+          id: string
+          is_archived: boolean
+          slug: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          id?: string
+          is_archived?: boolean
+          slug: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          id?: string
+          is_archived?: boolean
+          slug?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worksheet_subcategories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "worksheet_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       worksheets: {
         Row: {
           category_id: string | null
@@ -171,6 +212,7 @@ export type Database = {
           questions: Json | null
           seo: Json | null
           skills: string[] | null
+          subcategory_id: string | null
           subject: string
           title: string
           updated_at: string | null
@@ -192,6 +234,7 @@ export type Database = {
           questions?: Json | null
           seo?: Json | null
           skills?: string[] | null
+          subcategory_id?: string | null
           subject: string
           title: string
           updated_at?: string | null
@@ -213,6 +256,7 @@ export type Database = {
           questions?: Json | null
           seo?: Json | null
           skills?: string[] | null
+          subcategory_id?: string | null
           subject?: string
           title?: string
           updated_at?: string | null
@@ -224,6 +268,13 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "worksheet_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "worksheets_subcategory_id_fkey"
+            columns: ["subcategory_id"]
+            isOneToOne: false
+            referencedRelation: "worksheet_subcategories"
             referencedColumns: ["id"]
           },
         ]
