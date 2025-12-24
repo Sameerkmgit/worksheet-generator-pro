@@ -200,7 +200,14 @@ const AdminDashboard = () => {
   };
 
   const getCurrentCategory = () => {
-    return categories.find(c => c.grade === categoryGradeFilter && c.id === `${categoryGradeFilter}-${categorySubjectFilter}`);
+    const gradeNum = categoryGradeFilter.replace('grade-', '');
+    const normalizedSubject = categorySubjectFilter.replace(/-/g, ' ').toLowerCase();
+
+    return categories.find((c) => {
+      const cGrade = String(c.grade).replace('grade-', '').trim();
+      const cSubject = String(c.subject || '').toLowerCase().trim();
+      return cGrade === gradeNum && cSubject === normalizedSubject;
+    });
   };
 
   const validateImageFile = (file: File): { valid: boolean; error?: string } => {
