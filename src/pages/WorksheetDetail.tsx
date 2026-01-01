@@ -244,6 +244,27 @@ const WorksheetDetail = () => {
                 </CardContent>
               </Card>
 
+              {/* PDF Preview */}
+              {worksheet.pdfUrl && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Worksheet Preview</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="w-full rounded-lg overflow-hidden border">
+                      <iframe
+                        src={`${worksheet.pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                        className="w-full h-[600px] md:h-[800px]"
+                        title={`${worksheet.title} Preview`}
+                      />
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-3 text-center">
+                      Can't see the preview? <a href={worksheet.pdfUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Click here to open the PDF</a>
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* Questions/Content Section */}
               {worksheet.questions && Array.isArray(worksheet.questions) && worksheet.questions.length > 0 && (
                 <Card>
