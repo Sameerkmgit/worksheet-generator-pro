@@ -43,9 +43,10 @@ const Category = () => {
 
         const { data, error } = await supabase
           .from("worksheet_categories")
-          .select("id,title,subject,grade,description,image_url")
+          .select("id,title,subject,grade,description,image_url,sort_order")
           .eq("grade", gradeNumber)
-          .order("subject");
+          .order("sort_order", { ascending: true })
+          .order("title", { ascending: true });
 
         if (error) {
           console.error("Error fetching categories:", error);
