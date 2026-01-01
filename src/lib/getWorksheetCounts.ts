@@ -5,9 +5,14 @@ export interface GradeCounts {
 }
 
 export const getWorksheetCountsByGrade = async (): Promise<GradeCounts> => {
+  // Join worksheets with worksheet_categories to get accurate counts per grade
   const { data, error } = await supabase
     .from('worksheets')
-    .select('grade')
+    .select(`
+      id,
+      category_id,
+      worksheet_categories!inner(grade)
+    `)
     .eq('is_archived', false);
 
   if (error) {
@@ -15,11 +20,13 @@ export const getWorksheetCountsByGrade = async (): Promise<GradeCounts> => {
     return {};
   }
 
-  // Count worksheets by grade
+  // Count worksheets by grade from worksheet_categories
   const counts: GradeCounts = {};
   data?.forEach((worksheet) => {
-    const grade = worksheet.grade;
-    counts[grade] = (counts[grade] || 0) + 1;
+    const grade = (worksheet.worksheet_categories as { grade: string })?.grade;
+    if (grade) {
+      counts[grade] = (counts[grade] || 0) + 1;
+    }
   });
 
   return counts;
