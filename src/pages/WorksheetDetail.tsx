@@ -251,16 +251,41 @@ const WorksheetDetail = () => {
                     <CardTitle>Worksheet Preview</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="w-full rounded-lg overflow-hidden border">
-                      <iframe
-                        src={`${worksheet.pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-                        className="w-full h-[600px] md:h-[800px]"
-                        title={`${worksheet.title} Preview`}
-                      />
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-3 text-center">
-                      Can't see the preview? <a href={worksheet.pdfUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Click here to open the PDF</a>
-                    </p>
+                    {(() => {
+                      // Extract Google Drive file ID and create embed URL
+                      const driveMatch = worksheet.pdfUrl.match(/https?:\/\/drive\.google\.com\/file\/d\/([^/]+)/);
+                      const fileId = driveMatch ? driveMatch[1] : null;
+                      const embedUrl = fileId 
+                        ? `https://drive.google.com/file/d/${fileId}/preview`
+                        : worksheet.pdfUrl;
+                      const viewUrl = fileId
+                        ? `https://drive.google.com/file/d/${fileId}/view`
+                        : worksheet.pdfUrl;
+                      
+                      return (
+                        <>
+                          <div className="w-full rounded-lg overflow-hidden border bg-muted">
+                            <iframe
+                              src={embedUrl}
+                              className="w-full h-[600px] md:h-[800px]"
+                              title={`${worksheet.title} Preview`}
+                              allow="autoplay"
+                            />
+                          </div>
+                          <p className="text-sm text-muted-foreground mt-3 text-center">
+                            Can't see the preview?{" "}
+                            <a 
+                              href={viewUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-primary hover:underline"
+                            >
+                              Open in Google Drive
+                            </a>
+                          </p>
+                        </>
+                      );
+                    })()}
                   </CardContent>
                 </Card>
               )}
