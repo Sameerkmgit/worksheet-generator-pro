@@ -774,7 +774,9 @@ export const getAllCategories = async (): Promise<CategoryData[]> => {
   const { data, error } = await supabase
     .from('worksheet_categories')
     .select('*')
-    .order('grade', { ascending: true });
+    .order('grade', { ascending: true })
+    .order('sort_order', { ascending: true })
+    .order('title', { ascending: true });
 
   if (error) {
     console.error("Error fetching categories:", error);
@@ -809,7 +811,9 @@ export const getCategoriesByGrade = async (grade: string): Promise<CategoryData[
   const { data, error } = await supabase
     .from('worksheet_categories')
     .select('*')
-    .eq('grade', gradeNum);
+    .eq('grade', gradeNum)
+    .order('sort_order', { ascending: true })
+    .order('title', { ascending: true });
 
   if (error) return [];
   return (data || []).map(mapCategoryFromDB);
