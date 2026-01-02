@@ -57,8 +57,8 @@ const AssignmentsLanding = () => {
   const gradeTitle = gradeTitles[grade || ""] || "Grade";
   const pageTitle = `${gradeTitle} Assignments`;
   const pageDescription = `Practice tests, quizzes, and homework sheets for ${gradeTitle}. Download free printable assignments to reinforce learning and track progress.`;
-  const pageUrl = `https://wizkidshubworksheets.com/category/${grade}/assignments`;
-
+  const pageUrl = `https://wizkidshubworksheets.com/assignments/${grade}`;
+  const gradeUrl = `https://wizkidshubworksheets.com/categories/${grade}`;
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -86,7 +86,7 @@ const AssignmentsLanding = () => {
         "@type": "ListItem",
         "position": 2,
         "name": gradeTitle,
-        "item": `https://wizkidshubworksheets.com/category/${grade}`
+        "item": gradeUrl
       },
       {
         "@type": "ListItem",
@@ -120,7 +120,7 @@ const AssignmentsLanding = () => {
       <Header />
       <div className="flex-1">
         <div className="container mx-auto max-w-[1140px] py-8 px-6">
-          <Link to={`/category/${grade}`}>
+          <Link to={`/categories/${grade}`}>
             <Button variant="ghost" className="mb-6">
               <ArrowLeft className="mr-2" />
               Back to {gradeTitle}
@@ -167,7 +167,7 @@ const AssignmentsLanding = () => {
                     </CardHeader>
                     <CardContent>
                       <p className="text-muted-foreground mb-4">{type.description}</p>
-                      <Link to={`/category/${grade}/assignments`}>
+                      <Link to={`/worksheets?grade=${grade?.replace('grade-', '')}&subject=assignments`}>
                         <Button 
                           className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white"
                         >
