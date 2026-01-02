@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Download, Package, CheckCircle } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
@@ -8,12 +9,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-
-const getPackDownloadUrl = (gradeNumber: number) => {
-  return `${SUPABASE_URL}/storage/v1/object/public/worksheet-packs/grade-${gradeNumber}-pack.pdf`;
-};
 
 const packs = [
   {
@@ -122,34 +117,23 @@ const Packs = () => {
   const [email, setEmail] = useState("");
   const [selectedPack, setSelectedPack] = useState<typeof packs[0] | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleDownload = (pack: typeof packs[0]) => {
-    const downloadUrl = getPackDownloadUrl(pack.gradeNumber);
-    
-    // Create a temporary anchor element to trigger download
-    const link = document.createElement('a');
-    link.href = downloadUrl;
-    link.download = `${pack.id}.pdf`;
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    toast({
-      title: "Download Started!",
-      description: `${pack.title} is being downloaded.`,
-    });
+    // Navigate to the download route which handles the edge function call
+    navigate(`/downloads/grade-${pack.gradeNumber}-pack`);
   };
 
   const handleEmailDownload = (pack: typeof packs[0]) => {
     if (email) {
-      handleDownload(pack);
       toast({
-        title: "Download Started!",
-        description: `${pack.title} is being downloaded. We've noted your email for future updates!`,
+        title: "Email noted!",
+        description: `We've saved your email for future updates. Starting download...`,
       });
       setEmail("");
       setSelectedPack(null);
+      // Navigate to download after a brief delay
+      setTimeout(() => handleDownload(pack), 500);
     }
   };
 
