@@ -12,7 +12,7 @@ const Footer = () => {
             <p className="text-primary-foreground/70 text-sm">Advertisement</p>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* About */}
           <div>
             <h3 className="font-heading font-semibold text-lg mb-4">About Us</h3>
@@ -73,6 +73,20 @@ const Footer = () => {
                 </Link>
               </li>
             </ul>
+          </div>
+
+          {/* Contact Us */}
+          <div>
+            <h3 className="font-heading font-semibold text-lg mb-4">Contact Us</h3>
+            <p className="text-sm opacity-90">
+              Have questions or feedback?
+            </p>
+            <a 
+              href="mailto:support@wizkidshub.com" 
+              className="text-sm opacity-90 hover:opacity-100 transition-opacity underline"
+            >
+              support@wizkidshub.com
+            </a>
           </div>
         </div>
 
