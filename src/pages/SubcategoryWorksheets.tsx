@@ -15,6 +15,7 @@ import {
   SubcategoryData,
   WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
+import { toTitleCase } from "@/lib/utils";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
@@ -65,8 +66,8 @@ const SubcategoryWorksheets = () => {
   }, [subcategoryId]);
 
   const gradeSlug = category?.grade ? `grade-${category.grade}` : "";
-  const pageTitle = subcategory?.title || "Worksheets";
-  const pageDescription = `Browse ${pageTitle} worksheets for ${category?.subject || "this subject"}.`;
+  const pageTitle = toTitleCase(subcategory?.title) || "Worksheets";
+  const pageDescription = `Browse ${pageTitle} worksheets for ${toTitleCase(category?.subject) || "this subject"}.`;
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -91,10 +92,10 @@ const SubcategoryWorksheets = () => {
               </Link>
               <span>/</span>
               <Link to={`/category/${category?.id}`} className="hover:text-primary capitalize">
-                {category?.title}
+                {toTitleCase(category?.title)}
               </Link>
               <span>/</span>
-              <span className="text-foreground">{subcategory?.title}</span>
+              <span className="text-foreground">{toTitleCase(subcategory?.title)}</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
               {pageTitle}
@@ -134,10 +135,10 @@ const SubcategoryWorksheets = () => {
                     </div>
                     <CardContent className="p-6">
                       <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">
-                        {worksheet.title}
+                        {toTitleCase(worksheet.title)}
                       </h3>
                       <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                        {worksheet.description}
+                        {toTitleCase(worksheet.description)}
                       </p>
                       <Button asChild variant="default" className="w-full">
                         <Link to={`/worksheet/${worksheet.id}`}>

@@ -15,6 +15,7 @@ import {
   WorksheetCategoryData,
   SubcategoryData,
 } from "@/lib/worksheetStorage";
+import { toTitleCase } from "@/lib/utils";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
@@ -106,13 +107,13 @@ const CategoryWorksheets = () => {
                 Grade {category?.grade}
               </Link>
               <span>/</span>
-              <span className="text-foreground">{category?.title}</span>
+              <span className="text-foreground">{toTitleCase(category?.title)}</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-              {category?.title}
+              {toTitleCase(category?.title)}
             </h1>
             {category?.description && (
-              <p className="text-lg text-muted-foreground max-w-3xl">{category.description}</p>
+              <p className="text-lg text-muted-foreground max-w-3xl">{toTitleCase(category.description)}</p>
             )}
           </div>
         </section>
@@ -131,7 +132,7 @@ const CategoryWorksheets = () => {
               // Show subcategories (topics) first
               <>
                 <h2 className="text-2xl font-semibold mb-6 text-foreground">
-                  Topics in {category?.title}
+                  Topics in {toTitleCase(category?.title)}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {subcategories.map((subcat) => (
@@ -144,10 +145,10 @@ const CategoryWorksheets = () => {
                       </div>
                       <CardContent className="p-6">
                         <h3 className="font-heading font-semibold text-xl mb-2">
-                          {subcat.title}
+                          {toTitleCase(subcat.title)}
                         </h3>
                         <p className="text-muted-foreground text-sm mb-4">
-                          View all {subcat.title.toLowerCase()} worksheets
+                          View all {toTitleCase(subcat.title)} worksheets
                         </p>
                         <Button asChild variant="default" className="w-full">
                           <Link to={`/subcategory/${subcat.id}`}>
@@ -183,10 +184,10 @@ const CategoryWorksheets = () => {
                     </div>
                     <CardContent className="p-6">
                       <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">
-                        {worksheet.title}
+                        {toTitleCase(worksheet.title)}
                       </h3>
                       <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                        {worksheet.description}
+                        {toTitleCase(worksheet.description)}
                       </p>
                       <Button asChild variant="default" className="w-full">
                         <Link to={`/worksheet/${worksheet.id}`}>

@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { getCategoriesByGrade, CategoryData } from "@/lib/worksheetStorage";
+import { toTitleCase } from "@/lib/utils";
 
 const gradeTitles: Record<string, string> = {
   "grade-1": "Grade 1",
@@ -97,16 +98,16 @@ const SubCategory = () => {
                     )}
                     <div className="p-6">
                       <h3 className="text-xl font-semibold mb-1">
-                        {category.name}
+                        {toTitleCase(category.name)}
                       </h3>
                       <p className="text-sm text-muted-foreground mb-4">
-                        {category.description}
+                        {toTitleCase(category.description)}
                       </p>
                       <Link
                         to={`/categories/${gradeSlug}/${category.subject}`}
                         className="inline-flex items-center text-primary font-medium hover:underline"
                       >
-                        View {category.name} worksheets
+                        View {toTitleCase(category.name)} Worksheets
                       </Link>
                     </div>
                   </div>

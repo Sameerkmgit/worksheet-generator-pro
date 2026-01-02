@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
+import { toTitleCase } from "@/lib/utils";
 
 interface WorksheetCategory {
   id: string;
@@ -192,12 +193,12 @@ const Category = () => {
                       <div className="p-2 rounded-lg bg-primary/10">
                         <FolderOpen className="h-6 w-6 text-primary" />
                       </div>
-                      <CardTitle className="text-xl">{category.title}</CardTitle>
+                      <CardTitle className="text-xl">{toTitleCase(category.title)}</CardTitle>
                     </div>
-                    <CardDescription className="text-sm">{category.subject}</CardDescription>
+                    <CardDescription className="text-sm">{toTitleCase(category.subject)}</CardDescription>
                     {category.description && (
                       <CardDescription className="text-sm mt-1">
-                        {category.description}
+                        {toTitleCase(category.description)}
                       </CardDescription>
                     )}
                   </CardHeader>
