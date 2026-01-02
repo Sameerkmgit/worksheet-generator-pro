@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Facebook, Twitter, Instagram, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -13,7 +12,7 @@ const Footer = () => {
             <p className="text-primary-foreground/70 text-sm">Advertisement</p>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* About */}
           <div>
             <h3 className="font-heading font-semibold text-lg mb-4">About Us</h3>
@@ -79,47 +78,6 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
-          </div>
-
-          {/* Social */}
-          <div>
-            <h3 className="font-heading font-semibold text-lg mb-4">Follow Us</h3>
-            <div className="flex gap-4">
-              <a href="#" className="opacity-90 hover:opacity-100 transition-opacity">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="opacity-90 hover:opacity-100 transition-opacity">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="opacity-90 hover:opacity-100 transition-opacity">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="opacity-90 hover:opacity-100 transition-opacity">
-                <Mail className="w-5 h-5" />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Newsletter Signup */}
-        <div className="border-t border-white/20 pt-8 mt-8">
-          <div className="max-w-md mx-auto text-center">
-            <h3 className="font-heading font-semibold text-lg mb-2">Get free worksheets in your inbox!</h3>
-            <p className="text-sm opacity-90 mb-4">Subscribe to receive new worksheets and educational resources.</p>
-            <form className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2 rounded-lg bg-primary-foreground/10 border border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary-foreground/50"
-                required
-              />
-              <button
-                type="submit"
-                className="px-6 py-2 bg-accent text-primary font-semibold rounded-lg hover:bg-accent/90 transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
           </div>
         </div>
 
