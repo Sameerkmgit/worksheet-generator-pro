@@ -1,23 +1,29 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Download, Package, CheckCircle } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 
-const packs = [
+interface PackData {
+  id: string;
+  title: string;
+  grade: number;
+  description: string;
+  worksheet_titles: string[];
+  color: string;
+}
+
+const packs: PackData[] = [
   {
     id: "grade-1-pack",
     title: "Grade 1 Complete Pack",
-    grade: "Grade 1",
-    gradeNumber: 1,
+    grade: 1,
     description: "10 essential worksheets for Grade 1 students covering Math, English, and Science",
-    worksheets: [
+    worksheet_titles: [
       "Introduction to Multiplication",
       "Simple Addition Practice",
       "Counting & Number Recognition",
@@ -34,10 +40,9 @@ const packs = [
   {
     id: "grade-2-pack",
     title: "Grade 2 Complete Pack",
-    grade: "Grade 2",
-    gradeNumber: 2,
+    grade: 2,
     description: "10 essential worksheets for Grade 2 students covering Math, English, and Science",
-    worksheets: [
+    worksheet_titles: [
       "Multiplication Tables (2 and 5)",
       "2-Digit Addition",
       "Simple Subtraction Practice",
@@ -54,10 +59,9 @@ const packs = [
   {
     id: "grade-3-pack",
     title: "Grade 3 Complete Pack",
-    grade: "Grade 3",
-    gradeNumber: 3,
+    grade: 3,
     description: "10 essential worksheets for Grade 3 students covering Math, English, and Science",
-    worksheets: [
+    worksheet_titles: [
       "Division Practice",
       "Multiplication Word Problems",
       "Fractions Basics",
@@ -74,10 +78,9 @@ const packs = [
   {
     id: "grade-4-pack",
     title: "Grade 4 Complete Pack",
-    grade: "Grade 4",
-    gradeNumber: 4,
+    grade: 4,
     description: "10 essential worksheets for Grade 4 students covering Math, English, and Science",
-    worksheets: [
+    worksheet_titles: [
       "Introduction to Fractions",
       "Geometry - Angles & Shapes",
       "Long Division Practice",
@@ -94,10 +97,9 @@ const packs = [
   {
     id: "grade-5-pack",
     title: "Grade 5 Complete Pack",
-    grade: "Grade 5",
-    gradeNumber: 5,
+    grade: 5,
     description: "10 essential worksheets for Grade 5 students covering Math, English, and Science",
-    worksheets: [
+    worksheet_titles: [
       "Decimals and Place Value",
       "Percentage Calculations",
       "Area & Perimeter",
@@ -114,28 +116,8 @@ const packs = [
 ];
 
 const Packs = () => {
-  const [email, setEmail] = useState("");
-  const [selectedPack, setSelectedPack] = useState<typeof packs[0] | null>(null);
+  const [selectedPack, setSelectedPack] = useState<PackData | null>(null);
   const { toast } = useToast();
-  const navigate = useNavigate();
-
-  const handleDownload = (pack: typeof packs[0]) => {
-    // Navigate to the download route which handles the edge function call
-    navigate(`/downloads/grade-${pack.gradeNumber}-pack`);
-  };
-
-  const handleEmailDownload = (pack: typeof packs[0]) => {
-    if (email) {
-      toast({
-        title: "Email noted!",
-        description: `We've saved your email for future updates. Starting download...`,
-      });
-      setEmail("");
-      setSelectedPack(null);
-      // Navigate to download after a brief delay
-      setTimeout(() => handleDownload(pack), 500);
-    }
-  };
 
   return (
     <div className="min-h-screen">
@@ -187,116 +169,73 @@ const Packs = () => {
 
           {/* Packs Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {packs.map((pack) => (
-              <Card key={pack.id} className="overflow-hidden">
-                <CardHeader>
-                  <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${pack.color} flex items-center justify-center mb-4`}>
-                    <Package className="w-8 h-8 text-white" />
-                  </div>
-                  <CardTitle className="text-2xl font-heading">{pack.title}</CardTitle>
-                  <p className="text-muted-foreground">{pack.description}</p>
-                </CardHeader>
-                <CardContent>
-                  <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-primary">
-                    What's Included:
-                  </h4>
-                  <ul className="space-y-2">
-                    {pack.worksheets.slice(0, 5).map((worksheet, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm">
-                        <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        <span>{worksheet}</span>
-                      </li>
-                    ))}
-                    <li className="text-sm text-muted-foreground italic">
-                      + {pack.worksheets.length - 5} more worksheets
-                    </li>
-                  </ul>
-                </CardContent>
-                <CardFooter className="flex gap-3">
-                  <Button
-                    onClick={() => handleDownload(pack)}
-                    className="flex-1"
-                  >
-                    <Download className="mr-2 h-4 w-4" />
-                    Download Now
-                  </Button>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" onClick={() => setSelectedPack(pack)}>
-                        View All
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-md">
-                      <DialogHeader>
-                        <DialogTitle className="font-heading">{pack.title}</DialogTitle>
-                        <DialogDescription>{pack.description}</DialogDescription>
-                      </DialogHeader>
-                      <div className="py-4">
-                        <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-primary">
-                          All {pack.worksheets.length} Worksheets:
-                        </h4>
-                        <ul className="space-y-2 max-h-60 overflow-y-auto">
-                          {pack.worksheets.map((worksheet, index) => (
-                            <li key={index} className="flex items-start gap-2 text-sm">
-                              <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                              <span>{worksheet}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="border-t pt-4">
-                        <p className="text-sm text-muted-foreground mb-3">
-                          Get this pack sent to your email (optional):
-                        </p>
-                        <div className="flex gap-2">
-                          <Input
-                            type="email"
-                            placeholder="your@email.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                          />
-                          <Button onClick={() => pack && handleEmailDownload(pack)}>
-                            Send
-                          </Button>
+            {packs.map((pack) => {
+              const titles = Array.isArray(pack.worksheet_titles) ? pack.worksheet_titles : [];
+              
+              return (
+                <Card key={pack.id} className="overflow-hidden">
+                  <CardHeader>
+                    <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${pack.color} flex items-center justify-center mb-4`}>
+                      <Package className="w-8 h-8 text-primary" />
+                    </div>
+                    <CardTitle className="text-2xl font-heading">{pack.title}</CardTitle>
+                    <p className="text-muted-foreground">{pack.description}</p>
+                  </CardHeader>
+                  <CardContent>
+                    <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-primary">
+                      What's Included:
+                    </h4>
+                    <ul className="space-y-2">
+                      {titles.slice(0, 5).map((worksheet, index) => (
+                        <li key={index} className="flex items-start gap-2 text-sm">
+                          <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                          <span>{worksheet}</span>
+                        </li>
+                      ))}
+                      {titles.length > 5 && (
+                        <li className="text-sm text-muted-foreground italic">
+                          + {titles.length - 5} more worksheets
+                        </li>
+                      )}
+                    </ul>
+                  </CardContent>
+                  <CardFooter className="flex gap-3">
+                    <Button asChild className="flex-1">
+                      <a href={`/downloads/grade-${pack.grade}-pack`}>
+                        <Download className="mr-2 h-4 w-4" />
+                        Download Now
+                      </a>
+                    </Button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline" onClick={() => setSelectedPack(pack)}>
+                          View All
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-md">
+                        <DialogHeader>
+                          <DialogTitle className="font-heading">{pack.title}</DialogTitle>
+                          <DialogDescription>{pack.description}</DialogDescription>
+                        </DialogHeader>
+                        <div className="py-4">
+                          <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-primary">
+                            All {titles.length} Worksheets:
+                          </h4>
+                          <ul className="space-y-2 max-h-60 overflow-y-auto">
+                            {titles.map((worksheet, index) => (
+                              <li key={index} className="flex items-start gap-2 text-sm">
+                                <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                <span>{worksheet}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-
-          {/* Newsletter CTA */}
-          <div className="mt-16 bg-gradient-to-r from-primary to-primary-dark text-white p-8 rounded-lg text-center">
-            <h2 className="text-3xl font-bold mb-4 font-heading">Want More Free Worksheets?</h2>
-            <p className="text-lg mb-6 opacity-90">
-              Subscribe to our newsletter and get new worksheets delivered to your inbox every week!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                className="bg-white text-foreground"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <Button
-                variant="accent"
-                size="lg"
-                onClick={() => {
-                  if (email) {
-                    toast({
-                      title: "Subscribed!",
-                      description: "You'll receive weekly worksheets in your inbox.",
-                    });
-                    setEmail("");
-                  }
-                }}
-              >
-                Subscribe
-              </Button>
-            </div>
+                      </DialogContent>
+                    </Dialog>
+                  </CardFooter>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </main>
