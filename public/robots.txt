@@ -8,4 +8,4 @@ Disallow: /admin/
 Disallow: /dashboard-secure-2025
 
 # Sitemap location
-Sitemap: https://wizkidshubworksheets.com/sitemap.xml
+Sitemap: https://wizkidshub.com/sitemap.xml
