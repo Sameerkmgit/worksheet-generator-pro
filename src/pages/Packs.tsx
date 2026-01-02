@@ -43,10 +43,13 @@ const Packs = () => {
       setError(null);
 
       try {
-        const { data, error } = await supabase
+        const { data, error } = await (supabase as any)
           .from("v_pack_card_dynamic")
           .select("pack_id, grade, slug, title, description, worksheet_titles, worksheet_count")
           .order("grade", { ascending: true });
+
+        console.log("v_pack_card_dynamic data:", data);
+        console.log("v_pack_card_dynamic error:", error);
 
         if (error) throw error;
 
