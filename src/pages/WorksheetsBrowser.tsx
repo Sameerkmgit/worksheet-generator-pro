@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, ExternalLink, Search } from "lucide-react";
+import { Loader2, ExternalLink, Search, X } from "lucide-react";
 import { format } from "date-fns";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -33,6 +33,16 @@ const WorksheetsBrowser = () => {
   const [loadingWorksheets, setLoadingWorksheets] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Check if any filters are active
+  const hasActiveFilters = selectedGrade !== null || selectedSubject !== null || searchTerm.trim() !== "";
+
+  // Clear all filters
+  const clearFilters = () => {
+    setSelectedGrade(null);
+    setSelectedSubject(null);
+    setSearchTerm("");
+  };
+
   // Fetch distinct grades on mount
   useEffect(() => {
     const fetchGrades = async () => {
@@ -49,10 +59,7 @@ const WorksheetsBrowser = () => {
         const gradeList: string[] = (data || []).map((d) => d.grade);
         const uniqueGrades: string[] = Array.from(new Set(gradeList)).sort();
         setGrades(uniqueGrades);
-        
-        if (uniqueGrades.length > 0) {
-          setSelectedGrade(uniqueGrades[0]);
-        }
+        // Do NOT auto-select the first grade
       } catch (err: any) {
         setError(err.message || "Failed to load grades");
       } finally {
@@ -63,19 +70,22 @@ const WorksheetsBrowser = () => {
     fetchGrades();
   }, []);
 
-  // Fetch subjects when grade changes
+  // Fetch all subjects (or filtered by grade if selected)
   useEffect(() => {
-    if (selectedGrade === null) return;
-
     const fetchSubjects = async () => {
       setLoadingSubjects(true);
       setError(null);
       try {
-        const { data, error: queryError } = await supabase
+        let query = supabase
           .from("worksheets")
           .select("subject")
-          .eq("grade", selectedGrade)
           .eq("is_archived", false);
+
+        if (selectedGrade) {
+          query = query.eq("grade", selectedGrade);
+        }
+
+        const { data, error: queryError } = await query;
 
         if (queryError) throw queryError;
 
@@ -83,9 +93,8 @@ const WorksheetsBrowser = () => {
         const uniqueSubjects: string[] = Array.from(new Set(subjectList)).sort();
         setSubjects(uniqueSubjects);
         
-        if (uniqueSubjects.length > 0) {
-          setSelectedSubject(uniqueSubjects[0]);
-        } else {
+        // Reset subject if the currently selected subject isn't available for the new grade
+        if (selectedSubject && !uniqueSubjects.includes(selectedSubject)) {
           setSelectedSubject(null);
         }
       } catch (err: any) {
@@ -100,11 +109,6 @@ const WorksheetsBrowser = () => {
 
   // Fetch worksheets when filters change
   useEffect(() => {
-    if (selectedGrade === null || selectedSubject === null) {
-      setWorksheets([]);
-      return;
-    }
-
     const fetchWorksheets = async () => {
       setLoadingWorksheets(true);
       setError(null);
@@ -112,11 +116,18 @@ const WorksheetsBrowser = () => {
         let query = supabase
           .from("worksheets")
           .select("id, grade, subject, title, pdf_url, created_at")
-          .eq("grade", selectedGrade)
-          .eq("subject", selectedSubject)
           .eq("is_archived", false)
           .order("created_at", { ascending: false })
           .order("title", { ascending: true });
+
+        // Only apply filters if values are selected
+        if (selectedGrade) {
+          query = query.eq("grade", selectedGrade);
+        }
+        
+        if (selectedSubject) {
+          query = query.eq("subject", selectedSubject);
+        }
 
         if (searchTerm.trim()) {
           query = query.ilike("title", `%${searchTerm.trim()}%`);
@@ -145,6 +156,24 @@ const WorksheetsBrowser = () => {
     }
   };
 
+  // Handle grade change - use special value "__all__" for clearing
+  const handleGradeChange = (value: string) => {
+    if (value === "__all__") {
+      setSelectedGrade(null);
+    } else {
+      setSelectedGrade(value);
+    }
+  };
+
+  // Handle subject change - use special value "__all__" for clearing
+  const handleSubjectChange = (value: string) => {
+    if (value === "__all__") {
+      setSelectedSubject(null);
+    } else {
+      setSelectedSubject(value);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -163,19 +192,20 @@ const WorksheetsBrowser = () => {
           </div>
 
           {/* Filters */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row gap-4 mb-4">
             {/* Grade Dropdown */}
             <div className="flex-1 min-w-[150px]">
               <label className="block text-sm font-medium text-foreground mb-1">Grade</label>
               <Select
-                value={selectedGrade || ""}
-                onValueChange={setSelectedGrade}
-                disabled={loadingGrades || grades.length === 0}
+                value={selectedGrade || "__all__"}
+                onValueChange={handleGradeChange}
+                disabled={loadingGrades}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder={loadingGrades ? "Loading..." : "Select Grade"} />
+                  <SelectValue placeholder="All Grades" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-background border shadow-lg z-50">
+                  <SelectItem value="__all__">All Grades</SelectItem>
                   {grades.map((g) => (
                     <SelectItem key={g} value={g}>
                       {g}
@@ -189,14 +219,15 @@ const WorksheetsBrowser = () => {
             <div className="flex-1 min-w-[150px]">
               <label className="block text-sm font-medium text-foreground mb-1">Subject</label>
               <Select
-                value={selectedSubject || ""}
-                onValueChange={setSelectedSubject}
-                disabled={loadingSubjects || subjects.length === 0}
+                value={selectedSubject || "__all__"}
+                onValueChange={handleSubjectChange}
+                disabled={loadingSubjects}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder={loadingSubjects ? "Loading..." : "Select Subject"} />
+                  <SelectValue placeholder="All Subjects" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-background border shadow-lg z-50">
+                  <SelectItem value="__all__">All Subjects</SelectItem>
                   {subjects.map((s) => (
                     <SelectItem key={s} value={s}>
                       {s}
@@ -222,6 +253,21 @@ const WorksheetsBrowser = () => {
             </div>
           </div>
 
+          {/* Clear Filters Button */}
+          {hasActiveFilters && (
+            <div className="flex justify-end mb-6">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={clearFilters}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-4 w-4 mr-2" />
+                Clear Filters
+              </Button>
+            </div>
+          )}
+
           {/* Error State */}
           {error && (
             <div className="bg-destructive/10 border border-destructive/20 text-destructive rounded-md p-4 mb-6">
@@ -238,14 +284,19 @@ const WorksheetsBrowser = () => {
           )}
 
           {/* Worksheets List */}
-          {!loadingWorksheets && worksheets.length === 0 && selectedGrade && selectedSubject && (
+          {!loadingWorksheets && worksheets.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
-              No worksheets found for this selection.
+              {hasActiveFilters 
+                ? "No worksheets found for this selection." 
+                : "Select a grade or subject to browse worksheets."}
             </div>
           )}
 
           {!loadingWorksheets && worksheets.length > 0 && (
             <div className="space-y-4">
+              <p className="text-sm text-muted-foreground mb-4">
+                Showing {worksheets.length} worksheet{worksheets.length !== 1 ? 's' : ''}
+              </p>
               {worksheets.map((worksheet) => (
                 <Card key={worksheet.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4">
