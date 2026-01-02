@@ -35,17 +35,25 @@ const Packs = () => {
   const { data: packs, isLoading, error } = useQuery({
     queryKey: ["pack-cards"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("v_pack_card_dynamic" as any)
-        .select("*")
-        .order("grade", { ascending: true });
+      try {
+        const { data, error } = await supabase
+          .from("v_pack_card_dynamic" as any)
+          .select("*")
+          .order("grade", { ascending: true });
 
-      if (error) {
-        console.error("Error fetching packs from v_pack_card_dynamic:", error);
-        throw error;
+        console.log("v_pack_card_dynamic data:", data);
+        console.log("v_pack_card_dynamic error:", error);
+
+        if (error) {
+          console.error("Error fetching packs from v_pack_card_dynamic:", error);
+          throw error;
+        }
+
+        return data as unknown as PackCardData[];
+      } catch (e) {
+        console.error("Packs fetch error:", e);
+        throw e;
       }
-
-      return data as unknown as PackCardData[];
     },
   });
 
