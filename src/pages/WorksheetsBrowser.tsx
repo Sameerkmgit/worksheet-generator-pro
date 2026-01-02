@@ -9,6 +9,7 @@ import { Loader2, ExternalLink, Search, X } from "lucide-react";
 import { format } from "date-fns";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { toTitleCase } from "@/lib/utils";
 
 interface Worksheet {
   id: string;
@@ -208,7 +209,7 @@ const WorksheetsBrowser = () => {
                   <SelectItem value="__all__">All Grades</SelectItem>
                   {grades.map((g) => (
                     <SelectItem key={g} value={g}>
-                      {g}
+                      Grade {g}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -230,7 +231,7 @@ const WorksheetsBrowser = () => {
                   <SelectItem value="__all__">All Subjects</SelectItem>
                   {subjects.map((s) => (
                     <SelectItem key={s} value={s}>
-                      {s}
+                      {toTitleCase(s)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -301,9 +302,9 @@ const WorksheetsBrowser = () => {
                 <Card key={worksheet.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4">
                     <div className="flex-1">
-                      <h3 className="font-medium text-foreground">{worksheet.title}</h3>
+                      <h3 className="font-medium text-foreground">{toTitleCase(worksheet.title)}</h3>
                       <p className="text-sm text-muted-foreground">
-                        {worksheet.grade} · {worksheet.subject}
+                        Grade {worksheet.grade} · {toTitleCase(worksheet.subject)}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         Added on {formatDate(worksheet.created_at)}

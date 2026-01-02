@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getWorksheetById, getWorksheetImageOverride } from "@/lib/worksheetStorage";
+import { toTitleCase } from "@/lib/utils";
 
 const WorksheetDetail = () => {
   const { worksheetId } = useParams();
@@ -86,8 +87,8 @@ const WorksheetDetail = () => {
     );
   }
 
-  const pageTitle = `${worksheet.title} - Free Printable PDF`;
-  const pageDescription = worksheet.description || `Download free ${worksheet.grade} ${worksheet.subject} worksheet: ${worksheet.title}. Perfect for classroom and home learning.`;
+  const pageTitle = `${toTitleCase(worksheet.title)} - Free Printable PDF`;
+  const pageDescription = toTitleCase(worksheet.description) || `Download free Grade ${worksheet.grade} ${toTitleCase(worksheet.subject)} worksheet: ${toTitleCase(worksheet.title)}. Perfect for classroom and home learning.`;
   const pageUrl = `https://wizkidshubworksheets.com/worksheet/${worksheetId}`;
 
   const structuredData = {
@@ -222,17 +223,17 @@ const WorksheetDetail = () => {
                 <CardContent className="p-6">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
                     <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
-                      {worksheet.grade}
+                      Grade {worksheet.grade}
                     </span>
                     <span className="bg-secondary/10 text-secondary-foreground px-3 py-1 rounded-full">
-                      {worksheet.subject}
+                      {toTitleCase(worksheet.subject)}
                     </span>
                   </div>
 
-                  <h1 className="text-3xl md:text-4xl font-bold mb-4">{worksheet.title}</h1>
+                  <h1 className="text-3xl md:text-4xl font-bold mb-4">{toTitleCase(worksheet.title)}</h1>
                   
                   <p className="text-lg text-muted-foreground mb-6">
-                    {worksheet.description}
+                    {toTitleCase(worksheet.description)}
                   </p>
 
                   <Button size="lg" className="w-full md:w-auto" asChild>
@@ -319,7 +320,7 @@ const WorksheetDetail = () => {
                       {worksheet.skills.map((skill: string, index: number) => (
                         <li key={index} className="flex items-start">
                           <span className="text-primary mr-2">✓</span>
-                          <span className="text-muted-foreground">{skill}</span>
+                          <span className="text-muted-foreground">{toTitleCase(skill)}</span>
                         </li>
                       ))}
                     </ul>

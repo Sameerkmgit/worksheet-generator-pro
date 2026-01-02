@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Search as SearchIcon, Download, Filter } from "lucide-react";
+import { Search as SearchIcon, Download, Filter, X } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getWorksheetCardImage, WorksheetData } from "@/lib/worksheetStorage";
+import { toTitleCase } from "@/lib/utils";
 
 // Import all worksheet data from Category page structure
 const allWorksheets = [
@@ -146,7 +147,7 @@ const Search = () => {
                 <SelectTrigger className="w-full sm:w-[180px]">
                   <SelectValue placeholder="All Grades" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-background border shadow-lg z-50">
                   <SelectItem value="all">All Grades</SelectItem>
                   <SelectItem value="1">Grade 1</SelectItem>
                   <SelectItem value="2">Grade 2</SelectItem>
@@ -159,7 +160,7 @@ const Search = () => {
                 <SelectTrigger className="w-full sm:w-[180px]">
                   <SelectValue placeholder="All Subjects" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-background border shadow-lg z-50">
                   <SelectItem value="all">All Subjects</SelectItem>
                   <SelectItem value="math">Math</SelectItem>
                   <SelectItem value="science">Science</SelectItem>
@@ -168,6 +169,22 @@ const Search = () => {
                   <SelectItem value="assignments">Assignments</SelectItem>
                 </SelectContent>
               </Select>
+              {(gradeFilter !== "all" || subjectFilter !== "all" || searchQuery) && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setGradeFilter("all");
+                    setSubjectFilter("all");
+                    setSearchParams(new URLSearchParams());
+                  }}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Clear Filters
+                </Button>
+              )}
             </div>
           </div>
 
@@ -209,16 +226,16 @@ const Search = () => {
                       );
                     })()}
                     <CardTitle className="text-xl group-hover:text-primary transition-colors font-heading">
-                      {worksheet.title}
+                      {toTitleCase(worksheet.title)}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="flex gap-2 mb-2">
                       <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded">
-                        {worksheet.grade}
+                        Grade {worksheet.grade}
                       </span>
                       <span className="text-xs px-2 py-1 bg-secondary/10 text-secondary rounded">
-                        {worksheet.category}
+                        {toTitleCase(worksheet.category)}
                       </span>
                     </div>
                   </CardContent>
