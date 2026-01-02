@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Download, Package, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
@@ -195,59 +196,68 @@ const Packs = () => {
                       )}
                     </CardContent>
 
-                    <CardFooter className="flex gap-3">
-                      {/* IMPORTANT: Use proxy download route */}
-                      <Button asChild className="flex-1">
-                        <a href={`/downloads/grade-${pack.grade}-pack`}>
-                          <Download className="mr-2 h-4 w-4" />
-                          Download Now
-                        </a>
-                      </Button>
+                    <CardFooter className="flex flex-col gap-3">
+                      {/* Link to Grade page */}
+                      <Link to={`/categories/grade-${pack.grade}`} className="w-full">
+                        <Button variant="outline" className="w-full">
+                          Browse Grade {pack.grade} Worksheets
+                        </Button>
+                      </Link>
+                      
+                      <div className="flex gap-3 w-full">
+                        {/* IMPORTANT: Use proxy download route */}
+                        <Button asChild className="flex-1">
+                          <a href={`/downloads/grade-${pack.grade}-pack`}>
+                            <Download className="mr-2 h-4 w-4" />
+                            Download Now
+                          </a>
+                        </Button>
 
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button variant="outline" onClick={() => setSelectedPack(pack)}>
-                            View All
-                          </Button>
-                        </DialogTrigger>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" onClick={() => setSelectedPack(pack)}>
+                              View All
+                            </Button>
+                          </DialogTrigger>
 
-                        <DialogContent className="max-w-md">
-                          <DialogHeader>
-                            <DialogTitle className="font-heading">{pack.title}</DialogTitle>
-                            <DialogDescription>{pack.description}</DialogDescription>
-                          </DialogHeader>
+                          <DialogContent className="max-w-md">
+                            <DialogHeader>
+                              <DialogTitle className="font-heading">{pack.title}</DialogTitle>
+                              <DialogDescription>{pack.description}</DialogDescription>
+                            </DialogHeader>
 
-                          <div className="py-4">
-                            <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-primary">
-                              All {titles.length} Worksheets:
-                            </h4>
+                            <div className="py-4">
+                              <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-primary">
+                                All {titles.length} Worksheets:
+                              </h4>
 
-                            <ul className="space-y-2 max-h-60 overflow-y-auto">
-                              {titles.map((t, index) => (
-                                <li key={index} className="flex items-start gap-2 text-sm">
-                                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                                  <span>{t}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <div className="border-t pt-4">
-                            <p className="text-sm text-muted-foreground mb-3">
-                              Get this pack sent to your email (optional):
-                            </p>
-                            <div className="flex gap-2">
-                              <Input
-                                type="email"
-                                placeholder="your@email.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                              />
-                              <Button onClick={() => selectedPack && handleEmailSend(selectedPack)}>Send</Button>
+                              <ul className="space-y-2 max-h-60 overflow-y-auto">
+                                {titles.map((t, index) => (
+                                  <li key={index} className="flex items-start gap-2 text-sm">
+                                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                    <span>{t}</span>
+                                  </li>
+                                ))}
+                              </ul>
                             </div>
-                          </div>
-                        </DialogContent>
-                      </Dialog>
+
+                            <div className="border-t pt-4">
+                              <p className="text-sm text-muted-foreground mb-3">
+                                Get this pack sent to your email (optional):
+                              </p>
+                              <div className="flex gap-2">
+                                <Input
+                                  type="email"
+                                  placeholder="your@email.com"
+                                  value={email}
+                                  onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <Button onClick={() => selectedPack && handleEmailSend(selectedPack)}>Send</Button>
+                              </div>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
                     </CardFooter>
                   </Card>
                 );

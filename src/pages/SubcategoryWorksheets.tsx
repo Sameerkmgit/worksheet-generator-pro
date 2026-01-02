@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
+import { Eye, FolderOpen, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { supabase } from "@/integrations/supabase/client";
 import {
   getWorksheetsBySubcategoryId,
   getSubcategoryById,
@@ -29,17 +30,25 @@ const getPdfEmbedUrl = (pdfUrl: string): string => {
   return pdfUrl;
 };
 
+interface RelatedTopic {
+  id: string;
+  title: string;
+  worksheetCount: number;
+}
+
 const SubcategoryWorksheets = () => {
   const { subcategoryId } = useParams();
   const [worksheets, setWorksheets] = useState<WorksheetData[]>([]);
   const [subcategory, setSubcategory] = useState<SubcategoryData | null>(null);
   const [category, setCategory] = useState<WorksheetCategoryData | null>(null);
+  const [relatedTopics, setRelatedTopics] = useState<RelatedTopic[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setWorksheets([]);
     setSubcategory(null);
     setCategory(null);
+    setRelatedTopics([]);
     setLoading(true);
 
     const loadData = async () => {
@@ -52,6 +61,43 @@ const SubcategoryWorksheets = () => {
         if (subcatData?.categoryId) {
           const categoryData = await getWorksheetCategoryById(subcatData.categoryId);
           setCategory(categoryData);
+
+          // Fetch related topics (other subcategories in same category)
+          const { data: relatedData, error: relatedError } = await supabase
+            .from("worksheet_subcategories")
+            .select("id, title")
+            .eq("category_id", subcatData.categoryId)
+            .eq("is_archived", false)
+            .neq("id", subcategoryId)
+            .order("sort_order", { ascending: true })
+            .limit(10);
+
+          if (!relatedError && relatedData) {
+            // Get worksheet counts for each related topic
+            const relatedWithCounts = await Promise.all(
+              relatedData.map(async (topic) => {
+                const { count } = await supabase
+                  .from("worksheets")
+                  .select("*", { count: "exact", head: true })
+                  .eq("subcategory_id", topic.id)
+                  .eq("is_archived", false);
+                
+                return {
+                  id: topic.id,
+                  title: topic.title,
+                  worksheetCount: count || 0,
+                };
+              })
+            );
+            
+            // Sort by worksheet count and take top 6
+            const sortedRelated = relatedWithCounts
+              .filter(t => t.worksheetCount > 0)
+              .sort((a, b) => b.worksheetCount - a.worksheetCount)
+              .slice(0, 6);
+            
+            setRelatedTopics(sortedRelated);
+          }
         }
 
         const worksheetsData = await getWorksheetsBySubcategoryId(subcategoryId);
@@ -155,6 +201,34 @@ const SubcategoryWorksheets = () => {
             )}
           </div>
         </section>
+
+        {/* Related Topics Section */}
+        {relatedTopics.length > 0 && (
+          <section className="py-12 px-4 bg-secondary/5">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl font-bold mb-6 text-foreground font-heading">
+                Related Topics in {toTitleCase(category?.title)}
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {relatedTopics.map((topic) => (
+                  <Link key={topic.id} to={`/subcategory/${topic.id}`}>
+                    <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 group">
+                      <CardContent className="p-4 flex flex-col items-center text-center">
+                        <FolderOpen className="w-8 h-8 text-primary/60 mb-2 group-hover:text-primary transition-colors" />
+                        <h3 className="font-semibold text-sm text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+                          {toTitleCase(topic.title)}
+                        </h3>
+                        <p className="text-xs text-muted-foreground">
+                          {topic.worksheetCount} worksheet{topic.worksheetCount !== 1 ? "s" : ""}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </main>
 
       <Footer />

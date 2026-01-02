@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Eye, FolderOpen } from "lucide-react";
+import { Eye, FolderOpen, FileText } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { supabase } from "@/integrations/supabase/client";
 import {
   getWorksheetsByCategoryId,
   getWorksheetCategoryById,
@@ -29,10 +30,14 @@ const getPdfEmbedUrl = (pdfUrl: string): string => {
   return pdfUrl;
 };
 
+interface TopicWithCount extends SubcategoryData {
+  worksheetCount: number;
+}
+
 const CategoryWorksheets = () => {
   const { categoryId } = useParams();
   const [worksheets, setWorksheets] = useState<WorksheetData[]>([]);
-  const [subcategories, setSubcategories] = useState<SubcategoryData[]>([]);
+  const [subcategories, setSubcategories] = useState<TopicWithCount[]>([]);
   const [category, setCategory] = useState<WorksheetCategoryData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -64,7 +69,24 @@ const CategoryWorksheets = () => {
 
         // Fetch subcategories first
         const subcatsData = await getSubcategoriesByCategoryId(effectiveCategoryId);
-        setSubcategories(subcatsData);
+        
+        // Get worksheet counts for each subcategory
+        const subcatsWithCounts = await Promise.all(
+          subcatsData.map(async (subcat) => {
+            const { count } = await supabase
+              .from("worksheets")
+              .select("*", { count: "exact", head: true })
+              .eq("subcategory_id", subcat.id)
+              .eq("is_archived", false);
+            
+            return {
+              ...subcat,
+              worksheetCount: count || 0,
+            };
+          })
+        );
+        
+        setSubcategories(subcatsWithCounts);
 
         // Also fetch worksheets without subcategory for fallback display
         const worksheetsData = await getWorksheetsByCategoryId(effectiveCategoryId);
@@ -134,9 +156,9 @@ const CategoryWorksheets = () => {
                 </div>
               </div>
             ) : hasSubcategories ? (
-              // Show subcategories (topics) first
+              // Show subcategories (topics) with worksheet counts
               <>
-                <h2 className="text-2xl font-semibold mb-6 text-foreground">
+                <h2 className="text-2xl font-semibold mb-6 text-foreground font-heading">
                   Topics in {toTitleCase(category?.title)}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -152,9 +174,10 @@ const CategoryWorksheets = () => {
                         <h3 className="font-heading font-semibold text-xl mb-2">
                           {toTitleCase(subcat.title)}
                         </h3>
-                        <p className="text-muted-foreground text-sm mb-4">
-                          View all {toTitleCase(subcat.title)} worksheets
-                        </p>
+                        <div className="flex items-center gap-2 text-muted-foreground text-sm mb-4">
+                          <FileText className="w-4 h-4" />
+                          <span>{subcat.worksheetCount} worksheet{subcat.worksheetCount !== 1 ? "s" : ""}</span>
+                        </div>
                         <Button asChild variant="default" className="w-full">
                           <Link to={`/subcategory/${subcat.id}`}>
                             <Eye className="mr-2 h-4 w-4" />
