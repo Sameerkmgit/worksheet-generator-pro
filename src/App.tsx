@@ -22,6 +22,8 @@ import Packs from "./pages/Packs";
 import Search from "./pages/Search";
 import WorksheetsBrowser from "./pages/WorksheetsBrowser";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +58,10 @@ const App = () => {
 
             {/* ASSIGNMENTS */}
             <Route path="/assignments/:grade" element={<AssignmentsLanding />} />
+
+            {/* LEGAL PAGES */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
 
             {/* ADMIN ROUTES */}
             <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
