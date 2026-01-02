@@ -6,16 +6,16 @@ import { Download, Loader2, AlertCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const DownloadPack = () => {
-  const { grade } = useParams<{ grade: string }>();
+  const { packId } = useParams<{ packId: string }>();
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Extract grade number from packId (e.g., "grade-1-pack" -> "1")
+  const gradeMatch = packId?.match(/^grade-(\d)-pack$/);
+  const gradeNum = gradeMatch ? gradeMatch[1] : null;
+
   useEffect(() => {
     const downloadPack = async () => {
-      // Extract grade number from URL (e.g., "1" from "grade-1-pack")
-      const gradeMatch = grade?.match(/^(\d)$/);
-      const gradeNum = gradeMatch ? gradeMatch[1] : null;
-
       if (!gradeNum || parseInt(gradeNum) < 1 || parseInt(gradeNum) > 5) {
         setStatus("error");
         setErrorMessage("Invalid grade. Please select a valid grade (1-5).");
@@ -61,9 +61,9 @@ const DownloadPack = () => {
     };
 
     downloadPack();
-  }, [grade]);
+  }, [gradeNum]);
 
-  const gradeDisplay = grade?.match(/^(\d)$/)?.[1] || grade;
+  const gradeDisplay = gradeNum || packId;
 
   return (
     <>
