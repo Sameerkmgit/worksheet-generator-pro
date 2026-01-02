@@ -81,8 +81,8 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Free Printable Worksheets for Grades 1-5 | WizKidsHub Worksheets</title>
-        <meta name="description" content="Download free printable educational worksheets for Grades 1-5. Math, English, Science worksheets aligned with CBSE curriculum. Perfect for homeschooling and classroom learning." />
+        <title>Free Printable Worksheets for Grades 1–5 | WizKidsHub Worksheets</title>
+        <meta name="description" content="Download free printable Math, English, and Science worksheets for Grades 1 to 5. Trusted PDF worksheets for parents and teachers." />
         <link rel="canonical" href="https://wizkidshubworksheets.com/" />
         
         <script type="application/ld+json">
@@ -115,7 +115,7 @@ const Home = () => {
         <div className="container mx-auto max-w-[1140px] relative z-10">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in font-heading">
-              WizKidsHub Worksheets for Grades 1–5
+              Free Printable Worksheets for Grades 1–5
             </h1>
             <p className="text-xl md:text-2xl text-blue-50 mb-10 animate-fade-in max-w-3xl mx-auto">
               Free printable educational worksheets for young learners. Math, English, Science, and more – all designed to make learning fun and effective.

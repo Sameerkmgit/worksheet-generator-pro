@@ -84,10 +84,10 @@ const Packs = () => {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Free Worksheet Packs | WizKidsHub Worksheets</title>
+        <title>Free Worksheet Packs (PDF) for Grades 1–5 | WizKidsHub</title>
         <meta
           name="description"
-          content="Download free worksheet packs for Grades 1-5. Each pack includes 10 carefully selected worksheets covering Math, English, and Science."
+          content="Download free worksheet packs for Grades 1–5. Each pack includes 10 carefully selected printable worksheets in PDF format."
         />
         <link rel="canonical" href="https://wizkidshubworksheets.com/packs" />
       </Helmet>

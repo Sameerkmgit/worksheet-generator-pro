@@ -72,8 +72,9 @@ const Category = () => {
   
   const gradeTitle = gradeTitles[gradeSlug || ""] || `Grade ${gradeNumber}`;
   const pageTitle = `${gradeTitle} Worksheets`;
+  const seoTitle = `${gradeTitle} Worksheets – Free Printable Math, English & Science PDFs`;
   
-  const pageDescription = `Free printable ${gradeTitle.toLowerCase()} worksheets. Download and print for classroom or home learning.`;
+  const pageDescription = `Download free ${gradeTitle} printable worksheets in Math, English, and Science. Curriculum-aligned PDFs for home and classroom use.`;
 
   const pageUrl = `https://wizkidshubworksheets.com/categories/${gradeSlug}`;
   
@@ -112,7 +113,7 @@ const Category = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>{pageTitle} - Free Printable PDFs | WizKidsHub Worksheets</title>
+        <title>{seoTitle}</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
         <script type="application/ld+json">
@@ -146,7 +147,7 @@ const Category = () => {
               Back to Home
             </Link>
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-              {pageTitle}
+              {gradeTitle} Worksheets
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl">
               {pageDescription}
