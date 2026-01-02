@@ -6,111 +6,61 @@
   
   <!-- Homepage -->
   <url>
-    <loc>https://wizkidshubworksheets.com/</loc>
-    <lastmod>2025-11-20</lastmod>
+    <loc>https://wizkidshub.com/</loc>
+    <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
-  <!-- Category Pages -->
+  <!-- Grade Category Pages -->
   <url>
-    <loc>https://wizkidshubworksheets.com/category/class-1</loc>
-    <lastmod>2025-11-20</lastmod>
+    <loc>https://wizkidshub.com/categories/grade-1</loc>
+    <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
-    <loc>https://wizkidshubworksheets.com/category/class-2</loc>
-    <lastmod>2025-11-20</lastmod>
+    <loc>https://wizkidshub.com/categories/grade-2</loc>
+    <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
-    <loc>https://wizkidshubworksheets.com/category/class-3</loc>
-    <lastmod>2025-11-20</lastmod>
+    <loc>https://wizkidshub.com/categories/grade-3</loc>
+    <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
-    <loc>https://wizkidshubworksheets.com/category/class-4</loc>
-    <lastmod>2025-11-20</lastmod>
+    <loc>https://wizkidshub.com/categories/grade-4</loc>
+    <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
-    <loc>https://wizkidshubworksheets.com/category/class-5</loc>
-    <lastmod>2025-11-20</lastmod>
+    <loc>https://wizkidshub.com/categories/grade-5</loc>
+    <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
+  <!-- Legal Pages -->
   <url>
-    <loc>https://wizkidshubworksheets.com/category/math</loc>
-    <lastmod>2025-11-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://wizkidshubworksheets.com/category/english</loc>
-    <lastmod>2025-11-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://wizkidshubworksheets.com/category/science</loc>
-    <lastmod>2025-11-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://wizkidshubworksheets.com/category/others</loc>
-    <lastmod>2025-11-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <!-- Worksheet Detail Pages -->
-  <url>
-    <loc>https://wizkidshubworksheets.com/worksheet/1</loc>
-    <lastmod>2025-11-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://wizkidshubworksheets.com/worksheet/2</loc>
-    <lastmod>2025-11-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://wizkidshubworksheets.com/worksheet/3</loc>
-    <lastmod>2025-11-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://wizkidshubworksheets.com/worksheet/20</loc>
-    <lastmod>2025-11-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Admin Page (optional - can be removed or set to noindex) -->
-  <url>
-    <loc>https://wizkidshubworksheets.com/admin-upload</loc>
-    <lastmod>2025-11-20</lastmod>
+    <loc>https://wizkidshub.com/privacy-policy</loc>
+    <lastmod>2026-01-02</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.1</priority>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://wizkidshub.com/terms-of-service</loc>
+    <lastmod>2026-01-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   
 </urlset>
