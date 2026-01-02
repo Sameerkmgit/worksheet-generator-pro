@@ -78,7 +78,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/20 pt-8 text-center text-sm opacity-90">
-          <p>© 2025 WizKidsHubWorksheets. All rights reserved.</p>
+          <p>© 2026 WizKidsHubWorksheets. All rights reserved.</p>
         </div>
       </div>
     </footer>
