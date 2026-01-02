@@ -61,7 +61,7 @@ const App = () => {
             <Route path="/assignments/:grade" element={<AssignmentsLanding />} />
 
             {/* DOWNLOAD ROUTES */}
-            <Route path="/downloads/grade-:grade-pack" element={<DownloadPack />} />
+            <Route path="/downloads/:packId" element={<DownloadPack />} />
 
             {/* LEGAL PAGES */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
