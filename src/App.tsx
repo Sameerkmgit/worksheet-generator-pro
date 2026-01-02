@@ -10,7 +10,7 @@ import Category from "./pages/Category";
 import CategoryWorksheets from "./pages/CategoryWorksheets";
 import SubcategoryWorksheets from "./pages/SubcategoryWorksheets";
 import WorksheetDetail from "./pages/WorksheetDetail";
-import SubCategory from "./pages/SubCategory";
+
 
 import AdminUpload from "./pages/AdminUpload";
 import AdminLogin from "./pages/AdminLogin";
