@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,12 +9,17 @@ const DownloadPack = () => {
   const { packId } = useParams<{ packId: string }>();
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [errorMessage, setErrorMessage] = useState("");
+  const didRun = useRef(false);
 
   // Extract grade number from packId (e.g., "grade-1-pack" -> "1")
   const gradeMatch = packId?.match(/^grade-(\d)-pack$/);
   const gradeNum = gradeMatch ? gradeMatch[1] : null;
 
   useEffect(() => {
+    // Guard against React StrictMode double-execution
+    if (didRun.current) return;
+    didRun.current = true;
+
     const downloadPack = async () => {
       if (!gradeNum || parseInt(gradeNum) < 1 || parseInt(gradeNum) > 5) {
         setStatus("error");
