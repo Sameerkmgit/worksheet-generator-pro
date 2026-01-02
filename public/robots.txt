@@ -2,10 +2,15 @@
 User-agent: *
 Allow: /
 
-# Disallow admin pages
+# Disallow download routes (noindex pages)
+Disallow: /downloads/
+
+# Disallow admin and auth routes
 Disallow: /admin-upload
 Disallow: /admin/
+Disallow: /admin-login
 Disallow: /dashboard-secure-2025
+Disallow: /reset-password
 
 # Sitemap location
-Sitemap: https://wizkidshub.com/sitemap.xml
+Sitemap: https://wizkidshubworksheets.com/sitemap.xml
