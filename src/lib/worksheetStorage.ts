@@ -1,6 +1,7 @@
 // Utility functions for managing worksheet and category data using Supabase
 import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
+import { toTitleCase } from '@/lib/utils';
 
 // Validation schema for worksheet data
 const worksheetSchema = z.object({
@@ -473,18 +474,18 @@ export const createWorksheet = async (
     .from('worksheets')
     .insert({
       id: newId,
-      title: worksheet.title.trim(),
-      description: worksheet.description,
+      title: toTitleCase(worksheet.title.trim()),
+      description: worksheet.description ? toTitleCase(worksheet.description) : worksheet.description,
       grade: worksheet.grade,
-      subject: worksheet.subject,
+      subject: toTitleCase(worksheet.subject),
       pdf_url: worksheet.pdfUrl,
       image_url: worksheet.imageUrl,
       content: worksheet.content,
       category_id: worksheet.categoryId,
-      heading: worksheet.heading,
+      heading: worksheet.heading ? toTitleCase(worksheet.heading) : worksheet.heading,
       intro: worksheet.intro,
       questions: worksheet.questions,
-      skills: worksheet.skills,
+      skills: worksheet.skills?.map(s => toTitleCase(s)),
       usage: worksheet.usage,
       faq: worksheet.faq,
       seo: worksheet.seo,
@@ -527,18 +528,18 @@ export const updateWorksheet = async (
   }
 
   const updateData: any = {};
-  if (updates.title) updateData.title = updates.title.trim();
-  if (updates.description !== undefined) updateData.description = updates.description;
+  if (updates.title) updateData.title = toTitleCase(updates.title.trim());
+  if (updates.description !== undefined) updateData.description = updates.description ? toTitleCase(updates.description) : updates.description;
   if (updates.grade) updateData.grade = updates.grade;
   if (updates.subject) updateData.subject = updates.subject;
   if (updates.pdfUrl) updateData.pdf_url = updates.pdfUrl;
   if (updates.imageUrl !== undefined) updateData.image_url = updates.imageUrl;
   if (updates.content !== undefined) updateData.content = updates.content;
   if (updates.categoryId !== undefined) updateData.category_id = updates.categoryId;
-  if (updates.heading !== undefined) updateData.heading = updates.heading;
+  if (updates.heading !== undefined) updateData.heading = updates.heading ? toTitleCase(updates.heading) : updates.heading;
   if (updates.intro !== undefined) updateData.intro = updates.intro;
   if (updates.questions !== undefined) updateData.questions = updates.questions;
-  if (updates.skills !== undefined) updateData.skills = updates.skills;
+  if (updates.skills !== undefined) updateData.skills = updates.skills?.map(s => toTitleCase(s));
   if (updates.usage !== undefined) updateData.usage = updates.usage;
   if (updates.faq !== undefined) updateData.faq = updates.faq;
   if (updates.seo !== undefined) updateData.seo = updates.seo;
@@ -654,9 +655,9 @@ export const createWorksheetCategory = async (
     .from('worksheet_categories')
     .insert({
       grade: category.grade,
-      subject: category.subject,
-      title: category.title.trim(),
-      description: category.description,
+      subject: toTitleCase(category.subject),
+      title: toTitleCase(category.title.trim()),
+      description: category.description ? toTitleCase(category.description) : category.description,
     })
     .select()
     .single();
@@ -679,9 +680,9 @@ export const updateWorksheetCategory = async (
 ): Promise<WorksheetCategoryData | null> => {
   const updateData: any = {};
   if (updates.grade) updateData.grade = updates.grade;
-  if (updates.subject) updateData.subject = updates.subject;
-  if (updates.title) updateData.title = updates.title.trim();
-  if (updates.description !== undefined) updateData.description = updates.description;
+  if (updates.subject) updateData.subject = toTitleCase(updates.subject);
+  if (updates.title) updateData.title = toTitleCase(updates.title.trim());
+  if (updates.description !== undefined) updateData.description = updates.description ? toTitleCase(updates.description) : updates.description;
 
   const { data, error } = await supabase
     .from('worksheet_categories')
