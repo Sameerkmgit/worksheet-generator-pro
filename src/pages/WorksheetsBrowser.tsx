@@ -9,6 +9,7 @@ import { Loader2, ExternalLink, Search, X } from "lucide-react";
 import { format } from "date-fns";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { toTitleCase } from "@/lib/utils";
 
 interface Worksheet {
@@ -175,17 +176,30 @@ const WorksheetsBrowser = () => {
     }
   };
 
+  // Breadcrumb items for Worksheets Browser page
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Browse Worksheets" }
+  ];
+
   return (
     <>
       <Helmet>
         <title>Browse Worksheets | WizKidsHub Worksheets</title>
         <meta name="description" content="Browse and download worksheets by grade and subject" />
+        <link rel="canonical" href="https://wizkidshubworksheets.com/worksheets" />
       </Helmet>
+      
+      {/* Breadcrumbs component injects JSON-LD */}
+      <Breadcrumbs items={breadcrumbItems} className="hidden" />
 
       <div className="min-h-screen bg-background">
         <Header />
         
         <div className="container mx-auto px-4 py-8 max-w-6xl">
+          {/* Visible Breadcrumbs */}
+          <Breadcrumbs items={breadcrumbItems} className="mb-6" />
+          
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2 font-heading">WizKidsHub Worksheets Browser</h1>

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -81,6 +82,12 @@ const Packs = () => {
     setSelectedPack(null);
   };
 
+  // Breadcrumb items for Packs page
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Worksheet Packs" }
+  ];
+
   return (
     <div className="min-h-screen">
       <Helmet>
@@ -91,11 +98,17 @@ const Packs = () => {
         />
         <link rel="canonical" href="https://wizkidshubworksheets.com/packs" />
       </Helmet>
+      
+      {/* Breadcrumbs component injects JSON-LD */}
+      <Breadcrumbs items={breadcrumbItems} className="hidden" />
 
       <Header />
 
       <main className="py-12 px-6">
         <div className="container mx-auto max-w-[1140px]">
+          {/* Visible Breadcrumbs */}
+          <Breadcrumbs items={breadcrumbItems} className="mb-6" />
+          
           {/* Hero Section */}
           <div className="text-center mb-12">
             <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6 border-2 border-accent/20">
