@@ -155,10 +155,56 @@ export type Database = {
             foreignKeyName: "worksheet_image_overrides_worksheet_id_fkey"
             columns: ["worksheet_id"]
             isOneToOne: true
+            referencedRelation: "v_pack_items_dynamic"
+            referencedColumns: ["worksheet_id"]
+          },
+          {
+            foreignKeyName: "worksheet_image_overrides_worksheet_id_fkey"
+            columns: ["worksheet_id"]
+            isOneToOne: true
             referencedRelation: "worksheets"
             referencedColumns: ["id"]
           },
         ]
+      }
+      worksheet_packs: {
+        Row: {
+          created_at: string
+          description: string | null
+          grade: number
+          id: string
+          is_published: boolean
+          rule_n: number
+          rule_type: string
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          grade: number
+          id?: string
+          is_published?: boolean
+          rule_n?: number
+          rule_type?: string
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          grade?: number
+          id?: string
+          is_published?: boolean
+          rule_n?: number
+          rule_type?: string
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       worksheet_subcategories: {
         Row: {
@@ -287,7 +333,28 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      v_pack_card_dynamic: {
+        Row: {
+          description: string | null
+          grade: number | null
+          pack_id: string | null
+          slug: string | null
+          title: string | null
+          worksheet_count: number | null
+          worksheet_titles: Json | null
+        }
+        Relationships: []
+      }
+      v_pack_items_dynamic: {
+        Row: {
+          display_order: number | null
+          grade: number | null
+          pack_id: string | null
+          title: string | null
+          worksheet_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       grant_admin_role: { Args: { user_email: string }; Returns: string }
