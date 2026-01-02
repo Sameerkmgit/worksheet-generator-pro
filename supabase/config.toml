@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.download-pack]
 verify_jwt = false
+
+[functions.sitemap]
+verify_jwt = false
