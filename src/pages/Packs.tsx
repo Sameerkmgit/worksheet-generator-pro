@@ -9,11 +9,18 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+
+const getPackDownloadUrl = (gradeNumber: number) => {
+  return `${SUPABASE_URL}/storage/v1/object/public/worksheet-packs/grade-${gradeNumber}-pack.pdf`;
+};
+
 const packs = [
   {
     id: "grade-1-pack",
     title: "Grade 1 Complete Pack",
     grade: "Grade 1",
+    gradeNumber: 1,
     description: "10 essential worksheets for Grade 1 students covering Math, English, and Science",
     worksheets: [
       "Introduction to Multiplication",
@@ -27,13 +34,13 @@ const packs = [
       "Counting & Number Recognition",
       "Simple Subtraction"
     ],
-    color: "from-blue-400 to-blue-500",
-    downloadUrl: "#grade-1-pack"
+    color: "from-blue-400 to-blue-500"
   },
   {
     id: "grade-2-pack",
     title: "Grade 2 Complete Pack",
     grade: "Grade 2",
+    gradeNumber: 2,
     description: "10 essential worksheets for Grade 2 students covering Math, English, and Science",
     worksheets: [
       "Multiplication Tables (2 and 5)",
@@ -47,13 +54,13 @@ const packs = [
       "Water Cycle",
       "States of Matter"
     ],
-    color: "from-blue-500 to-blue-600",
-    downloadUrl: "#grade-2-pack"
+    color: "from-blue-500 to-blue-600"
   },
   {
     id: "grade-3-pack",
     title: "Grade 3 Complete Pack",
     grade: "Grade 3",
+    gradeNumber: 3,
     description: "10 essential worksheets for Grade 3 students covering Math, English, and Science",
     worksheets: [
       "Division Practice",
@@ -67,13 +74,13 @@ const packs = [
       "Simple Machines",
       "Animal Classification"
     ],
-    color: "from-indigo-400 to-indigo-500",
-    downloadUrl: "#grade-3-pack"
+    color: "from-indigo-400 to-indigo-500"
   },
   {
     id: "grade-4-pack",
     title: "Grade 4 Complete Pack",
     grade: "Grade 4",
+    gradeNumber: 4,
     description: "10 essential worksheets for Grade 4 students covering Math, English, and Science",
     worksheets: [
       "Introduction to Fractions",
@@ -87,13 +94,13 @@ const packs = [
       "Electricity Basics",
       "Ecosystem & Food Chains"
     ],
-    color: "from-indigo-500 to-indigo-600",
-    downloadUrl: "#grade-4-pack"
+    color: "from-indigo-500 to-indigo-600"
   },
   {
     id: "grade-5-pack",
     title: "Grade 5 Complete Pack",
     grade: "Grade 5",
+    gradeNumber: 5,
     description: "10 essential worksheets for Grade 5 students covering Math, English, and Science",
     worksheets: [
       "Decimals and Place Value",
@@ -107,8 +114,7 @@ const packs = [
       "Energy Types & Conservation",
       "Weather & Climate"
     ],
-    color: "from-purple-400 to-purple-500",
-    downloadUrl: "#grade-5-pack"
+    color: "from-purple-400 to-purple-500"
   }
 ];
 
@@ -117,19 +123,32 @@ const Packs = () => {
   const [selectedPack, setSelectedPack] = useState<typeof packs[0] | null>(null);
   const { toast } = useToast();
 
-  const handleDownload = (pack: typeof packs[0], withEmail: boolean = false) => {
-    if (withEmail && email) {
+  const handleDownload = (pack: typeof packs[0]) => {
+    const downloadUrl = getPackDownloadUrl(pack.gradeNumber);
+    
+    // Create a temporary anchor element to trigger download
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = `${pack.id}.pdf`;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    toast({
+      title: "Download Started!",
+      description: `${pack.title} is being downloaded.`,
+    });
+  };
+
+  const handleEmailDownload = (pack: typeof packs[0]) => {
+    if (email) {
+      handleDownload(pack);
       toast({
         title: "Download Started!",
-        description: `${pack.title} is being downloaded. Check your email for a copy!`,
+        description: `${pack.title} is being downloaded. We've noted your email for future updates!`,
       });
       setEmail("");
-      setSelectedPack(null);
-    } else if (!withEmail) {
-      toast({
-        title: "Download Started!",
-        description: `${pack.title} is being downloaded.`,
-      });
       setSelectedPack(null);
     }
   };
@@ -139,7 +158,7 @@ const Packs = () => {
       <Helmet>
         <title>Free Worksheet Packs | WizKidsHub Worksheets</title>
         <meta name="description" content="Download free worksheet packs for Grades 1-5. Each pack includes 10 carefully selected worksheets covering Math, English, and Science." />
-        <link rel="canonical" href="https://wizkidshubworksheets.com/packs" />
+        <link rel="canonical" href="https://wizkidshub.com/packs" />
       </Helmet>
 
       <Header />
@@ -252,7 +271,7 @@ const Packs = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                           />
-                          <Button onClick={() => pack && handleDownload(pack, true)}>
+                          <Button onClick={() => pack && handleEmailDownload(pack)}>
                             Send
                           </Button>
                         </div>
