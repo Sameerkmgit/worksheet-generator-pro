@@ -6,6 +6,7 @@ import { Eye } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import {
   getWorksheetsBySubcategoryId,
   getSubcategoryById,
@@ -68,13 +69,26 @@ const SubcategoryWorksheets = () => {
   const gradeSlug = category?.grade ? `grade-${category.grade}` : "";
   const pageTitle = toTitleCase(subcategory?.title) || "Worksheets";
   const pageDescription = `Browse ${pageTitle} worksheets for ${toTitleCase(category?.subject) || "this subject"}.`;
+  const pageUrl = `https://wizkidshubworksheets.com/subcategory/${subcategoryId}`;
+
+  // Breadcrumb items for Subcategory Worksheets page
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: `Grade ${category?.grade}`, href: `/categories/${gradeSlug}` },
+    { label: toTitleCase(category?.title) || "Category", href: `/category/${category?.id}` },
+    { label: pageTitle }
+  ];
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
         <title>{pageTitle} Worksheets | WizKidsHub</title>
         <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={pageUrl} />
       </Helmet>
+      
+      {/* Breadcrumbs component injects JSON-LD */}
+      <Breadcrumbs items={breadcrumbItems} className="hidden" />
 
       <Header />
 
@@ -82,21 +96,9 @@ const SubcategoryWorksheets = () => {
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-primary/5 to-accent/5 py-12">
           <div className="container mx-auto px-4">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-              <Link to="/" className="hover:text-primary">
-                Home
-              </Link>
-              <span>/</span>
-              <Link to={`/categories/${gradeSlug}`} className="hover:text-primary capitalize">
-                Grade {category?.grade}
-              </Link>
-              <span>/</span>
-              <Link to={`/category/${category?.id}`} className="hover:text-primary capitalize">
-                {toTitleCase(category?.title)}
-              </Link>
-              <span>/</span>
-              <span className="text-foreground">{toTitleCase(subcategory?.title)}</span>
-            </div>
+            {/* Visible Breadcrumbs */}
+            <Breadcrumbs items={breadcrumbItems} className="mb-4" />
+            
             <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
               {pageTitle}
             </h1>

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
 import { toTitleCase } from "@/lib/utils";
@@ -91,24 +92,11 @@ const Category = () => {
     }
   };
 
-  const breadcrumbData = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://wizkidshubworksheets.com"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": gradeTitle,
-        "item": pageUrl
-      }
-    ]
-  };
+  // Breadcrumb items for Grade pages
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: `${gradeTitle} Worksheets` }
+  ];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -119,10 +107,10 @@ const Category = () => {
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbData)}
-        </script>
       </Helmet>
+      
+      {/* Breadcrumbs component injects JSON-LD */}
+      <Breadcrumbs items={breadcrumbItems} className="hidden" />
 
       <Header />
       
@@ -139,13 +127,9 @@ const Category = () => {
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-12">
           <div className="max-w-7xl mx-auto px-4">
-            <Link 
-              to="/"
-              className="inline-flex items-center text-primary hover:text-primary/80 mb-6 transition-colors"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Link>
+            {/* Visible Breadcrumbs */}
+            <Breadcrumbs items={breadcrumbItems} className="mb-6" />
+            
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
               {gradeTitle} Worksheets
             </h1>

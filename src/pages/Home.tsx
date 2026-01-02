@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { getWorksheetCountsByGrade } from "@/lib/getWorksheetCounts";
 
 const baseCategories = [
@@ -65,18 +66,10 @@ const Home = () => {
     }
   };
 
-  const breadcrumbData = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://wizkidshubworksheets.com"
-      }
-    ]
-  };
+  // Breadcrumb items for Home page
+  const breadcrumbItems = [
+    { label: "Home" }
+  ];
 
   return (
     <div className="min-h-screen">
@@ -88,10 +81,10 @@ const Home = () => {
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbData)}
-        </script>
       </Helmet>
+      
+      {/* Breadcrumbs JSON-LD injected via component */}
+      <Breadcrumbs items={breadcrumbItems} className="hidden" />
       
       <Header />
       

@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getWorksheetById, getWorksheetImageOverride } from "@/lib/worksheetStorage";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById } from "@/lib/worksheetStorage";
 import { toTitleCase } from "@/lib/utils";
 
 const WorksheetDetail = () => {
@@ -15,6 +16,8 @@ const WorksheetDetail = () => {
   const [worksheet, setWorksheet] = useState<any>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState<any>(null);
+  const [subcategory, setSubcategory] = useState<any>(null);
 
   useEffect(() => {
     const loadWorksheet = async () => {
@@ -33,6 +36,15 @@ const WorksheetDetail = () => {
         }
 
         setWorksheet(data);
+
+        // Load category for breadcrumbs
+        if (data.categoryId) {
+          const categoryData = await getWorksheetCategoryById(data.categoryId);
+          setCategory(categoryData);
+        }
+        
+        // Note: subcategory lookup would require additional DB query
+        // For now, we skip subcategory breadcrumb if not available from category context
 
         // Check for image override
         const override = await getWorksheetImageOverride(worksheetId);
@@ -91,6 +103,8 @@ const WorksheetDetail = () => {
   const pageDescription = toTitleCase(worksheet.description) || `Download free Grade ${worksheet.grade} ${toTitleCase(worksheet.subject)} worksheet: ${toTitleCase(worksheet.title)}. Perfect for classroom and home learning.`;
   const pageUrl = `https://wizkidshubworksheets.com/worksheet/${worksheetId}`;
 
+  const gradeSlug = worksheet.grade ? `grade-${worksheet.grade}` : "";
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LearningResource",
@@ -108,36 +122,27 @@ const WorksheetDetail = () => {
     }
   };
 
-  const breadcrumbData = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://wizkidshubworksheets.com"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": worksheet.grade,
-        "item": `https://wizkidshubworksheets.com/category/${worksheet.grade.toLowerCase().replace(' ', '-')}`
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": worksheet.subject,
-        "item": `https://wizkidshubworksheets.com/category/${worksheet.grade.toLowerCase().replace(' ', '-')}/${worksheet.subject.toLowerCase().replace(' ', '-')}`
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
-        "name": worksheet.title,
-        "item": pageUrl
-      }
-    ]
-  };
+  // Build dynamic breadcrumb items
+  const breadcrumbItems: Array<{ label: string; href?: string }> = [
+    { label: "Home", href: "/" },
+    { label: `Grade ${worksheet.grade}`, href: `/categories/${gradeSlug}` },
+  ];
+  
+  if (category) {
+    breadcrumbItems.push({ 
+      label: toTitleCase(category.title) || "Category", 
+      href: `/category/${category.id}` 
+    });
+  }
+  
+  if (subcategory) {
+    breadcrumbItems.push({ 
+      label: toTitleCase(subcategory.title) || "Topic", 
+      href: `/subcategory/${subcategory.id}` 
+    });
+  }
+  
+  breadcrumbItems.push({ label: toTitleCase(worksheet.title) });
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -157,10 +162,10 @@ const WorksheetDetail = () => {
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbData)}
-        </script>
       </Helmet>
+      
+      {/* Breadcrumbs component injects JSON-LD */}
+      <Breadcrumbs items={breadcrumbItems} className="hidden" />
 
       <Header />
 
@@ -176,13 +181,7 @@ const WorksheetDetail = () => {
 
         {/* Breadcrumbs */}
         <div className="max-w-7xl mx-auto px-4 py-6">
-          <button
-            onClick={() => navigate(-1)}
-            className="inline-flex items-center text-primary hover:text-primary/80 mb-4 transition-colors"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
-          </button>
+          <Breadcrumbs items={breadcrumbItems} className="mb-4" />
         </div>
 
         {/* Main Content */}
