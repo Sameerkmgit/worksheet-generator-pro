@@ -8,6 +8,7 @@ const PrivacyPolicy = () => {
       <Helmet>
         <title>Privacy Policy | WizKidsHubWorksheets</title>
         <meta name="description" content="Privacy Policy for WizKidsHubWorksheets - Learn how we protect your privacy while using our free educational worksheets." />
+        <link rel="canonical" href="https://wizkidshubworksheets.com/privacy-policy" />
       </Helmet>
       <Header />
       <main className="flex-1 container mx-auto max-w-[800px] py-12 px-6">
