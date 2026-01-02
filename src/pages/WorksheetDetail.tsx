@@ -1,14 +1,21 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Download, ArrowLeft, Loader2 } from "lucide-react";
+import { Download, ArrowLeft, Loader2, FileText, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById } from "@/lib/worksheetStorage";
+import { supabase } from "@/integrations/supabase/client";
+import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
 import { toTitleCase } from "@/lib/utils";
+
+interface RelatedWorksheet {
+  id: string;
+  title: string;
+  subject: string;
+}
 
 const WorksheetDetail = () => {
   const { worksheetId } = useParams();
@@ -18,6 +25,8 @@ const WorksheetDetail = () => {
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState<any>(null);
   const [subcategory, setSubcategory] = useState<any>(null);
+  const [moreFromTopic, setMoreFromTopic] = useState<RelatedWorksheet[]>([]);
+  const [moreFromGrade, setMoreFromGrade] = useState<RelatedWorksheet[]>([]);
 
   useEffect(() => {
     const loadWorksheet = async () => {
@@ -43,8 +52,45 @@ const WorksheetDetail = () => {
           setCategory(categoryData);
         }
         
-        // Note: subcategory lookup would require additional DB query
-        // For now, we skip subcategory breadcrumb if not available from category context
+        // Fetch "More from this topic" (same subcategory) - query directly
+        const { data: wsData } = await supabase
+          .from("worksheets")
+          .select("subcategory_id")
+          .eq("id", worksheetId)
+          .maybeSingle();
+        
+        if (wsData?.subcategory_id) {
+          const { data: topicWorksheets, error: topicError } = await supabase
+            .from("worksheets")
+            .select("id, title, subject")
+            .eq("subcategory_id", wsData.subcategory_id)
+            .eq("is_archived", false)
+            .neq("id", worksheetId)
+            .limit(6);
+          
+          if (!topicError && topicWorksheets) {
+            setMoreFromTopic(topicWorksheets);
+          }
+        }
+
+        // Fetch "More from this grade" (same grade, different worksheets)
+        const gradeNum = data.grade?.toString().replace("Grade ", "").trim();
+        if (gradeNum) {
+          const { data: gradeWorksheets, error: gradeError } = await supabase
+            .from("worksheets")
+            .select("id, title, subject")
+            .eq("grade", gradeNum)
+            .eq("is_archived", false)
+            .neq("id", worksheetId)
+            .limit(6);
+          
+          if (!gradeError && gradeWorksheets) {
+            // Filter out ones already in moreFromTopic
+            const topicIds = new Set(moreFromTopic.map(w => w.id));
+            const filtered = gradeWorksheets.filter(w => !topicIds.has(w.id)).slice(0, 6);
+            setMoreFromGrade(filtered);
+          }
+        }
 
         // Check for image override
         const override = await getWorksheetImageOverride(worksheetId);
@@ -374,6 +420,70 @@ const WorksheetDetail = () => {
             </div>
           </div>
         </div>
+
+        {/* More from this Topic Section */}
+        {moreFromTopic.length > 0 && (
+          <section className="py-12 px-4 bg-secondary/5">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl font-bold mb-6 text-foreground font-heading">
+                More from this Topic
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {moreFromTopic.map((ws) => (
+                  <Link key={ws.id} to={`/worksheet/${ws.id}`}>
+                    <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 group">
+                      <CardContent className="p-4">
+                        <FileText className="w-8 h-8 text-primary/60 mb-2 group-hover:text-primary transition-colors" />
+                        <h3 className="font-semibold text-sm text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                          {toTitleCase(ws.title)}
+                        </h3>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {toTitleCase(ws.subject)}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* More from this Grade Section */}
+        {moreFromGrade.length > 0 && (
+          <section className="py-12 px-4">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-foreground font-heading">
+                  More Grade {worksheet.grade?.toString().replace("Grade ", "")} Worksheets
+                </h2>
+                <Link 
+                  to={`/categories/grade-${worksheet.grade?.toString().replace("Grade ", "").trim()}`}
+                  className="text-primary hover:underline flex items-center gap-1 text-sm font-medium"
+                >
+                  View All <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {moreFromGrade.map((ws) => (
+                  <Link key={ws.id} to={`/worksheet/${ws.id}`}>
+                    <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 group">
+                      <CardContent className="p-4">
+                        <FileText className="w-8 h-8 text-primary/60 mb-2 group-hover:text-primary transition-colors" />
+                        <h3 className="font-semibold text-sm text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                          {toTitleCase(ws.title)}
+                        </h3>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {toTitleCase(ws.subject)}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Bottom Banner Ad */}
         <div className="w-full bg-gray-100 py-4">
