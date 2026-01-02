@@ -63,19 +63,14 @@ const Footer = () => {
             <h3 className="font-heading font-semibold text-lg mb-4">Legal</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/privacy-policy" className="opacity-90 hover:opacity-100 transition-opacity">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="opacity-90 hover:opacity-100 transition-opacity">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="opacity-90 hover:opacity-100 transition-opacity">
-                  Contact Us
-                </a>
+                <Link to="/terms-of-service" className="opacity-90 hover:opacity-100 transition-opacity">
+                  Terms Of Service
+                </Link>
               </li>
             </ul>
           </div>
@@ -83,7 +78,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/20 pt-8 text-center text-sm opacity-90">
-          <p>© 2024 WizKidsHubWorksheets. All rights reserved.</p>
+          <p>© 2025 WizKidsHubWorksheets. All rights reserved.</p>
         </div>
       </div>
     </footer>
