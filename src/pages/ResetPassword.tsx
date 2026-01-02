@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -87,8 +88,13 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary/5 flex items-center justify-center p-6">
-      <Card className="w-full max-w-md">
+    <>
+      <Helmet>
+        <title>Reset Password | WizKidsHub</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <div className="min-h-screen bg-secondary/5 flex items-center justify-center p-6">
+        <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
             <Lock className="w-6 h-6 text-primary" />
@@ -145,7 +151,8 @@ const ResetPassword = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </>
   );
 };
 
