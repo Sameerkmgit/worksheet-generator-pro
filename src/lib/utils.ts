@@ -56,3 +56,38 @@ export function cleanDisplayTitle(str: string | null | undefined): string {
     .replace(/\s+/g, " ")
     .trim();
 }
+
+/**
+ * Converts a subject name to a URL-friendly slug.
+ * Derived from actual data, not hardcoded.
+ * 
+ * @example
+ * toSubjectSlug("Math") // "math"
+ * toSubjectSlug("Computer Science") // "computer-science"
+ * toSubjectSlug("English Language Arts") // "english-language-arts"
+ */
+export function toSubjectSlug(subject: string | null | undefined): string {
+  if (!subject) return "";
+  
+  return subject
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}
+
+/**
+ * Converts a subject slug back to a display-friendly format.
+ * 
+ * @example
+ * fromSubjectSlug("computer-science") // "Computer Science"
+ * fromSubjectSlug("math") // "Math"
+ */
+export function fromSubjectSlug(slug: string | null | undefined): string {
+  if (!slug) return "";
+  
+  return slug
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
