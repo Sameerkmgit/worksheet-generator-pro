@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Search as SearchIcon, Download, Filter, X } from "lucide-react";
+import { Search as SearchIcon, Download, Filter, X, ArrowUp, ArrowDown, Hash } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -79,6 +79,23 @@ const Search = () => {
   const [gradeFilter, setGradeFilter] = useState(searchParams.get("grade") || "all");
   const [subjectFilter, setSubjectFilter] = useState(searchParams.get("subject") || "all");
   const [hasAutoSelectedSubject, setHasAutoSelectedSubject] = useState(false);
+  const [jumpToValue, setJumpToValue] = useState("");
+  const [showJumpInput, setShowJumpInput] = useState(false);
+  const resultsGridRef = useRef<HTMLDivElement>(null);
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollToBottom = () => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+
+  const handleJumpToResult = () => {
+    const num = parseInt(jumpToValue, 10);
+    if (isNaN(num) || num < 1 || num > filteredWorksheets.length) return;
+    const card = resultsGridRef.current?.querySelector(`[data-result-index="${num}"]`);
+    if (card) {
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      setJumpToValue("");
+      setShowJumpInput(false);
+    }
+  };
 
   // Auto-select subject filter if query exactly matches a subject name
   useEffect(() => {
@@ -249,9 +266,9 @@ const Search = () => {
           </div>
 
           {filteredWorksheets.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredWorksheets.map((worksheet) => (
-                <Card key={worksheet.id} className="group cursor-pointer">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" ref={resultsGridRef}>
+              {filteredWorksheets.map((worksheet, index) => (
+                <Card key={worksheet.id} className="group cursor-pointer" data-result-index={index + 1}>
                   <CardHeader>
                     {(() => {
                       // Convert the old worksheet format to WorksheetData for the helper
@@ -321,6 +338,63 @@ const Search = () => {
           )}
         </div>
       </main>
+
+      {/* Floating Navigation Buttons */}
+      {filteredWorksheets.length > 0 && (
+        <div className="fixed bottom-6 right-6 flex flex-col gap-2 z-40">
+          {/* Jump to Result Input */}
+          {showJumpInput && (
+            <div className="flex items-center gap-1 bg-card border rounded-lg shadow-lg p-2 animate-fade-in">
+              <Input
+                type="number"
+                min={1}
+                max={filteredWorksheets.length}
+                placeholder={`1-${filteredWorksheets.length}`}
+                value={jumpToValue}
+                onChange={(e) => setJumpToValue(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleJumpToResult()}
+                className="w-20 h-8 text-sm"
+              />
+              <Button size="sm" variant="secondary" onClick={handleJumpToResult} className="h-8 px-2">
+                Go
+              </Button>
+              <Button size="sm" variant="ghost" onClick={() => setShowJumpInput(false)} className="h-8 px-2">
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
+          
+          <div className="flex gap-2">
+            <Button
+              size="icon"
+              variant="secondary"
+              onClick={() => setShowJumpInput(!showJumpInput)}
+              className="h-10 w-10 rounded-full shadow-lg"
+              title="Jump to result #"
+            >
+              <Hash className="h-4 w-4" />
+            </Button>
+            <Button
+              size="icon"
+              variant="secondary"
+              onClick={scrollToTop}
+              className="h-10 w-10 rounded-full shadow-lg"
+              title="Scroll to top"
+            >
+              <ArrowUp className="h-4 w-4" />
+            </Button>
+            <Button
+              size="icon"
+              variant="secondary"
+              onClick={scrollToBottom}
+              className="h-10 w-10 rounded-full shadow-lg"
+              title="Scroll to bottom"
+            >
+              <ArrowDown className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>
