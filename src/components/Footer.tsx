@@ -78,15 +78,15 @@ const Footer = () => {
           {/* Contact Us */}
           <div>
             <h3 className="font-heading font-semibold text-lg mb-4">Contact Us</h3>
-            <p className="text-sm opacity-90">
+            <p className="text-sm opacity-90 mb-2">
               Have questions or feedback?
             </p>
-            <a 
-              href="mailto:support@wizkidshub.com" 
+            <Link 
+              to="/support" 
               className="text-sm opacity-90 hover:opacity-100 transition-opacity underline"
             >
-              support@wizkidshub.com
-            </a>
+              Send us a message
+            </Link>
           </div>
         </div>
 
