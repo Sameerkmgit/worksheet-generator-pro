@@ -10,7 +10,7 @@ import { format } from "date-fns";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { toTitleCase } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle } from "@/lib/utils";
 
 interface Worksheet {
   id: string;
@@ -316,7 +316,7 @@ const WorksheetsBrowser = () => {
                 <Card key={worksheet.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4">
                     <div className="flex-1">
-                      <h3 className="font-medium text-foreground">{toTitleCase(worksheet.title)}</h3>
+                      <h3 className="font-medium text-foreground">{toTitleCase(cleanDisplayTitle(worksheet.title))}</h3>
                       <p className="text-sm text-muted-foreground">
                         Grade {worksheet.grade} · {toTitleCase(worksheet.subject)}
                       </p>
