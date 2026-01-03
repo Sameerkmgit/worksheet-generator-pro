@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
-import { toTitleCase } from "@/lib/utils";
+import { toTitleCase, toSubjectSlug } from "@/lib/utils";
 
 interface WorksheetCategory {
   id: string;
@@ -225,12 +225,12 @@ const Category = () => {
                 subjects.map((subject) => {
                   const config = subjectConfig[subject] || { icon: BookOpen, color: "from-gray-500 to-gray-600" };
                   const Icon = config.icon;
-                  const categoryForSubject = categories.find(c => c.subject === subject);
+                  const subjectSlug = toSubjectSlug(subject);
                   
                   return (
                     <Link 
                       key={subject} 
-                      to={categoryForSubject ? `/category/${categoryForSubject.id}` : "#"}
+                      to={`/categories/${gradeSlug}/${subjectSlug}`}
                       className="block"
                     >
                       <Card className="h-full hover:shadow-lg transition-shadow group">
@@ -352,7 +352,7 @@ const Category = () => {
                     </CardHeader>
                     <CardContent className="pt-0">
                       <Button asChild className="w-full">
-                        <Link to={`/category/${category.id}`}>View Worksheets</Link>
+                        <Link to={`/categories/${gradeSlug}/${toSubjectSlug(category.subject)}`}>View Worksheets</Link>
                       </Button>
                     </CardContent>
                   </Card>

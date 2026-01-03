@@ -7,7 +7,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import Category from "./pages/Category";
-import CategoryWorksheets from "./pages/CategoryWorksheets";
+import Subject from "./pages/Subject";
+import CategoryRedirect from "./pages/CategoryRedirect";
 import SubcategoryWorksheets from "./pages/SubcategoryWorksheets";
 import WorksheetDetail from "./pages/WorksheetDetail";
 
@@ -48,8 +49,11 @@ const App = () => {
             {/* GRADE → CATEGORY LIST (fetches from worksheet_categories) */}
             <Route path="/categories/:gradeSlug" element={<Category />} />
 
-            {/* WORKSHEETS INSIDE CATEGORY (shows subcategories/topics first) */}
-            <Route path="/category/:categoryId" element={<CategoryWorksheets />} />
+            {/* SUBJECT PAGE - NEW READABLE URL */}
+            <Route path="/categories/:gradeSlug/:subjectSlug" element={<Subject />} />
+
+            {/* LEGACY CATEGORY ROUTE - REDIRECTS TO NEW READABLE URL */}
+            <Route path="/category/:categoryId" element={<CategoryRedirect />} />
 
             {/* WORKSHEETS INSIDE SUBCATEGORY (specific topic) */}
             <Route path="/subcategory/:subcategoryId" element={<SubcategoryWorksheets />} />

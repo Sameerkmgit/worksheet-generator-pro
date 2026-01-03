@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toSubjectSlug } from "@/lib/utils";
 
 interface RelatedWorksheet {
   id: string;
@@ -175,9 +175,10 @@ const WorksheetDetail = () => {
   ];
   
   if (category) {
+    const subjectSlug = toSubjectSlug(category.subject);
     breadcrumbItems.push({ 
       label: toTitleCase(category.title) || "Category", 
-      href: `/category/${category.id}` 
+      href: `/categories/${gradeSlug}/${subjectSlug}` 
     });
   }
   

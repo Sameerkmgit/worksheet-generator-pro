@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Eye, FolderOpen, FileText } from "lucide-react";
@@ -12,12 +12,10 @@ import {
   getWorksheetsByCategoryId,
   getWorksheetCategoryById,
   getSubcategoriesByCategoryId,
-  getWorksheetCardImage,
   WorksheetData,
   WorksheetCategoryData,
-  SubcategoryData,
 } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug } from "@/lib/utils";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
@@ -39,24 +37,18 @@ interface TopicWithCount {
   image_url?: string | null;
 }
 
-const CategoryWorksheets = () => {
-  const { categoryId } = useParams();
+const Subject = () => {
+  const { gradeSlug, subjectSlug } = useParams();
+  const navigate = useNavigate();
   const [worksheets, setWorksheets] = useState<WorksheetData[]>([]);
   const [subcategories, setSubcategories] = useState<TopicWithCount[]>([]);
   const [category, setCategory] = useState<WorksheetCategoryData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Normalize subject from DB format to URL slug
-  const subjectToSlug = (subject: string): string => {
-    const slugMap: Record<string, string> = {
-      Math: "math",
-      English: "english",
-      Science: "science",
-      "Computer Science": "computer-science",
-      Assignments: "assignments",
-    };
-    return slugMap[subject] || subject.toLowerCase().replace(/\s+/g, "-");
-  };
+  // Parse grade number from slug (grade-2 -> 2)
+  const gradeNumber = gradeSlug?.replace('grade-', '') || '';
+  // Convert subject slug to search format
+  const subjectSearch = fromSubjectSlug(subjectSlug);
 
   useEffect(() => {
     setWorksheets([]);
@@ -66,17 +58,43 @@ const CategoryWorksheets = () => {
 
     const loadData = async () => {
       try {
-        const effectiveCategoryId = categoryId || "";
-        if (!effectiveCategoryId) return;
+        if (!gradeNumber || !subjectSlug) return;
 
-        const categoryData = await getWorksheetCategoryById(effectiveCategoryId);
-        setCategory(categoryData);
+        // Find the category by grade and subject
+        const { data: catData, error: catError } = await supabase
+          .from("worksheet_categories")
+          .select("*")
+          .eq("grade", gradeNumber)
+          .ilike("subject", subjectSearch)
+          .maybeSingle();
+
+        if (catError) {
+          console.error("Error fetching category:", catError);
+          return;
+        }
+
+        if (!catData) {
+          // Category not found, redirect to grade page
+          navigate(`/categories/${gradeSlug}`, { replace: true });
+          return;
+        }
+
+        setCategory({
+          id: catData.id,
+          title: catData.title,
+          subject: catData.subject,
+          grade: catData.grade,
+          description: catData.description || undefined,
+          imageUrl: catData.image_url || undefined,
+          createdAt: catData.created_at,
+          updatedAt: catData.updated_at || undefined,
+        });
 
         // Fetch subcategories with image_url
         const { data: subcatsRaw } = await supabase
           .from("worksheet_subcategories")
           .select("id, title, slug, category_id, image_url, sort_order")
-          .eq("category_id", effectiveCategoryId)
+          .eq("category_id", catData.id)
           .eq("is_archived", false)
           .order("sort_order", { ascending: true });
         
@@ -103,7 +121,7 @@ const CategoryWorksheets = () => {
         setSubcategories(subcatsWithCounts);
 
         // Also fetch worksheets without subcategory for fallback display
-        const worksheetsData = await getWorksheetsByCategoryId(effectiveCategoryId);
+        const worksheetsData = await getWorksheetsByCategoryId(catData.id);
         setWorksheets(worksheetsData || []);
       } catch (error) {
         console.error("Error loading category data:", error);
@@ -113,27 +131,26 @@ const CategoryWorksheets = () => {
     };
 
     loadData();
-  }, [categoryId]);
+  }, [gradeNumber, subjectSlug, subjectSearch, gradeSlug, navigate]);
 
-  const gradeSlug = category?.grade ? `grade-${category.grade}` : "";
-  const subjectSlug = category ? subjectToSlug(category.subject) : "";
   const hasSubcategories = subcategories.length > 0;
+  const gradeTitle = `Grade ${gradeNumber}`;
 
-  const pageTitle = category?.title || "Worksheets";
-  const pageDescription = `Browse ${category?.title} worksheets for Grade ${category?.grade}.`;
-  const pageUrl = `https://wizkidshubworksheets.com/category/${categoryId}`;
+  const pageTitle = category?.title || `${toTitleCase(subjectSearch)} Worksheets`;
+  const pageDescription = `Browse ${category?.title || toTitleCase(subjectSearch)} worksheets for ${gradeTitle}.`;
+  const pageUrl = `https://wizkidshubworksheets.com/categories/${gradeSlug}/${subjectSlug}`;
 
-  // Breadcrumb items for Category Worksheets page
+  // Breadcrumb items
   const breadcrumbItems = [
     { label: "Home", href: "/" },
-    { label: `Grade ${category?.grade}`, href: `/categories/${gradeSlug}` },
-    { label: toTitleCase(category?.title) || "Category" }
+    { label: `${gradeTitle} Worksheets`, href: `/categories/${gradeSlug}` },
+    { label: toTitleCase(category?.title) || toTitleCase(subjectSearch) }
   ];
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
-        <title>{pageTitle} Worksheets | WizKidsHub</title>
+        <title>{pageTitle} | {gradeTitle} | WizKidsHub</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
       </Helmet>
@@ -185,7 +202,7 @@ const CategoryWorksheets = () => {
                         {subcat.image_url ? (
                           <img
                             src={subcat.image_url}
-                            alt={`${toTitleCase(subcat.title)} worksheets for Grade ${category?.grade}`}
+                            alt={`${toTitleCase(subcat.title)} worksheets for ${gradeTitle}`}
                             className="w-full h-full object-cover"
                             loading="lazy"
                           />
@@ -262,4 +279,4 @@ const CategoryWorksheets = () => {
   );
 };
 
-export default CategoryWorksheets;
+export default Subject;

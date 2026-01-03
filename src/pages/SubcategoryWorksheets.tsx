@@ -17,7 +17,7 @@ import {
   SubcategoryData,
   WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toSubjectSlug } from "@/lib/utils";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
@@ -115,6 +115,7 @@ const SubcategoryWorksheets = () => {
   }, [subcategoryId]);
 
   const gradeSlug = category?.grade ? `grade-${category.grade}` : "";
+  const subjectSlug = category?.subject ? toSubjectSlug(category.subject) : "";
   const pageTitle = toTitleCase(subcategory?.title) || "Worksheets";
   const pageDescription = `Browse ${pageTitle} worksheets for ${toTitleCase(category?.subject) || "this subject"}.`;
   const pageUrl = `https://wizkidshubworksheets.com/subcategory/${subcategoryId}`;
@@ -123,7 +124,7 @@ const SubcategoryWorksheets = () => {
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: `Grade ${category?.grade}`, href: `/categories/${gradeSlug}` },
-    { label: toTitleCase(category?.title) || "Category", href: `/category/${category?.id}` },
+    { label: toTitleCase(category?.title) || "Category", href: `/categories/${gradeSlug}/${subjectSlug}` },
     { label: pageTitle }
   ];
 
