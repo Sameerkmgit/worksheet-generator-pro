@@ -53,8 +53,8 @@ const Home = () => {
     "@type": "EducationalOrganization",
     "name": "WizKidsHub Worksheets",
     "description": "Free printable educational worksheets for Grades 1-5. Math, English, Science worksheets aligned with CBSE curriculum.",
-    "url": "https://wizkidshubworksheets.com",
-    "logo": "https://wizkidshubworksheets.com/logo.png",
+    "url": "https://worksheet-generator-pro.lovable.app",
+    "logo": "https://worksheet-generator-pro.lovable.app/logo.png",
     "sameAs": [
       "https://facebook.com/wizkidshubworksheets",
       "https://twitter.com/wizkidshubworksheets"
@@ -76,7 +76,7 @@ const Home = () => {
       <Helmet>
         <title>Free Printable Worksheets for Grades 1–5 | WizKidsHub Worksheets</title>
         <meta name="description" content="Download free printable Math, English, and Science worksheets for Grades 1 to 5. Trusted PDF worksheets for parents and teachers." />
-        <link rel="canonical" href="https://wizkidshubworksheets.com/" />
+        <link rel="canonical" href="https://worksheet-generator-pro.lovable.app/" />
         
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}

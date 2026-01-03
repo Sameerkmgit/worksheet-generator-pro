@@ -147,7 +147,7 @@ const WorksheetDetail = () => {
 
   const pageTitle = `${toTitleCase(cleanDisplayTitle(worksheet.title))} - Free Printable PDF`;
   const pageDescription = toTitleCase(cleanDisplayTitle(worksheet.description)) || `Download free Grade ${worksheet.grade} ${toTitleCase(worksheet.subject)} worksheet: ${toTitleCase(cleanDisplayTitle(worksheet.title))}. Perfect for classroom and home learning.`;
-  const pageUrl = `https://wizkidshubworksheets.com/worksheet/${worksheetId}`;
+  const pageUrl = `https://worksheet-generator-pro.lovable.app/worksheet/${worksheetId}`;
 
   const gradeSlug = worksheet.grade ? `grade-${worksheet.grade}` : "";
 
@@ -164,7 +164,7 @@ const WorksheetDetail = () => {
     "publisher": {
       "@type": "Organization",
       "name": "WizKidsHub Worksheets",
-      "url": "https://wizkidshubworksheets.com"
+      "url": "https://worksheet-generator-pro.lovable.app"
     }
   };
 

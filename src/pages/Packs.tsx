@@ -97,7 +97,7 @@ const Packs = () => {
           name="description"
           content="Download free worksheet packs for Grades 1–5. Each pack includes 10 carefully selected printable worksheets in PDF format."
         />
-        <link rel="canonical" href="https://wizkidshubworksheets.com/packs" />
+        <link rel="canonical" href="https://worksheet-generator-pro.lovable.app/packs" />
       </Helmet>
       
       {/* Breadcrumbs component injects JSON-LD */}
