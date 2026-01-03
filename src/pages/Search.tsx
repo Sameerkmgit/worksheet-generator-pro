@@ -130,21 +130,27 @@ const Search = () => {
     setSearchParams(params);
   };
 
-  const filteredWorksheets = allWorksheets.filter((worksheet) => {
-    const query = searchParams.get("q")?.toLowerCase() || "";
-    const grade = searchParams.get("grade") || "all";
-    const subject = searchParams.get("subject") || "all";
+  const query = searchParams.get("q")?.trim().toLowerCase() || "";
+  const grade = searchParams.get("grade") || "all";
+  const subject = searchParams.get("subject") || "all";
 
-    const matchesQuery = !query || 
-      worksheet.title.toLowerCase().includes(query) ||
-      worksheet.category.toLowerCase().includes(query) ||
-      worksheet.keywords?.some(kw => kw.toLowerCase().includes(query));
+  // Only filter worksheets if there's a query OR filters are applied
+  const hasSearchCriteria = query || grade !== "all" || subject !== "all";
 
-    const matchesGrade = grade === "all" || worksheet.grade === grade;
-    const matchesSubject = subject === "all" || worksheet.category.toLowerCase() === subject.toLowerCase();
+  const filteredWorksheets = hasSearchCriteria
+    ? allWorksheets.filter((worksheet) => {
+        // Query matching: must match title, category, or keywords (case-insensitive)
+        const matchesQuery = !query || 
+          worksheet.title.toLowerCase().includes(query) ||
+          worksheet.category.toLowerCase().includes(query) ||
+          worksheet.keywords?.some(kw => kw.toLowerCase().includes(query));
 
-    return matchesQuery && matchesGrade && matchesSubject;
-  });
+        const matchesGrade = grade === "all" || worksheet.grade === grade;
+        const matchesSubject = subject === "all" || worksheet.category.toLowerCase() === subject.toLowerCase();
+
+        return matchesQuery && matchesGrade && matchesSubject;
+      })
+    : []; // Return empty array when no search criteria provided
 
   return (
     <div className="min-h-screen">
