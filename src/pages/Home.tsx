@@ -101,8 +101,8 @@ const Home = () => {
       {/* Hero Section */}
       <section className="gradient-hero text-white py-24 px-6 relative overflow-hidden" aria-label="Hero section with introduction to WizKidsHub Worksheets">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-48 h-48 bg-accent rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute top-20 left-20 w-48 h-48 bg-accent rounded-full blur-3xl" aria-hidden="true"></div>
+          <div className="absolute bottom-20 right-20 w-64 h-64 bg-white rounded-full blur-3xl" aria-hidden="true"></div>
         </div>
         
         <div className="container mx-auto max-w-[1140px] relative z-10">
@@ -110,18 +110,21 @@ const Home = () => {
             <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in font-heading">
               Free Printable Worksheets for Grades 1–5
             </h1>
-            <p className="text-xl md:text-2xl text-blue-50 mb-10 animate-fade-in max-w-3xl mx-auto">
-              Free printable educational worksheets for young learners. Math, English, Science, and more – all designed to make learning fun and effective.
+            <h2 className="text-xl md:text-2xl text-blue-50 mb-4 animate-fade-in max-w-3xl mx-auto font-medium">
+              Printable Math, English, and Science Worksheets for Kids
+            </h2>
+            <p className="text-base md:text-lg text-blue-100 mb-10 animate-fade-in max-w-2xl mx-auto">
+              Download free, printable worksheets by grade and subject. No sign-up required. Perfect for home and classroom use.
             </p>
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in mb-10">
-              <Link to="/worksheets">
+              <Link to="/worksheets" aria-label="Browse all free printable worksheets">
                 <Button size="lg" className="h-14 px-10 text-base font-semibold">
                   Browse Worksheets
                 </Button>
               </Link>
-              <Link to="/packs">
+              <Link to="/packs" aria-label="Download free worksheet packs">
                 <Button size="lg" variant="accent" className="h-14 px-10 text-base font-semibold">
                   Download Free Pack
                 </Button>
@@ -138,9 +141,10 @@ const Home = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                   className="border border-border bg-white text-foreground placeholder:text-muted-foreground h-12 text-base focus-visible:ring-2 focus-visible:ring-primary rounded-md"
+                  aria-label="Search worksheets by subject, grade, or topic"
                 />
-                <Button size="lg" className="h-12 px-8 text-base" onClick={handleSearch}>
-                  <Search className="mr-2" />
+                <Button size="lg" className="h-12 px-8 text-base" onClick={handleSearch} aria-label="Search worksheets">
+                  <Search className="mr-2" aria-hidden="true" />
                   Search
                 </Button>
               </div>
@@ -155,7 +159,7 @@ const Home = () => {
           <div className="text-center mb-12">
             <h2 id="categories-heading" className="text-4xl font-bold text-foreground mb-4 font-heading">Explore by Category</h2>
             <p className="text-lg text-muted-foreground">
-              Choose from our comprehensive collection organized by class and subject
+              Browse our collection of printable worksheets for kids, organized by grade level from Grade 1 to Grade 5
             </p>
           </div>
 
@@ -175,19 +179,23 @@ const Home = () => {
               ))
             ) : (
               categories.map((category) => (
-                <Link to={`/categories/${category.id}`} key={category.id}>
+                <Link 
+                  to={`/categories/${category.id}`} 
+                  key={category.id}
+                  aria-label={`View ${category.title} worksheets - ${category.worksheets} available`}
+                >
                   <Card className="cursor-pointer group h-full">
                     <CardHeader>
-                  <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`} role="img" aria-label={`${category.title} category icon`}>
-                    <category.icon className="w-8 h-8 text-white" aria-hidden="true" />
-                  </div>
+                      <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`} aria-hidden="true">
+                        <category.icon className="w-8 h-8 text-white" aria-hidden="true" />
+                      </div>
                       <CardTitle className="text-2xl group-hover:text-primary transition-colors font-heading">
-                        {category.title}
+                        {category.title} Worksheets
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-muted-foreground text-base">
-                        {category.worksheets} worksheets available
+                        {category.worksheets} free printable worksheets
                       </p>
                     </CardContent>
                   </Card>
@@ -195,6 +203,21 @@ const Home = () => {
               ))
             )}
           </div>
+
+          {/* Internal Links for SEO */}
+          <nav className="mt-8 text-center" aria-label="Quick links to grade worksheets">
+            <p className="text-sm text-muted-foreground">
+              <Link to="/categories/grade-1" className="hover:text-primary hover:underline">Grade 1 Worksheets</Link>
+              <span className="mx-2">|</span>
+              <Link to="/categories/grade-2" className="hover:text-primary hover:underline">Grade 2 Worksheets</Link>
+              <span className="mx-2">|</span>
+              <Link to="/categories/grade-3" className="hover:text-primary hover:underline">Grade 3 Worksheets</Link>
+              <span className="mx-2">|</span>
+              <Link to="/categories/grade-4" className="hover:text-primary hover:underline">Grade 4 Worksheets</Link>
+              <span className="mx-2">|</span>
+              <Link to="/categories/grade-5" className="hover:text-primary hover:underline">Grade 5 Worksheets</Link>
+            </p>
+          </nav>
         </div>
       </section>
 
@@ -203,39 +226,39 @@ const Home = () => {
         <div className="container mx-auto max-w-[1140px]">
           <div className="text-center mb-12">
             <h2 id="features-heading" className="text-4xl font-bold text-foreground mb-4 font-heading">Why WizKidsHub Worksheets?</h2>
-            <p className="text-lg text-muted-foreground">Trusted by thousands of parents and teachers</p>
+            <p className="text-lg text-muted-foreground">Trusted by thousands of parents and teachers for free printable worksheets for home and classroom use</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center bg-card p-6 rounded-lg shadow-card">
-              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20" role="img" aria-label="Free worksheets icon">
+            <article className="text-center bg-card p-6 rounded-lg shadow-card">
+              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20" aria-hidden="true">
                 <FileText className="w-8 h-8 text-accent" aria-hidden="true" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 font-heading">100% Free</h3>
+              <h3 className="text-xl font-semibold mb-3 font-heading">100% Free Worksheets</h3>
               <p className="text-muted-foreground">
-                All worksheets are completely free to download and print. No hidden costs or subscriptions.
+                All Math, English, and Science worksheets are completely free to download and print. No hidden costs or subscriptions.
               </p>
-            </div>
+            </article>
 
-            <div className="text-center bg-card p-6 rounded-lg shadow-card">
-              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20" role="img" aria-label="High quality icon">
+            <article className="text-center bg-card p-6 rounded-lg shadow-card">
+              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20" aria-hidden="true">
                 <Star className="w-8 h-8 text-accent" aria-hidden="true" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 font-heading">High Quality</h3>
+              <h3 className="text-xl font-semibold mb-3 font-heading">High Quality PDFs</h3>
               <p className="text-muted-foreground">
-                Professionally designed and educationally sound content created by experienced educators.
+                Professionally designed printable worksheets for kids, created by experienced educators for effective learning.
               </p>
-            </div>
+            </article>
 
-            <div className="text-center bg-card p-6 rounded-lg shadow-card">
-              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20" role="img" aria-label="Curriculum aligned icon">
+            <article className="text-center bg-card p-6 rounded-lg shadow-card">
+              <div className="w-16 h-16 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 border-2 border-accent/20" aria-hidden="true">
                 <BookOpen className="w-8 h-8 text-accent" aria-hidden="true" />
               </div>
               <h3 className="text-xl font-semibold mb-3 font-heading">Curriculum Aligned</h3>
               <p className="text-muted-foreground">
-                All worksheets are aligned with standard curriculum for Classes 1–5, ensuring relevance.
+                All worksheets are aligned with standard curriculum for Grade 1 to Grade 5, ensuring educational relevance.
               </p>
-            </div>
+            </article>
           </div>
         </div>
       </section>
