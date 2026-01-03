@@ -143,7 +143,7 @@ const Category = () => {
   
   const pageDescription = `Download free ${gradeTitle} printable worksheets in Math, English, and Science. Curriculum-aligned PDFs for home and classroom use.`;
 
-  const pageUrl = `https://wizkidshubworksheets.com/categories/${gradeSlug}`;
+  const pageUrl = `https://worksheet-generator-pro.lovable.app/categories/${gradeSlug}`;
   
   const structuredData = {
     "@context": "https://schema.org",
@@ -154,7 +154,7 @@ const Category = () => {
     "isPartOf": {
       "@type": "WebSite",
       "name": "WizKidsHub Worksheets",
-      "url": "https://wizkidshubworksheets.com"
+      "url": "https://worksheet-generator-pro.lovable.app"
     }
   };
 

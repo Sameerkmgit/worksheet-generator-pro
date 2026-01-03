@@ -138,7 +138,7 @@ const Subject = () => {
 
   const pageTitle = category?.title || `${toTitleCase(subjectSearch)} Worksheets`;
   const pageDescription = `Browse ${category?.title || toTitleCase(subjectSearch)} worksheets for ${gradeTitle}.`;
-  const pageUrl = `https://wizkidshubworksheets.com/categories/${gradeSlug}/${subjectSlug}`;
+  const pageUrl = `https://worksheet-generator-pro.lovable.app/categories/${gradeSlug}/${subjectSlug}`;
 
   // Breadcrumb items
   const breadcrumbItems = [

@@ -118,7 +118,7 @@ const SubcategoryWorksheets = () => {
   const subjectSlug = category?.subject ? toSubjectSlug(category.subject) : "";
   const pageTitle = toTitleCase(subcategory?.title) || "Worksheets";
   const pageDescription = `Browse ${pageTitle} worksheets for ${toTitleCase(category?.subject) || "this subject"}.`;
-  const pageUrl = `https://wizkidshubworksheets.com/subcategory/${subcategoryId}`;
+  const pageUrl = `https://worksheet-generator-pro.lovable.app/subcategory/${subcategoryId}`;
 
   // Breadcrumb items for Subcategory Worksheets page
   const breadcrumbItems = [
