@@ -63,7 +63,8 @@ const Support = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.from("support_messages").insert({
+      // Store in database
+      const { error: dbError } = await supabase.from("support_messages").insert({
         email: result.data.email,
         name: result.data.name || null,
         subject: result.data.subject || null,
@@ -71,7 +72,31 @@ const Support = () => {
         page_url: window.location.origin + location.pathname,
       });
 
-      if (error) throw error;
+      if (dbError) {
+        console.error("Database error:", dbError);
+        throw dbError;
+      }
+
+      // Send email notification via edge function
+      const { data: emailData, error: emailError } = await supabase.functions.invoke(
+        "send-support-email",
+        {
+          body: {
+            email: result.data.email,
+            name: result.data.name || undefined,
+            subject: result.data.subject || undefined,
+            message: result.data.message,
+            pageUrl: window.location.origin + location.pathname,
+          },
+        }
+      );
+
+      if (emailError) {
+        console.error("Email sending error:", emailError);
+        // Still show success since message was saved to database
+      } else {
+        console.log("Email sent successfully:", emailData);
+      }
 
       setIsSubmitted(true);
       toast({
@@ -100,7 +125,7 @@ const Support = () => {
       <Helmet>
         <title>Contact & Support | WizKidsHub Worksheets</title>
         <meta name="description" content="Get in touch with WizKidsHub. Send us your questions, feedback, or suggestions about our educational worksheets." />
-        <link rel="canonical" href="https://wizkidshubworksheets.com/support" />
+        <link rel="canonical" href="https://worksheet-generator-pro.lovable.app/support" />
       </Helmet>
 
       <Header />
