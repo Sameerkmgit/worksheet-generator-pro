@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
-import { toTitleCase } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle } from "@/lib/utils";
 
 interface RelatedWorksheet {
   id: string;
@@ -145,8 +145,8 @@ const WorksheetDetail = () => {
     );
   }
 
-  const pageTitle = `${toTitleCase(worksheet.title)} - Free Printable PDF`;
-  const pageDescription = toTitleCase(worksheet.description) || `Download free Grade ${worksheet.grade} ${toTitleCase(worksheet.subject)} worksheet: ${toTitleCase(worksheet.title)}. Perfect for classroom and home learning.`;
+  const pageTitle = `${toTitleCase(cleanDisplayTitle(worksheet.title))} - Free Printable PDF`;
+  const pageDescription = toTitleCase(cleanDisplayTitle(worksheet.description)) || `Download free Grade ${worksheet.grade} ${toTitleCase(worksheet.subject)} worksheet: ${toTitleCase(cleanDisplayTitle(worksheet.title))}. Perfect for classroom and home learning.`;
   const pageUrl = `https://wizkidshubworksheets.com/worksheet/${worksheetId}`;
 
   const gradeSlug = worksheet.grade ? `grade-${worksheet.grade}` : "";
@@ -188,7 +188,7 @@ const WorksheetDetail = () => {
     });
   }
   
-  breadcrumbItems.push({ label: toTitleCase(worksheet.title) });
+  breadcrumbItems.push({ label: toTitleCase(cleanDisplayTitle(worksheet.title)) });
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -275,10 +275,10 @@ const WorksheetDetail = () => {
                     </span>
                   </div>
 
-                  <h1 className="text-3xl md:text-4xl font-bold mb-4">{toTitleCase(worksheet.title)}</h1>
+                  <h1 className="text-3xl md:text-4xl font-bold mb-4">{toTitleCase(cleanDisplayTitle(worksheet.title))}</h1>
                   
                   <p className="text-lg text-muted-foreground mb-6">
-                    {toTitleCase(worksheet.description)}
+                    {toTitleCase(cleanDisplayTitle(worksheet.description))}
                   </p>
 
                   <Button size="lg" className="w-full md:w-auto" asChild>
@@ -435,7 +435,7 @@ const WorksheetDetail = () => {
                       <CardContent className="p-4">
                         <FileText className="w-8 h-8 text-primary/60 mb-2 group-hover:text-primary transition-colors" />
                         <h3 className="font-semibold text-sm text-foreground line-clamp-2 group-hover:text-primary transition-colors">
-                          {toTitleCase(ws.title)}
+                          {toTitleCase(cleanDisplayTitle(ws.title))}
                         </h3>
                         <p className="text-xs text-muted-foreground mt-1">
                           {toTitleCase(ws.subject)}
@@ -471,7 +471,7 @@ const WorksheetDetail = () => {
                       <CardContent className="p-4">
                         <FileText className="w-8 h-8 text-primary/60 mb-2 group-hover:text-primary transition-colors" />
                         <h3 className="font-semibold text-sm text-foreground line-clamp-2 group-hover:text-primary transition-colors">
-                          {toTitleCase(ws.title)}
+                          {toTitleCase(cleanDisplayTitle(ws.title))}
                         </h3>
                         <p className="text-xs text-muted-foreground mt-1">
                           {toTitleCase(ws.subject)}

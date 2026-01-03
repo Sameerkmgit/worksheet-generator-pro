@@ -34,3 +34,25 @@ export function toTitleCase(str: string | null | undefined): string {
     })
     .join(" ");
 }
+
+/**
+ * Cleans display titles by removing unwanted labels like "(MCQ)" and "Regen".
+ * This is a UI-only cleanup to keep database titles stable for SEO.
+ * 
+ * @example
+ * cleanDisplayTitle("Addition Practice (MCQ)") // "Addition Practice"
+ * cleanDisplayTitle("Regen Math Quiz") // "Math Quiz"
+ * cleanDisplayTitle("Multiplication Regen WS") // "Multiplication WS"
+ */
+export function cleanDisplayTitle(str: string | null | undefined): string {
+  if (!str) return "";
+  
+  return str
+    // Remove "(MCQ)" including any surrounding spaces
+    .replace(/\s*\(MCQ\)\s*/gi, " ")
+    // Remove standalone "Regen" word (case-insensitive)
+    .replace(/\bRegen\b\s*/gi, "")
+    // Clean up any double spaces and trim
+    .replace(/\s+/g, " ")
+    .trim();
+}

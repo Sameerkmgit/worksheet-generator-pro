@@ -17,7 +17,7 @@ import {
   WorksheetCategoryData,
   SubcategoryData,
 } from "@/lib/worksheetStorage";
-import { toTitleCase } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle } from "@/lib/utils";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
@@ -237,10 +237,10 @@ const CategoryWorksheets = () => {
                     </div>
                     <CardContent className="p-6">
                       <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">
-                        {toTitleCase(worksheet.title)}
+                        {toTitleCase(cleanDisplayTitle(worksheet.title))}
                       </h3>
                       <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                        {toTitleCase(worksheet.description)}
+                        {toTitleCase(cleanDisplayTitle(worksheet.description))}
                       </p>
                       <Button asChild variant="default" className="w-full">
                         <Link to={`/worksheet/${worksheet.id}`}>
