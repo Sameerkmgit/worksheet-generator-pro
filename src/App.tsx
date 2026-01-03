@@ -26,6 +26,7 @@ import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import DownloadPack from "./pages/DownloadPack";
+import Support from "./pages/Support";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +70,8 @@ const App = () => {
 
             {/* LEGAL PAGES */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/support" element={<Support />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
 
             {/* ADMIN ROUTES */}
