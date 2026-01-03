@@ -199,10 +199,10 @@ const Category = () => {
             {/* Visible Breadcrumbs */}
             <Breadcrumbs items={breadcrumbItems} className="mb-6" />
             
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-foreground tracking-tight">
               {gradeTitle} Worksheets
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
               {pageDescription}
             </p>
           </div>
