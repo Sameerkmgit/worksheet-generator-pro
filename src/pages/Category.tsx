@@ -24,6 +24,7 @@ interface PopularTopic {
   title: string;
   worksheet_count: number;
   category_title: string;
+  image_url?: string | null;
 }
 
 const gradeTitles: Record<string, string> = {
@@ -84,6 +85,7 @@ const Category = () => {
             id,
             title,
             category_id,
+            image_url,
             worksheet_categories!inner(grade, title)
           `)
           .eq("worksheet_categories.grade", gradeNumber)
@@ -108,6 +110,7 @@ const Category = () => {
                 title: topic.title,
                 worksheet_count: count || 0,
                 category_title: topic.worksheet_categories?.title || "",
+                image_url: topic.image_url,
               };
             })
           );
@@ -261,7 +264,21 @@ const Category = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {popularTopics.map((topic) => (
                   <Link key={topic.id} to={`/subcategory/${topic.id}`}>
-                    <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50">
+                    <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 overflow-hidden">
+                      <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
+                        {topic.image_url ? (
+                          <img
+                            src={topic.image_url}
+                            alt={`${toTitleCase(topic.title)} worksheets for ${gradeTitle}`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <FolderOpen className="h-10 w-10 text-primary/40" />
+                          </div>
+                        )}
+                      </div>
                       <CardContent className="p-4">
                         <h3 className="font-semibold text-foreground mb-1 line-clamp-2">
                           {toTitleCase(topic.title)}

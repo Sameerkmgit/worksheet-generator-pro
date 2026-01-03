@@ -30,8 +30,13 @@ const getPdfEmbedUrl = (pdfUrl: string): string => {
   return pdfUrl;
 };
 
-interface TopicWithCount extends SubcategoryData {
+interface TopicWithCount {
+  id: string;
+  title: string;
+  slug: string;
+  categoryId: string;
   worksheetCount: number;
+  image_url?: string | null;
 }
 
 const CategoryWorksheets = () => {
@@ -67,12 +72,17 @@ const CategoryWorksheets = () => {
         const categoryData = await getWorksheetCategoryById(effectiveCategoryId);
         setCategory(categoryData);
 
-        // Fetch subcategories first
-        const subcatsData = await getSubcategoriesByCategoryId(effectiveCategoryId);
+        // Fetch subcategories with image_url
+        const { data: subcatsRaw } = await supabase
+          .from("worksheet_subcategories")
+          .select("id, title, slug, category_id, image_url, sort_order")
+          .eq("category_id", effectiveCategoryId)
+          .eq("is_archived", false)
+          .order("sort_order", { ascending: true });
         
         // Get worksheet counts for each subcategory
         const subcatsWithCounts = await Promise.all(
-          subcatsData.map(async (subcat) => {
+          (subcatsRaw || []).map(async (subcat) => {
             const { count } = await supabase
               .from("worksheets")
               .select("*", { count: "exact", head: true })
@@ -80,7 +90,11 @@ const CategoryWorksheets = () => {
               .eq("is_archived", false);
             
             return {
-              ...subcat,
+              id: subcat.id,
+              title: subcat.title,
+              slug: subcat.slug,
+              categoryId: subcat.category_id,
+              image_url: subcat.image_url,
               worksheetCount: count || 0,
             };
           })
@@ -167,8 +181,19 @@ const CategoryWorksheets = () => {
                       key={subcat.id}
                       className="hover:shadow-lg transition-shadow overflow-hidden"
                     >
-                      <div className="aspect-[16/9] bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                        <FolderOpen className="h-16 w-16 text-primary/40" />
+                      <div className="aspect-[16/9] bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
+                        {subcat.image_url ? (
+                          <img
+                            src={subcat.image_url}
+                            alt={`${toTitleCase(subcat.title)} worksheets for Grade ${category?.grade}`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <FolderOpen className="h-16 w-16 text-primary/40" />
+                          </div>
+                        )}
                       </div>
                       <CardContent className="p-6">
                         <h3 className="font-heading font-semibold text-xl mb-2">

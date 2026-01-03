@@ -34,6 +34,7 @@ interface RelatedTopic {
   id: string;
   title: string;
   worksheetCount: number;
+  image_url?: string | null;
 }
 
 const SubcategoryWorksheets = () => {
@@ -65,7 +66,7 @@ const SubcategoryWorksheets = () => {
           // Fetch related topics (other subcategories in same category)
           const { data: relatedData, error: relatedError } = await supabase
             .from("worksheet_subcategories")
-            .select("id, title")
+            .select("id, title, image_url")
             .eq("category_id", subcatData.categoryId)
             .eq("is_archived", false)
             .neq("id", subcategoryId)
@@ -86,6 +87,7 @@ const SubcategoryWorksheets = () => {
                   id: topic.id,
                   title: topic.title,
                   worksheetCount: count || 0,
+                  image_url: topic.image_url,
                 };
               })
             );
@@ -212,9 +214,22 @@ const SubcategoryWorksheets = () => {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {relatedTopics.map((topic) => (
                   <Link key={topic.id} to={`/subcategory/${topic.id}`}>
-                    <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 group">
+                    <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 group overflow-hidden">
+                      <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
+                        {topic.image_url ? (
+                          <img
+                            src={topic.image_url}
+                            alt={`${toTitleCase(topic.title)} worksheets`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <FolderOpen className="w-8 h-8 text-primary/40" />
+                          </div>
+                        )}
+                      </div>
                       <CardContent className="p-4 flex flex-col items-center text-center">
-                        <FolderOpen className="w-8 h-8 text-primary/60 mb-2 group-hover:text-primary transition-colors" />
                         <h3 className="font-semibold text-sm text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors">
                           {toTitleCase(topic.title)}
                         </h3>
