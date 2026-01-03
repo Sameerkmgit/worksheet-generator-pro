@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Search as SearchIcon, Download, Filter, X } from "lucide-react";
 import { Helmet } from "react-helmet-async";
@@ -52,11 +52,56 @@ const allWorksheets = [
   { id: 49, title: "Essay Writing and Paragraph Structure", category: "English", grade: "5", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", keywords: ["essay", "writing", "paragraph", "english"] },
 ];
 
+// Available subjects for exact matching (order matters: exact matches are checked first)
+const SUBJECTS = ["Math", "English", "Science", "Computer Science", "Assignments"];
+
+/**
+ * Check if query exactly matches a subject name (case-insensitive).
+ * Returns the normalized subject value for the filter, or null if no exact match.
+ */
+const getExactSubjectMatch = (query: string): string | null => {
+  const normalizedQuery = query.trim().toLowerCase();
+  
+  // Check for exact match first (e.g., "science" should match "Science", not "Computer Science")
+  for (const subject of SUBJECTS) {
+    if (subject.toLowerCase() === normalizedQuery) {
+      return subject.toLowerCase();
+    }
+  }
+  
+  return null;
+};
+
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
+  const initialQuery = searchParams.get("q") || "";
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [gradeFilter, setGradeFilter] = useState(searchParams.get("grade") || "all");
   const [subjectFilter, setSubjectFilter] = useState(searchParams.get("subject") || "all");
+  const [hasAutoSelectedSubject, setHasAutoSelectedSubject] = useState(false);
+
+  // Auto-select subject filter if query exactly matches a subject name
+  useEffect(() => {
+    const query = searchParams.get("q") || "";
+    const existingSubjectParam = searchParams.get("subject");
+    
+    // Only auto-select if:
+    // 1. There's a query
+    // 2. No subject filter is already set via URL param
+    // 3. We haven't already auto-selected for this session
+    if (query && !existingSubjectParam && !hasAutoSelectedSubject) {
+      const exactMatch = getExactSubjectMatch(query);
+      if (exactMatch) {
+        setSubjectFilter(exactMatch);
+        setHasAutoSelectedSubject(true);
+        
+        // Update URL params to include the auto-selected subject
+        const params = new URLSearchParams(searchParams);
+        params.set("subject", exactMatch);
+        setSearchParams(params, { replace: true });
+      }
+    }
+  }, [searchParams, hasAutoSelectedSubject, setSearchParams]);
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -77,6 +122,7 @@ const Search = () => {
 
   const handleSubjectChange = (value: string) => {
     setSubjectFilter(value);
+    setHasAutoSelectedSubject(true); // Mark as manually changed
     const params = new URLSearchParams();
     if (searchQuery) params.set("q", searchQuery);
     if (gradeFilter !== "all") params.set("grade", gradeFilter);
@@ -177,6 +223,7 @@ const Search = () => {
                     setSearchQuery("");
                     setGradeFilter("all");
                     setSubjectFilter("all");
+                    setHasAutoSelectedSubject(false); // Reset auto-select flag
                     setSearchParams(new URLSearchParams());
                   }}
                   className="text-muted-foreground hover:text-foreground"
@@ -259,6 +306,7 @@ const Search = () => {
                 setSearchQuery("");
                 setGradeFilter("all");
                 setSubjectFilter("all");
+                setHasAutoSelectedSubject(false); // Reset auto-select flag
                 setSearchParams(new URLSearchParams());
               }}>
                 Clear All Filters
