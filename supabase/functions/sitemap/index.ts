@@ -89,7 +89,8 @@ Deno.serve(async (req) => {
       for (const cat of categories) {
         const lastmod = formatDate(cat.updated_at);
         // Build readable URL: /categories/grade-1/math
-        const gradeSlug = cat.grade.toLowerCase().replace(/\s+/g, "-");
+        // Grade is stored as "1", "2", etc. - convert to "grade-1", "grade-2"
+        const gradeSlug = `grade-${cat.grade}`;
         const subjectSlug = cat.subject.toLowerCase().replace(/\s+/g, "-");
         sitemap += buildUrlEntry(`${SITE_URL}/categories/${gradeSlug}/${subjectSlug}`, lastmod, "0.8", "weekly");
       }
