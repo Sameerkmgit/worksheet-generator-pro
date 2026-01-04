@@ -174,7 +174,7 @@ const Search = () => {
       <Helmet>
         <title>Search Worksheets | WizKidsHub Worksheets</title>
         <meta name="description" content="Search for educational worksheets by keyword, grade, and subject. Find the perfect printable worksheet for your child." />
-        <link rel="canonical" href="https://wizkidshubworksheets.com/search" />
+        <link rel="canonical" href="https://www.wizkidshub.com/search" />
       </Helmet>
 
       <Header />

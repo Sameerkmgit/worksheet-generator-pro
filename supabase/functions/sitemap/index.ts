@@ -1,6 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const SITE_URL = "https://worksheet-generator-pro.lovable.app";
+const SITE_URL = "https://www.wizkidshub.com";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
