@@ -125,7 +125,7 @@ const Support = () => {
       <Helmet>
         <title>Contact & Support | WizKidsHub Worksheets</title>
         <meta name="description" content="Get in touch with WizKidsHub. Send us your questions, feedback, or suggestions about our educational worksheets." />
-        <link rel="canonical" href="https://worksheet-generator-pro.lovable.app/support" />
+        <link rel="canonical" href="https://www.wizkidshub.com/support" />
       </Helmet>
 
       <Header />
