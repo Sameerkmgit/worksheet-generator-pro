@@ -75,11 +75,11 @@ Deno.serve(async (req) => {
       sitemap += buildUrlEntry(`${SITE_URL}/categories/${grade}`, null, "0.8", "weekly");
     }
 
-    // Fetch worksheet_categories for category pages
-    console.log("Fetching worksheet_categories...");
+    // Fetch worksheet_categories for subject pages with readable URLs
+    console.log("Fetching worksheet_categories for subject pages...");
     const { data: categories, error: catError } = await supabase
       .from("worksheet_categories")
-      .select("id, updated_at")
+      .select("id, grade, subject, updated_at")
       .order("sort_order", { ascending: true });
 
     if (catError) {
@@ -88,12 +88,15 @@ Deno.serve(async (req) => {
       console.log(`Found ${categories.length} categories`);
       for (const cat of categories) {
         const lastmod = formatDate(cat.updated_at);
-        sitemap += buildUrlEntry(`${SITE_URL}/category/${cat.id}`, lastmod, "0.8", "weekly");
+        // Build readable URL: /categories/grade-1/math
+        const gradeSlug = cat.grade.toLowerCase().replace(/\s+/g, "-");
+        const subjectSlug = cat.subject.toLowerCase().replace(/\s+/g, "-");
+        sitemap += buildUrlEntry(`${SITE_URL}/categories/${gradeSlug}/${subjectSlug}`, lastmod, "0.8", "weekly");
       }
     }
 
     // Fetch worksheet_subcategories for topic pages
-    console.log("Fetching worksheet_subcategories...");
+    console.log("Fetching worksheet_subcategories for topic pages...");
     const { data: subcategories, error: subError } = await supabase
       .from("worksheet_subcategories")
       .select("id, updated_at")
