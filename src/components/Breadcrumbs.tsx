@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ChevronRight, Home } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
-const SITE_URL = "https://worksheet-generator-pro.lovable.app";
+const SITE_URL = "https://www.wizkidshub.com";
 
 export interface BreadcrumbItem {
   label: string;

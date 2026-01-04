@@ -57,8 +57,8 @@ const AssignmentsLanding = () => {
   const gradeTitle = gradeTitles[grade || ""] || "Grade";
   const pageTitle = `${gradeTitle} Assignments`;
   const pageDescription = `Practice tests, quizzes, and homework sheets for ${gradeTitle}. Download free printable assignments to reinforce learning and track progress.`;
-  const pageUrl = `https://wizkidshubworksheets.com/assignments/${grade}`;
-  const gradeUrl = `https://wizkidshubworksheets.com/categories/${grade}`;
+  const pageUrl = `https://www.wizkidshub.com/assignments/${grade}`;
+  const gradeUrl = `https://www.wizkidshub.com/categories/${grade}`;
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -68,7 +68,7 @@ const AssignmentsLanding = () => {
     "isPartOf": {
       "@type": "WebSite",
       "name": "WizKidsHub Worksheets",
-      "url": "https://wizkidshubworksheets.com"
+      "url": "https://www.wizkidshub.com"
     }
   };
 
@@ -80,7 +80,7 @@ const AssignmentsLanding = () => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://wizkidshubworksheets.com"
+        "item": "https://www.wizkidshub.com"
       },
       {
         "@type": "ListItem",

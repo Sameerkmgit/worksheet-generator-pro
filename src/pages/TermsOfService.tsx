@@ -8,7 +8,7 @@ const TermsOfService = () => {
       <Helmet>
         <title>Terms Of Service | WizKidsHubWorksheets</title>
         <meta name="description" content="Terms of Service for WizKidsHubWorksheets - Rules and guidelines for using our free educational worksheets." />
-        <link rel="canonical" href="https://worksheet-generator-pro.lovable.app/terms-of-service" />
+        <link rel="canonical" href="https://www.wizkidshub.com/terms-of-service" />
       </Helmet>
       <Header />
       <main className="flex-1 container mx-auto max-w-[800px] py-12 px-6">

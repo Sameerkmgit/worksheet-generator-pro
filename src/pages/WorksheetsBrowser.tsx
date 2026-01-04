@@ -187,7 +187,7 @@ const WorksheetsBrowser = () => {
       <Helmet>
         <title>Browse Worksheets | WizKidsHub Worksheets</title>
         <meta name="description" content="Browse and download worksheets by grade and subject" />
-        <link rel="canonical" href="https://worksheet-generator-pro.lovable.app/worksheets" />
+        <link rel="canonical" href="https://www.wizkidshub.com/worksheets" />
       </Helmet>
       
       {/* Breadcrumbs component injects JSON-LD */}
