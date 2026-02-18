@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Upload, FileText, Image, CheckCircle, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Upload, FileText, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,14 +11,90 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 
+interface WorksheetCategory {
+  id: string;
+  title: string;
+  grade: string;
+  subject: string;
+}
+
+interface Subcategory {
+  id: string;
+  title: string;
+  category_id: string;
+}
+
 const AdminUpload = () => {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [grade, setGrade] = useState("");
   const [subject, setSubject] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [subcategoryId, setSubcategoryId] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+
+  const [categories, setCategories] = useState<WorksheetCategory[]>([]);
+  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState(false);
+  const [loadingSubcategories, setLoadingSubcategories] = useState(false);
+
+  // Fetch categories when grade + subject change
+  useEffect(() => {
+    if (!grade || !subject) {
+      setCategories([]);
+      setCategoryId("");
+      setSubcategories([]);
+      setSubcategoryId("");
+      return;
+    }
+
+    const fetchCategories = async () => {
+      setLoadingCategories(true);
+      // Convert grade-1 → "1"
+      const gradeNumber = grade.replace("grade-", "");
+      const { data, error } = await supabase
+        .from("worksheet_categories")
+        .select("id, title, grade, subject")
+        .eq("grade", gradeNumber)
+        .eq("subject", subject)
+        .order("title");
+
+      if (!error && data) {
+        setCategories(data);
+      }
+      setLoadingCategories(false);
+    };
+
+    fetchCategories();
+  }, [grade, subject]);
+
+  // Fetch subcategories when category changes
+  useEffect(() => {
+    if (!categoryId) {
+      setSubcategories([]);
+      setSubcategoryId("");
+      return;
+    }
+
+    const fetchSubcategories = async () => {
+      setLoadingSubcategories(true);
+      const { data, error } = await supabase
+        .from("worksheet_subcategories")
+        .select("id, title, category_id")
+        .eq("category_id", categoryId)
+        .eq("is_archived", false)
+        .order("title");
+
+      if (!error && data) {
+        setSubcategories(data);
+      }
+      setLoadingSubcategories(false);
+    };
+
+    fetchSubcategories();
+  }, [categoryId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,43 +111,49 @@ const AdminUpload = () => {
     setIsUploading(true);
 
     try {
-      // Upload PDF to Supabase Storage
-      const pdfFileName = `${Date.now()}-${pdfFile.name}`;
-      const { data: pdfData, error: pdfError } = await supabase.storage
-        .from('worksheet-images')
-        .upload(pdfFileName, pdfFile, {
-          contentType: 'application/pdf',
-          upsert: false
+      // Build a structured file path: grade-1/english/phonics/<filename>.pdf
+      const gradeNumber = grade.replace("grade-", "");
+      const safeName = pdfFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const filePath = `grade-${gradeNumber}/${subject}/${Date.now()}-${safeName}`;
+
+      // Upload PDF to the worksheet-pdfs bucket
+      const { error: uploadError } = await supabase.storage
+        .from("worksheet-pdfs")
+        .upload(filePath, pdfFile, {
+          contentType: "application/pdf",
+          upsert: false,
         });
 
-      if (pdfError) throw pdfError;
+      if (uploadError) throw uploadError;
 
-      const { data: { publicUrl: pdfUrl } } = supabase.storage
-        .from('worksheet-images')
-        .getPublicUrl(pdfFileName);
+      // Get the public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from("worksheet-pdfs")
+        .getPublicUrl(filePath);
 
-      // Convert grade from "grade-1" to "Grade 1"
-      const gradeTitle = grade.split('-').map((word, index) => 
-        index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
-      ).join(' ');
+      // Convert grade from "grade-1" to "1" for DB
+      const gradeTitle = gradeNumber;
 
       // Insert worksheet into database
       const { error: insertError } = await supabase
-        .from('worksheets')
+        .from("worksheets")
         .insert({
           id: `worksheet-${Date.now()}`,
           title,
           description: description || null,
           grade: gradeTitle,
           subject,
-          pdf_url: pdfUrl
+          pdf_url: publicUrl,
+          is_archived: false,
+          category_id: categoryId || null,
+          subcategory_id: subcategoryId || null,
         });
 
       if (insertError) throw insertError;
 
       toast({
         title: "Success!",
-        description: "Worksheet added successfully.",
+        description: "Worksheet uploaded and visible on the public site.",
       });
 
       // Reset form
@@ -79,14 +161,16 @@ const AdminUpload = () => {
       setDescription("");
       setGrade("");
       setSubject("");
+      setCategoryId("");
+      setSubcategoryId("");
       setPdfFile(null);
-      
-      // Reset file inputs
-      const pdfInput = document.getElementById('pdf') as HTMLInputElement;
-      if (pdfInput) pdfInput.value = '';
+      setCategories([]);
+      setSubcategories([]);
 
+      const pdfInput = document.getElementById("pdf") as HTMLInputElement;
+      if (pdfInput) pdfInput.value = "";
     } catch (error: any) {
-      console.error('Upload error:', error);
+      console.error("Upload error:", error);
       toast({
         title: "Upload Failed",
         description: error.message || "Failed to upload worksheet. Please try again.",
@@ -112,128 +196,182 @@ const AdminUpload = () => {
           </div>
 
           <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl font-heading">Worksheet Details</CardTitle>
-            <CardDescription>
-              Fill in the information and upload the files for your worksheet
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Title */}
-              <div className="space-y-2">
-                <Label htmlFor="title" className="text-base font-semibold">
-                  Worksheet Title *
-                </Label>
-                <Input
-                  id="title"
-                  placeholder="e.g., Addition Basics for Grade 1"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="h-12"
-                  required
-                />
-              </div>
-
-              {/* Grade */}
-              <div className="space-y-2">
-                <Label htmlFor="grade" className="text-base font-semibold">
-                  Grade *
-                </Label>
-                <Select value={grade} onValueChange={setGrade} required>
-                  <SelectTrigger className="h-12">
-                    <SelectValue placeholder="Select a grade" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="grade-1">Grade 1</SelectItem>
-                    <SelectItem value="grade-2">Grade 2</SelectItem>
-                    <SelectItem value="grade-3">Grade 3</SelectItem>
-                    <SelectItem value="grade-4">Grade 4</SelectItem>
-                    <SelectItem value="grade-5">Grade 5</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Subject */}
-              <div className="space-y-2">
-                <Label htmlFor="subject" className="text-base font-semibold">
-                  Subject *
-                </Label>
-                <Select value={subject} onValueChange={setSubject} required>
-                  <SelectTrigger className="h-12">
-                    <SelectValue placeholder="Select a subject" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="math">Math</SelectItem>
-                    <SelectItem value="science">Science</SelectItem>
-                    <SelectItem value="english">English</SelectItem>
-                    <SelectItem value="computer-science">Computer Science</SelectItem>
-                    <SelectItem value="assignments">Assignments</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Description */}
-              <div className="space-y-2">
-                <Label htmlFor="description" className="text-base font-semibold">
-                  Description
-                </Label>
-                <Textarea
-                  id="description"
-                  placeholder="Describe what this worksheet covers and who it's for..."
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="min-h-[120px]"
-                />
-              </div>
-
-              {/* PDF Upload */}
-              <div className="space-y-2">
-                <Label htmlFor="pdf" className="text-base font-semibold">
-                  PDF File *
-                </Label>
-                <div className="border-2 border-dashed rounded-lg border-border p-6 text-center hover:border-primary transition-colors">
-                  <input
-                    id="pdf"
-                    type="file"
-                    accept=".pdf"
-                    onChange={(e) => setPdfFile(e.target.files?.[0] || null)}
-                    className="hidden"
+            <CardHeader>
+              <CardTitle className="text-2xl font-heading">Worksheet Details</CardTitle>
+              <CardDescription>
+                Fill in the information and upload the PDF for your worksheet
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Title */}
+                <div className="space-y-2">
+                  <Label htmlFor="title" className="text-base font-semibold">
+                    Worksheet Title *
+                  </Label>
+                  <Input
+                    id="title"
+                    placeholder="e.g., Addition Basics for Grade 1"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="h-12"
                     required
                   />
-                  <label htmlFor="pdf" className="cursor-pointer">
-                    <FileText className="w-12 h-12 mx-auto mb-3 text-primary" />
-                    {pdfFile ? (
-                      <div className="flex items-center justify-center gap-2 text-accent">
-                        <CheckCircle className="w-5 h-5" />
-                        <span className="font-medium">{pdfFile.name}</span>
-                      </div>
-                    ) : (
-                      <div>
-                        <p className="font-medium text-foreground mb-1">Click to upload PDF</p>
-                        <p className="text-sm text-muted-foreground">or drag and drop</p>
-                      </div>
-                    )}
-                  </label>
                 </div>
-              </div>
 
-              <Button type="submit" size="lg" className="w-full h-14 text-base" disabled={isUploading}>
-                {isUploading ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Uploading...
-                  </>
-                ) : (
-                  <>
-                    <Upload className="mr-2" />
-                    Upload Worksheet
-                  </>
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+                {/* Grade */}
+                <div className="space-y-2">
+                  <Label htmlFor="grade" className="text-base font-semibold">
+                    Grade *
+                  </Label>
+                  <Select value={grade} onValueChange={setGrade} required>
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Select a grade" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="grade-1">Grade 1</SelectItem>
+                      <SelectItem value="grade-2">Grade 2</SelectItem>
+                      <SelectItem value="grade-3">Grade 3</SelectItem>
+                      <SelectItem value="grade-4">Grade 4</SelectItem>
+                      <SelectItem value="grade-5">Grade 5</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Subject */}
+                <div className="space-y-2">
+                  <Label htmlFor="subject" className="text-base font-semibold">
+                    Subject *
+                  </Label>
+                  <Select value={subject} onValueChange={setSubject} required>
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Select a subject" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="math">Math</SelectItem>
+                      <SelectItem value="science">Science</SelectItem>
+                      <SelectItem value="english">English</SelectItem>
+                      <SelectItem value="computer-science">Computer Science</SelectItem>
+                      <SelectItem value="assignments">Assignments</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Category (filtered by grade + subject) */}
+                <div className="space-y-2">
+                  <Label className="text-base font-semibold">Category</Label>
+                  <Select
+                    value={categoryId}
+                    onValueChange={(v) => { setCategoryId(v); setSubcategoryId(""); }}
+                    disabled={!grade || !subject || loadingCategories}
+                  >
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder={
+                        !grade || !subject
+                          ? "Select grade & subject first"
+                          : loadingCategories
+                          ? "Loading…"
+                          : categories.length === 0
+                          ? "No categories found"
+                          : "Select a category"
+                      } />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map((c) => (
+                        <SelectItem key={c.id} value={c.id}>{c.title}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Subcategory (filtered by category) */}
+                <div className="space-y-2">
+                  <Label className="text-base font-semibold">Subcategory / Topic</Label>
+                  <Select
+                    value={subcategoryId}
+                    onValueChange={setSubcategoryId}
+                    disabled={!categoryId || loadingSubcategories}
+                  >
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder={
+                        !categoryId
+                          ? "Select a category first"
+                          : loadingSubcategories
+                          ? "Loading…"
+                          : subcategories.length === 0
+                          ? "No subcategories found"
+                          : "Select a subcategory"
+                      } />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {subcategories.map((s) => (
+                        <SelectItem key={s.id} value={s.id}>{s.title}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Description */}
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="text-base font-semibold">
+                    Description
+                  </Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Describe what this worksheet covers and who it's for..."
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="min-h-[120px]"
+                  />
+                </div>
+
+                {/* PDF Upload */}
+                <div className="space-y-2">
+                  <Label htmlFor="pdf" className="text-base font-semibold">
+                    PDF File *
+                  </Label>
+                  <div className="border-2 border-dashed rounded-lg border-border p-6 text-center hover:border-primary transition-colors">
+                    <input
+                      id="pdf"
+                      type="file"
+                      accept=".pdf"
+                      onChange={(e) => setPdfFile(e.target.files?.[0] || null)}
+                      className="hidden"
+                      required
+                    />
+                    <label htmlFor="pdf" className="cursor-pointer">
+                      <FileText className="w-12 h-12 mx-auto mb-3 text-primary" />
+                      {pdfFile ? (
+                        <div className="flex items-center justify-center gap-2 text-accent">
+                          <CheckCircle className="w-5 h-5" />
+                          <span className="font-medium">{pdfFile.name}</span>
+                        </div>
+                      ) : (
+                        <div>
+                          <p className="font-medium text-foreground mb-1">Click to upload PDF</p>
+                          <p className="text-sm text-muted-foreground">or drag and drop</p>
+                        </div>
+                      )}
+                    </label>
+                  </div>
+                </div>
+
+                <Button type="submit" size="lg" className="w-full h-14 text-base" disabled={isUploading}>
+                  {isUploading ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="mr-2" />
+                      Upload Worksheet
+                    </>
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
         </div>
       </div>
       <Footer />
