@@ -99,10 +99,10 @@ const AdminUpload = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!title || !grade || !subject || !pdfFile) {
+    if (!title || !grade || !subject || !pdfFile || !categoryId || !subcategoryId) {
       toast({
         title: "Missing Information",
-        description: "Please fill in title, grade, subject, and PDF file.",
+        description: "Please fill in all required fields: title, grade, subject, category, subcategory, and PDF file.",
         variant: "destructive",
       });
       return;
@@ -145,8 +145,8 @@ const AdminUpload = () => {
           subject,
           pdf_url: publicUrl,
           is_archived: false,
-          category_id: categoryId || null,
-          subcategory_id: subcategoryId || null,
+          category_id: categoryId,
+          subcategory_id: subcategoryId,
         });
 
       if (insertError) throw insertError;
@@ -356,7 +356,7 @@ const AdminUpload = () => {
                   </div>
                 </div>
 
-                <Button type="submit" size="lg" className="w-full h-14 text-base" disabled={isUploading}>
+                <Button type="submit" size="lg" className="w-full h-14 text-base" disabled={isUploading || !title || !grade || !subject || !pdfFile || !categoryId || !subcategoryId}>
                   {isUploading ? (
                     <>
                       <Loader2 className="mr-2 h-5 w-5 animate-spin" />
