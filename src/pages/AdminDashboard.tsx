@@ -558,16 +558,24 @@ const AdminDashboard = () => {
     const submitData = {
       ...formData,
       pdfUrl: finalPdfUrl,
-      categoryId: formData.categoryId === "none" ? "" : formData.categoryId,
-      subcategoryId: formData.subcategoryId === "none" ? "" : formData.subcategoryId,
+      categoryId: formData.categoryId === "none" ? null : formData.categoryId || null,
+      subcategoryId: formData.subcategoryId === "none" ? null : formData.subcategoryId || null,
     };
 
     try {
       if (editingWorksheet) {
-        await updateWorksheet(editingWorksheet.id, submitData);
+        const result = await updateWorksheet(editingWorksheet.id, submitData);
+        if (!result) {
+          toast({ title: "❌ Update Failed", description: "Worksheet could not be updated. Check the console for errors.", variant: "destructive", duration: 10000 });
+          return;
+        }
         toast({ title: "Worksheet Updated", description: "The worksheet has been successfully updated" });
       } else {
-        await createWorksheet(submitData);
+        const result = await createWorksheet(submitData);
+        if (!result) {
+          toast({ title: "❌ Save Failed", description: "Worksheet could not be saved. Check the console for errors.", variant: "destructive", duration: 10000 });
+          return;
+        }
         toast({
           title: "✅ Worksheet Created!",
           description: `"${formData.title}" has been added. Go to Categories tab to upload its image.`,

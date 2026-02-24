@@ -497,9 +497,12 @@ export const createWorksheet = async (
     .select()
     .single();
 
-  if (error || !data) {
-    console.error("Error creating worksheet:", error);
-    return null;
+  if (error) {
+    console.error("Supabase insert error:", error);
+    throw new Error(error.message || 'Failed to save worksheet to database');
+  }
+  if (!data) {
+    throw new Error('No data returned from worksheet insert');
   }
 
   return mapWorksheetFromDB(data);
@@ -556,9 +559,12 @@ export const updateWorksheet = async (
     .select()
     .single();
 
-  if (error || !data) {
-    console.error("Error updating worksheet:", error);
-    return null;
+  if (error) {
+    console.error("Supabase update error:", error);
+    throw new Error(error.message || 'Failed to update worksheet in database');
+  }
+  if (!data) {
+    throw new Error('No data returned from worksheet update');
   }
 
   return mapWorksheetFromDB(data);
