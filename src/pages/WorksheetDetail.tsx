@@ -146,11 +146,18 @@ const WorksheetDetail = () => {
     );
   }
 
-  const pageTitle = `${toTitleCase(cleanDisplayTitle(worksheet.title))} - Free Printable PDF`;
-  const pageDescription = toTitleCase(cleanDisplayTitle(worksheet.description)) || `Download free Grade ${worksheet.grade} ${toTitleCase(worksheet.subject)} worksheet: ${toTitleCase(cleanDisplayTitle(worksheet.title))}. Perfect for classroom and home learning.`;
+  const cleanTitle = toTitleCase(cleanDisplayTitle(worksheet.title));
+  const gradeNum = worksheet.grade?.toString().replace("Grade ", "").trim();
+  const subjectName = toTitleCase(worksheet.subject);
+  const pageTitle = (cleanTitle && gradeNum && subjectName)
+    ? `${cleanTitle} - Grade ${gradeNum} ${subjectName} Free Printable Worksheet | WizKidsHub`
+    : `${cleanTitle} - Free Printable PDF | WizKidsHub`;
+  const pageDescription = (cleanTitle && gradeNum && subjectName)
+    ? `Download this free printable ${subjectName} worksheet for Grade ${gradeNum} students. Topic: ${cleanTitle}. No sign-up required. Perfect for classroom or home use. | WizKidsHub`
+    : `Download free Grade ${worksheet.grade} ${subjectName} worksheet: ${cleanTitle}. Perfect for classroom and home learning.`;
   const pageUrl = `https://www.wizkidshub.com/worksheet/${worksheetId}`;
 
-  const gradeSlug = worksheet.grade ? `grade-${worksheet.grade}` : "";
+  const gradeSlug = worksheet.grade ? `grade-${gradeNum}` : "";
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -195,7 +202,7 @@ const WorksheetDetail = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>{pageTitle} | WizKidsHub Worksheets</title>
+        <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content={pageTitle} />

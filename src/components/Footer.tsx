@@ -70,6 +70,11 @@ const Footer = () => {
                   Terms Of Service
                 </Link>
               </li>
+              <li>
+                <Link to="/about" className="opacity-90 hover:opacity-100 transition-opacity">
+                  About Us
+                </Link>
+              </li>
             </ul>
           </div>
 
