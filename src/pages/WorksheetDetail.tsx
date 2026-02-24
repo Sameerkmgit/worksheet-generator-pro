@@ -161,14 +161,16 @@ const WorksheetDetail = () => {
 
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "LearningResource",
-    "name": worksheet.title,
+    "@type": "EducationalResource",
+    "name": cleanTitle,
     "description": pageDescription,
-    "educationalLevel": worksheet.grade,
+    "educationalLevel": `Grade ${gradeNum}`,
     "learningResourceType": "Worksheet",
     "isAccessibleForFree": true,
     "inLanguage": "en",
     "url": pageUrl,
+    "about": subjectName,
+    "encodingFormat": "application/pdf",
     "publisher": {
       "@type": "Organization",
       "name": "WizKidsHub Worksheets",

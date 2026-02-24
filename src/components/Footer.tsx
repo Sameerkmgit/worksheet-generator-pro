@@ -75,21 +75,12 @@ const Footer = () => {
                   About Us
                 </Link>
               </li>
+              <li>
+                <Link to="/contact" className="opacity-90 hover:opacity-100 transition-opacity">
+                  Contact Us
+                </Link>
+              </li>
             </ul>
-          </div>
-
-          {/* Contact Us */}
-          <div>
-            <h3 className="font-heading font-semibold text-lg mb-4">Contact Us</h3>
-            <p className="text-sm opacity-90 mb-2">
-              Have questions or feedback?
-            </p>
-            <Link 
-              to="/support" 
-              className="text-sm opacity-90 hover:opacity-100 transition-opacity underline"
-            >
-              Send us a message
-            </Link>
           </div>
         </div>
 
