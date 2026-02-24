@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Edit, Trash2, LogOut, FileText, Filter, Image as ImageIcon, FolderPlus, Loader2 } from "lucide-react";
+import { Plus, Edit, Trash2, LogOut, FileText, Filter, Image as ImageIcon, FolderPlus, Loader2, UploadCloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ImageUploader from "@/components/ImageUploader";
 import PdfUploadZone from "@/components/PdfUploadZone";
+import BulkUpload from "@/components/BulkUpload";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -55,7 +56,7 @@ const AdminDashboard = () => {
   const [editingWorksheet, setEditingWorksheet] = useState<WorksheetData | null>(null);
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [worksheetCategories, setWorksheetCategories] = useState<WorksheetCategoryData[]>([]);
-  const [activeTab, setActiveTab] = useState<"worksheets" | "categories" | "worksheet-categories">("worksheets");
+  const [activeTab, setActiveTab] = useState<"worksheets" | "bulk-upload" | "categories" | "worksheet-categories">("worksheets");
   const [categoryGradeFilter, setCategoryGradeFilter] = useState<string>("grade-1");
   const [categorySubjectFilter, setCategorySubjectFilter] = useState<string>("math");
   const [isUploading, setIsUploading] = useState(false);
@@ -761,6 +762,14 @@ const AdminDashboard = () => {
             Categories
           </Button>
           <Button
+            variant={activeTab === "bulk-upload" ? "default" : "ghost"}
+            onClick={() => setActiveTab("bulk-upload")}
+            className="rounded-b-none"
+          >
+            <UploadCloud className="mr-2 h-4 w-4" />
+            Bulk Upload
+          </Button>
+          <Button
             variant={activeTab === "worksheet-categories" ? "default" : "ghost"}
             onClick={() => setActiveTab("worksheet-categories")}
             className="rounded-b-none"
@@ -1102,6 +1111,8 @@ const AdminDashboard = () => {
         </div>
           </>
         )}
+
+        {activeTab === "bulk-upload" && <BulkUpload />}
 
         {activeTab === "categories" && (
           <div className="space-y-6">
