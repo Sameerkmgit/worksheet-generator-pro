@@ -13,6 +13,7 @@ const Header = () => {
     { label: "Grade 3", path: "/categories/grade-3" },
     { label: "Grade 4", path: "/categories/grade-4" },
     { label: "Grade 5", path: "/categories/grade-5" },
+    { label: "About Us", path: "/about" },
   ];
 
   const isActive = (path: string) => {

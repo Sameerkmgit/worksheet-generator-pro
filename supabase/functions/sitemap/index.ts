@@ -68,6 +68,8 @@ Deno.serve(async (req) => {
     sitemap += buildUrlEntry(`${SITE_URL}/worksheets`, null, "0.9", "weekly");
     sitemap += buildUrlEntry(`${SITE_URL}/privacy-policy`, null, "0.3", "yearly");
     sitemap += buildUrlEntry(`${SITE_URL}/terms-of-service`, null, "0.3", "yearly");
+    sitemap += buildUrlEntry(`${SITE_URL}/about`, null, "0.5", "monthly");
+    sitemap += buildUrlEntry(`${SITE_URL}/support`, null, "0.3", "yearly");
 
     // Grade pages: /categories/:gradeSlug (grade-1, grade-2, etc.)
     const grades = ["grade-1", "grade-2", "grade-3", "grade-4", "grade-5"];
