@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
-import AdSense from "@/components/AdSense";
+import AdSense from "@/components/AdSense"; // Google AdSense component
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getWorksheetCountsByGrade } from "@/lib/getWorksheetCounts";
