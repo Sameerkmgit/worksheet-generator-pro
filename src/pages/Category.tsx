@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { FolderOpen, BookOpen, Sparkles } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import AdSense from "@/components/AdSense";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
@@ -184,12 +185,10 @@ const Category = () => {
       <Header />
       
       <main className="flex-1">
-        {/* Advertisement Section - Top Banner */}
-        <div className="w-full bg-gray-100 py-4">
+        {/* Top Banner Ad */}
+        <div className="w-full py-4">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="bg-gray-200 h-24 flex items-center justify-center rounded">
-              <span className="text-gray-500">Advertisement</span>
-            </div>
+            <AdSense adSlot="4567890123" adFormat="horizontal" className="w-full min-h-[90px]" />
           </div>
         </div>
 
@@ -362,12 +361,10 @@ const Category = () => {
           </div>
         </section>
 
-        {/* Advertisement Section - Bottom Banner */}
-        <div className="w-full bg-gray-100 py-4">
+        {/* Bottom Banner Ad */}
+        <div className="w-full py-4">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="bg-gray-200 h-24 flex items-center justify-center rounded">
-              <span className="text-gray-500">Advertisement</span>
-            </div>
+            <AdSense adSlot="5678901234" adFormat="horizontal" className="w-full min-h-[90px]" />
           </div>
         </div>
       </main>
