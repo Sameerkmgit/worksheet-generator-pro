@@ -1,6 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Download, ArrowLeft, Loader2, FileText, ArrowRight } from "lucide-react";
+import AdSense from "@/components/AdSense";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Helmet } from "react-helmet-async";
@@ -218,11 +219,9 @@ const WorksheetDetail = () => {
 
       <main className="flex-1">
         {/* Top Banner Ad */}
-        <div className="w-full bg-gray-100 py-4">
+        <div className="w-full py-4">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="bg-gray-200 h-24 flex items-center justify-center rounded">
-              <span className="text-gray-500">Advertisement</span>
-            </div>
+            <AdSense adSlot="8901234567" adFormat="horizontal" className="w-full min-h-[90px]" />
           </div>
         </div>
 
@@ -410,13 +409,7 @@ const WorksheetDetail = () => {
             <div className="space-y-6">
               {/* Sidebar Ad */}
               <div className="sticky top-4">
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="bg-gray-200 h-64 flex items-center justify-center rounded">
-                      <span className="text-gray-500">Advertisement</span>
-                    </div>
-                  </CardContent>
-                </Card>
+                <AdSense adSlot="9012345678" adFormat="vertical" className="min-h-[250px]" />
               </div>
             </div>
           </div>
@@ -487,11 +480,9 @@ const WorksheetDetail = () => {
         )}
 
         {/* Bottom Banner Ad */}
-        <div className="w-full bg-gray-100 py-4">
+        <div className="w-full py-4">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="bg-gray-200 h-24 flex items-center justify-center rounded">
-              <span className="text-gray-500">Advertisement</span>
-            </div>
+            <AdSense adSlot="0123456789" adFormat="horizontal" className="w-full min-h-[90px]" />
           </div>
         </div>
       </main>

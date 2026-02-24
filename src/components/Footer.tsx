@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import AdSense from "@/components/AdSense";
 
 const Footer = () => {
   return (
@@ -7,10 +8,7 @@ const Footer = () => {
         
         {/* Footer Ad Placement */}
         <div className="mb-12 flex justify-center">
-          <div className="bg-primary-foreground/10 rounded-lg border border-dashed border-primary-foreground/30 p-6 text-center w-full max-w-[728px] min-h-[90px] flex items-center justify-center">
-            {/* <!-- Google AdSense - Footer Banner - Replace with your ad code --> */}
-            <p className="text-primary-foreground/70 text-sm">Advertisement</p>
-          </div>
+          <AdSense adSlot="3456789012" adFormat="horizontal" className="w-full max-w-[728px] min-h-[90px]" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* About */}

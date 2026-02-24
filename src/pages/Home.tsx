@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
+import AdSense from "@/components/AdSense";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getWorksheetCountsByGrade } from "@/lib/getWorksheetCounts";
@@ -88,13 +89,10 @@ const Home = () => {
       
       <Header />
       
-      {/* Header Banner Ad - 728x90 (responsive) */}
+      {/* Header Banner Ad */}
       <section className="py-4 px-6 bg-background">
         <div className="container mx-auto max-w-[1140px] flex justify-center">
-          <div className="bg-muted rounded-lg border border-dashed border-border flex items-center justify-center min-h-[90px] w-full max-w-[728px]">
-            {/* Google AdSense - Header Banner 728x90 - Replace with your ad code */}
-            <p className="text-muted-foreground text-sm">Advertisement</p>
-          </div>
+          <AdSense adSlot="1234567890" adFormat="horizontal" className="w-full max-w-[728px] min-h-[90px]" />
         </div>
       </section>
       
@@ -263,13 +261,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Mid-Page Ad - Between Sections (responsive) */}
+      {/* Mid-Page Ad */}
       <section className="py-8 px-6">
         <div className="container mx-auto max-w-[1140px]">
-          <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-border">
-            {/* Google AdSense - Mid-Page Banner - Replace with your ad code */}
-            <p className="text-muted-foreground">Advertisement</p>
-          </div>
+          <AdSense adSlot="2345678901" adFormat="horizontal" className="w-full min-h-[90px]" />
         </div>
       </section>
 

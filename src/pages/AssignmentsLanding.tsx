@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Calendar, ClipboardCheck, BookOpen, FileText, Zap } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import AdSense from "@/components/AdSense";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
@@ -141,10 +142,7 @@ const AssignmentsLanding = () => {
           </div>
 
           {/* Ad Placement */}
-          <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-border mb-12">
-            {/* Google AdSense - Assignments Header - Replace with your ad code */}
-            <p className="text-muted-foreground">Advertisement</p>
-          </div>
+          <AdSense adSlot="6789012345" adFormat="horizontal" className="w-full min-h-[90px] mb-12" />
 
           {/* Assignment Types Grid */}
           <div className="mb-8">
@@ -182,10 +180,7 @@ const AssignmentsLanding = () => {
           </div>
 
           {/* Bottom Ad */}
-          <div className="bg-muted rounded-lg p-8 text-center border border-dashed border-border mt-12">
-            {/* Google AdSense - Assignments Footer - Replace with your ad code */}
-            <p className="text-muted-foreground">Advertisement</p>
-          </div>
+          <AdSense adSlot="7890123456" adFormat="horizontal" className="w-full min-h-[90px] mt-12" />
 
           {/* Info Section */}
           <div className="mt-12 bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-950/20 dark:to-amber-950/20 rounded-lg p-8 border border-orange-200 dark:border-orange-800">
