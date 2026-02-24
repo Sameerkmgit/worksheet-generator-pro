@@ -34,6 +34,7 @@ export interface WorksheetData {
   faq?: any[];
   seo?: any;
   categoryId?: string;
+  subcategoryId?: string;
   createdAt: string;
   updatedAt?: string;
 }
@@ -112,6 +113,7 @@ const mapWorksheetFromDB = (w: any): WorksheetData => ({
   faq: w.faq as any,
   seo: w.seo as any,
   categoryId: w.category_id,
+  subcategoryId: w.subcategory_id,
   createdAt: w.created_at,
   updatedAt: w.updated_at,
 });
@@ -481,7 +483,9 @@ export const createWorksheet = async (
       pdf_url: worksheet.pdfUrl,
       image_url: worksheet.imageUrl,
       content: worksheet.content,
-      category_id: worksheet.categoryId,
+      category_id: worksheet.categoryId || null,
+      subcategory_id: worksheet.subcategoryId || null,
+      is_archived: false,
       heading: worksheet.heading ? toTitleCase(worksheet.heading) : worksheet.heading,
       intro: worksheet.intro,
       questions: worksheet.questions,
@@ -535,7 +539,8 @@ export const updateWorksheet = async (
   if (updates.pdfUrl) updateData.pdf_url = updates.pdfUrl;
   if (updates.imageUrl !== undefined) updateData.image_url = updates.imageUrl;
   if (updates.content !== undefined) updateData.content = updates.content;
-  if (updates.categoryId !== undefined) updateData.category_id = updates.categoryId;
+  if (updates.categoryId !== undefined) updateData.category_id = updates.categoryId || null;
+  if (updates.subcategoryId !== undefined) updateData.subcategory_id = updates.subcategoryId || null;
   if (updates.heading !== undefined) updateData.heading = updates.heading ? toTitleCase(updates.heading) : updates.heading;
   if (updates.intro !== undefined) updateData.intro = updates.intro;
   if (updates.questions !== undefined) updateData.questions = updates.questions;
