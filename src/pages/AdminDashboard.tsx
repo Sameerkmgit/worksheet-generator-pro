@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Edit, Trash2, LogOut, FileText, Filter, Image as ImageIcon, FolderPlus } from "lucide-react";
+import { Plus, Edit, Trash2, LogOut, FileText, Filter, Image as ImageIcon, FolderPlus, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ImageUploader from "@/components/ImageUploader";
+import PdfUploadZone from "@/components/PdfUploadZone";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -57,6 +58,9 @@ const AdminDashboard = () => {
   const [categorySubjectFilter, setCategorySubjectFilter] = useState<string>("math");
   const [isUploading, setIsUploading] = useState(false);
   const [imageUpdateTrigger, setImageUpdateTrigger] = useState(0);
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [pdfUploading, setPdfUploading] = useState(false);
+  const [pdfUploadProgress, setPdfUploadProgress] = useState(0);
   const [selectedImageFile, setSelectedImageFile] = useState<{[key: string]: File | null}>({});
   const [savedWorksheetIds, setSavedWorksheetIds] = useState<Set<string>>(new Set());
   const [categoryFilteredWorksheets, setCategoryFilteredWorksheets] = useState<WorksheetData[]>([]);
@@ -473,26 +477,66 @@ const AdminDashboard = () => {
       content: "",
     });
     setEditingWorksheet(null);
+    setPdfFile(null);
+    setPdfUploadProgress(0);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // For new worksheets, a PDF file is required; for edits, existing URL is fine
+    if (!editingWorksheet && !pdfFile) {
+      toast({ title: "Missing PDF", description: "Please upload a PDF file.", variant: "destructive" });
+      return;
+    }
+
+    let finalPdfUrl = formData.pdfUrl;
+
+    // Upload the PDF if a new file was selected
+    if (pdfFile) {
+      setPdfUploading(true);
+      setPdfUploadProgress(10);
+      try {
+        const gradeNumber = formData.grade;
+        const safeName = pdfFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+        const filePath = `grade-${gradeNumber}/${formData.subject}/${Date.now()}-${safeName}`;
+
+        setPdfUploadProgress(30);
+        const { error: uploadError } = await supabase.storage
+          .from("worksheet-pdfs")
+          .upload(filePath, pdfFile, { contentType: "application/pdf", upsert: false });
+
+        if (uploadError) throw uploadError;
+
+        setPdfUploadProgress(80);
+        const { data: { publicUrl } } = supabase.storage
+          .from("worksheet-pdfs")
+          .getPublicUrl(filePath);
+
+        finalPdfUrl = publicUrl;
+        setPdfUploadProgress(100);
+      } catch (err: any) {
+        console.error("PDF upload error:", err);
+        toast({ title: "Upload Failed", description: err.message || "Failed to upload PDF.", variant: "destructive" });
+        setPdfUploading(false);
+        setPdfUploadProgress(0);
+        return;
+      } finally {
+        setPdfUploading(false);
+      }
+    }
+
     // Prepare data, treating "none" as empty categoryId
     const submitData = {
       ...formData,
+      pdfUrl: finalPdfUrl,
       categoryId: formData.categoryId === "none" ? "" : formData.categoryId,
     };
 
     if (editingWorksheet) {
-      // Update existing worksheet
       await updateWorksheet(editingWorksheet.id, submitData);
-      toast({
-        title: "Worksheet Updated",
-        description: "The worksheet has been successfully updated",
-      });
+      toast({ title: "Worksheet Updated", description: "The worksheet has been successfully updated" });
     } else {
-      // Create new worksheet
       await createWorksheet(submitData);
       toast({
         title: "✅ Worksheet Created!",
@@ -501,13 +545,9 @@ const AdminDashboard = () => {
       });
     }
 
-    // Reload all worksheets
     await loadWorksheets();
-    
-    // Force reload category worksheets immediately
     const filtered = await getWorksheetsForFilters();
     setCategoryFilteredWorksheets(filtered);
-    
     setIsDialogOpen(false);
     resetForm();
   };
@@ -828,18 +868,14 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="pdfUrl">PDF URL *</Label>
-                  <Input
-                    id="pdfUrl"
-                    type="url"
-                    value={formData.pdfUrl}
-                    onChange={(e) => setFormData({ ...formData, pdfUrl: e.target.value })}
-                    placeholder="https://drive.google.com/file/d/..."
-                    required
+                  <Label>PDF File *</Label>
+                  <PdfUploadZone
+                    file={pdfFile}
+                    onFileChange={setPdfFile}
+                    existingPdfUrl={editingWorksheet ? formData.pdfUrl : undefined}
+                    isUploading={pdfUploading}
+                    uploadProgress={pdfUploadProgress}
                   />
-                  <p className="text-xs text-muted-foreground">
-                    Use Google Drive, Dropbox, or any direct PDF link
-                  </p>
                 </div>
 
                 <div className="space-y-2">
@@ -857,8 +893,10 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className="flex gap-2 pt-4">
-                  <Button type="submit" className="flex-1">
-                    {editingWorksheet ? "Update Worksheet" : "Create Worksheet"}
+                  <Button type="submit" className="flex-1" disabled={pdfUploading}>
+                    {pdfUploading ? (
+                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Uploading…</>
+                    ) : editingWorksheet ? "Update Worksheet" : "Create Worksheet"}
                   </Button>
                   <Button
                     type="button"
