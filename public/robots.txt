@@ -12,5 +12,5 @@ Disallow: /admin-login
 Disallow: /dashboard-secure-2025
 Disallow: /reset-password
 
-# Sitemap location (served via Edge Function)
-Sitemap: https://sitalsldfenvtdjdgafg.supabase.co/functions/v1/sitemap
+# Sitemap location
+Sitemap: https://www.wizkidshub.com/sitemap.xml
