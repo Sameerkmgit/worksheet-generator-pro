@@ -32,6 +32,8 @@ import {
   createWorksheetCategory,
   deleteWorksheetCategory,
   WorksheetCategoryData,
+  SubcategoryData,
+  getSubcategoriesByCategoryId,
 } from "@/lib/worksheetStorage";
 import {
   Dialog,
@@ -78,11 +80,14 @@ const AdminDashboard = () => {
     grade: "",
     subject: "",
     categoryId: "none",
+    subcategoryId: "none",
     pdfUrl: "",
     content: "",
   });
   const [categoryOptions, setCategoryOptions] = useState<WorksheetCategoryData[]>([]);
+  const [subcategoryOptions, setSubcategoryOptions] = useState<SubcategoryData[]>([]);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
+  const [isSubcategoriesLoading, setIsSubcategoriesLoading] = useState(false);
 
   // Helper function to normalize subject for DB queries
   const normalizeSubject = (subject: string): string => {
@@ -182,6 +187,27 @@ const AdminDashboard = () => {
 
     fetchCategories();
   }, [formData.grade, formData.subject]);
+
+  // Fetch subcategories when categoryId changes
+  useEffect(() => {
+    const fetchSubcategories = async () => {
+      if (!formData.categoryId || formData.categoryId === "none") {
+        setSubcategoryOptions([]);
+        return;
+      }
+      setIsSubcategoriesLoading(true);
+      try {
+        const subs = await getSubcategoriesByCategoryId(formData.categoryId);
+        setSubcategoryOptions(subs);
+      } catch (error) {
+        console.error('Error fetching subcategories:', error);
+        setSubcategoryOptions([]);
+      } finally {
+        setIsSubcategoriesLoading(false);
+      }
+    };
+    fetchSubcategories();
+  }, [formData.categoryId]);
 
   const loadWorksheets = async () => {
     const data = await getAllWorksheets();
@@ -473,12 +499,14 @@ const AdminDashboard = () => {
       grade: "",
       subject: "",
       categoryId: "none",
+      subcategoryId: "none",
       pdfUrl: "",
       content: "",
     });
     setEditingWorksheet(null);
     setPdfFile(null);
     setPdfUploadProgress(0);
+    setSubcategoryOptions([]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -526,23 +554,35 @@ const AdminDashboard = () => {
       }
     }
 
-    // Prepare data, treating "none" as empty categoryId
+    // Prepare data, treating "none" as empty categoryId/subcategoryId
     const submitData = {
       ...formData,
       pdfUrl: finalPdfUrl,
       categoryId: formData.categoryId === "none" ? "" : formData.categoryId,
+      subcategoryId: formData.subcategoryId === "none" ? "" : formData.subcategoryId,
     };
 
-    if (editingWorksheet) {
-      await updateWorksheet(editingWorksheet.id, submitData);
-      toast({ title: "Worksheet Updated", description: "The worksheet has been successfully updated" });
-    } else {
-      await createWorksheet(submitData);
+    try {
+      if (editingWorksheet) {
+        await updateWorksheet(editingWorksheet.id, submitData);
+        toast({ title: "Worksheet Updated", description: "The worksheet has been successfully updated" });
+      } else {
+        await createWorksheet(submitData);
+        toast({
+          title: "✅ Worksheet Created!",
+          description: `"${formData.title}" has been added. Go to Categories tab to upload its image.`,
+          duration: 6000,
+        });
+      }
+    } catch (err: any) {
+      console.error("Worksheet save error:", err);
       toast({
-        title: "✅ Worksheet Created!",
-        description: `"${formData.title}" has been added. Go to Categories tab to upload its image.`,
-        duration: 6000,
+        title: "❌ Failed to Save Worksheet",
+        description: err.message || "An unknown error occurred. Check console for details.",
+        variant: "destructive",
+        duration: 10000,
       });
+      return;
     }
 
     await loadWorksheets();
@@ -559,6 +599,7 @@ const AdminDashboard = () => {
       grade: worksheet.grade,
       subject: worksheet.subject,
       categoryId: worksheet.categoryId || "none",
+      subcategoryId: (worksheet as any).subcategoryId || "none",
       pdfUrl: worksheet.pdfUrl,
       content: worksheet.content || "",
     });
@@ -864,6 +905,36 @@ const AdminDashboard = () => {
                   </div>
                   <p className="text-xs text-muted-foreground">
                     Categories help organize multiple worksheets on the same topic
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="subcategory">Subcategory / Topic</Label>
+                  <Select
+                    value={formData.subcategoryId}
+                    onValueChange={(value) => setFormData({ ...formData, subcategoryId: value })}
+                    disabled={!formData.categoryId || formData.categoryId === "none" || isSubcategoriesLoading}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder={
+                        isSubcategoriesLoading
+                          ? "Loading subcategories..."
+                          : !formData.categoryId || formData.categoryId === "none"
+                          ? "Select a category first"
+                          : "Select subcategory (optional)"
+                      } />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">No Subcategory</SelectItem>
+                      {subcategoryOptions.map(sub => (
+                        <SelectItem key={sub.id} value={sub.id}>
+                          {sub.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">
+                    Subcategories/topics appear under categories on the site
                   </p>
                 </div>
 
