@@ -34,6 +34,7 @@ export interface WorksheetData {
   faq?: any[];
   seo?: any;
   difficulty?: string;
+  subCategory?: string;
   categoryId?: string;
   subcategoryId?: string;
   createdAt: string;
@@ -114,6 +115,7 @@ const mapWorksheetFromDB = (w: any): WorksheetData => ({
   faq: w.faq as any,
   seo: w.seo as any,
   difficulty: w.difficulty,
+  subCategory: w.sub_category,
   categoryId: w.category_id,
   subcategoryId: w.subcategory_id,
   createdAt: w.created_at,
@@ -486,6 +488,7 @@ export const createWorksheet = async (
       image_url: worksheet.imageUrl,
       content: worksheet.content,
       difficulty: worksheet.difficulty || null,
+      sub_category: worksheet.subCategory || null,
       category_id: worksheet.categoryId || null,
       subcategory_id: worksheet.subcategoryId || null,
       is_archived: false,
@@ -546,6 +549,7 @@ export const updateWorksheet = async (
   if (updates.imageUrl !== undefined) updateData.image_url = updates.imageUrl;
   if (updates.content !== undefined) updateData.content = updates.content;
   if (updates.difficulty !== undefined) updateData.difficulty = updates.difficulty || null;
+  if (updates.subCategory !== undefined) updateData.sub_category = updates.subCategory || null;
   if (updates.categoryId !== undefined) updateData.category_id = updates.categoryId || null;
   if (updates.subcategoryId !== undefined) updateData.subcategory_id = updates.subcategoryId || null;
   if (updates.heading !== undefined) updateData.heading = updates.heading ? toTitleCase(updates.heading) : updates.heading;
