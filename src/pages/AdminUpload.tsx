@@ -33,6 +33,7 @@ const AdminUpload = () => {
   const [categoryId, setCategoryId] = useState("");
   const [subcategoryId, setSubcategoryId] = useState("");
   const [difficulty, setDifficulty] = useState("");
+  const [subCategory, setSubCategory] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -146,7 +147,8 @@ const AdminUpload = () => {
           subject,
           pdf_url: publicUrl,
           is_archived: false,
-          difficulty: difficulty || null,
+          difficulty: difficulty && difficulty !== "none" ? difficulty : null,
+          sub_category: subCategory && subCategory !== "none" ? subCategory : null,
           category_id: categoryId,
           subcategory_id: subcategoryId,
         });
@@ -166,6 +168,7 @@ const AdminUpload = () => {
       setCategoryId("");
       setSubcategoryId("");
       setDifficulty("");
+      setSubCategory("");
       setPdfFile(null);
       setCategories([]);
       setSubcategories([]);
@@ -256,6 +259,69 @@ const AdminUpload = () => {
                       <SelectItem value="english">English</SelectItem>
                       <SelectItem value="computer-science">Computer Science</SelectItem>
                       <SelectItem value="assignments">Assignments</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Sub-Category (dependent on subject) */}
+                <div className="space-y-2">
+                  <Label className="text-base font-semibold">Sub-Category</Label>
+                  <Select
+                    value={subCategory || "none"}
+                    onValueChange={(v) => setSubCategory(v === "none" ? "" : v)}
+                    disabled={!subject}
+                  >
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder={!subject ? "Select subject first" : "Select sub-category (optional)"} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">None</SelectItem>
+                      {subject === "math" && (
+                        <>
+                          <SelectItem value="Addition">Addition</SelectItem>
+                          <SelectItem value="Subtraction">Subtraction</SelectItem>
+                          <SelectItem value="Multiplication">Multiplication</SelectItem>
+                          <SelectItem value="Division">Division</SelectItem>
+                          <SelectItem value="Place Value">Place Value</SelectItem>
+                          <SelectItem value="Fractions">Fractions</SelectItem>
+                          <SelectItem value="Shapes">Shapes</SelectItem>
+                          <SelectItem value="Measurement">Measurement</SelectItem>
+                          <SelectItem value="Time & Money">Time & Money</SelectItem>
+                        </>
+                      )}
+                      {subject === "english" && (
+                        <>
+                          <SelectItem value="Reading">Reading</SelectItem>
+                          <SelectItem value="Grammar">Grammar</SelectItem>
+                          <SelectItem value="Vocabulary">Vocabulary</SelectItem>
+                          <SelectItem value="Writing">Writing</SelectItem>
+                          <SelectItem value="Phonics">Phonics</SelectItem>
+                        </>
+                      )}
+                      {subject === "science" && (
+                        <>
+                          <SelectItem value="Plants & Animals">Plants & Animals</SelectItem>
+                          <SelectItem value="My Body">My Body</SelectItem>
+                          <SelectItem value="Family & Home">Family & Home</SelectItem>
+                          <SelectItem value="Food & Water">Food & Water</SelectItem>
+                          <SelectItem value="Environment">Environment</SelectItem>
+                        </>
+                      )}
+                      {subject === "computer-science" && (
+                        <>
+                          <SelectItem value="Computer Basics">Computer Basics</SelectItem>
+                          <SelectItem value="Keyboard & Mouse">Keyboard & Mouse</SelectItem>
+                          <SelectItem value="Digital Safety">Digital Safety</SelectItem>
+                        </>
+                      )}
+                      {subject === "assignments" && (
+                        <>
+                          <SelectItem value="English Assignment Packs">English Assignment Packs</SelectItem>
+                          <SelectItem value="Math Assignment Packs">Math Assignment Packs</SelectItem>
+                          <SelectItem value="EVS Assignment Packs">EVS Assignment Packs</SelectItem>
+                          <SelectItem value="Mixed Subject Revision Sheets">Mixed Subject Revision Sheets</SelectItem>
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
                 </div>
