@@ -561,7 +561,7 @@ const AdminDashboard = () => {
     const submitData = {
       ...formData,
       pdfUrl: finalPdfUrl,
-      difficulty: formData.difficulty || undefined,
+      difficulty: formData.difficulty && formData.difficulty !== "none" ? formData.difficulty : undefined,
       categoryId: formData.categoryId === "none" ? null : formData.categoryId || null,
       subcategoryId: formData.subcategoryId === "none" ? null : formData.subcategoryId || null,
     };
@@ -969,7 +969,7 @@ const AdminDashboard = () => {
                       <SelectValue placeholder="Select difficulty (optional)" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">None</SelectItem>
+                      <SelectItem value="none">None</SelectItem>
                       <SelectItem value="Easy">Easy</SelectItem>
                       <SelectItem value="Medium">Medium</SelectItem>
                       <SelectItem value="Hard">Hard</SelectItem>
