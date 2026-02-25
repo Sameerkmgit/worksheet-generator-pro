@@ -286,6 +286,7 @@ export type Database = {
           content: string | null
           created_at: string | null
           description: string | null
+          difficulty: string | null
           faq: Json | null
           grade: string
           heading: string | null
@@ -308,6 +309,7 @@ export type Database = {
           content?: string | null
           created_at?: string | null
           description?: string | null
+          difficulty?: string | null
           faq?: Json | null
           grade: string
           heading?: string | null
@@ -330,6 +332,7 @@ export type Database = {
           content?: string | null
           created_at?: string | null
           description?: string | null
+          difficulty?: string | null
           faq?: Json | null
           grade?: string
           heading?: string | null
