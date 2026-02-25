@@ -28,6 +28,7 @@ const WorksheetsBrowser = () => {
   
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   
   const [loadingGrades, setLoadingGrades] = useState(true);
@@ -36,12 +37,13 @@ const WorksheetsBrowser = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Check if any filters are active
-  const hasActiveFilters = selectedGrade !== null || selectedSubject !== null || searchTerm.trim() !== "";
+  const hasActiveFilters = selectedGrade !== null || selectedSubject !== null || selectedDifficulty !== null || searchTerm.trim() !== "";
 
   // Clear all filters
   const clearFilters = () => {
     setSelectedGrade(null);
     setSelectedSubject(null);
+    setSelectedDifficulty(null);
     setSearchTerm("");
   };
 
@@ -119,7 +121,7 @@ const WorksheetsBrowser = () => {
           .from("worksheets")
           .select("id, grade, subject, title, pdf_url, created_at")
           .eq("is_archived", false)
-          .order("created_at", { ascending: false })
+          .order("grade", { ascending: true })
           .order("title", { ascending: true });
 
         // Only apply filters if values are selected
@@ -129,6 +131,10 @@ const WorksheetsBrowser = () => {
         
         if (selectedSubject) {
           query = query.eq("subject", selectedSubject);
+        }
+
+        if (selectedDifficulty) {
+          query = query.eq("difficulty", selectedDifficulty);
         }
 
         if (searchTerm.trim()) {
@@ -148,7 +154,7 @@ const WorksheetsBrowser = () => {
     };
 
     fetchWorksheets();
-  }, [selectedGrade, selectedSubject, searchTerm]);
+  }, [selectedGrade, selectedSubject, selectedDifficulty, searchTerm]);
 
   const formatDate = (dateString: string) => {
     try {
@@ -176,6 +182,15 @@ const WorksheetsBrowser = () => {
     }
   };
 
+  // Handle difficulty change
+  const handleDifficultyChange = (value: string) => {
+    if (value === "__all__") {
+      setSelectedDifficulty(null);
+    } else {
+      setSelectedDifficulty(value);
+    }
+  };
+
   // Breadcrumb items for Worksheets Browser page
   const breadcrumbItems = [
     { label: "Home", href: "/" },
@@ -185,8 +200,8 @@ const WorksheetsBrowser = () => {
   return (
     <>
       <Helmet>
-        <title>Browse Worksheets | WizKidsHub Worksheets</title>
-        <meta name="description" content="Browse and download worksheets by grade and subject" />
+        <title>Browse All Free Printable Worksheets – Grades 1 to 5 | WizKidsHub</title>
+        <meta name="description" content="Browse and download 715+ free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty. No sign-up required. | WizKidsHub" />
         <link rel="canonical" href="https://www.wizkidshub.com/worksheets" />
       </Helmet>
       
@@ -202,8 +217,8 @@ const WorksheetsBrowser = () => {
           
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2 font-heading">WizKidsHub Worksheets Browser</h1>
-            <p className="text-muted-foreground">Browse worksheets by Grade and Subject</p>
+            <h1 className="text-3xl font-bold text-foreground mb-2 font-heading">Browse All Worksheets</h1>
+            <p className="text-muted-foreground">715 free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty.</p>
           </div>
 
           {/* Filters */}
@@ -248,6 +263,25 @@ const WorksheetsBrowser = () => {
                       {toTitleCase(s)}
                     </SelectItem>
                   ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Difficulty Dropdown */}
+            <div className="flex-1 min-w-[150px]">
+              <label className="block text-sm font-medium text-foreground mb-1">Difficulty</label>
+              <Select
+                value={selectedDifficulty || "__all__"}
+                onValueChange={handleDifficultyChange}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="All Levels" />
+                </SelectTrigger>
+                <SelectContent className="bg-background border shadow-lg z-50">
+                  <SelectItem value="__all__">All Levels</SelectItem>
+                  <SelectItem value="easy">Easy</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="hard">Hard</SelectItem>
                 </SelectContent>
               </Select>
             </div>
