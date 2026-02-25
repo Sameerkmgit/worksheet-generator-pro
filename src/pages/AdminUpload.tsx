@@ -32,6 +32,7 @@ const AdminUpload = () => {
   const [subject, setSubject] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [subcategoryId, setSubcategoryId] = useState("");
+  const [difficulty, setDifficulty] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -145,6 +146,7 @@ const AdminUpload = () => {
           subject,
           pdf_url: publicUrl,
           is_archived: false,
+          difficulty: difficulty || null,
           category_id: categoryId,
           subcategory_id: subcategoryId,
         });
@@ -163,6 +165,7 @@ const AdminUpload = () => {
       setSubject("");
       setCategoryId("");
       setSubcategoryId("");
+      setDifficulty("");
       setPdfFile(null);
       setCategories([]);
       setSubcategories([]);
@@ -307,6 +310,24 @@ const AdminUpload = () => {
                       {subcategories.map((s) => (
                         <SelectItem key={s.id} value={s.id}>{s.title}</SelectItem>
                       ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Difficulty */}
+                <div className="space-y-2">
+                  <Label htmlFor="difficulty" className="text-base font-semibold">
+                    Difficulty
+                  </Label>
+                  <Select value={difficulty} onValueChange={setDifficulty}>
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Select difficulty (optional)" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="">None</SelectItem>
+                      <SelectItem value="Easy">Easy</SelectItem>
+                      <SelectItem value="Medium">Medium</SelectItem>
+                      <SelectItem value="Hard">Hard</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
