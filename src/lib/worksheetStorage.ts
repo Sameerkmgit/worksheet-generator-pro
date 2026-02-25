@@ -33,6 +33,7 @@ export interface WorksheetData {
   usage?: string;
   faq?: any[];
   seo?: any;
+  difficulty?: string;
   categoryId?: string;
   subcategoryId?: string;
   createdAt: string;
@@ -112,6 +113,7 @@ const mapWorksheetFromDB = (w: any): WorksheetData => ({
   usage: w.usage,
   faq: w.faq as any,
   seo: w.seo as any,
+  difficulty: w.difficulty,
   categoryId: w.category_id,
   subcategoryId: w.subcategory_id,
   createdAt: w.created_at,
@@ -483,6 +485,7 @@ export const createWorksheet = async (
       pdf_url: worksheet.pdfUrl,
       image_url: worksheet.imageUrl,
       content: worksheet.content,
+      difficulty: worksheet.difficulty || null,
       category_id: worksheet.categoryId || null,
       subcategory_id: worksheet.subcategoryId || null,
       is_archived: false,
@@ -542,6 +545,7 @@ export const updateWorksheet = async (
   if (updates.pdfUrl) updateData.pdf_url = updates.pdfUrl;
   if (updates.imageUrl !== undefined) updateData.image_url = updates.imageUrl;
   if (updates.content !== undefined) updateData.content = updates.content;
+  if (updates.difficulty !== undefined) updateData.difficulty = updates.difficulty || null;
   if (updates.categoryId !== undefined) updateData.category_id = updates.categoryId || null;
   if (updates.subcategoryId !== undefined) updateData.subcategory_id = updates.subcategoryId || null;
   if (updates.heading !== undefined) updateData.heading = updates.heading ? toTitleCase(updates.heading) : updates.heading;

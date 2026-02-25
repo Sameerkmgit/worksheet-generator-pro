@@ -82,6 +82,7 @@ const AdminDashboard = () => {
     subject: "",
     categoryId: "none",
     subcategoryId: "none",
+    difficulty: "",
     pdfUrl: "",
     content: "",
   });
@@ -501,6 +502,7 @@ const AdminDashboard = () => {
       subject: "",
       categoryId: "none",
       subcategoryId: "none",
+      difficulty: "",
       pdfUrl: "",
       content: "",
     });
@@ -559,6 +561,7 @@ const AdminDashboard = () => {
     const submitData = {
       ...formData,
       pdfUrl: finalPdfUrl,
+      difficulty: formData.difficulty || undefined,
       categoryId: formData.categoryId === "none" ? null : formData.categoryId || null,
       subcategoryId: formData.subcategoryId === "none" ? null : formData.subcategoryId || null,
     };
@@ -609,6 +612,7 @@ const AdminDashboard = () => {
       subject: worksheet.subject,
       categoryId: worksheet.categoryId || "none",
       subcategoryId: (worksheet as any).subcategoryId || "none",
+      difficulty: worksheet.difficulty || "",
       pdfUrl: worksheet.pdfUrl,
       content: worksheet.content || "",
     });
@@ -956,6 +960,24 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className="space-y-2">
+                  <Label htmlFor="difficulty">Difficulty</Label>
+                  <Select
+                    value={formData.difficulty}
+                    onValueChange={(value) => setFormData({ ...formData, difficulty: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select difficulty (optional)" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="">None</SelectItem>
+                      <SelectItem value="Easy">Easy</SelectItem>
+                      <SelectItem value="Medium">Medium</SelectItem>
+                      <SelectItem value="Hard">Hard</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
                   <Label>PDF File *</Label>
                   <PdfUploadZone
                     file={pdfFile}
@@ -1076,10 +1098,15 @@ const AdminDashboard = () => {
                                   <p className="text-muted-foreground text-sm mb-4">
                                     {worksheet.description}
                                   </p>
-                                  <div className="flex gap-4 text-xs text-muted-foreground">
-                                    <span>Created: {new Date(worksheet.createdAt).toLocaleDateString()}</span>
-                                    <span>Updated: {new Date(worksheet.updatedAt).toLocaleDateString()}</span>
-                                  </div>
+                                    <div className="flex gap-4 text-xs text-muted-foreground">
+                                      <span>Created: {new Date(worksheet.createdAt).toLocaleDateString()}</span>
+                                      <span>Updated: {new Date(worksheet.updatedAt).toLocaleDateString()}</span>
+                                      {worksheet.difficulty && (
+                                        <span className="px-2 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                                          {worksheet.difficulty}
+                                        </span>
+                                      )}
+                                    </div>
                                 </div>
                                 <div className="flex gap-2">
                                   <Button
