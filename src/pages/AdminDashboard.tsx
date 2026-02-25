@@ -368,7 +368,10 @@ const AdminDashboard = () => {
       "computer-science": ["Computer Basics", "Keyboard & Mouse", "Digital Safety"],
       assignments: ["English Assignment Packs", "Math Assignment Packs", "EVS Assignment Packs", "Mixed Subject Revision Sheets"],
     };
-    return map[subject] || [];
+    if (subject === "all" || !map[subject]) {
+      return [...new Set(Object.values(map).flat())];
+    }
+    return map[subject];
   };
 
   const handleLogout = () => {
@@ -1133,19 +1136,17 @@ const AdminDashboard = () => {
               </SelectContent>
             </Select>
 
-            {filterSubject !== "all" && (
-              <Select value={filterSubCategory} onValueChange={setFilterSubCategory}>
-                <SelectTrigger className="w-full md:w-[200px]">
-                  <SelectValue placeholder="Filter by Sub-Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Sub-Categories</SelectItem>
-                  {getSubCategoryOptionsForSubject(filterSubject).map((opt) => (
-                    <SelectItem key={opt} value={opt}>{opt}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
+            <Select value={filterSubCategory} onValueChange={setFilterSubCategory}>
+              <SelectTrigger className="w-full md:w-[200px]">
+                <SelectValue placeholder="Filter by Sub-Category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Sub-Categories</SelectItem>
+                {getSubCategoryOptionsForSubject(filterSubject).map((opt) => (
+                  <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
