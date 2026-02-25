@@ -52,6 +52,7 @@ const AdminDashboard = () => {
   const [filteredWorksheets, setFilteredWorksheets] = useState<WorksheetData[]>([]);
   const [filterGrade, setFilterGrade] = useState<string>("all");
   const [filterSubject, setFilterSubject] = useState<string>("all");
+  const [filterSubCategory, setFilterSubCategory] = useState<string>("all");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingWorksheet, setEditingWorksheet] = useState<WorksheetData | null>(null);
   const [categories, setCategories] = useState<CategoryData[]>([]);
@@ -135,7 +136,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     filterWorksheets();
-  }, [worksheets, filterGrade, filterSubject]);
+  }, [worksheets, filterGrade, filterSubject, filterSubCategory]);
 
   // Load category-filtered worksheets
   useEffect(() => {
@@ -351,8 +352,23 @@ const AdminDashboard = () => {
     if (filterSubject !== "all") {
       filtered = filtered.filter(w => w.subject === filterSubject);
     }
+
+    if (filterSubCategory !== "all") {
+      filtered = filtered.filter(w => w.subCategory === filterSubCategory);
+    }
     
     setFilteredWorksheets(filtered);
+  };
+
+  const getSubCategoryOptionsForSubject = (subject: string): string[] => {
+    const map: Record<string, string[]> = {
+      math: ["Addition", "Subtraction", "Multiplication", "Division", "Place Value", "Fractions", "Shapes", "Measurement", "Time & Money"],
+      english: ["Reading", "Grammar", "Vocabulary", "Writing", "Phonics"],
+      science: ["Plants & Animals", "My Body", "Family & Home", "Food & Water", "Environment"],
+      "computer-science": ["Computer Basics", "Keyboard & Mouse", "Digital Safety"],
+      assignments: ["English Assignment Packs", "Math Assignment Packs", "EVS Assignment Packs", "Mixed Subject Revision Sheets"],
+    };
+    return map[subject] || [];
   };
 
   const handleLogout = () => {
@@ -1103,7 +1119,7 @@ const AdminDashboard = () => {
               </SelectContent>
             </Select>
 
-            <Select value={filterSubject} onValueChange={setFilterSubject}>
+            <Select value={filterSubject} onValueChange={(val) => { setFilterSubject(val); setFilterSubCategory("all"); }}>
               <SelectTrigger className="w-full md:w-[180px]">
                 <SelectValue placeholder="Filter by Subject" />
               </SelectTrigger>
@@ -1116,6 +1132,20 @@ const AdminDashboard = () => {
                 <SelectItem value="assignments">Assignments</SelectItem>
               </SelectContent>
             </Select>
+
+            {filterSubject !== "all" && (
+              <Select value={filterSubCategory} onValueChange={setFilterSubCategory}>
+                <SelectTrigger className="w-full md:w-[200px]">
+                  <SelectValue placeholder="Filter by Sub-Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Sub-Categories</SelectItem>
+                  {getSubCategoryOptionsForSubject(filterSubject).map((opt) => (
+                    <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
           </div>
         </div>
 
