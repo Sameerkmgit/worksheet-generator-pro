@@ -250,53 +250,6 @@ const Category = () => {
           </div>
         </section>
 
-        {/* Popular Topics Section */}
-        {popularTopics.length > 0 && (
-          <section className="py-12 px-4 bg-secondary/5">
-            <div className="max-w-7xl mx-auto">
-              <div className="flex items-center gap-2 mb-6">
-                <Sparkles className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl font-bold text-foreground font-heading">
-                  Popular Topics in {gradeTitle}
-                </h2>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {popularTopics.map((topic) => (
-                  <Link key={topic.id} to={`/subcategory/${topic.id}`}>
-                    <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 overflow-hidden">
-                      <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
-                        {topic.image_url ? (
-                          <img
-                            src={topic.image_url}
-                            alt={`${toTitleCase(topic.title)} worksheets for ${gradeTitle}`}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <FolderOpen className="h-10 w-10 text-primary/40" />
-                          </div>
-                        )}
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-foreground mb-1 line-clamp-2">
-                          {toTitleCase(topic.title)}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {topic.worksheet_count} worksheet{topic.worksheet_count !== 1 ? "s" : ""}
-                        </p>
-                        <p className="text-xs text-primary mt-1">
-                          {toTitleCase(topic.category_title)}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
         {/* Categories Grid */}
         <section className="py-16 px-4">
           <div className="max-w-7xl mx-auto">
@@ -360,6 +313,53 @@ const Category = () => {
             </div>
           </div>
         </section>
+
+        {/* Popular Topics Section */}
+        {popularTopics.length > 0 && (
+          <section className="py-12 px-4 bg-secondary/5">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex items-center gap-2 mb-6">
+                <Sparkles className="w-6 h-6 text-primary" />
+                <h2 className="text-2xl font-bold text-foreground font-heading">
+                  Popular Topics in {gradeTitle}
+                </h2>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {popularTopics.map((topic) => (
+                  <Link key={topic.id} to={`/subcategory/${topic.id}`}>
+                    <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 overflow-hidden">
+                      <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
+                        {topic.image_url ? (
+                          <img
+                            src={topic.image_url}
+                            alt={`${toTitleCase(topic.title)} worksheets for ${gradeTitle}`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <FolderOpen className="h-10 w-10 text-primary/40" />
+                          </div>
+                        )}
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-foreground mb-1 line-clamp-2">
+                          {toTitleCase(topic.title)}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {topic.worksheet_count} worksheet{topic.worksheet_count !== 1 ? "s" : ""}
+                        </p>
+                        <p className="text-xs text-primary mt-1">
+                          {toTitleCase(topic.category_title)}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Bottom Banner Ad */}
         <div className="w-full py-4">
