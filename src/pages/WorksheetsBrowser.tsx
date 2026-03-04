@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Loader2, ExternalLink, Search, X } from "lucide-react";
 import { format } from "date-fns";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSense from "@/components/AdSense";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { toTitleCase, cleanDisplayTitle } from "@/lib/utils";
 
@@ -346,7 +347,13 @@ const WorksheetsBrowser = () => {
               <p className="text-sm text-muted-foreground mb-4">
                 Showing {worksheets.length} worksheet{worksheets.length !== 1 ? 's' : ''}
               </p>
-              {worksheets.map((worksheet) => (
+              {worksheets.map((worksheet, index) => (
+                <React.Fragment key={worksheet.id}>
+                  {index === Math.floor(worksheets.length / 2) && (
+                    <div className="py-4">
+                      <AdSense adSlot="3456789012" adFormat="auto" className="w-full" />
+                    </div>
+                  )}
                 <Card key={worksheet.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4">
                     <div className="flex-1">
@@ -368,6 +375,7 @@ const WorksheetsBrowser = () => {
                     </Button>
                   </CardContent>
                 </Card>
+                </React.Fragment>
               ))}
             </div>
           )}

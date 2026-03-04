@@ -89,13 +89,6 @@ const Home = () => {
       
       <Header />
       
-      {/* Header Banner Ad */}
-      <section className="py-4 px-6 bg-background">
-        <div className="container mx-auto max-w-[1140px] flex justify-center">
-          <AdSense adSlot="1234567890" adFormat="horizontal" className="w-full max-w-[728px] min-h-[90px]" />
-        </div>
-      </section>
-      
       {/* Hero Section */}
       <section className="gradient-hero text-white py-24 px-6 relative overflow-hidden" aria-label="Hero section with introduction to WizKidsHub Worksheets">
         <div className="absolute inset-0 opacity-10">
@@ -148,6 +141,13 @@ const Home = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Ad below hero */}
+      <section className="py-4 px-6">
+        <div className="container mx-auto max-w-[1140px]">
+          <AdSense adSlot="1234567890" adFormat="auto" className="w-full" />
         </div>
       </section>
 
