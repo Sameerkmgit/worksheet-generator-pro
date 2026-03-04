@@ -185,13 +185,6 @@ const Category = () => {
       <Header />
       
       <main className="flex-1">
-        {/* Top Banner Ad */}
-        <div className="w-full py-4">
-          <div className="max-w-7xl mx-auto px-4">
-            <AdSense adSlot="4567890123" adFormat="horizontal" className="w-full min-h-[90px]" />
-          </div>
-        </div>
-
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-12">
           <div className="max-w-7xl mx-auto px-4">
@@ -206,6 +199,13 @@ const Category = () => {
             </p>
           </div>
         </section>
+
+        {/* Ad below hero */}
+        <div className="py-4 px-4">
+          <div className="max-w-7xl mx-auto">
+            <AdSense adSlot="4567890123" adFormat="auto" className="w-full" />
+          </div>
+        </div>
 
         {/* Subjects Grid */}
         <section className="py-12 px-4 bg-background">
