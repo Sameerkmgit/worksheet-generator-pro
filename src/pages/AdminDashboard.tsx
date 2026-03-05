@@ -82,6 +82,7 @@ const AdminDashboard = () => {
   const [subcatCategories, setSubcatCategories] = useState<WorksheetCategoryData[]>([]);
   const [subcatCategoryFilter, setSubcatCategoryFilter] = useState<string>("all");
   const [subcatList, setSubcatList] = useState<SubcategoryData[]>([]);
+  const [subcatNameFilter, setSubcatNameFilter] = useState<string>("all");
   const [subcatImageUploading, setSubcatImageUploading] = useState<string | null>(null);
   // Form state
   const [formData, setFormData] = useState({
