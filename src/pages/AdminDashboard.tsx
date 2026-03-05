@@ -76,6 +76,13 @@ const AdminDashboard = () => {
     grade: "",
     subject: "",
   });
+  // Subcategory image upload state
+  const [subcatGradeFilter, setSubcatGradeFilter] = useState<string>("1");
+  const [subcatSubjectFilter, setSubcatSubjectFilter] = useState<string>("Math");
+  const [subcatCategories, setSubcatCategories] = useState<WorksheetCategoryData[]>([]);
+  const [subcatCategoryFilter, setSubcatCategoryFilter] = useState<string>("all");
+  const [subcatList, setSubcatList] = useState<SubcategoryData[]>([]);
+  const [subcatImageUploading, setSubcatImageUploading] = useState<string | null>(null);
   // Form state
   const [formData, setFormData] = useState({
     title: "",
