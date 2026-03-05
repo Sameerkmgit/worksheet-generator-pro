@@ -1740,9 +1740,13 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Subcategory Grid */}
-                {subcatList.length > 0 ? (
+                {(() => {
+                  const displayedSubcats = subcatNameFilter === "all"
+                    ? subcatList
+                    : subcatList.filter(s => s.title === subcatNameFilter);
+                  return displayedSubcats.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {subcatList.map(subcat => (
+                    {displayedSubcats.map(subcat => (
                       <Card key={subcat.id} className="overflow-hidden">
                         <CardContent className="p-4">
                           <h4 className="font-semibold text-base mb-2">{subcat.title}</h4>
