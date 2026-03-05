@@ -82,6 +82,7 @@ const AdminDashboard = () => {
   const [subcatCategories, setSubcatCategories] = useState<WorksheetCategoryData[]>([]);
   const [subcatCategoryFilter, setSubcatCategoryFilter] = useState<string>("all");
   const [subcatList, setSubcatList] = useState<SubcategoryData[]>([]);
+  const [subcatNameFilter, setSubcatNameFilter] = useState<string>("all");
   const [subcatImageUploading, setSubcatImageUploading] = useState<string | null>(null);
   // Form state
   const [formData, setFormData] = useState({
@@ -724,6 +725,7 @@ const AdminDashboard = () => {
       const cats = await getWorksheetCategoriesByGradeAndSubject(subcatGradeFilter, subcatSubjectFilter);
       setSubcatCategories(cats);
       setSubcatCategoryFilter("all");
+      setSubcatNameFilter("all");
     };
     if (subcatGradeFilter && subcatSubjectFilter) {
       loadSubcatCategories();
@@ -1684,7 +1686,7 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent>
                 {/* Filters */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                   <div className="space-y-2">
                     <Label>Grade</Label>
                     <Select value={subcatGradeFilter} onValueChange={setSubcatGradeFilter}>
@@ -1721,12 +1723,31 @@ const AdminDashboard = () => {
                       </SelectContent>
                     </Select>
                   </div>
+                  <div className="space-y-2">
+                    <Label>Subcategory</Label>
+                    <Select
+                      value={subcatNameFilter}
+                      onValueChange={setSubcatNameFilter}
+                    >
+                      <SelectTrigger><SelectValue placeholder="All subcategories" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Subcategories</SelectItem>
+                        {[...new Set(subcatList.map(s => s.title))].sort().map(name => (
+                          <SelectItem key={name} value={name}>{name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
                 {/* Subcategory Grid */}
-                {subcatList.length > 0 ? (
+                {(() => {
+                  const displayedSubcats = subcatNameFilter === "all"
+                    ? subcatList
+                    : subcatList.filter(s => s.title === subcatNameFilter);
+                  return displayedSubcats.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {subcatList.map(subcat => (
+                    {displayedSubcats.map(subcat => (
                       <Card key={subcat.id} className="overflow-hidden">
                         <CardContent className="p-4">
                           <h4 className="font-semibold text-base mb-2">{subcat.title}</h4>
@@ -1774,9 +1795,10 @@ const AdminDashboard = () => {
                   </div>
                 ) : (
                   <div className="text-center py-8 text-muted-foreground">
-                    <p>No subcategories found for Grade {subcatGradeFilter} → {subcatSubjectFilter}</p>
+                    <p>No subcategories found for Grade {subcatGradeFilter} → {subcatSubjectFilter}{subcatNameFilter !== "all" ? ` → ${subcatNameFilter}` : ""}</p>
                   </div>
-                )}
+                );
+                })()}
               </CardContent>
             </Card>
           </div>
