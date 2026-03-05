@@ -1673,6 +1673,112 @@ const AdminDashboard = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Subcategory Image Management */}
+            <Card className="mt-8">
+              <CardHeader>
+                <CardTitle>📸 Subcategory / Topic Thumbnails</CardTitle>
+                <CardDescription>
+                  Upload thumbnail images for subcategories like Addition, Subtraction, Phonics, etc. These appear on topic cards across the public site.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {/* Filters */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                  <div className="space-y-2">
+                    <Label>Grade</Label>
+                    <Select value={subcatGradeFilter} onValueChange={setSubcatGradeFilter}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {["1","2","3","4","5"].map(g => (
+                          <SelectItem key={g} value={g}>Grade {g}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Subject</Label>
+                    <Select value={subcatSubjectFilter} onValueChange={setSubcatSubjectFilter}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Math">Math</SelectItem>
+                        <SelectItem value="English">English</SelectItem>
+                        <SelectItem value="Science">Science</SelectItem>
+                        <SelectItem value="Computer Science">Computer Science</SelectItem>
+                        <SelectItem value="Assignments">Assignments</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Category (optional)</Label>
+                    <Select value={subcatCategoryFilter} onValueChange={setSubcatCategoryFilter}>
+                      <SelectTrigger><SelectValue placeholder="All categories" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Categories</SelectItem>
+                        {subcatCategories.map(c => (
+                          <SelectItem key={c.id} value={c.id}>{c.title}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Subcategory Grid */}
+                {subcatList.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {subcatList.map(subcat => (
+                      <Card key={subcat.id} className="overflow-hidden">
+                        <CardContent className="p-4">
+                          <h4 className="font-semibold text-base mb-2">{subcat.title}</h4>
+                          
+                          {/* Current thumbnail preview */}
+                          <div className="aspect-[4/3] rounded-lg overflow-hidden bg-muted border mb-3 max-w-[200px]">
+                            {subcat.imageUrl ? (
+                              <img
+                                src={subcat.imageUrl}
+                                alt={subcat.title}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                                <ImageIcon className="w-8 h-8" />
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Upload input */}
+                          <Input
+                            type="file"
+                            accept="image/png,image/jpeg,image/webp"
+                            className="cursor-pointer text-sm"
+                            disabled={subcatImageUploading === subcat.id}
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) handleSubcatImageUpload(subcat.id, file);
+                              e.target.value = '';
+                            }}
+                          />
+                          {subcatImageUploading === subcat.id && (
+                            <p className="text-sm text-primary mt-2 flex items-center gap-1">
+                              <Loader2 className="w-3 h-3 animate-spin" /> Uploading...
+                            </p>
+                          )}
+                          {subcat.imageUrl && (
+                            <p className="text-xs text-muted-foreground mt-1 truncate">
+                              ✓ Image set
+                            </p>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <p>No subcategories found for Grade {subcatGradeFilter} → {subcatSubjectFilter}</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </div>
         )}
       </div>
