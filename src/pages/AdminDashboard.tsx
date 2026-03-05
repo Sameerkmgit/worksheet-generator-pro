@@ -1684,7 +1684,7 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent>
                 {/* Filters */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                   <div className="space-y-2">
                     <Label>Grade</Label>
                     <Select value={subcatGradeFilter} onValueChange={setSubcatGradeFilter}>
@@ -1717,6 +1717,21 @@ const AdminDashboard = () => {
                         <SelectItem value="all">All Categories</SelectItem>
                         {subcatCategories.map(c => (
                           <SelectItem key={c.id} value={c.id}>{c.title}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Subcategory</Label>
+                    <Select
+                      value={subcatNameFilter}
+                      onValueChange={setSubcatNameFilter}
+                    >
+                      <SelectTrigger><SelectValue placeholder="All subcategories" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Subcategories</SelectItem>
+                        {[...new Set(subcatList.map(s => s.title))].sort().map(name => (
+                          <SelectItem key={name} value={name}>{name}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
