@@ -725,6 +725,7 @@ const AdminDashboard = () => {
       const cats = await getWorksheetCategoriesByGradeAndSubject(subcatGradeFilter, subcatSubjectFilter);
       setSubcatCategories(cats);
       setSubcatCategoryFilter("all");
+      setSubcatNameFilter("all");
     };
     if (subcatGradeFilter && subcatSubjectFilter) {
       loadSubcatCategories();
