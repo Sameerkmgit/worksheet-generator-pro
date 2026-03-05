@@ -1794,9 +1794,10 @@ const AdminDashboard = () => {
                   </div>
                 ) : (
                   <div className="text-center py-8 text-muted-foreground">
-                    <p>No subcategories found for Grade {subcatGradeFilter} → {subcatSubjectFilter}</p>
+                    <p>No subcategories found for Grade {subcatGradeFilter} → {subcatSubjectFilter}{subcatNameFilter !== "all" ? ` → ${subcatNameFilter}` : ""}</p>
                   </div>
-                )}
+                );
+                })()}
               </CardContent>
             </Card>
           </div>
