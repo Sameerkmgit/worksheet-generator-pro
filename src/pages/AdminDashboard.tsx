@@ -710,18 +710,77 @@ const AdminDashboard = () => {
     if (window.confirm(`Delete category "${title}"? Worksheets will not be deleted.`)) {
       const success = await deleteWorksheetCategory(id);
       if (success) {
-        toast({
-          title: "Success",
-          description: "Category deleted successfully",
-        });
+        toast({ title: "Success", description: "Category deleted successfully" });
         loadWorksheetCategories();
       } else {
-        toast({
-          title: "Error",
-          description: "Failed to delete category",
-          variant: "destructive",
-        });
+        toast({ title: "Error", description: "Failed to delete category", variant: "destructive" });
       }
+    }
+  };
+
+  // Load subcategories for the subcategory image manager
+  useEffect(() => {
+    const loadSubcatCategories = async () => {
+      const cats = await getWorksheetCategoriesByGradeAndSubject(subcatGradeFilter, subcatSubjectFilter);
+      setSubcatCategories(cats);
+      setSubcatCategoryFilter("all");
+    };
+    if (subcatGradeFilter && subcatSubjectFilter) {
+      loadSubcatCategories();
+    }
+  }, [subcatGradeFilter, subcatSubjectFilter]);
+
+  useEffect(() => {
+    const loadSubcats = async () => {
+      if (subcatCategoryFilter === "all") {
+        const allSubs: SubcategoryData[] = [];
+        for (const cat of subcatCategories) {
+          const subs = await getSubcategoriesByCategoryId(cat.id);
+          allSubs.push(...subs);
+        }
+        setSubcatList(allSubs);
+      } else {
+        const subs = await getSubcategoriesByCategoryId(subcatCategoryFilter);
+        setSubcatList(subs);
+      }
+    };
+    loadSubcats();
+  }, [subcatCategoryFilter, subcatCategories]);
+
+  const handleSubcatImageUpload = async (subcatId: string, file: File) => {
+    const validation = validateImageFile(file);
+    if (!validation.valid) {
+      toast({ title: "Invalid File", description: validation.error, variant: "destructive" });
+      return;
+    }
+    setSubcatImageUploading(subcatId);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `subcategory-${subcatId}-${Date.now()}.${fileExt}`;
+      const filePath = `subcategories/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('category-images')
+        .upload(filePath, file, { cacheControl: '3600', upsert: true });
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('category-images')
+        .getPublicUrl(filePath);
+
+      const { error: updateError } = await supabase
+        .from('worksheet_subcategories')
+        .update({ image_url: publicUrl })
+        .eq('id', subcatId);
+      if (updateError) throw updateError;
+
+      setSubcatList(prev => prev.map(s => s.id === subcatId ? { ...s, imageUrl: publicUrl } : s));
+      toast({ title: "✅ Image Uploaded!", description: "Subcategory thumbnail updated successfully." });
+    } catch (error: any) {
+      console.error('Subcategory image upload error:', error);
+      toast({ title: "❌ Upload Failed", description: error.message || "Failed to upload image", variant: "destructive" });
+    } finally {
+      setSubcatImageUploading(null);
     }
   };
 
