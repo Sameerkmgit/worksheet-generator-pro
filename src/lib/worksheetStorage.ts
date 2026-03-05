@@ -59,6 +59,7 @@ export interface SubcategoryData {
   slug: string;
   sortOrder: number;
   isArchived: boolean;
+  imageUrl?: string | null;
   createdAt: string;
   updatedAt?: string;
 }
@@ -154,6 +155,7 @@ const mapSubcategoryFromDB = (s: any): SubcategoryData => ({
   slug: s.slug,
   sortOrder: s.sort_order,
   isArchived: s.is_archived,
+  imageUrl: s.image_url || null,
   createdAt: s.created_at,
   updatedAt: s.updated_at,
 });
