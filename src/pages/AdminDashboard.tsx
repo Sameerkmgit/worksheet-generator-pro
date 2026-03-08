@@ -129,18 +129,6 @@ const AdminDashboard = () => {
     return subjectMap[subject] || subject;
   };
 
-  // Reset all data and reseed
-  const handleResetData = async () => {
-    if (window.confirm("⚠️ This will seed missing worksheets from Grades 1-5. Your uploaded worksheets will NOT be deleted. Continue?")) {
-      await seedInitialWorksheets();
-      loadWorksheets();
-      loadCategories();
-      toast({
-        title: "Seeding Complete",
-        description: "Missing default worksheets have been added to the database.",
-      });
-    }
-  };
 
   useEffect(() => {
     const checkAuth = async () => {
