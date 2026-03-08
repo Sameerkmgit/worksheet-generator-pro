@@ -159,6 +159,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     filterWorksheets();
+    setWorksheetPage(1);
   }, [worksheets, filterGrade, filterSubject, filterSubCategory]);
 
   // Load category-filtered worksheets
