@@ -95,6 +95,10 @@ const AdminDashboard = () => {
   const [subcatList, setSubcatList] = useState<SubcategoryData[]>([]);
   const [subcatNameFilter, setSubcatNameFilter] = useState<string>("all");
   const [subcatImageUploading, setSubcatImageUploading] = useState<string | null>(null);
+  // Pagination state for worksheets tab
+  const [worksheetPage, setWorksheetPage] = useState(1);
+  const [worksheetSearch, setWorksheetSearch] = useState("");
+  const WORKSHEETS_PER_PAGE = 50;
   // Form state
   const [formData, setFormData] = useState({
     title: "",
