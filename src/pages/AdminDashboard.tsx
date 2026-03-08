@@ -27,7 +27,7 @@ import {
   setWorksheetImageOverride,
   getWorksheetImageOverride,
   getAllWorksheetImageOverrides,
-  seedInitialWorksheets,
+  
   getAllWorksheetCategories,
   getWorksheetCategoriesByGradeAndSubject,
   createWorksheetCategory,
@@ -129,18 +129,6 @@ const AdminDashboard = () => {
     return subjectMap[subject] || subject;
   };
 
-  // Reset all data and reseed
-  const handleResetData = async () => {
-    if (window.confirm("⚠️ This will seed missing worksheets from Grades 1-5. Your uploaded worksheets will NOT be deleted. Continue?")) {
-      await seedInitialWorksheets();
-      loadWorksheets();
-      loadCategories();
-      toast({
-        title: "Seeding Complete",
-        description: "Missing default worksheets have been added to the database.",
-      });
-    }
-  };
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -149,8 +137,6 @@ const AdminDashboard = () => {
         navigate("/dashboard-secure-2025");
         return;
       }
-      // Seed worksheets if none exist
-      seedInitialWorksheets();
       loadWorksheets();
       loadCategories();
       loadWorksheetCategories();
@@ -877,9 +863,6 @@ const AdminDashboard = () => {
               Admin Dashboard
             </h1>
             <div className="flex gap-2">
-              <Button onClick={handleResetData} variant="secondary" size="sm">
-                🌱 Seed Missing Worksheets
-              </Button>
               <Button onClick={handleLogout} variant="outline">
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
@@ -1576,12 +1559,9 @@ const AdminDashboard = () => {
                     <p className="text-base text-yellow-700 mb-1">
                       Selected filters: <strong>{categoryGradeFilter.replace('grade-', 'Grade ')}</strong> → <strong className="capitalize">{categorySubjectFilter}</strong>
                     </p>
-                    <p className="text-sm text-muted-foreground mb-6">
-                      No worksheets match these filters. Try resetting data or check if worksheets exist for this combination.
+                    <p className="text-sm text-muted-foreground">
+                      No worksheets match these filters. Check if worksheets exist for this combination.
                     </p>
-                    <Button onClick={handleResetData} variant="default" size="lg">
-                      🔄 Reset & Create Sample Data
-                    </Button>
                   </div>
                 )}
               </CardContent>
