@@ -64,6 +64,7 @@ const AdminDashboard = () => {
   const [filterGrade, setFilterGrade] = useState<string>("all");
   const [filterSubject, setFilterSubject] = useState<string>("all");
   const [filterSubCategory, setFilterSubCategory] = useState<string>("all");
+  const [filterSubcategoryOptions, setFilterSubcategoryOptions] = useState<SubcategoryData[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingWorksheet, setEditingWorksheet] = useState<WorksheetData | null>(null);
   const [categories, setCategories] = useState<CategoryData[]>([]);
