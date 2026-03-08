@@ -163,6 +163,28 @@ const AdminDashboard = () => {
     setWorksheetPage(1);
   }, [worksheets, filterGrade, filterSubject, filterSubCategory]);
 
+  // Load subcategory options for the filter dropdown from DB
+  useEffect(() => {
+    const loadFilterSubcategories = async () => {
+      if (filterGrade === "all" || filterSubject === "all") {
+        setFilterSubcategoryOptions([]);
+        return;
+      }
+      try {
+        const normalizedSubject = normalizeSubject(filterSubject);
+        const cats = await getWorksheetCategoriesByGradeAndSubject(filterGrade, normalizedSubject);
+        if (cats.length > 0) {
+          const subs = await getSubcategoriesByCategoryId(cats[0].id);
+          setFilterSubcategoryOptions(subs);
+        } else {
+          setFilterSubcategoryOptions([]);
+        }
+      } catch {
+        setFilterSubcategoryOptions([]);
+      }
+    };
+    loadFilterSubcategories();
+  }, [filterGrade, filterSubject]);
   // Load category-filtered worksheets
   useEffect(() => {
     const loadCategoryWorksheets = async () => {
