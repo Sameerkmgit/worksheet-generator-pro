@@ -863,9 +863,6 @@ const AdminDashboard = () => {
               Admin Dashboard
             </h1>
             <div className="flex gap-2">
-              <Button onClick={handleResetData} variant="secondary" size="sm">
-                🌱 Seed Missing Worksheets
-              </Button>
               <Button onClick={handleLogout} variant="outline">
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
