@@ -397,7 +397,7 @@ const AdminDashboard = () => {
     }
     
     if (filterSubject !== "all") {
-      filtered = filtered.filter(w => w.subject === filterSubject);
+      filtered = filtered.filter(w => w.subject.toLowerCase() === filterSubject.toLowerCase());
     }
 
     if (filterSubCategory !== "all") {
