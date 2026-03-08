@@ -137,8 +137,6 @@ const AdminDashboard = () => {
         navigate("/dashboard-secure-2025");
         return;
       }
-      // Seed worksheets if none exist
-      seedInitialWorksheets();
       loadWorksheets();
       loadCategories();
       loadWorksheetCategories();
