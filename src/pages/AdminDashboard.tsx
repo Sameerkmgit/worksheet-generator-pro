@@ -1680,9 +1680,33 @@ const AdminDashboard = () => {
                             </p>
                           )}
                           {subcat.imageUrl && (
-                            <p className="text-xs text-muted-foreground mt-1 truncate">
-                              ✓ Image set
-                            </p>
+                            <div className="flex items-center gap-2 mt-1">
+                              <p className="text-xs text-muted-foreground truncate">✓ Image set</p>
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button variant="ghost" size="sm" className="h-6 px-2 text-xs text-destructive hover:text-destructive" disabled={subcatImageUploading === subcat.id}>
+                                    <Trash2 className="w-3 h-3 mr-1" /> Delete
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>Delete subcategory image?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      This will remove the thumbnail for "{subcat.title}" from the admin dashboard and the public site. The file will also be deleted from storage.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction
+                                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                      onClick={() => handleSubcatImageDelete(subcat.id, subcat.imageUrl!)}
+                                    >
+                                      Delete Image
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </div>
                           )}
                         </CardContent>
                       </Card>
