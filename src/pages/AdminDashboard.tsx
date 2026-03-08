@@ -1535,149 +1535,8 @@ const AdminDashboard = () => {
 
         {activeTab === "worksheet-categories" && (
           <div className="space-y-8">
+            {/* Subcategory Image Management — shown first for visibility */}
             <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>Manage Worksheet Categories</CardTitle>
-                    <CardDescription>
-                      Create categories to organize multiple worksheets on the same topic
-                    </CardDescription>
-                  </div>
-                  <Dialog open={isCategoryDialogOpen} onOpenChange={setIsCategoryDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button>
-                        <Plus className="mr-2 h-4 w-4" />
-                        New Category
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Create New Category</DialogTitle>
-                        <DialogDescription>
-                          Categories help organize worksheets by topic (e.g., Addition, Subtraction, Comprehension)
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="space-y-4 mt-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="categoryTitle">Category Title *</Label>
-                          <Input
-                            id="categoryTitle"
-                            value={newCategoryData.title}
-                            onChange={(e) => setNewCategoryData({ ...newCategoryData, title: e.target.value })}
-                            placeholder="e.g., Addition, Comprehension, etc."
-                            required
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="categoryDescription">Description</Label>
-                          <Textarea
-                            id="categoryDescription"
-                            value={newCategoryData.description || ""}
-                            onChange={(e) => setNewCategoryData({ ...newCategoryData, description: e.target.value })}
-                            placeholder="Brief description (optional)"
-                            rows={2}
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="categoryGrade">Grade *</Label>
-                            <Select
-                              value={newCategoryData.grade}
-                              onValueChange={(value) => setNewCategoryData({ ...newCategoryData, grade: value })}
-                              required
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select grade" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="1">Grade 1</SelectItem>
-                                <SelectItem value="2">Grade 2</SelectItem>
-                                <SelectItem value="3">Grade 3</SelectItem>
-                                <SelectItem value="4">Grade 4</SelectItem>
-                                <SelectItem value="5">Grade 5</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="categorySubject">Subject *</Label>
-                            <Select
-                              value={newCategoryData.subject}
-                              onValueChange={(value) => setNewCategoryData({ ...newCategoryData, subject: value })}
-                              required
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select subject" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="math">Math</SelectItem>
-                                <SelectItem value="science">Science</SelectItem>
-                                <SelectItem value="english">English</SelectItem>
-                                <SelectItem value="computer-science">Computer Science</SelectItem>
-                                <SelectItem value="assignments">Assignments</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-                        <div className="flex gap-2 pt-4">
-                          <Button onClick={handleCreateCategory} className="flex-1">
-                            Create Category
-                          </Button>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            onClick={() => setIsCategoryDialogOpen(false)}
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  {["1", "2", "3", "4", "5"].map(grade => (
-                    <div key={grade}>
-                      <h3 className="text-lg font-semibold mb-3">Grade {grade}</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {worksheetCategories
-                          .filter(c => c.grade === grade)
-                          .map(category => (
-                            <Card key={category.id}>
-                              <CardContent className="p-4">
-                                <div className="flex items-start justify-between">
-                                  <div className="flex-1">
-                                    <h4 className="font-semibold">{category.title}</h4>
-                                    <p className="text-sm text-muted-foreground capitalize">{category.subject}</p>
-                                    {category.description && (
-                                      <p className="text-sm text-muted-foreground mt-1">{category.description}</p>
-                                    )}
-                                  </div>
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={() => handleDeleteCategory(category.id, category.title)}
-                                  >
-                                    <Trash2 className="h-4 w-4 text-destructive" />
-                                  </Button>
-                                </div>
-                              </CardContent>
-                            </Card>
-                          ))}
-                        {worksheetCategories.filter(c => c.grade === grade).length === 0 && (
-                          <p className="text-sm text-muted-foreground col-span-full">No categories yet for {grade}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Subcategory Image Management */}
-            <Card className="mt-8">
               <CardHeader>
                 <CardTitle>📸 Subcategory / Topic Thumbnails</CardTitle>
                 <CardDescription>
@@ -1799,6 +1658,141 @@ const AdminDashboard = () => {
                   </div>
                 );
                 })()}
+              </CardContent>
+            </Card>
+
+            {/* Category Management — below thumbnails */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Manage Worksheet Categories</CardTitle>
+                    <CardDescription>
+                      Create categories to organize multiple worksheets on the same topic
+                    </CardDescription>
+                  </div>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button>
+                        <Plus className="mr-2 h-4 w-4" />
+                        New Category
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Create New Category</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4 py-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="categoryTitle">Title *</Label>
+                          <Input
+                            id="categoryTitle"
+                            value={newCategoryData.title}
+                            onChange={(e) => setNewCategoryData({ ...newCategoryData, title: e.target.value })}
+                            placeholder="e.g. Addition Practice"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="categoryDescription">Description</Label>
+                          <Input
+                            id="categoryDescription"
+                            value={newCategoryData.description}
+                            onChange={(e) => setNewCategoryData({ ...newCategoryData, description: e.target.value })}
+                            placeholder="Optional description"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="categoryGrade">Grade *</Label>
+                            <Select
+                              value={newCategoryData.grade}
+                              onValueChange={(value) => setNewCategoryData({ ...newCategoryData, grade: value })}
+                              required
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select grade" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="1">Grade 1</SelectItem>
+                                <SelectItem value="2">Grade 2</SelectItem>
+                                <SelectItem value="3">Grade 3</SelectItem>
+                                <SelectItem value="4">Grade 4</SelectItem>
+                                <SelectItem value="5">Grade 5</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="categorySubject">Subject *</Label>
+                            <Select
+                              value={newCategoryData.subject}
+                              onValueChange={(value) => setNewCategoryData({ ...newCategoryData, subject: value })}
+                              required
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select subject" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="math">Math</SelectItem>
+                                <SelectItem value="science">Science</SelectItem>
+                                <SelectItem value="english">English</SelectItem>
+                                <SelectItem value="computer-science">Computer Science</SelectItem>
+                                <SelectItem value="assignments">Assignments</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                        <div className="flex gap-2 justify-end">
+                          <Button onClick={handleCreateCategory}>
+                            Create Category
+                          </Button>
+                          <DialogTrigger asChild>
+                            <Button variant="outline">
+                              Cancel
+                            </Button>
+                          </DialogTrigger>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {["1", "2", "3", "4", "5"].map(grade => (
+                    <div key={grade}>
+                      <h3 className="text-lg font-semibold mb-3">Grade {grade}</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {worksheetCategories
+                          .filter(c => c.grade === grade)
+                          .map(category => (
+                            <Card key={category.id}>
+                              <CardContent className="p-4">
+                                <div className="flex items-start justify-between">
+                                  <div className="flex-1">
+                                    <h4 className="font-semibold">{category.title}</h4>
+                                    <p className="text-sm text-muted-foreground capitalize">{category.subject}</p>
+                                    {category.description && (
+                                      <p className="text-sm text-muted-foreground mt-1">{category.description}</p>
+                                    )}
+                                  </div>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => handleDeleteCategory(category.id, category.title)}
+                                  >
+                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                  </Button>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          ))}
+                        {worksheetCategories.filter(c => c.grade === grade).length === 0 && (
+                          <p className="text-sm text-muted-foreground col-span-full">No categories yet for {grade}</p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
           </div>
