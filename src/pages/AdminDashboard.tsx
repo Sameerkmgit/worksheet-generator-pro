@@ -1262,8 +1262,8 @@ const AdminDashboard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Sub-Categories</SelectItem>
-                {getSubCategoryOptionsForSubject(filterSubject).map((opt) => (
-                  <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                {filterSubcategoryOptions.map((opt) => (
+                  <SelectItem key={opt.id} value={opt.id}>{opt.title}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
