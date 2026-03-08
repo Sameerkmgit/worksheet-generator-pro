@@ -1534,7 +1534,7 @@ const AdminDashboard = () => {
         )}
 
         {activeTab === "worksheet-categories" && (
-          <div>
+          <div className="space-y-8">
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
