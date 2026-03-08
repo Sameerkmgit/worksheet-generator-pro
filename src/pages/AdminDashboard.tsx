@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Edit, Trash2, LogOut, FileText, Filter, Image as ImageIcon, FolderPlus, Loader2, UploadCloud } from "lucide-react";
+import { Plus, Edit, Trash2, LogOut, FileText, Filter, Image as ImageIcon, FolderPlus, Loader2, UploadCloud, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -95,6 +95,10 @@ const AdminDashboard = () => {
   const [subcatList, setSubcatList] = useState<SubcategoryData[]>([]);
   const [subcatNameFilter, setSubcatNameFilter] = useState<string>("all");
   const [subcatImageUploading, setSubcatImageUploading] = useState<string | null>(null);
+  // Pagination state for worksheets tab
+  const [worksheetPage, setWorksheetPage] = useState(1);
+  const [worksheetSearch, setWorksheetSearch] = useState("");
+  const WORKSHEETS_PER_PAGE = 50;
   // Form state
   const [formData, setFormData] = useState({
     title: "",
@@ -155,6 +159,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     filterWorksheets();
+    setWorksheetPage(1);
   }, [worksheets, filterGrade, filterSubject, filterSubCategory]);
 
   // Load category-filtered worksheets
@@ -822,34 +827,21 @@ const AdminDashboard = () => {
     }
   };
 
-  // Group worksheets by grade and subject
-  const groupedWorksheets = filteredWorksheets.reduce((acc, worksheet) => {
-    const key = `${worksheet.grade}-${worksheet.subject}`;
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-    acc[key].push(worksheet);
-    return acc;
-  }, {} as Record<string, WorksheetData[]>);
+  // Apply search filter on top of grade/subject/subcategory filters
+  const searchFilteredWorksheets = worksheetSearch.trim()
+    ? filteredWorksheets.filter(w =>
+        w.title.toLowerCase().includes(worksheetSearch.toLowerCase()) ||
+        (w.description || "").toLowerCase().includes(worksheetSearch.toLowerCase())
+      )
+    : filteredWorksheets;
 
-  // Further group by category within each grade-subject group
-  const groupedByCategory = (worksheets: WorksheetData[]) => {
-    return worksheets.reduce((acc, worksheet) => {
-      const categoryId = worksheet.categoryId || 'uncategorized';
-      if (!acc[categoryId]) {
-        acc[categoryId] = [];
-      }
-      acc[categoryId].push(worksheet);
-      return acc;
-    }, {} as Record<string, WorksheetData[]>);
-  };
-
-  // Get category title by ID
-  const getCategoryTitle = (categoryId: string): string => {
-    if (categoryId === 'uncategorized') return 'Uncategorized';
-    const category = worksheetCategories.find(cat => cat.id === categoryId);
-    return category?.title || 'Unknown Category';
-  };
+  // Pagination calculations
+  const totalPages = Math.max(1, Math.ceil(searchFilteredWorksheets.length / WORKSHEETS_PER_PAGE));
+  const safeWorksheetPage = Math.min(worksheetPage, totalPages);
+  const paginatedWorksheets = searchFilteredWorksheets.slice(
+    (safeWorksheetPage - 1) * WORKSHEETS_PER_PAGE,
+    safeWorksheetPage * WORKSHEETS_PER_PAGE
+  );
 
   return (
     <div className="min-h-screen bg-secondary/5">
@@ -1252,94 +1244,98 @@ const AdminDashboard = () => {
               </SelectContent>
             </Select>
           </div>
+
+          {/* Search Box */}
+          <div className="relative mb-4">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search worksheets by title…"
+              value={worksheetSearch}
+              onChange={(e) => { setWorksheetSearch(e.target.value); setWorksheetPage(1); }}
+              className="pl-10"
+            />
+          </div>
         </div>
 
-        {/* Worksheets List */}
-        <div className="space-y-8">
-          {Object.keys(groupedWorksheets).length === 0 ? (
+        {/* Worksheets List - Paginated */}
+        <div className="space-y-4">
+          <p className="text-sm text-muted-foreground">
+            Showing {((safeWorksheetPage - 1) * WORKSHEETS_PER_PAGE) + 1}–{Math.min(safeWorksheetPage * WORKSHEETS_PER_PAGE, searchFilteredWorksheets.length)} of {searchFilteredWorksheets.length} worksheets
+            {worksheetSearch && ` matching "${worksheetSearch}"`}
+          </p>
+
+          {paginatedWorksheets.length === 0 ? (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <FileText className="h-16 w-16 text-muted-foreground mb-4" />
                 <h3 className="text-lg font-semibold mb-2">No Worksheets Found</h3>
                 <p className="text-muted-foreground text-center mb-4">
-                  Get started by adding your first worksheet
+                  {worksheetSearch ? "Try a different search term" : "Get started by adding your first worksheet"}
                 </p>
               </CardContent>
             </Card>
           ) : (
-            Object.entries(groupedWorksheets).map(([key, items]) => {
-              const [grade, subject] = key.split("-");
-              const gradeLabel = grade.charAt(0).toUpperCase() + grade.slice(1).replace("-", " ");
-              const subjectLabel = subject.charAt(0).toUpperCase() + subject.slice(1).replace("-", " ");
-              
-              // Group worksheets by category
-              const categorizedWorksheets = groupedByCategory(items);
-
-              return (
-                <div key={key} className="space-y-6">
-                  <h2 className="text-xl font-heading font-semibold mb-4 pb-2 border-b-2">
-                    {gradeLabel} - {subjectLabel} ({items.length})
-                  </h2>
-                  
-                  {/* Display worksheets grouped by category */}
-                  {Object.entries(categorizedWorksheets).map(([categoryId, categoryWorksheets]) => (
-                    <div key={categoryId} className="ml-4">
-                      <h3 className="text-lg font-semibold mb-3 text-primary flex items-center gap-2">
-                        <span className="w-2 h-2 bg-primary rounded-full"></span>
-                        {getCategoryTitle(categoryId)} ({categoryWorksheets.length})
-                      </h3>
-                      
-                      <div className="grid grid-cols-1 gap-4 ml-6">
-                        {categoryWorksheets.map((worksheet) => (
-                          <Card key={worksheet.id} className="hover:shadow-soft transition-shadow">
-                            <CardContent className="p-6">
-                              <div className="flex items-start justify-between gap-4">
-                                <div className="flex-1">
-                                  <h4 className="font-semibold text-lg mb-2">{worksheet.title}</h4>
-                                  <p className="text-muted-foreground text-sm mb-4">
-                                    {worksheet.description}
-                                  </p>
-                                    <div className="flex gap-4 text-xs text-muted-foreground">
-                                      <span>Created: {new Date(worksheet.createdAt).toLocaleDateString()}</span>
-                                      <span>Updated: {new Date(worksheet.updatedAt).toLocaleDateString()}</span>
-                                      {worksheet.difficulty && (
-                                        <span className="px-2 py-0.5 rounded bg-muted text-muted-foreground font-medium">
-                                          {worksheet.difficulty}
-                                        </span>
-                                      )}
-                                      {(worksheet as any).subCategory && (
-                                        <span className="px-2 py-0.5 rounded bg-muted text-muted-foreground font-medium">
-                                          {(worksheet as any).subCategory}
-                                        </span>
-                                      )}
-                                    </div>
-                                </div>
-                                <div className="flex gap-2">
-                                  <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => handleEdit(worksheet)}
-                                  >
-                                    <Edit className="h-4 w-4" />
-                                  </Button>
-                                  <Button
-                                    variant="destructive"
-                                    size="sm"
-                                    onClick={() => handleDelete(worksheet.id, worksheet.title)}
-                                  >
-                                    <Trash2 className="h-4 w-4" />
-                                  </Button>
-                                </div>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        ))}
+            <div className="grid grid-cols-1 gap-3">
+              {paginatedWorksheets.map((worksheet) => (
+                <Card key={worksheet.id} className="hover:shadow-soft transition-shadow">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-base mb-1">{worksheet.title}</h4>
+                        <p className="text-muted-foreground text-sm mb-2 line-clamp-1">
+                          {worksheet.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                          <span className="px-2 py-0.5 rounded bg-muted font-medium">Grade {worksheet.grade}</span>
+                          <span className="px-2 py-0.5 rounded bg-muted font-medium capitalize">{worksheet.subject}</span>
+                          {worksheet.difficulty && (
+                            <span className="px-2 py-0.5 rounded bg-muted font-medium">{worksheet.difficulty}</span>
+                          )}
+                          {(worksheet as any).subCategory && (
+                            <span className="px-2 py-0.5 rounded bg-muted font-medium">{(worksheet as any).subCategory}</span>
+                          )}
+                          <span>Created: {new Date(worksheet.createdAt).toLocaleDateString()}</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" onClick={() => handleEdit(worksheet)}>
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button variant="destructive" size="sm" onClick={() => handleDelete(worksheet.id, worksheet.title)}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
                       </div>
                     </div>
-                  ))}
-                </div>
-              );
-            })
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 py-4">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={safeWorksheetPage <= 1}
+                onClick={() => setWorksheetPage(p => Math.max(1, p - 1))}
+              >
+                <ChevronLeft className="h-4 w-4 mr-1" /> Previous
+              </Button>
+              <span className="text-sm text-muted-foreground px-4">
+                Page {safeWorksheetPage} of {totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={safeWorksheetPage >= totalPages}
+                onClick={() => setWorksheetPage(p => Math.min(totalPages, p + 1))}
+              >
+                Next <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
           )}
         </div>
           </>
