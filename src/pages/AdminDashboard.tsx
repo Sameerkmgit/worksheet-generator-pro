@@ -826,34 +826,21 @@ const AdminDashboard = () => {
     }
   };
 
-  // Group worksheets by grade and subject
-  const groupedWorksheets = filteredWorksheets.reduce((acc, worksheet) => {
-    const key = `${worksheet.grade}-${worksheet.subject}`;
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-    acc[key].push(worksheet);
-    return acc;
-  }, {} as Record<string, WorksheetData[]>);
+  // Apply search filter on top of grade/subject/subcategory filters
+  const searchFilteredWorksheets = worksheetSearch.trim()
+    ? filteredWorksheets.filter(w =>
+        w.title.toLowerCase().includes(worksheetSearch.toLowerCase()) ||
+        (w.description || "").toLowerCase().includes(worksheetSearch.toLowerCase())
+      )
+    : filteredWorksheets;
 
-  // Further group by category within each grade-subject group
-  const groupedByCategory = (worksheets: WorksheetData[]) => {
-    return worksheets.reduce((acc, worksheet) => {
-      const categoryId = worksheet.categoryId || 'uncategorized';
-      if (!acc[categoryId]) {
-        acc[categoryId] = [];
-      }
-      acc[categoryId].push(worksheet);
-      return acc;
-    }, {} as Record<string, WorksheetData[]>);
-  };
-
-  // Get category title by ID
-  const getCategoryTitle = (categoryId: string): string => {
-    if (categoryId === 'uncategorized') return 'Uncategorized';
-    const category = worksheetCategories.find(cat => cat.id === categoryId);
-    return category?.title || 'Unknown Category';
-  };
+  // Pagination calculations
+  const totalPages = Math.max(1, Math.ceil(searchFilteredWorksheets.length / WORKSHEETS_PER_PAGE));
+  const safeWorksheetPage = Math.min(worksheetPage, totalPages);
+  const paginatedWorksheets = searchFilteredWorksheets.slice(
+    (safeWorksheetPage - 1) * WORKSHEETS_PER_PAGE,
+    safeWorksheetPage * WORKSHEETS_PER_PAGE
+  );
 
   return (
     <div className="min-h-screen bg-secondary/5">
