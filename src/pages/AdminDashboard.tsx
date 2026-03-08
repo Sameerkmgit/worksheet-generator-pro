@@ -401,7 +401,8 @@ const AdminDashboard = () => {
     }
 
     if (filterSubCategory !== "all") {
-      filtered = filtered.filter(w => w.subCategory === filterSubCategory);
+      // Filter by subcategoryId (UUID) instead of text sub_category
+      filtered = filtered.filter(w => w.subcategoryId === filterSubCategory);
     }
     
     setFilteredWorksheets(filtered);
