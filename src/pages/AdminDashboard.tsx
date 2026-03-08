@@ -44,6 +44,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -781,6 +792,31 @@ const AdminDashboard = () => {
     } catch (error: any) {
       console.error('Subcategory image upload error:', error);
       toast({ title: "❌ Upload Failed", description: error.message || "Failed to upload image", variant: "destructive" });
+    } finally {
+      setSubcatImageUploading(null);
+    }
+  };
+
+  const handleSubcatImageDelete = async (subcatId: string, imageUrl: string) => {
+    setSubcatImageUploading(subcatId);
+    try {
+      // Extract storage path from public URL
+      const bucketPath = imageUrl.split('/category-images/')[1];
+      if (bucketPath) {
+        await supabase.storage.from('category-images').remove([decodeURIComponent(bucketPath)]);
+      }
+
+      const { error } = await supabase
+        .from('worksheet_subcategories')
+        .update({ image_url: null })
+        .eq('id', subcatId);
+      if (error) throw error;
+
+      setSubcatList(prev => prev.map(s => s.id === subcatId ? { ...s, imageUrl: undefined } : s));
+      toast({ title: "✅ Image Removed", description: "Subcategory thumbnail deleted." });
+    } catch (error: any) {
+      console.error('Subcategory image delete error:', error);
+      toast({ title: "❌ Delete Failed", description: error.message || "Failed to delete image", variant: "destructive" });
     } finally {
       setSubcatImageUploading(null);
     }
@@ -1644,9 +1680,33 @@ const AdminDashboard = () => {
                             </p>
                           )}
                           {subcat.imageUrl && (
-                            <p className="text-xs text-muted-foreground mt-1 truncate">
-                              ✓ Image set
-                            </p>
+                            <div className="flex items-center gap-2 mt-1">
+                              <p className="text-xs text-muted-foreground truncate">✓ Image set</p>
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button variant="ghost" size="sm" className="h-6 px-2 text-xs text-destructive hover:text-destructive" disabled={subcatImageUploading === subcat.id}>
+                                    <Trash2 className="w-3 h-3 mr-1" /> Delete
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>Delete subcategory image?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      This will remove the thumbnail for "{subcat.title}" from the admin dashboard and the public site. The file will also be deleted from storage.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction
+                                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                      onClick={() => handleSubcatImageDelete(subcat.id, subcat.imageUrl!)}
+                                    >
+                                      Delete Image
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </div>
                           )}
                         </CardContent>
                       </Card>
