@@ -797,6 +797,31 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleSubcatImageDelete = async (subcatId: string, imageUrl: string) => {
+    setSubcatImageUploading(subcatId);
+    try {
+      // Extract storage path from public URL
+      const bucketPath = imageUrl.split('/category-images/')[1];
+      if (bucketPath) {
+        await supabase.storage.from('category-images').remove([decodeURIComponent(bucketPath)]);
+      }
+
+      const { error } = await supabase
+        .from('worksheet_subcategories')
+        .update({ image_url: null })
+        .eq('id', subcatId);
+      if (error) throw error;
+
+      setSubcatList(prev => prev.map(s => s.id === subcatId ? { ...s, imageUrl: undefined } : s));
+      toast({ title: "✅ Image Removed", description: "Subcategory thumbnail deleted." });
+    } catch (error: any) {
+      console.error('Subcategory image delete error:', error);
+      toast({ title: "❌ Delete Failed", description: error.message || "Failed to delete image", variant: "destructive" });
+    } finally {
+      setSubcatImageUploading(null);
+    }
+  };
+
   // Group worksheets by grade and subject
   const groupedWorksheets = filteredWorksheets.reduce((acc, worksheet) => {
     const key = `${worksheet.grade}-${worksheet.subject}`;
