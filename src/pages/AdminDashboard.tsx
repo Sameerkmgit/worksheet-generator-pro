@@ -64,6 +64,7 @@ const AdminDashboard = () => {
   const [filterGrade, setFilterGrade] = useState<string>("all");
   const [filterSubject, setFilterSubject] = useState<string>("all");
   const [filterSubCategory, setFilterSubCategory] = useState<string>("all");
+  const [filterSubcategoryOptions, setFilterSubcategoryOptions] = useState<SubcategoryData[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingWorksheet, setEditingWorksheet] = useState<WorksheetData | null>(null);
   const [categories, setCategories] = useState<CategoryData[]>([]);
@@ -162,6 +163,28 @@ const AdminDashboard = () => {
     setWorksheetPage(1);
   }, [worksheets, filterGrade, filterSubject, filterSubCategory]);
 
+  // Load subcategory options for the filter dropdown from DB
+  useEffect(() => {
+    const loadFilterSubcategories = async () => {
+      if (filterGrade === "all" || filterSubject === "all") {
+        setFilterSubcategoryOptions([]);
+        return;
+      }
+      try {
+        const normalizedSubject = normalizeSubject(filterSubject);
+        const cats = await getWorksheetCategoriesByGradeAndSubject(filterGrade, normalizedSubject);
+        if (cats.length > 0) {
+          const subs = await getSubcategoriesByCategoryId(cats[0].id);
+          setFilterSubcategoryOptions(subs);
+        } else {
+          setFilterSubcategoryOptions([]);
+        }
+      } catch {
+        setFilterSubcategoryOptions([]);
+      }
+    };
+    loadFilterSubcategories();
+  }, [filterGrade, filterSubject]);
   // Load category-filtered worksheets
   useEffect(() => {
     const loadCategoryWorksheets = async () => {
@@ -378,7 +401,8 @@ const AdminDashboard = () => {
     }
 
     if (filterSubCategory !== "all") {
-      filtered = filtered.filter(w => w.subCategory === filterSubCategory);
+      // Filter by subcategoryId (UUID) instead of text sub_category
+      filtered = filtered.filter(w => w.subcategoryId === filterSubCategory);
     }
     
     setFilteredWorksheets(filtered);
@@ -1238,8 +1262,8 @@ const AdminDashboard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Sub-Categories</SelectItem>
-                {getSubCategoryOptionsForSubject(filterSubject).map((opt) => (
-                  <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                {filterSubcategoryOptions.map((opt) => (
+                  <SelectItem key={opt.id} value={opt.id}>{opt.title}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
