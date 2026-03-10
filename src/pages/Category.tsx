@@ -10,6 +10,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
 import { toTitleCase, toSubjectSlug, toTopicUrl } from "@/lib/utils";
+import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 
 interface WorksheetCategory {
   id: string;
@@ -365,6 +366,13 @@ const Category = () => {
             </div>
           </section>
         )}
+
+        {/* Interactive Practice CTA */}
+        <section className="py-8 px-4">
+          <div className="max-w-7xl mx-auto">
+            <InteractivePracticeBanner variant="page" grade={gradeNumber} />
+          </div>
+        </section>
 
         {/* Bottom Banner Ad */}
         <div className="w-full py-4">

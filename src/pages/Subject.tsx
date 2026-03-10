@@ -16,6 +16,7 @@ import {
   WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl } from "@/lib/utils";
+import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
@@ -270,6 +271,13 @@ const Subject = () => {
                 ))}
               </div>
             )}
+          </div>
+        </section>
+
+        {/* Interactive Practice CTA */}
+        <section className="py-8 px-4">
+          <div className="max-w-7xl mx-auto">
+            <InteractivePracticeBanner variant="page" grade={gradeNumber} subjectSlug={subjectSlug} />
           </div>
         </section>
       </main>

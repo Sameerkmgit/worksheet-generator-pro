@@ -11,6 +11,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toTopicUrl } from "@/lib/utils";
+import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 
 interface RelatedWorksheet {
   id: string;
@@ -362,27 +363,12 @@ const WorksheetDetail = () => {
                 </Card>
               )}
 
-              {/* Practice This Topic Online */}
-              <Card className="border-primary/20 bg-primary/5">
-                <CardContent className="p-6 text-center space-y-3">
-                  <h2 className="text-xl font-bold font-heading text-foreground">
-                    Practice This Topic Online
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Try the interactive worksheets with instant answers and guided practice.
-                  </p>
-                  <Button size="lg" variant="outline" className="mt-2" asChild>
-                    <a
-                      href={`https://practice.wizkidshub.com/grade-${gradeNum}/${toSubjectSlug(worksheet.subject)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ExternalLink className="mr-2 h-5 w-5" />
-                      Start Interactive Practice
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
+              {/* Practice on WizKidsHub Practice */}
+              <InteractivePracticeBanner
+                variant="detail"
+                grade={gradeNum}
+                subjectSlug={toSubjectSlug(worksheet.subject)}
+              />
 
               {/* Questions/Content Section */}
               {worksheet.questions && Array.isArray(worksheet.questions) && worksheet.questions.length > 0 && (

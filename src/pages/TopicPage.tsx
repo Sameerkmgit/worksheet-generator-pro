@@ -10,6 +10,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import AdSense from "@/components/AdSense";
 import { supabase } from "@/integrations/supabase/client";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl } from "@/lib/utils";
+import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 
 const getPdfEmbedUrl = (pdfUrl: string): string => {
   if (!pdfUrl) return "";
@@ -299,6 +300,13 @@ const TopicPage = () => {
             </div>
           </section>
         )}
+
+        {/* Interactive Practice CTA */}
+        <section className="py-8 px-4">
+          <div className="max-w-7xl mx-auto">
+            <InteractivePracticeBanner variant="page" grade={gradeNumber} subjectSlug={subjectSlug} />
+          </div>
+        </section>
 
         {/* Bottom Ad */}
         <div className="w-full py-4">
