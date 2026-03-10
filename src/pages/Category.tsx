@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
-import { toTitleCase, toSubjectSlug } from "@/lib/utils";
+import { toTitleCase, toSubjectSlug, toTopicUrl } from "@/lib/utils";
 
 interface WorksheetCategory {
   id: string;
