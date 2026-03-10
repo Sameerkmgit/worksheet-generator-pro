@@ -363,12 +363,6 @@ const WorksheetDetail = () => {
                 </Card>
               )}
 
-              {/* Practice on WizKidsHub Practice */}
-              <InteractivePracticeBanner
-                variant="page"
-                grade={gradeNum}
-                subjectSlug={toSubjectSlug(worksheet.subject)}
-              />
 
               {/* Questions/Content Section */}
               {worksheet.questions && Array.isArray(worksheet.questions) && worksheet.questions.length > 0 && (
