@@ -252,6 +252,11 @@ const Category = () => {
           </div>
         </section>
 
+        {/* Ad between sections */}
+        <div className="max-w-7xl mx-auto px-4 py-2">
+          <AdSense adSlot="4567890123" adFormat="auto" className="w-full" />
+        </div>
+
         {/* Categories Grid */}
         <section className="py-8 px-4">
           <div className="max-w-7xl mx-auto">
