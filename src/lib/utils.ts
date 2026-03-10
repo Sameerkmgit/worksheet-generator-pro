@@ -91,3 +91,14 @@ export function fromSubjectSlug(slug: string | null | undefined): string {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
+
+/**
+ * Builds a readable topic URL from grade, subject, and topic slug.
+ * 
+ * @example
+ * toTopicUrl("1", "Math", "addition") // "/categories/grade-1/math/addition"
+ * toTopicUrl("2", "Computer Science", "digital-safety") // "/categories/grade-2/computer-science/digital-safety"
+ */
+export function toTopicUrl(grade: string | number, subject: string, topicSlug: string): string {
+  return `/categories/grade-${grade}/${toSubjectSlug(subject)}/${topicSlug}`;
+}

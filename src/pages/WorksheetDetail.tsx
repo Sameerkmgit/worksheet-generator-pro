@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle, toSubjectSlug } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toTopicUrl } from "@/lib/utils";
 
 interface RelatedWorksheet {
   id: string;
@@ -53,7 +53,7 @@ const WorksheetDetail = () => {
           setCategory(categoryData);
         }
         
-        // Fetch "More from this topic" (same subcategory) - query directly
+        // Fetch subcategory for breadcrumbs
         const { data: wsData } = await supabase
           .from("worksheets")
           .select("subcategory_id")
@@ -61,6 +61,11 @@ const WorksheetDetail = () => {
           .maybeSingle();
         
         if (wsData?.subcategory_id) {
+          const subcat = await getSubcategoryById(wsData.subcategory_id);
+          if (subcat) {
+            setSubcategory(subcat);
+          }
+          
           const { data: topicWorksheets, error: topicError } = await supabase
             .from("worksheets")
             .select("id, title, subject")
@@ -192,10 +197,10 @@ const WorksheetDetail = () => {
     });
   }
   
-  if (subcategory) {
+  if (subcategory && category) {
     breadcrumbItems.push({ 
       label: toTitleCase(subcategory.title) || "Topic", 
-      href: `/subcategory/${subcategory.id}` 
+      href: toTopicUrl(gradeNum, category.subject, subcategory.slug || subcategory.id)
     });
   }
   

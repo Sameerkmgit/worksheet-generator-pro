@@ -8,18 +8,15 @@ const corsHeaders = {
   "Content-Type": "application/xml; charset=utf-8",
 };
 
-// Format date to W3C format for sitemap
 function formatDate(dateString: string | null): string | null {
   if (!dateString) return null;
   try {
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0]; // YYYY-MM-DD format
+    return new Date(dateString).toISOString().split("T")[0];
   } catch {
     return null;
   }
 }
 
-// Escape XML special characters
 function escapeXml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -29,24 +26,20 @@ function escapeXml(str: string): string {
     .replace(/'/g, "&apos;");
 }
 
-// Build a single URL entry
 function buildUrlEntry(loc: string, lastmod?: string | null, priority?: string, changefreq?: string): string {
   let entry = `  <url>\n    <loc>${escapeXml(loc)}</loc>\n`;
-  if (lastmod) {
-    entry += `    <lastmod>${lastmod}</lastmod>\n`;
-  }
-  if (changefreq) {
-    entry += `    <changefreq>${changefreq}</changefreq>\n`;
-  }
-  if (priority) {
-    entry += `    <priority>${priority}</priority>\n`;
-  }
+  if (lastmod) entry += `    <lastmod>${lastmod}</lastmod>\n`;
+  if (changefreq) entry += `    <changefreq>${changefreq}</changefreq>\n`;
+  if (priority) entry += `    <priority>${priority}</priority>\n`;
   entry += `  </url>\n`;
   return entry;
 }
 
+function toSubjectSlug(subject: string): string {
+  return subject.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+}
+
 Deno.serve(async (req) => {
-  // Handle CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -58,7 +51,6 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Start building sitemap
     let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n`;
     sitemap += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
 
@@ -71,52 +63,71 @@ Deno.serve(async (req) => {
     sitemap += buildUrlEntry(`${SITE_URL}/about`, null, "0.5", "monthly");
     sitemap += buildUrlEntry(`${SITE_URL}/support`, null, "0.3", "yearly");
 
-    // Grade pages: /categories/:gradeSlug (grade-1, grade-2, etc.)
+    // Grade pages
     const grades = ["grade-1", "grade-2", "grade-3", "grade-4", "grade-5"];
     for (const grade of grades) {
       sitemap += buildUrlEntry(`${SITE_URL}/categories/${grade}`, null, "0.8", "weekly");
     }
 
-    // Fetch worksheet_categories for subject pages with readable URLs
-    console.log("Fetching worksheet_categories for subject pages...");
+    // Subject pages
+    console.log("Fetching worksheet_categories...");
     const { data: categories, error: catError } = await supabase
       .from("worksheet_categories")
       .select("id, grade, subject, updated_at")
       .order("sort_order", { ascending: true });
 
-    if (catError) {
-      console.error("Error fetching categories:", catError);
-    } else if (categories) {
-      console.log(`Found ${categories.length} categories`);
+    if (catError) console.error("Error fetching categories:", catError);
+    
+    // Build a lookup: category_id → { grade, subject }
+    const catLookup: Record<string, { grade: string; subject: string }> = {};
+    if (categories) {
       for (const cat of categories) {
-        const lastmod = formatDate(cat.updated_at);
-        // Build readable URL: /categories/grade-1/math
-        // Grade is stored as "1", "2", etc. - convert to "grade-1", "grade-2"
         const gradeSlug = `grade-${cat.grade}`;
-        const subjectSlug = cat.subject.toLowerCase().replace(/\s+/g, "-");
+        const subjectSlug = toSubjectSlug(cat.subject);
+        const lastmod = formatDate(cat.updated_at);
         sitemap += buildUrlEntry(`${SITE_URL}/categories/${gradeSlug}/${subjectSlug}`, lastmod, "0.8", "weekly");
+        catLookup[cat.id] = { grade: cat.grade, subject: cat.subject };
       }
     }
 
-    // Fetch worksheet_subcategories for topic pages
-    console.log("Fetching worksheet_subcategories for topic pages...");
+    // Topic pages — readable URLs, only include topics with ≥3 worksheets
+    console.log("Fetching subcategories with worksheet counts...");
     const { data: subcategories, error: subError } = await supabase
       .from("worksheet_subcategories")
-      .select("id, updated_at")
+      .select("id, slug, category_id, updated_at")
       .eq("is_archived", false)
       .order("sort_order", { ascending: true });
 
-    if (subError) {
-      console.error("Error fetching subcategories:", subError);
-    } else if (subcategories) {
-      console.log(`Found ${subcategories.length} subcategories`);
+    if (subError) console.error("Error fetching subcategories:", subError);
+
+    if (subcategories) {
       for (const sub of subcategories) {
-        const lastmod = formatDate(sub.updated_at);
-        sitemap += buildUrlEntry(`${SITE_URL}/subcategory/${sub.id}`, lastmod, "0.7", "weekly");
+        const cat = catLookup[sub.category_id];
+        if (!cat) continue;
+
+        // Check worksheet count for this topic
+        const { count } = await supabase
+          .from("worksheets")
+          .select("*", { count: "exact", head: true })
+          .eq("subcategory_id", sub.id)
+          .eq("is_archived", false);
+
+        // Only include in sitemap if ≥3 worksheets
+        if ((count || 0) >= 3) {
+          const gradeSlug = `grade-${cat.grade}`;
+          const subjectSlug = toSubjectSlug(cat.subject);
+          const lastmod = formatDate(sub.updated_at);
+          sitemap += buildUrlEntry(
+            `${SITE_URL}/categories/${gradeSlug}/${subjectSlug}/${sub.slug}`,
+            lastmod,
+            "0.7",
+            "weekly"
+          );
+        }
       }
     }
 
-    // Fetch worksheets for detail pages
+    // Worksheet detail pages
     console.log("Fetching worksheets...");
     const { data: worksheets, error: wsError } = await supabase
       .from("worksheets")
@@ -124,33 +135,23 @@ Deno.serve(async (req) => {
       .eq("is_archived", false)
       .order("created_at", { ascending: false });
 
-    if (wsError) {
-      console.error("Error fetching worksheets:", wsError);
-    } else if (worksheets) {
-      console.log(`Found ${worksheets.length} worksheets`);
+    if (wsError) console.error("Error fetching worksheets:", wsError);
+    if (worksheets) {
       for (const ws of worksheets) {
         const lastmod = formatDate(ws.updated_at);
         sitemap += buildUrlEntry(`${SITE_URL}/worksheet/${ws.id}`, lastmod, "0.6", "monthly");
       }
     }
 
-    // Close sitemap
     sitemap += `</urlset>`;
-
     console.log("Sitemap generated successfully");
 
-    return new Response(sitemap, {
-      status: 200,
-      headers: corsHeaders,
-    });
+    return new Response(sitemap, { status: 200, headers: corsHeaders });
   } catch (error) {
     console.error("Sitemap generation error:", error);
     return new Response(
       `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>`,
-      {
-        status: 500,
-        headers: corsHeaders,
-      }
+      { status: 500, headers: corsHeaders }
     );
   }
 });

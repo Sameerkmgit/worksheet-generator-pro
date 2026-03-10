@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
-import { toTitleCase, toSubjectSlug } from "@/lib/utils";
+import { toTitleCase, toSubjectSlug, toTopicUrl } from "@/lib/utils";
 
 interface WorksheetCategory {
   id: string;
@@ -23,6 +23,8 @@ interface WorksheetCategory {
 interface PopularTopic {
   id: string;
   title: string;
+  slug: string;
+  subject: string;
   worksheet_count: number;
   category_title: string;
   image_url?: string | null;
@@ -85,9 +87,10 @@ const Category = () => {
           .select(`
             id,
             title,
+            slug,
             category_id,
             image_url,
-            worksheet_categories!inner(grade, title)
+            worksheet_categories!inner(grade, title, subject)
           `)
           .eq("worksheet_categories.grade", gradeNumber)
           .eq("is_archived", false)
@@ -109,6 +112,8 @@ const Category = () => {
               return {
                 id: topic.id,
                 title: topic.title,
+                slug: topic.slug,
+                subject: topic.worksheet_categories?.subject || "",
                 worksheet_count: count || 0,
                 category_title: topic.worksheet_categories?.title || "",
                 image_url: topic.image_url,
@@ -326,7 +331,7 @@ const Category = () => {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {popularTopics.map((topic) => (
-                  <Link key={topic.id} to={`/subcategory/${topic.id}`}>
+                  <Link key={topic.id} to={toTopicUrl(gradeNumber, topic.subject, topic.slug)}>
                     <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 overflow-hidden">
                       <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
                         {topic.image_url ? (
