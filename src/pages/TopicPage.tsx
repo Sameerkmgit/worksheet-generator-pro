@@ -301,6 +301,13 @@ const TopicPage = () => {
           </section>
         )}
 
+        {/* Interactive Practice CTA */}
+        <section className="py-8 px-4">
+          <div className="max-w-7xl mx-auto">
+            <InteractivePracticeBanner variant="page" grade={gradeNumber} subjectSlug={subjectSlug} />
+          </div>
+        </section>
+
         {/* Bottom Ad */}
         <div className="w-full py-4">
           <div className="max-w-7xl mx-auto px-4">

@@ -145,6 +145,9 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Interactive Practice Promotion */}
+      <InteractivePracticeBanner variant="homepage" />
+
       {/* Ad below hero */}
       <section className="py-4 px-6">
         <div className="container mx-auto max-w-[1140px]">

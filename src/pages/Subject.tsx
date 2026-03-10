@@ -275,6 +275,14 @@ const Subject = () => {
         </section>
       </main>
 
+        {/* Interactive Practice CTA */}
+        <section className="py-8 px-4">
+          <div className="max-w-7xl mx-auto">
+            <InteractivePracticeBanner variant="page" grade={gradeNumber} subjectSlug={subjectSlug} />
+          </div>
+        </section>
+      </main>
+
       <Footer />
     </div>
   );
