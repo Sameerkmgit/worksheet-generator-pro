@@ -192,24 +192,22 @@ const Category = () => {
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-12">
+        <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-8">
           <div className="max-w-7xl mx-auto px-4">
             {/* Visible Breadcrumbs */}
-            <Breadcrumbs items={breadcrumbItems} className="mb-6" />
+            <Breadcrumbs items={breadcrumbItems} className="mb-4" />
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-foreground tracking-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-foreground tracking-tight">
               {gradeTitle} Worksheets
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-6">
               {pageDescription}
             </p>
+
+            {/* Interactive Practice CTA */}
+            <InteractivePracticeBanner variant="page" grade={gradeNumber} />
           </div>
         </section>
-
-        {/* Interactive Practice CTA - prominent near top */}
-        <div className="max-w-7xl mx-auto px-4 pt-6 pb-2">
-          <InteractivePracticeBanner variant="page" grade={gradeNumber} />
-        </div>
 
         {/* Ad below hero */}
         <div className="max-w-7xl mx-auto px-4 py-2">
@@ -217,7 +215,7 @@ const Category = () => {
         </div>
 
         {/* Subjects Grid */}
-        <section className="py-8 px-4 bg-background">
+        <section className="py-6 px-4 bg-background">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-2xl font-bold mb-6 text-foreground font-heading">
               Browse by Subject
