@@ -207,21 +207,17 @@ const Category = () => {
         </section>
 
         {/* Interactive Practice CTA - prominent near top */}
-        <section className="py-6 px-4">
-          <div className="max-w-7xl mx-auto">
-            <InteractivePracticeBanner variant="page" grade={gradeNumber} />
-          </div>
-        </section>
+        <div className="max-w-7xl mx-auto px-4 pt-6 pb-2">
+          <InteractivePracticeBanner variant="page" grade={gradeNumber} />
+        </div>
 
         {/* Ad below hero */}
-        <div className="py-4 px-4">
-          <div className="max-w-7xl mx-auto">
-            <AdSense adSlot="4567890123" adFormat="auto" className="w-full" />
-          </div>
+        <div className="max-w-7xl mx-auto px-4 py-2">
+          <AdSense adSlot="4567890123" adFormat="auto" className="w-full" />
         </div>
 
         {/* Subjects Grid */}
-        <section className="py-12 px-4 bg-background">
+        <section className="py-8 px-4 bg-background">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-2xl font-bold mb-6 text-foreground font-heading">
               Browse by Subject
