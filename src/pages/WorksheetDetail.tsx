@@ -53,7 +53,7 @@ const WorksheetDetail = () => {
           setCategory(categoryData);
         }
         
-        // Fetch "More from this topic" (same subcategory) - query directly
+        // Fetch subcategory for breadcrumbs
         const { data: wsData } = await supabase
           .from("worksheets")
           .select("subcategory_id")
@@ -61,6 +61,11 @@ const WorksheetDetail = () => {
           .maybeSingle();
         
         if (wsData?.subcategory_id) {
+          const subcat = await getSubcategoryById(wsData.subcategory_id);
+          if (subcat) {
+            setSubcategory(subcat);
+          }
+          
           const { data: topicWorksheets, error: topicError } = await supabase
             .from("worksheets")
             .select("id, title, subject")
