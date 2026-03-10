@@ -23,6 +23,8 @@ interface WorksheetCategory {
 interface PopularTopic {
   id: string;
   title: string;
+  slug: string;
+  subject: string;
   worksheet_count: number;
   category_title: string;
   image_url?: string | null;
