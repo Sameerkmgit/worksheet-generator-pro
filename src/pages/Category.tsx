@@ -374,13 +374,6 @@ const Category = () => {
           </section>
         )}
 
-        {/* Interactive Practice CTA */}
-        <section className="py-8 px-4">
-          <div className="max-w-7xl mx-auto">
-            <InteractivePracticeBanner variant="page" grade={gradeNumber} />
-          </div>
-        </section>
-
         {/* Bottom Banner Ad */}
         <div className="w-full py-4">
           <div className="max-w-7xl mx-auto px-4">

@@ -365,7 +365,7 @@ const WorksheetDetail = () => {
 
               {/* Practice on WizKidsHub Practice */}
               <InteractivePracticeBanner
-                variant="detail"
+                variant="page"
                 grade={gradeNum}
                 subjectSlug={toSubjectSlug(worksheet.subject)}
               />
