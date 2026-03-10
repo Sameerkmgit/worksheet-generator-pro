@@ -221,7 +221,7 @@ const Subject = () => {
                           <span>{subcat.worksheetCount} worksheet{subcat.worksheetCount !== 1 ? "s" : ""}</span>
                         </div>
                         <Button asChild variant="default" className="w-full">
-                          <Link to={`/subcategory/${subcat.id}`}>
+                          <Link to={toTopicUrl(gradeNumber, category?.subject || '', subcat.slug)}>
                             <Eye className="mr-2 h-4 w-4" />
                             View Worksheets
                           </Link>

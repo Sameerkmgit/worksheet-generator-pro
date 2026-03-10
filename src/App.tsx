@@ -52,14 +52,17 @@ const App = () => {
             {/* GRADE → CATEGORY LIST (fetches from worksheet_categories) */}
             <Route path="/categories/:gradeSlug" element={<Category />} />
 
-            {/* SUBJECT PAGE - NEW READABLE URL */}
+            {/* SUBJECT PAGE - READABLE URL */}
             <Route path="/categories/:gradeSlug/:subjectSlug" element={<Subject />} />
 
-            {/* LEGACY CATEGORY ROUTE - REDIRECTS TO NEW READABLE URL */}
+            {/* TOPIC PAGE - NEW READABLE URL */}
+            <Route path="/categories/:gradeSlug/:subjectSlug/:topicSlug" element={<TopicPage />} />
+
+            {/* LEGACY CATEGORY ROUTE - REDIRECTS TO READABLE URL */}
             <Route path="/category/:categoryId" element={<CategoryRedirect />} />
 
-            {/* WORKSHEETS INSIDE SUBCATEGORY (specific topic) */}
-            <Route path="/subcategory/:subcategoryId" element={<SubcategoryWorksheets />} />
+            {/* LEGACY SUBCATEGORY ROUTE - REDIRECTS TO READABLE TOPIC URL */}
+            <Route path="/subcategory/:subcategoryId" element={<SubcategoryRedirect />} />
 
             {/* WORKSHEET DETAIL */}
             <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />

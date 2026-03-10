@@ -197,10 +197,10 @@ const WorksheetDetail = () => {
     });
   }
   
-  if (subcategory) {
+  if (subcategory && category) {
     breadcrumbItems.push({ 
       label: toTitleCase(subcategory.title) || "Topic", 
-      href: `/subcategory/${subcategory.id}` 
+      href: toTopicUrl(gradeNum, category.subject, subcategory.slug || subcategory.id)
     });
   }
   
