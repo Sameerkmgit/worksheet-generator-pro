@@ -11,6 +11,7 @@ import AdSense from "@/components/AdSense"; // Google AdSense component
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getWorksheetCountsByGrade } from "@/lib/getWorksheetCounts";
+import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 
 const baseCategories = [
   { id: "grade-1", title: "Grade 1", dbGrade: "1", icon: GraduationCap, color: "from-blue-400 to-blue-500" },
