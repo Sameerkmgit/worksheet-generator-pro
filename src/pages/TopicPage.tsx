@@ -10,6 +10,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import AdSense from "@/components/AdSense";
 import { supabase } from "@/integrations/supabase/client";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl } from "@/lib/utils";
+import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 
 const getPdfEmbedUrl = (pdfUrl: string): string => {
   if (!pdfUrl) return "";
