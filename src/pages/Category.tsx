@@ -206,6 +206,13 @@ const Category = () => {
           </div>
         </section>
 
+        {/* Interactive Practice CTA - prominent near top */}
+        <section className="py-6 px-4">
+          <div className="max-w-7xl mx-auto">
+            <InteractivePracticeBanner variant="page" grade={gradeNumber} />
+          </div>
+        </section>
+
         {/* Ad below hero */}
         <div className="py-4 px-4">
           <div className="max-w-7xl mx-auto">
@@ -366,13 +373,6 @@ const Category = () => {
             </div>
           </section>
         )}
-
-        {/* Interactive Practice CTA */}
-        <section className="py-8 px-4">
-          <div className="max-w-7xl mx-auto">
-            <InteractivePracticeBanner variant="page" grade={gradeNumber} />
-          </div>
-        </section>
 
         {/* Bottom Banner Ad */}
         <div className="w-full py-4">

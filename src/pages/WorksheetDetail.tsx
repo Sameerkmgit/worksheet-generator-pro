@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Download, ArrowLeft, Loader2, FileText, ArrowRight, ExternalLink } from "lucide-react";
+import { Download, ArrowLeft, Loader2, FileText, ArrowRight, Sparkles } from "lucide-react";
 import AdSense from "@/components/AdSense";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -305,12 +305,12 @@ const WorksheetDetail = () => {
                     </Button>
                     <Button size="lg" variant="outline" className="w-full md:w-auto" asChild>
                       <a 
-                        href={`https://www.wizkidshub.com/categories/grade-${gradeNum}/${toSubjectSlug(worksheet.subject)}`}
+                        href={`https://practice.wizkidshub.com/grade-${gradeNum}/${toSubjectSlug(worksheet.subject)}`}
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
-                        <ExternalLink className="mr-2 h-5 w-5" />
-                        View Printable Worksheets
+                        <Sparkles className="mr-2 h-5 w-5" />
+                        Start Interactive Practice
                       </a>
                     </Button>
                   </div>
@@ -365,7 +365,7 @@ const WorksheetDetail = () => {
 
               {/* Practice on WizKidsHub Practice */}
               <InteractivePracticeBanner
-                variant="detail"
+                variant="page"
                 grade={gradeNum}
                 subjectSlug={toSubjectSlug(worksheet.subject)}
               />
