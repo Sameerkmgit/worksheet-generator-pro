@@ -21,7 +21,7 @@ const InteractivePracticeBanner = ({
   grade,
   subjectSlug,
 }: InteractivePracticeBannerProps) => {
-  const href = buildPracticeUrl(grade, subjectSlug);
+  const href = buildPracticeUrl();
 
   if (variant === "homepage") {
     return (
