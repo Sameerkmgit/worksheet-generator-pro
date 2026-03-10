@@ -87,9 +87,10 @@ const Category = () => {
           .select(`
             id,
             title,
+            slug,
             category_id,
             image_url,
-            worksheet_categories!inner(grade, title)
+            worksheet_categories!inner(grade, title, subject)
           `)
           .eq("worksheet_categories.grade", gradeNumber)
           .eq("is_archived", false)
