@@ -273,7 +273,6 @@ const Subject = () => {
             )}
           </div>
         </section>
-      </main>
 
         {/* Interactive Practice CTA */}
         <section className="py-8 px-4">
