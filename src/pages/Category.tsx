@@ -260,7 +260,7 @@ const Category = () => {
         </section>
 
         {/* Categories Grid */}
-        <section className="py-16 px-4">
+        <section className="py-8 px-4">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-2xl font-bold mb-6 text-foreground font-heading">
               All {gradeTitle} Categories
