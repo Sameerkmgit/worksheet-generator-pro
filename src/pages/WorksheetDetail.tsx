@@ -295,12 +295,24 @@ const WorksheetDetail = () => {
                     {toTitleCase(cleanDisplayTitle(worksheet.description))}
                   </p>
 
-                  <Button size="lg" className="w-full md:w-auto" asChild>
-                    <a href={worksheet.pdfUrl} target="_blank" rel="noopener noreferrer">
-                      <Download className="mr-2 h-5 w-5" />
-                      Download PDF
-                    </a>
-                  </Button>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button size="lg" className="w-full md:w-auto" asChild>
+                      <a href={worksheet.pdfUrl} target="_blank" rel="noopener noreferrer">
+                        <Download className="mr-2 h-5 w-5" />
+                        Download PDF
+                      </a>
+                    </Button>
+                    <Button size="lg" variant="outline" className="w-full md:w-auto" asChild>
+                      <a 
+                        href={`https://www.wizkidshub.com/categories/grade-${gradeNum}/${toSubjectSlug(worksheet.subject)}`}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        <ExternalLink className="mr-2 h-5 w-5" />
+                        View Printable Worksheets
+                      </a>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
 
