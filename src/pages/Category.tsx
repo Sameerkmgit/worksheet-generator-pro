@@ -112,6 +112,8 @@ const Category = () => {
               return {
                 id: topic.id,
                 title: topic.title,
+                slug: topic.slug,
+                subject: topic.worksheet_categories?.subject || "",
                 worksheet_count: count || 0,
                 category_title: topic.worksheet_categories?.title || "",
                 image_url: topic.image_url,
