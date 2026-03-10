@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Download, ArrowLeft, Loader2, FileText, ArrowRight, ExternalLink } from "lucide-react";
+import { Download, ArrowLeft, Loader2, FileText, ArrowRight, Sparkles } from "lucide-react";
 import AdSense from "@/components/AdSense";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
