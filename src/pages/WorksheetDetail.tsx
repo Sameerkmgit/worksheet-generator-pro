@@ -305,7 +305,7 @@ const WorksheetDetail = () => {
                     </Button>
                     <Button size="lg" variant="outline" className="w-full md:w-auto" asChild>
                       <a 
-                        href={`https://practice.wizkidshub.com/grade-${gradeNum}/${toSubjectSlug(worksheet.subject)}`}
+                        href="https://practice.wizkidshub.com"
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
