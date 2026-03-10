@@ -9,7 +9,8 @@ import Home from "./pages/Home";
 import Category from "./pages/Category";
 import Subject from "./pages/Subject";
 import CategoryRedirect from "./pages/CategoryRedirect";
-import SubcategoryWorksheets from "./pages/SubcategoryWorksheets";
+import SubcategoryRedirect from "./pages/SubcategoryRedirect";
+import TopicPage from "./pages/TopicPage";
 import WorksheetDetail from "./pages/WorksheetDetail";
 
 
