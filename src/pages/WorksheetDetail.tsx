@@ -11,6 +11,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toTopicUrl } from "@/lib/utils";
+import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 
 interface RelatedWorksheet {
   id: string;
