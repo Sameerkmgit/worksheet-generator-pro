@@ -331,7 +331,7 @@ const Category = () => {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {popularTopics.map((topic) => (
-                  <Link key={topic.id} to={`/subcategory/${topic.id}`}>
+                  <Link key={topic.id} to={toTopicUrl(gradeNumber, topic.subject, topic.slug)}>
                     <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 overflow-hidden">
                       <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
                         {topic.image_url ? (
