@@ -12,9 +12,7 @@ interface InteractivePracticeBannerProps {
 
 const PRACTICE_BASE = "https://practice.wizkidshub.com";
 
-function buildPracticeUrl(grade?: string, subjectSlug?: string) {
-  if (grade && subjectSlug) return `${PRACTICE_BASE}/grade-${grade}/${subjectSlug}`;
-  if (grade) return `${PRACTICE_BASE}/grade-${grade}`;
+function buildPracticeUrl() {
   return PRACTICE_BASE;
 }
 
