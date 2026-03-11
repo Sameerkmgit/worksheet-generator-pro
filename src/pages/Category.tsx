@@ -39,6 +39,55 @@ const gradeTitles: Record<string, string> = {
   "grade-5": "Grade 5",
 };
 
+// Rich grade-level descriptions for AdSense content
+const gradeDescriptions: Record<string, { intro: string; subjects: { name: string; description: string }[] }> = {
+  "1": {
+    intro: "Grade 1 is when students build the foundation for lifelong learning. At this level, children develop number sense through counting, basic addition and subtraction, and place value concepts. They also begin reading simple sentences, learning phonics patterns, and exploring the world around them through basic science observations.",
+    subjects: [
+      { name: "Math", description: "Covers counting to 100, number recognition, basic addition and subtraction within 20, shapes, patterns, and simple measurement. Students build number sense and develop early problem-solving skills." },
+      { name: "English", description: "Focuses on phonics, letter recognition, sight words, simple sentence reading and writing. Students practice handwriting, spelling, and basic grammar concepts like nouns and verbs." },
+      { name: "Science", description: "Introduces living and non-living things, basic plant and animal life, weather observations, and the five senses. Students learn to observe, describe, and ask questions about their environment." },
+      { name: "Computer Science", description: "Introduces basic sequencing, simple patterns, and early logical thinking through unplugged activities. Students begin to understand how instructions work step by step." },
+    ],
+  },
+  "2": {
+    intro: "Grade 2 students strengthen their reading fluency and begin tackling multi-digit addition and subtraction. They explore more complex sentence structures, expand their vocabulary, and dive deeper into science topics like habitats and the water cycle. This is a pivotal year for building academic confidence and independent learning habits.",
+    subjects: [
+      { name: "Math", description: "Covers addition and subtraction with regrouping, place value to 1000, basic multiplication concepts, time, money, and data handling. Students develop fluency in mental math strategies." },
+      { name: "English", description: "Focuses on reading comprehension, expanded vocabulary, paragraph writing, and grammar skills including adjectives, adverbs, and punctuation. Students begin writing short stories and descriptions." },
+      { name: "Science", description: "Explores habitats, life cycles, states of matter, and the water cycle. Students learn to classify, compare, and record observations in simple experiments." },
+      { name: "Computer Science", description: "Builds on sequencing with simple algorithms, basic coding concepts using visual blocks, and understanding inputs and outputs in everyday technology." },
+    ],
+  },
+  "3": {
+    intro: "In Grade 3, students transition from learning to read to reading to learn. Multiplication and division become central math skills, while writing assignments grow longer and more structured. Science topics expand to include ecosystems, simple machines, and earth science, challenging students to think critically and analytically.",
+    subjects: [
+      { name: "Math", description: "Covers multiplication tables, division, fractions, measurement, area and perimeter, and multi-step word problems. Students develop strong computational skills and mathematical reasoning." },
+      { name: "English", description: "Focuses on reading comprehension across genres, essay writing, grammar mastery including tenses and sentence types, and vocabulary building through context clues and word roots." },
+      { name: "Science", description: "Explores ecosystems, food chains, simple machines, rocks and minerals, and the solar system. Students conduct guided experiments and learn the basics of the scientific method." },
+      { name: "Computer Science", description: "Introduces flowcharts, conditional logic, and basic programming concepts. Students begin to decompose problems and create simple step-by-step solutions." },
+    ],
+  },
+  "4": {
+    intro: "Grade 4 marks a significant increase in academic complexity. Students work with larger numbers, explore fractions and decimals in depth, and begin writing multi-paragraph essays. Science studies expand to energy, electricity, and the human body. Critical thinking and independent problem-solving become essential skills at this level.",
+    subjects: [
+      { name: "Math", description: "Covers multi-digit multiplication and division, fractions and decimals, geometry, data interpretation, and complex word problems. Students apply math to real-world scenarios." },
+      { name: "English", description: "Focuses on advanced reading comprehension, persuasive and narrative writing, complex grammar, figurative language, and research skills. Students develop a strong academic writing voice." },
+      { name: "Science", description: "Explores energy and electricity, the human body systems, weather and climate, and earth's resources. Students design experiments and analyze results systematically." },
+      { name: "Computer Science", description: "Covers variables, loops, and debugging in visual programming environments. Students create simple projects and begin understanding how software solves real problems." },
+    ],
+  },
+  "5": {
+    intro: "Grade 5 prepares students for middle school with advanced concepts across all subjects. Students master operations with fractions and decimals, write structured research reports, and explore complex science topics like ecosystems and the scientific method in depth. This year focuses on building independence and higher-order thinking skills.",
+    subjects: [
+      { name: "Math", description: "Covers operations with fractions and decimals, ratios, coordinate geometry, volume, and algebraic thinking. Students tackle multi-step problems requiring strategic planning and logical reasoning." },
+      { name: "English", description: "Focuses on literary analysis, structured essay writing, advanced grammar and mechanics, vocabulary from Greek and Latin roots, and oral presentation skills. Students engage with diverse text types." },
+      { name: "Science", description: "Explores matter and chemical changes, force and motion, ecosystems and biodiversity, and space science. Students conduct independent investigations and write lab reports." },
+      { name: "Computer Science", description: "Introduces functions, events, and more complex algorithms. Students build interactive projects and begin understanding how technology impacts society and daily life." },
+    ],
+  },
+};
+
 // Subject icons and colors
 const subjectConfig: Record<string, { icon: typeof BookOpen; color: string }> = {
   Math: { icon: BookOpen, color: "from-blue-500 to-indigo-500" },
@@ -251,6 +300,41 @@ const Category = () => {
             </div>
           </div>
         </section>
+
+        {/* Grade Description Section */}
+        {gradeDescriptions[gradeNumber] && (
+          <section className="py-8 px-4 bg-background">
+            <div className="max-w-7xl mx-auto space-y-6">
+              <div className="prose prose-muted max-w-none">
+                <h2 className="text-2xl font-bold text-foreground font-heading mb-3">
+                  What {gradeTitle} Students Learn
+                </h2>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  {gradeDescriptions[gradeNumber].intro}
+                </p>
+
+                <h3 className="text-xl font-bold text-foreground font-heading mb-4">
+                  What You Will Find Here
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  {gradeDescriptions[gradeNumber].subjects.map((subj) => (
+                    <div key={subj.name} className="rounded-lg border p-4 bg-card">
+                      <h4 className="font-semibold text-foreground mb-1">{subj.name}</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{subj.description}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="rounded-lg bg-primary/5 border border-primary/10 p-4">
+                  <h4 className="font-semibold text-foreground mb-1">Curriculum Alignment</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    All {gradeTitle} worksheets on WizKidsHub are aligned with standard school curricula. They are designed to complement classroom instruction and can be used as homework, revision material, or enrichment activities. Our worksheets follow a progressive difficulty structure to help students build skills step by step.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Ad between sections */}
         <div className="max-w-7xl mx-auto px-4 py-2">

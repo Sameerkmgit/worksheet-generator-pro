@@ -29,6 +29,7 @@ import TermsOfService from "./pages/TermsOfService";
 import DownloadPack from "./pages/DownloadPack";
 import Support from "./pages/Support";
 import About from "./pages/About";
+import Blog from "./pages/Blog";
 
 const queryClient = new QueryClient();
 
@@ -79,6 +80,7 @@ const App = () => {
             <Route path="/support" element={<Support />} />
             <Route path="/contact" element={<Support />} />
             <Route path="/about" element={<About />} />
+            <Route path="/blog" element={<Blog />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
 
             {/* ADMIN ROUTES */}
