@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -368,10 +369,12 @@ const WorksheetsBrowser = () => {
                     <Button
                       variant="default"
                       size="sm"
-                      onClick={() => window.open(worksheet.pdf_url, "_blank", "noopener,noreferrer")}
+                      asChild
                     >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      View / Download
+                      <Link to={`/worksheet/${worksheet.id}`}>
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        View Details
+                      </Link>
                     </Button>
                   </CardContent>
                 </Card>

@@ -12,11 +12,59 @@ import { supabase } from "@/integrations/supabase/client";
 import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toTopicUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
+import { Badge } from "@/components/ui/badge";
 
 interface RelatedWorksheet {
   id: string;
   title: string;
   subject: string;
+}
+
+// Generate dynamic description when DB field is empty
+function generateDescription(title: string, grade: string, subject: string): string {
+  const subjectName = toTitleCase(subject);
+  const cleanName = toTitleCase(cleanDisplayTitle(title));
+  return `This free printable ${subjectName} worksheet is designed for Grade ${grade} students. "${cleanName}" helps young learners build essential ${subjectName.toLowerCase()} skills through structured practice problems. Perfect for classroom instruction, homework assignments, or at-home learning — no sign-up required.`;
+}
+
+// Generate dynamic learning objectives when DB skills field is empty
+function generateLearningObjectives(title: string, subject: string): string[] {
+  const subjectLower = subject.toLowerCase();
+  const cleanName = cleanDisplayTitle(title).toLowerCase();
+
+  const baseObjectives: Record<string, string[]> = {
+    math: [
+      `Practice core ${cleanName} concepts and build computational fluency`,
+      "Strengthen number sense and problem-solving strategies",
+      "Develop accuracy and speed with grade-appropriate math problems",
+      "Build confidence in applying mathematical reasoning",
+    ],
+    english: [
+      `Improve reading comprehension and ${cleanName} skills`,
+      "Expand vocabulary and strengthen language usage",
+      "Practice writing mechanics including grammar and punctuation",
+      "Develop critical thinking through language-based exercises",
+    ],
+    science: [
+      `Explore key ${cleanName} concepts through guided activities`,
+      "Develop observation and scientific reasoning skills",
+      "Learn to identify and classify scientific phenomena",
+      "Build a foundation for hands-on scientific inquiry",
+    ],
+    default: [
+      `Practice and reinforce ${cleanName} skills`,
+      `Build foundational knowledge in ${toTitleCase(subject).toLowerCase()}`,
+      "Develop critical thinking and problem-solving abilities",
+      "Gain confidence through structured, guided practice",
+    ],
+  };
+
+  return baseObjectives[subjectLower] || baseObjectives.default;
+}
+
+// Generate dynamic how-to-use guidance when DB usage field is empty
+function generateHowToUse(grade: string, subject: string): string {
+  return `Print this worksheet and give it to your Grade ${grade} student to complete independently or with guidance. Review the answers together to identify areas of strength and topics that may need additional practice. This worksheet works great as a classroom warm-up, homework assignment, or supplementary learning activity at home. For best results, encourage students to show their work and explain their reasoning.`;
 }
 
 const WorksheetDetail = () => {
@@ -281,19 +329,23 @@ const WorksheetDetail = () => {
               {/* Worksheet Details */}
               <Card>
                 <CardContent className="p-6">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                    <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
-                      Grade {worksheet.grade}
-                    </span>
-                    <span className="bg-secondary/10 text-secondary-foreground px-3 py-1 rounded-full">
-                      {toTitleCase(worksheet.subject)}
-                    </span>
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <Badge variant="secondary" className="bg-primary/10 text-primary border-0">Grade {gradeNum}</Badge>
+                    <Badge variant="secondary" className="bg-secondary/10 text-secondary-foreground border-0">{subjectName}</Badge>
+                    {worksheet.difficulty && (
+                      <Badge variant="outline">{toTitleCase(worksheet.difficulty)}</Badge>
+                    )}
+                    {worksheet.subCategory && (
+                      <Badge variant="outline">{toTitleCase(worksheet.subCategory)}</Badge>
+                    )}
                   </div>
 
-                  <h1 className="text-3xl md:text-4xl font-bold mb-4">{toTitleCase(cleanDisplayTitle(worksheet.title))}</h1>
+                  <h1 className="text-3xl md:text-4xl font-bold mb-4">{cleanTitle}</h1>
                   
                   <p className="text-lg text-muted-foreground mb-6">
-                    {toTitleCase(cleanDisplayTitle(worksheet.description))}
+                    {worksheet.description
+                      ? toTitleCase(cleanDisplayTitle(worksheet.description))
+                      : generateDescription(worksheet.title, gradeNum, worksheet.subject)}
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-3">
@@ -382,38 +434,37 @@ const WorksheetDetail = () => {
                 </Card>
               )}
 
-              {/* Skills Section */}
-              {worksheet.skills && Array.isArray(worksheet.skills) && worksheet.skills.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Skills Developed</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {worksheet.skills.map((skill: string, index: number) => (
-                        <li key={index} className="flex items-start">
-                          <span className="text-primary mr-2">✓</span>
-                          <span className="text-muted-foreground">{toTitleCase(skill)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
+              {/* Learning Objectives / Skills Section — always shown */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Learning Objectives</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {(worksheet.skills && Array.isArray(worksheet.skills) && worksheet.skills.length > 0
+                      ? worksheet.skills
+                      : generateLearningObjectives(worksheet.title, worksheet.subject)
+                    ).map((skill: string, index: number) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-primary mr-2">✓</span>
+                        <span className="text-muted-foreground">{toTitleCase(skill)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
 
-              {/* Usage Section */}
-              {worksheet.usage && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>How to Use This Worksheet</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {worksheet.usage}
-                    </p>
-                  </CardContent>
-                </Card>
-              )}
+              {/* How to Use — always shown */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>How to Use This Worksheet</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {worksheet.usage || generateHowToUse(gradeNum, worksheet.subject)}
+                  </p>
+                </CardContent>
+              </Card>
 
               {/* FAQ Section */}
               {worksheet.faq && Array.isArray(worksheet.faq) && worksheet.faq.length > 0 && (
