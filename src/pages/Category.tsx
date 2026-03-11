@@ -301,6 +301,41 @@ const Category = () => {
           </div>
         </section>
 
+        {/* Grade Description Section */}
+        {gradeDescriptions[gradeNumber] && (
+          <section className="py-8 px-4 bg-background">
+            <div className="max-w-7xl mx-auto space-y-6">
+              <div className="prose prose-muted max-w-none">
+                <h2 className="text-2xl font-bold text-foreground font-heading mb-3">
+                  What {gradeTitle} Students Learn
+                </h2>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  {gradeDescriptions[gradeNumber].intro}
+                </p>
+
+                <h3 className="text-xl font-bold text-foreground font-heading mb-4">
+                  What You Will Find Here
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  {gradeDescriptions[gradeNumber].subjects.map((subj) => (
+                    <div key={subj.name} className="rounded-lg border p-4 bg-card">
+                      <h4 className="font-semibold text-foreground mb-1">{subj.name}</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{subj.description}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="rounded-lg bg-primary/5 border border-primary/10 p-4">
+                  <h4 className="font-semibold text-foreground mb-1">Curriculum Alignment</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    All {gradeTitle} worksheets on WizKidsHub are aligned with standard school curricula. They are designed to complement classroom instruction and can be used as homework, revision material, or enrichment activities. Our worksheets follow a progressive difficulty structure to help students build skills step by step.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Ad between sections */}
         <div className="max-w-7xl mx-auto px-4 py-2">
           <AdSense adSlot="4567890123" adFormat="auto" className="w-full" />
