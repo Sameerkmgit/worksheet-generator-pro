@@ -145,6 +145,38 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Our Mission */}
+      <section className="py-12 px-6 bg-card" aria-labelledby="mission-heading">
+        <div className="container mx-auto max-w-[1140px] text-center">
+          <h2 id="mission-heading" className="text-3xl font-bold text-foreground mb-4 font-heading">Our Mission</h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            WizKidsHub exists to make quality education accessible to every child. We provide free, curriculum-aligned printable worksheets so that parents, teachers, and tutors never have to worry about finding — or paying for — grade-appropriate practice material. Every worksheet is educator-reviewed and ready to print.
+          </p>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-12 px-6" aria-labelledby="how-it-works-heading">
+        <div className="container mx-auto max-w-[1140px]">
+          <h2 id="how-it-works-heading" className="text-3xl font-bold text-foreground mb-8 font-heading text-center">How It Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { step: "1", title: "Browse", desc: "Choose a grade level and subject. Explore our library of 780+ free worksheets organized by topic and difficulty." },
+              { step: "2", title: "Download", desc: "Click on any worksheet to see details, then download the PDF instantly. No sign-up or account needed." },
+              { step: "3", title: "Print & Learn", desc: "Print the worksheet at home or in the classroom. Students complete it by hand for better retention and focus." },
+            ].map((item) => (
+              <div key={item.step} className="text-center space-y-3">
+                <div className="mx-auto w-14 h-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-2xl font-bold">
+                  {item.step}
+                </div>
+                <h3 className="text-xl font-semibold text-foreground font-heading">{item.title}</h3>
+                <p className="text-muted-foreground">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Interactive Practice Promotion */}
       <InteractivePracticeBanner variant="homepage" />
 
