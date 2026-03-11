@@ -434,38 +434,37 @@ const WorksheetDetail = () => {
                 </Card>
               )}
 
-              {/* Skills Section */}
-              {worksheet.skills && Array.isArray(worksheet.skills) && worksheet.skills.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Skills Developed</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {worksheet.skills.map((skill: string, index: number) => (
-                        <li key={index} className="flex items-start">
-                          <span className="text-primary mr-2">✓</span>
-                          <span className="text-muted-foreground">{toTitleCase(skill)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
+              {/* Learning Objectives / Skills Section — always shown */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Learning Objectives</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {(worksheet.skills && Array.isArray(worksheet.skills) && worksheet.skills.length > 0
+                      ? worksheet.skills
+                      : generateLearningObjectives(worksheet.title, worksheet.subject)
+                    ).map((skill: string, index: number) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-primary mr-2">✓</span>
+                        <span className="text-muted-foreground">{toTitleCase(skill)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
 
-              {/* Usage Section */}
-              {worksheet.usage && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>How to Use This Worksheet</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {worksheet.usage}
-                    </p>
-                  </CardContent>
-                </Card>
-              )}
+              {/* How to Use — always shown */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>How to Use This Worksheet</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {worksheet.usage || generateHowToUse(gradeNum, worksheet.subject)}
+                  </p>
+                </CardContent>
+              </Card>
 
               {/* FAQ Section */}
               {worksheet.faq && Array.isArray(worksheet.faq) && worksheet.faq.length > 0 && (
