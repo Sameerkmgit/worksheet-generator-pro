@@ -12,11 +12,59 @@ import { supabase } from "@/integrations/supabase/client";
 import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toTopicUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
+import { Badge } from "@/components/ui/badge";
 
 interface RelatedWorksheet {
   id: string;
   title: string;
   subject: string;
+}
+
+// Generate dynamic description when DB field is empty
+function generateDescription(title: string, grade: string, subject: string): string {
+  const subjectName = toTitleCase(subject);
+  const cleanName = toTitleCase(cleanDisplayTitle(title));
+  return `This free printable ${subjectName} worksheet is designed for Grade ${grade} students. "${cleanName}" helps young learners build essential ${subjectName.toLowerCase()} skills through structured practice problems. Perfect for classroom instruction, homework assignments, or at-home learning — no sign-up required.`;
+}
+
+// Generate dynamic learning objectives when DB skills field is empty
+function generateLearningObjectives(title: string, subject: string): string[] {
+  const subjectLower = subject.toLowerCase();
+  const cleanName = cleanDisplayTitle(title).toLowerCase();
+
+  const baseObjectives: Record<string, string[]> = {
+    math: [
+      `Practice core ${cleanName} concepts and build computational fluency`,
+      "Strengthen number sense and problem-solving strategies",
+      "Develop accuracy and speed with grade-appropriate math problems",
+      "Build confidence in applying mathematical reasoning",
+    ],
+    english: [
+      `Improve reading comprehension and ${cleanName} skills`,
+      "Expand vocabulary and strengthen language usage",
+      "Practice writing mechanics including grammar and punctuation",
+      "Develop critical thinking through language-based exercises",
+    ],
+    science: [
+      `Explore key ${cleanName} concepts through guided activities`,
+      "Develop observation and scientific reasoning skills",
+      "Learn to identify and classify scientific phenomena",
+      "Build a foundation for hands-on scientific inquiry",
+    ],
+    default: [
+      `Practice and reinforce ${cleanName} skills`,
+      `Build foundational knowledge in ${toTitleCase(subject).toLowerCase()}`,
+      "Develop critical thinking and problem-solving abilities",
+      "Gain confidence through structured, guided practice",
+    ],
+  };
+
+  return baseObjectives[subjectLower] || baseObjectives.default;
+}
+
+// Generate dynamic how-to-use guidance when DB usage field is empty
+function generateHowToUse(grade: string, subject: string): string {
+  return `Print this worksheet and give it to your Grade ${grade} student to complete independently or with guidance. Review the answers together to identify areas of strength and topics that may need additional practice. This worksheet works great as a classroom warm-up, homework assignment, or supplementary learning activity at home. For best results, encourage students to show their work and explain their reasoning.`;
 }
 
 const WorksheetDetail = () => {
