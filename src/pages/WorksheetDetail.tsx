@@ -329,19 +329,23 @@ const WorksheetDetail = () => {
               {/* Worksheet Details */}
               <Card>
                 <CardContent className="p-6">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                    <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
-                      Grade {worksheet.grade}
-                    </span>
-                    <span className="bg-secondary/10 text-secondary-foreground px-3 py-1 rounded-full">
-                      {toTitleCase(worksheet.subject)}
-                    </span>
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <Badge variant="secondary" className="bg-primary/10 text-primary border-0">Grade {gradeNum}</Badge>
+                    <Badge variant="secondary" className="bg-secondary/10 text-secondary-foreground border-0">{subjectName}</Badge>
+                    {worksheet.difficulty && (
+                      <Badge variant="outline">{toTitleCase(worksheet.difficulty)}</Badge>
+                    )}
+                    {worksheet.subCategory && (
+                      <Badge variant="outline">{toTitleCase(worksheet.subCategory)}</Badge>
+                    )}
                   </div>
 
-                  <h1 className="text-3xl md:text-4xl font-bold mb-4">{toTitleCase(cleanDisplayTitle(worksheet.title))}</h1>
+                  <h1 className="text-3xl md:text-4xl font-bold mb-4">{cleanTitle}</h1>
                   
                   <p className="text-lg text-muted-foreground mb-6">
-                    {toTitleCase(cleanDisplayTitle(worksheet.description))}
+                    {worksheet.description
+                      ? toTitleCase(cleanDisplayTitle(worksheet.description))
+                      : generateDescription(worksheet.title, gradeNum, worksheet.subject)}
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-3">
