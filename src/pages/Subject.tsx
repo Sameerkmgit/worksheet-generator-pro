@@ -130,6 +130,10 @@ const Subject = () => {
           .eq("is_archived", false)
           .order("created_at", { ascending: false });
 
+        if (import.meta.env.DEV) {
+          console.log(`[Subject] ${catData.subject} (grade ${catData.grade}): ${(uncategorizedWs || []).length} uncategorized worksheets`);
+        }
+
         // If no subcategories at all, fetch ALL worksheets for this category
         if (!subcatsRaw || subcatsRaw.length === 0) {
           const allWs = await getWorksheetsByCategoryId(catData.id);
