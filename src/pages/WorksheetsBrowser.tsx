@@ -35,7 +35,7 @@ const WorksheetsBrowser = () => {
   
   const [loadingGrades, setLoadingGrades] = useState(true);
   const [loadingSubjects, setLoadingSubjects] = useState(false);
-  const [loadingWorksheets, setLoadingWorksheets] = useState(false);
+  const [loadingWorksheets, setLoadingWorksheets] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Check if any filters are active
