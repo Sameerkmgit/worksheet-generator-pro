@@ -180,12 +180,8 @@ const Home = () => {
       {/* Interactive Practice Promotion */}
       <InteractivePracticeBanner variant="homepage" />
 
-      {/* Ad below hero */}
-      <section className="py-4 px-6">
-        <div className="container mx-auto max-w-[1140px]">
-          <AdSense adSlot="1234567890" adFormat="auto" className="w-full" />
-        </div>
-      </section>
+      {/* Ad below hero - only renders when AdSense fills the slot */}
+      <AdSense adSlot="1234567890" adFormat="auto" className="w-full" />
 
       {/* Categories Section */}
       <section className="py-16 px-6" aria-labelledby="categories-heading">
