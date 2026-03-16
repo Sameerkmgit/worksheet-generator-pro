@@ -303,6 +303,7 @@ const Subject = () => {
                   </Card>
                 ))}
               </div>
+            )}
           </div>
         </section>
 
