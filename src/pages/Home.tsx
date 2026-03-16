@@ -111,16 +111,16 @@ const Home = () => {
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in mb-10">
-              <Link to="/worksheets" aria-label="Browse all free printable worksheets">
-                <Button size="lg" className="h-14 px-10 text-base font-semibold">
+              <Button asChild size="lg" className="h-14 px-10 text-base font-semibold">
+                <Link to="/worksheets" aria-label="Browse all free printable worksheets">
                   Browse Worksheets
-                </Button>
-              </Link>
-              <Link to="/packs" aria-label="Download free worksheet packs">
-                <Button size="lg" variant="accent" className="h-14 px-10 text-base font-semibold">
-                  Download Free Pack
-                </Button>
-              </Link>
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="accent" className="h-14 px-10 text-base font-semibold">
+                <Link to="/packs" aria-label="Download free worksheet packs">
+                  Download Free Packs
+                </Link>
+              </Button>
             </div>
             
             {/* Search Bar */}
