@@ -121,9 +121,32 @@ const Subject = () => {
         
         setSubcategories(subcatsWithCounts);
 
-        // Also fetch worksheets without subcategory for fallback display
-        const worksheetsData = await getWorksheetsByCategoryId(catData.id);
-        setWorksheets(worksheetsData || []);
+        // Fetch worksheets that have NO subcategory (uncategorized) for fallback display
+        const { data: uncategorizedWs } = await supabase
+          .from("worksheets")
+          .select("*")
+          .eq("category_id", catData.id)
+          .is("subcategory_id", null)
+          .eq("is_archived", false)
+          .order("created_at", { ascending: false });
+
+        // If no subcategories at all, fetch ALL worksheets for this category
+        if (!subcatsRaw || subcatsRaw.length === 0) {
+          const allWs = await getWorksheetsByCategoryId(catData.id);
+          setWorksheets(allWs || []);
+        } else {
+          // Map uncategorized worksheets
+          setWorksheets((uncategorizedWs || []).map((w: any) => ({
+            id: w.id,
+            title: w.title,
+            description: w.description,
+            pdfUrl: w.pdf_url,
+            grade: w.grade,
+            subject: w.subject,
+            imageUrl: w.image_url,
+            createdAt: w.created_at,
+          })) as WorksheetData[]);
+        }
       } catch (error) {
         console.error("Error loading category data:", error);
       } finally {
