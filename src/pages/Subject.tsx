@@ -119,7 +119,8 @@ const Subject = () => {
           })
         );
         
-        setSubcategories(subcatsWithCounts);
+        // Filter out topics with 0 worksheets so users never land on empty pages
+        setSubcategories(subcatsWithCounts.filter(s => s.worksheetCount > 0));
 
         // Fetch worksheets that have NO subcategory (uncategorized) for fallback display
         const { data: uncategorizedWs } = await supabase
