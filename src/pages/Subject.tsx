@@ -218,31 +218,81 @@ const Subject = () => {
                 </div>
               </div>
             ) : hasSubcategories ? (
-              // Show subcategories (topics) with worksheet counts, plus uncategorized worksheets
               <>
                 <h2 className="text-2xl font-semibold mb-6 text-foreground font-heading">
                   Topics in {toTitleCase(category?.title)}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {subcategories.map((subcat) => (
-                  <Card
-                    key={worksheet.id}
-                    className="overflow-hidden hover:shadow-lg transition-shadow"
-                  >
+                    <Card key={subcat.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+                      <div className="aspect-[16/9] bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
+                        {subcat.image_url ? (
+                          <img src={subcat.image_url} alt={`${toTitleCase(subcat.title)} worksheets for ${gradeTitle}`} className="w-full h-full object-cover" loading="lazy" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <FolderOpen className="h-16 w-16 text-primary/40" />
+                          </div>
+                        )}
+                      </div>
+                      <CardContent className="p-6">
+                        <h3 className="font-heading font-semibold text-xl mb-2">{toTitleCase(subcat.title)}</h3>
+                        <div className="flex items-center gap-2 text-muted-foreground text-sm mb-4">
+                          <FileText className="w-4 h-4" />
+                          <span>{subcat.worksheetCount} worksheet{subcat.worksheetCount !== 1 ? "s" : ""}</span>
+                        </div>
+                        <Button asChild variant="default" className="w-full">
+                          <Link to={toTopicUrl(gradeNumber, category?.subject || '', subcat.slug)}>
+                            <Eye className="mr-2 h-4 w-4" />
+                            View Worksheets
+                          </Link>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                {/* Uncategorized worksheets that don't belong to any topic */}
+                {worksheets.length > 0 && (
+                  <>
+                    <h2 className="text-2xl font-semibold mb-6 mt-12 text-foreground font-heading">
+                      More {toTitleCase(category?.subject)} Worksheets
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {worksheets.map((worksheet) => (
+                        <Card key={worksheet.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                          <div className="aspect-[4/3] overflow-hidden bg-muted flex items-stretch">
+                            <iframe src={getPdfEmbedUrl(worksheet.pdfUrl)} title={worksheet.title} className="w-full h-full border-0" />
+                          </div>
+                          <CardContent className="p-6">
+                            <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">{toTitleCase(cleanDisplayTitle(worksheet.title))}</h3>
+                            <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{toTitleCase(cleanDisplayTitle(worksheet.description))}</p>
+                            <Button asChild variant="default" className="w-full">
+                              <Link to={`/worksheet/${worksheet.id}`}>
+                                <Eye className="mr-2 h-4 w-4" />
+                                View Details
+                              </Link>
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </>
+            ) : worksheets.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground text-lg">No worksheets available in this category yet. Check back soon!</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {worksheets.map((worksheet) => (
+                  <Card key={worksheet.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="aspect-[4/3] overflow-hidden bg-muted flex items-stretch">
-                      <iframe
-                        src={getPdfEmbedUrl(worksheet.pdfUrl)}
-                        title={worksheet.title}
-                        className="w-full h-full border-0"
-                      />
+                      <iframe src={getPdfEmbedUrl(worksheet.pdfUrl)} title={worksheet.title} className="w-full h-full border-0" />
                     </div>
                     <CardContent className="p-6">
-                      <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">
-                        {toTitleCase(cleanDisplayTitle(worksheet.title))}
-                      </h3>
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                        {toTitleCase(cleanDisplayTitle(worksheet.description))}
-                      </p>
+                      <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">{toTitleCase(cleanDisplayTitle(worksheet.title))}</h3>
+                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{toTitleCase(cleanDisplayTitle(worksheet.description))}</p>
                       <Button asChild variant="default" className="w-full">
                         <Link to={`/worksheet/${worksheet.id}`}>
                           <Eye className="mr-2 h-4 w-4" />
@@ -253,7 +303,6 @@ const Subject = () => {
                   </Card>
                 ))}
               </div>
-            )}
           </div>
         </section>
 
