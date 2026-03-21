@@ -102,7 +102,7 @@ const TopicPage = () => {
         // Fetch worksheets for this topic
         const { data: wsData } = await supabase
           .from("worksheets")
-          .select("id, title, description, pdf_url, image_url, subject")
+          .select("id, title, description, pdf_url, image_url, subject, slug")
           .eq("subcategory_id", subData.id)
           .eq("is_archived", false)
           .order("created_at", { ascending: false });
