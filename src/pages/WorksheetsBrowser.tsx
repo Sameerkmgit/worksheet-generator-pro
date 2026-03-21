@@ -12,7 +12,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdSense from "@/components/AdSense";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { toTitleCase, cleanDisplayTitle } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toWorksheetUrl } from "@/lib/utils";
 
 interface Worksheet {
   id: string;
