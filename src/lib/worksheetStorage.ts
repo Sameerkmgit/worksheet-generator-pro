@@ -20,6 +20,7 @@ const worksheetSchema = z.object({
 export interface WorksheetData {
   id: string;
   title: string;
+  slug?: string;
   description?: string;
   grade: string;
   subject: string;
