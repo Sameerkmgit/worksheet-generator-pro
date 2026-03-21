@@ -24,9 +24,18 @@ interface Subcategory {
   category_id: string;
 }
 
+const SUBJECT_LABELS: Record<string, string> = {
+  math: "Math",
+  english: "English",
+  science: "Science",
+  "computer-science": "Computer Science",
+  assignments: "Assignments",
+};
+
 const AdminUpload = () => {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
+  const [titleManuallyEdited, setTitleManuallyEdited] = useState(false);
   const [description, setDescription] = useState("");
   const [grade, setGrade] = useState("");
   const [subject, setSubject] = useState("");
@@ -41,6 +50,34 @@ const AdminUpload = () => {
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [loadingSubcategories, setLoadingSubcategories] = useState(false);
+
+  // Auto-generate title when grade, subject, and subcategory are selected
+  useEffect(() => {
+    if (titleManuallyEdited || !grade || !subject || !subcategoryId) return;
+
+    const selectedSubcat = subcategories.find((s) => s.id === subcategoryId);
+    if (!selectedSubcat) return;
+
+    const gradeNumber = grade.replace("grade-", "");
+    const subjectLabel = SUBJECT_LABELS[subject] || subject;
+
+    const fetchNextNumber = async () => {
+      const { count } = await supabase
+        .from("worksheets")
+        .select("id", { count: "exact", head: true })
+        .eq("grade", gradeNumber)
+        .eq("subject", subject)
+        .eq("subcategory_id", subcategoryId)
+        .eq("is_archived", false);
+
+      const nextNum = (count ?? 0) + 1;
+      setTitle(
+        `${selectedSubcat.title} \u2013 Grade ${gradeNumber} ${subjectLabel} Worksheet ${nextNum} \u2013 Free Printable`
+      );
+    };
+
+    fetchNextNumber();
+  }, [grade, subject, subcategoryId, subcategories, titleManuallyEdited]);
 
   // Fetch categories when grade + subject change
   useEffect(() => {
