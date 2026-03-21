@@ -18,6 +18,7 @@ interface RelatedWorksheet {
   id: string;
   title: string;
   subject: string;
+  slug?: string | null;
 }
 
 // Generate dynamic description when DB field is empty
