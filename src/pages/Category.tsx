@@ -229,6 +229,7 @@ const Category = () => {
         <title>{seoTitle}</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
+        <meta name="robots" content="index, follow" />
         <meta property="og:title" content={seoTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:type" content="website" />
