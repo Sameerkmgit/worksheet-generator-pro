@@ -164,8 +164,8 @@ const TopicPage = () => {
     relatedTopics.length > 0;
 
   const canonicalUrl = `${SITE_URL}/categories/${gradeSlug}/${subjectSlug}/${topicSlug}`;
-  const seoTitle = `${topicTitle} Worksheets - ${gradeLabel} ${subjectLabel} | WizKidsHub`;
-  const seoDescription = `Free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. ${worksheets.length} worksheets available. Download and practice. No sign-up required.`;
+  const seoTitle = `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} – Free Printable | WizKidsHub`;
+  const seoDescription = `Download free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. Perfect for practice, homework, and classroom learning.`;
 
   const breadcrumbItems = [
     { label: "Home", href: "/" },
@@ -181,6 +181,13 @@ const TopicPage = () => {
         <meta name="description" content={seoDescription} />
         <link rel="canonical" href={canonicalUrl} />
         {!hasEnoughContent && <meta name="robots" content="noindex,follow" />}
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={seoDescription} />
       </Helmet>
 
       <Breadcrumbs items={breadcrumbItems} className="hidden" />
