@@ -12,6 +12,7 @@ import CategoryRedirect from "./pages/CategoryRedirect";
 import SubcategoryRedirect from "./pages/SubcategoryRedirect";
 import TopicPage from "./pages/TopicPage";
 import WorksheetDetail from "./pages/WorksheetDetail";
+import WorksheetRedirect from "./pages/WorksheetRedirect";
 
 
 import AdminUpload from "./pages/AdminUpload";
