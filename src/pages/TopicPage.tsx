@@ -26,6 +26,7 @@ interface WorksheetRow {
   pdf_url: string;
   image_url: string | null;
   subject: string;
+  slug?: string | null;
 }
 
 interface RelatedTopic {
