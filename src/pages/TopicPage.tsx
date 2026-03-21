@@ -157,12 +157,6 @@ const TopicPage = () => {
   const gradeLabel = `Grade ${gradeNumber}`;
   const subjectLabel = toTitleCase(category?.subject) || toTitleCase(subjectDisplay);
 
-  // Indexing logic: require ≥3 worksheets + title + related topics
-  const hasEnoughContent =
-    worksheets.length >= 3 &&
-    !!subcategory?.title &&
-    relatedTopics.length > 0;
-
   const canonicalUrl = `${SITE_URL}/categories/${gradeSlug}/${subjectSlug}/${topicSlug}`;
   const seoTitle = `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} – Free Printable | WizKidsHub`;
   const seoDescription = `Download free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. Perfect for practice, homework, and classroom learning.`;
@@ -180,7 +174,7 @@ const TopicPage = () => {
         <title>{seoTitle}</title>
         <meta name="description" content={seoDescription} />
         <link rel="canonical" href={canonicalUrl} />
-        {!hasEnoughContent && <meta name="robots" content="noindex,follow" />}
+        <meta name="robots" content="index, follow" />
         <meta property="og:title" content={seoTitle} />
         <meta property="og:description" content={seoDescription} />
         <meta property="og:type" content="website" />
