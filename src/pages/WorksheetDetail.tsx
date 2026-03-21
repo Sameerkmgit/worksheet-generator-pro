@@ -515,7 +515,7 @@ const WorksheetDetail = () => {
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {moreFromTopic.map((ws) => (
-                  <Link key={ws.id} to={`/worksheet/${ws.id}`}>
+                  <Link key={ws.id} to={toWorksheetUrl(ws)}>
                     <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 group">
                       <CardContent className="p-4">
                         <FileText className="w-8 h-8 text-primary/60 mb-2 group-hover:text-primary transition-colors" />
