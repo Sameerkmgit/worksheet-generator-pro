@@ -122,7 +122,7 @@ const WorksheetsBrowser = () => {
       try {
         let query = supabase
           .from("worksheets")
-          .select("id, grade, subject, title, pdf_url, created_at")
+          .select("id, grade, subject, title, pdf_url, created_at, slug")
           .eq("is_archived", false)
           .order("grade", { ascending: true })
           .order("title", { ascending: true });

@@ -192,7 +192,7 @@ const SubcategoryWorksheets = () => {
                         {toTitleCase(cleanDisplayTitle(worksheet.description))}
                       </p>
                       <Button asChild variant="default" className="w-full">
-                        <Link to={`/worksheet/${worksheet.id}`}>
+                        <Link to={toWorksheetUrl(worksheet)}>
                           <Eye className="mr-2 h-4 w-4" />
                           View Details
                         </Link>
