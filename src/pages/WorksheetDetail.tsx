@@ -69,7 +69,7 @@ function generateHowToUse(grade: string, subject: string): string {
 }
 
 const WorksheetDetail = () => {
-  const { worksheetId } = useParams();
+  const { worksheetSlug } = useParams();
   const navigate = useNavigate();
   const [worksheet, setWorksheet] = useState<any>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -81,17 +81,28 @@ const WorksheetDetail = () => {
 
   useEffect(() => {
     const loadWorksheet = async () => {
-      if (!worksheetId) {
+      if (!worksheetSlug) {
         setLoading(false);
         return;
       }
 
       try {
         setLoading(true);
-        const data = await getWorksheetById(worksheetId);
+        
+        // Try loading by slug first, then fall back to ID
+        let data = await getWorksheetBySlug(worksheetSlug);
+        if (!data) {
+          data = await getWorksheetById(worksheetSlug);
+        }
         
         if (!data) {
           setLoading(false);
+          return;
+        }
+
+        // If we loaded by ID and there's a slug, redirect to the slug URL
+        if (/^\d+$/.test(worksheetSlug) && data.slug) {
+          navigate(`/worksheet/${data.slug}`, { replace: true });
           return;
         }
 
