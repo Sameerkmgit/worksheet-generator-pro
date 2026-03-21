@@ -17,7 +17,7 @@ import {
   SubcategoryData,
   WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle, toSubjectSlug } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toWorksheetUrl } from "@/lib/utils";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
