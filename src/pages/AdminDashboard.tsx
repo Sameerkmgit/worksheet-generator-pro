@@ -863,6 +863,10 @@ const AdminDashboard = () => {
               Admin Dashboard
             </h1>
             <div className="flex gap-2">
+              <Button variant="outline" onClick={() => navigate("/admin/worksheet-audit")}>
+                <FileText className="mr-2 h-4 w-4" />
+                Audit
+              </Button>
               <Button onClick={handleLogout} variant="outline">
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout

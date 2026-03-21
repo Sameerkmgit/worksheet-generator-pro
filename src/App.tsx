@@ -19,6 +19,7 @@ import AdminUpload from "./pages/AdminUpload";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ResetPassword from "./pages/ResetPassword";
+import WorksheetAudit from "./pages/WorksheetAudit";
 
 import AssignmentsLanding from "./pages/AssignmentsLanding";
 import Packs from "./pages/Packs";
@@ -90,6 +91,7 @@ const App = () => {
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
             <Route path="/admin/reset-password" element={<ResetPassword />} />
+            <Route path="/admin/worksheet-audit" element={<WorksheetAudit />} />
             {/* Obscured secure entry URL – goes to admin login */}
             <Route path="/dashboard-secure-2025" element={<AdminLogin />} />
 
