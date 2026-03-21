@@ -254,9 +254,12 @@ const AdminUpload = () => {
                   </Label>
                   <Input
                     id="title"
-                    placeholder="e.g., Addition Basics for Grade 1"
+                    placeholder="Auto-generated from topic, grade & subject"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                      setTitleManuallyEdited(true);
+                    }}
                     className="h-12"
                     required
                   />
