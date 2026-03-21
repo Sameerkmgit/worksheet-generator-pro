@@ -9,8 +9,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
-import { getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toTopicUrl } from "@/lib/utils";
+import { getWorksheetBySlug, getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
+import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 import { Badge } from "@/components/ui/badge";
 
@@ -18,6 +18,7 @@ interface RelatedWorksheet {
   id: string;
   title: string;
   subject: string;
+  slug?: string | null;
 }
 
 // Generate dynamic description when DB field is empty
@@ -68,7 +69,7 @@ function generateHowToUse(grade: string, subject: string): string {
 }
 
 const WorksheetDetail = () => {
-  const { worksheetId } = useParams();
+  const { worksheetSlug } = useParams();
   const navigate = useNavigate();
   const [worksheet, setWorksheet] = useState<any>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -80,17 +81,28 @@ const WorksheetDetail = () => {
 
   useEffect(() => {
     const loadWorksheet = async () => {
-      if (!worksheetId) {
+      if (!worksheetSlug) {
         setLoading(false);
         return;
       }
 
       try {
         setLoading(true);
-        const data = await getWorksheetById(worksheetId);
+        
+        // Try loading by slug first, then fall back to ID
+        let data = await getWorksheetBySlug(worksheetSlug);
+        if (!data) {
+          data = await getWorksheetById(worksheetSlug);
+        }
         
         if (!data) {
           setLoading(false);
+          return;
+        }
+
+        // If we loaded by ID and there's a slug, redirect to the slug URL
+        if (/^\d+$/.test(worksheetSlug) && data.slug) {
+          navigate(`/worksheet/${data.slug}`, { replace: true });
           return;
         }
 
@@ -106,7 +118,7 @@ const WorksheetDetail = () => {
         const { data: wsData } = await supabase
           .from("worksheets")
           .select("subcategory_id")
-          .eq("id", worksheetId)
+          .eq("id", data.id)
           .maybeSingle();
         
         if (wsData?.subcategory_id) {
@@ -117,10 +129,10 @@ const WorksheetDetail = () => {
           
           const { data: topicWorksheets, error: topicError } = await supabase
             .from("worksheets")
-            .select("id, title, subject")
+            .select("id, title, subject, slug")
             .eq("subcategory_id", wsData.subcategory_id)
             .eq("is_archived", false)
-            .neq("id", worksheetId)
+            .neq("id", data.id)
             .limit(6);
           
           if (!topicError && topicWorksheets) {
@@ -133,10 +145,10 @@ const WorksheetDetail = () => {
         if (gradeNum) {
           const { data: gradeWorksheets, error: gradeError } = await supabase
             .from("worksheets")
-            .select("id, title, subject")
+            .select("id, title, subject, slug")
             .eq("grade", gradeNum)
             .eq("is_archived", false)
-            .neq("id", worksheetId)
+            .neq("id", data.id)
             .limit(6);
           
           if (!gradeError && gradeWorksheets) {
@@ -148,7 +160,7 @@ const WorksheetDetail = () => {
         }
 
         // Check for image override
-        const override = await getWorksheetImageOverride(worksheetId);
+        const override = await getWorksheetImageOverride(data.id);
         setImageUrl(override || data.imageUrl || "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800");
       } catch (error) {
         console.error("Error loading worksheet:", error);
@@ -158,7 +170,7 @@ const WorksheetDetail = () => {
     };
 
     loadWorksheet();
-  }, [worksheetId]);
+  }, [worksheetSlug]);
 
   if (loading) {
     return (
@@ -209,7 +221,7 @@ const WorksheetDetail = () => {
   const pageDescription = (cleanTitle && gradeNum && subjectName)
     ? `Download this free printable ${subjectName} worksheet for Grade ${gradeNum} students. Topic: ${cleanTitle}. No sign-up required. Perfect for classroom or home use. | WizKidsHub`
     : `Download free Grade ${worksheet.grade} ${subjectName} worksheet: ${cleanTitle}. Perfect for classroom and home learning.`;
-  const pageUrl = `https://www.wizkidshub.com/worksheet/${worksheetId}`;
+  const pageUrl = `https://www.wizkidshub.com/worksheet/${worksheet.slug || worksheet.id}`;
 
   const gradeSlug = worksheet.grade ? `grade-${gradeNum}` : "";
 
@@ -503,7 +515,7 @@ const WorksheetDetail = () => {
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {moreFromTopic.map((ws) => (
-                  <Link key={ws.id} to={`/worksheet/${ws.id}`}>
+                  <Link key={ws.id} to={toWorksheetUrl(ws)}>
                     <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 group">
                       <CardContent className="p-4">
                         <FileText className="w-8 h-8 text-primary/60 mb-2 group-hover:text-primary transition-colors" />
@@ -539,7 +551,7 @@ const WorksheetDetail = () => {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {moreFromGrade.map((ws) => (
-                  <Link key={ws.id} to={`/worksheet/${ws.id}`}>
+                  <Link key={ws.id} to={toWorksheetUrl(ws)}>
                     <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 group">
                       <CardContent className="p-4">
                         <FileText className="w-8 h-8 text-primary/60 mb-2 group-hover:text-primary transition-colors" />

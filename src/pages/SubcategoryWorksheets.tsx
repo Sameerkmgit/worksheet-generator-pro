@@ -17,7 +17,7 @@ import {
   SubcategoryData,
   WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle, toSubjectSlug } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toWorksheetUrl } from "@/lib/utils";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
@@ -192,7 +192,7 @@ const SubcategoryWorksheets = () => {
                         {toTitleCase(cleanDisplayTitle(worksheet.description))}
                       </p>
                       <Button asChild variant="default" className="w-full">
-                        <Link to={`/worksheet/${worksheet.id}`}>
+                        <Link to={toWorksheetUrl(worksheet)}>
                           <Eye className="mr-2 h-4 w-4" />
                           View Details
                         </Link>

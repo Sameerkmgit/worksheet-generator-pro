@@ -102,3 +102,16 @@ export function fromSubjectSlug(slug: string | null | undefined): string {
 export function toTopicUrl(grade: string | number, subject: string, topicSlug: string): string {
   return `/categories/grade-${grade}/${toSubjectSlug(subject)}/${topicSlug}`;
 }
+
+/**
+ * Builds a worksheet URL using slug (preferred) or falling back to ID.
+ * 
+ * @example
+ * toWorksheetUrl({ slug: "addition-grade-1-math-worksheet-1-free-printable", id: "138" })
+ * // "/worksheet/addition-grade-1-math-worksheet-1-free-printable"
+ * toWorksheetUrl({ id: "138" })
+ * // "/worksheet/138"
+ */
+export function toWorksheetUrl(ws: { slug?: string | null; id: string }): string {
+  return `/worksheet/${ws.slug || ws.id}`;
+}

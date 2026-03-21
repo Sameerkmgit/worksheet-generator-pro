@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AdSense from "@/components/AdSense";
 import { supabase } from "@/integrations/supabase/client";
-import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 
 const getPdfEmbedUrl = (pdfUrl: string): string => {
@@ -26,6 +26,7 @@ interface WorksheetRow {
   pdf_url: string;
   image_url: string | null;
   subject: string;
+  slug?: string | null;
 }
 
 interface RelatedTopic {
@@ -101,7 +102,7 @@ const TopicPage = () => {
         // Fetch worksheets for this topic
         const { data: wsData } = await supabase
           .from("worksheets")
-          .select("id, title, description, pdf_url, image_url, subject")
+          .select("id, title, description, pdf_url, image_url, subject, slug")
           .eq("subcategory_id", subData.id)
           .eq("is_archived", false)
           .order("created_at", { ascending: false });
@@ -251,7 +252,7 @@ const TopicPage = () => {
                         {toTitleCase(cleanDisplayTitle(ws.description))}
                       </p>
                       <Button asChild variant="default" className="w-full">
-                        <Link to={`/worksheet/${ws.id}`}>
+                        <Link to={toWorksheetUrl(ws)}>
                           <Eye className="mr-2 h-4 w-4" />
                           View Details
                         </Link>

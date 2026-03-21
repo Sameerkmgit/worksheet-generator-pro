@@ -15,7 +15,7 @@ import {
   WorksheetData,
   WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 
 // Helper: turn Google Drive links into embeddable preview links
@@ -272,7 +272,7 @@ const Subject = () => {
                             <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">{toTitleCase(cleanDisplayTitle(worksheet.title))}</h3>
                             <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{toTitleCase(cleanDisplayTitle(worksheet.description))}</p>
                             <Button asChild variant="default" className="w-full">
-                              <Link to={`/worksheet/${worksheet.id}`}>
+                              <Link to={toWorksheetUrl(worksheet)}>
                                 <Eye className="mr-2 h-4 w-4" />
                                 View Details
                               </Link>
@@ -299,7 +299,7 @@ const Subject = () => {
                       <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">{toTitleCase(cleanDisplayTitle(worksheet.title))}</h3>
                       <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{toTitleCase(cleanDisplayTitle(worksheet.description))}</p>
                       <Button asChild variant="default" className="w-full">
-                        <Link to={`/worksheet/${worksheet.id}`}>
+                        <Link to={toWorksheetUrl(worksheet)}>
                           <Eye className="mr-2 h-4 w-4" />
                           View Details
                         </Link>

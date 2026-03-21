@@ -12,7 +12,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdSense from "@/components/AdSense";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { toTitleCase, cleanDisplayTitle } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toWorksheetUrl } from "@/lib/utils";
 
 interface Worksheet {
   id: string;
@@ -21,6 +21,7 @@ interface Worksheet {
   title: string;
   pdf_url: string;
   created_at: string;
+  slug?: string | null;
 }
 
 const WorksheetsBrowser = () => {
@@ -121,7 +122,7 @@ const WorksheetsBrowser = () => {
       try {
         let query = supabase
           .from("worksheets")
-          .select("id, grade, subject, title, pdf_url, created_at")
+          .select("id, grade, subject, title, pdf_url, created_at, slug")
           .eq("is_archived", false)
           .order("grade", { ascending: true })
           .order("title", { ascending: true });
@@ -371,7 +372,7 @@ const WorksheetsBrowser = () => {
                       size="sm"
                       asChild
                     >
-                      <Link to={`/worksheet/${worksheet.id}`}>
+                      <Link to={toWorksheetUrl(worksheet)}>
                         <ExternalLink className="h-4 w-4 mr-2" />
                         View Details
                       </Link>

@@ -298,6 +298,7 @@ export type Database = {
           questions: Json | null
           seo: Json | null
           skills: string[] | null
+          slug: string | null
           sub_category: string | null
           subcategory_id: string | null
           subject: string
@@ -322,6 +323,7 @@ export type Database = {
           questions?: Json | null
           seo?: Json | null
           skills?: string[] | null
+          slug?: string | null
           sub_category?: string | null
           subcategory_id?: string | null
           subject: string
@@ -346,6 +348,7 @@ export type Database = {
           questions?: Json | null
           seo?: Json | null
           skills?: string[] | null
+          slug?: string | null
           sub_category?: string | null
           subcategory_id?: string | null
           subject?: string

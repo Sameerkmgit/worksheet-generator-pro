@@ -12,6 +12,7 @@ import CategoryRedirect from "./pages/CategoryRedirect";
 import SubcategoryRedirect from "./pages/SubcategoryRedirect";
 import TopicPage from "./pages/TopicPage";
 import WorksheetDetail from "./pages/WorksheetDetail";
+import WorksheetRedirect from "./pages/WorksheetRedirect";
 
 
 import AdminUpload from "./pages/AdminUpload";
@@ -65,8 +66,8 @@ const App = () => {
             {/* LEGACY SUBCATEGORY ROUTE - REDIRECTS TO READABLE TOPIC URL */}
             <Route path="/subcategory/:subcategoryId" element={<SubcategoryRedirect />} />
 
-            {/* WORKSHEET DETAIL */}
-            <Route path="/worksheet/:worksheetId" element={<WorksheetDetail />} />
+            {/* WORKSHEET DETAIL - slug-based URL */}
+            <Route path="/worksheet/:worksheetSlug" element={<WorksheetDetail />} />
 
             {/* ASSIGNMENTS */}
             <Route path="/assignments/:grade" element={<AssignmentsLanding />} />
