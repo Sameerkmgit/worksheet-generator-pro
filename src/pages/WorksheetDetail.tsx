@@ -221,7 +221,7 @@ const WorksheetDetail = () => {
   const pageDescription = (cleanTitle && gradeNum && subjectName)
     ? `Download this free printable ${subjectName} worksheet for Grade ${gradeNum} students. Topic: ${cleanTitle}. No sign-up required. Perfect for classroom or home use. | WizKidsHub`
     : `Download free Grade ${worksheet.grade} ${subjectName} worksheet: ${cleanTitle}. Perfect for classroom and home learning.`;
-  const pageUrl = `https://www.wizkidshub.com/worksheet/${worksheetId}`;
+  const pageUrl = `https://www.wizkidshub.com/worksheet/${worksheet.slug || worksheet.id}`;
 
   const gradeSlug = worksheet.grade ? `grade-${gradeNum}` : "";
 
