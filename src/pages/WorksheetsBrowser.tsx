@@ -21,6 +21,7 @@ interface Worksheet {
   title: string;
   pdf_url: string;
   created_at: string;
+  slug?: string | null;
 }
 
 const WorksheetsBrowser = () => {
