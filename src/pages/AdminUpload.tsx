@@ -199,6 +199,7 @@ const AdminUpload = () => {
 
       // Reset form
       setTitle("");
+      setTitleManuallyEdited(false);
       setDescription("");
       setGrade("");
       setSubject("");
