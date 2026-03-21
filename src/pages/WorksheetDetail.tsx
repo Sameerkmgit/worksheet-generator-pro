@@ -215,12 +215,11 @@ const WorksheetDetail = () => {
   const cleanTitle = toTitleCase(cleanDisplayTitle(worksheet.title));
   const gradeNum = worksheet.grade?.toString().replace("Grade ", "").trim();
   const subjectName = toTitleCase(worksheet.subject);
-  const pageTitle = (cleanTitle && gradeNum && subjectName)
-    ? `${cleanTitle} - Grade ${gradeNum} ${subjectName} Free Printable Worksheet | WizKidsHub`
-    : `${cleanTitle} - Free Printable PDF | WizKidsHub`;
-  const pageDescription = (cleanTitle && gradeNum && subjectName)
-    ? `Download this free printable ${subjectName} worksheet for Grade ${gradeNum} students. Topic: ${cleanTitle}. No sign-up required. Perfect for classroom or home use. | WizKidsHub`
-    : `Download free Grade ${worksheet.grade} ${subjectName} worksheet: ${cleanTitle}. Perfect for classroom and home learning.`;
+  // Use the raw DB title (already in standard naming convention) for SEO meta
+  const rawTitle = worksheet.title || cleanTitle;
+  const pageTitle = `${rawTitle} | WizKidsHub`;
+  const topicName = cleanTitle.split("–")[0]?.trim() || cleanTitle;
+  const pageDescription = `Download this free printable ${topicName} worksheet for Grade ${gradeNum} ${subjectName}. Perfect for practice, homework, and classroom use.`;
   const pageUrl = `https://www.wizkidshub.com/worksheet/${worksheet.slug || worksheet.id}`;
 
   const gradeSlug = worksheet.grade ? `grade-${gradeNum}` : "";
