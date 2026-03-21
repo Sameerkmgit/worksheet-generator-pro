@@ -127,11 +127,11 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Worksheet detail pages
+    // Worksheet detail pages — use slugs
     console.log("Fetching worksheets...");
     const { data: worksheets, error: wsError } = await supabase
       .from("worksheets")
-      .select("id, updated_at")
+      .select("id, slug, updated_at")
       .eq("is_archived", false)
       .order("created_at", { ascending: false });
 
@@ -139,7 +139,8 @@ Deno.serve(async (req) => {
     if (worksheets) {
       for (const ws of worksheets) {
         const lastmod = formatDate(ws.updated_at);
-        sitemap += buildUrlEntry(`${SITE_URL}/worksheet/${ws.id}`, lastmod, "0.6", "monthly");
+        const wsPath = ws.slug || ws.id;
+        sitemap += buildUrlEntry(`${SITE_URL}/worksheet/${wsPath}`, lastmod, "0.6", "monthly");
       }
     }
 
