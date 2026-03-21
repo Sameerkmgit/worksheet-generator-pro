@@ -252,7 +252,7 @@ const TopicPage = () => {
                         {toTitleCase(cleanDisplayTitle(ws.description))}
                       </p>
                       <Button asChild variant="default" className="w-full">
-                        <Link to={`/worksheet/${ws.id}`}>
+                        <Link to={toWorksheetUrl(ws)}>
                           <Eye className="mr-2 h-4 w-4" />
                           View Details
                         </Link>
