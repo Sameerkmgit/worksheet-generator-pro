@@ -165,7 +165,7 @@ const Subject = () => {
   const hasSubcategories = subcategories.length > 0;
   const gradeTitle = `Grade ${gradeNumber}`;
 
-  const subjectLabel = toTitleCase(category?.title) || toTitleCase(subjectSearch);
+  const subjectLabel = toTitleCase(category?.subject) || toTitleCase(subjectSearch);
   const pageTitle = `Grade ${gradeNumber} ${subjectLabel} Worksheets – Free Printable | WizKidsHub`;
   const pageDescription = `Download free printable ${subjectLabel} worksheets for Grade ${gradeNumber}. Perfect for practice, homework, and classroom learning.`;
   const pageUrl = `https://www.wizkidshub.com/categories/${gradeSlug}/${subjectSlug}`;
