@@ -102,6 +102,7 @@ export const getWorksheetCardImage = (worksheet: WorksheetData): string => {
 const mapWorksheetFromDB = (w: any): WorksheetData => ({
   id: w.id,
   title: w.title,
+  slug: w.slug || undefined,
   description: w.description || '',
   grade: w.grade,
   subject: w.subject,
@@ -123,6 +124,23 @@ const mapWorksheetFromDB = (w: any): WorksheetData => ({
   createdAt: w.created_at,
   updatedAt: w.updated_at,
 });
+
+// Fetch worksheet by slug
+export const getWorksheetBySlug = async (slug: string): Promise<WorksheetData | null> => {
+  const { data, error } = await supabase
+    .from('worksheets')
+    .select('*')
+    .eq('slug', slug)
+    .eq('is_archived', false)
+    .maybeSingle();
+
+  if (error || !data) {
+    console.error(`Error fetching worksheet with slug ${slug}:`, error);
+    return null;
+  }
+
+  return mapWorksheetFromDB(data);
+};
 
 // Helper to convert DB row to WorksheetCategoryData
 const mapWorksheetCategoryFromDB = (c: any): WorksheetCategoryData => ({
