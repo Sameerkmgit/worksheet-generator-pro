@@ -78,8 +78,18 @@ const Home = () => {
       <Helmet>
         <title>Free Printable Worksheets for Grades 1–5 | WizKidsHub Worksheets</title>
         <meta name="description" content="Download free printable Math, English, and Science worksheets for Grades 1 to 5. Trusted PDF worksheets for parents and teachers." />
+        <meta name="keywords" content="free printable worksheets, grade 1 worksheets, grade 2 worksheets, grade 3 worksheets, grade 4 worksheets, grade 5 worksheets, CBSE worksheets, math worksheets, english worksheets, science worksheets" />
         <link rel="canonical" href="https://www.wizkidshub.com/" />
-        
+        <meta property="og:title" content="Free Printable Worksheets for Grades 1–5 | WizKidsHub Worksheets" />
+        <meta property="og:description" content="Download free printable Math, English, and Science worksheets for Grades 1 to 5. Trusted PDF worksheets for parents and teachers." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.wizkidshub.com/" />
+        <meta property="og:image" content="https://www.wizkidshub.com/og-image.jpg" />
+        <meta property="og:site_name" content="WizKidsHub Worksheets" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Free Printable Worksheets for Grades 1–5 | WizKidsHub Worksheets" />
+        <meta name="twitter:description" content="Download free printable Math, English, and Science worksheets for Grades 1 to 5." />
+        <meta name="twitter:image" content="https://www.wizkidshub.com/og-image.jpg" />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
