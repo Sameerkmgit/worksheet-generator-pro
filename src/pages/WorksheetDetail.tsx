@@ -118,7 +118,7 @@ const WorksheetDetail = () => {
         const { data: wsData } = await supabase
           .from("worksheets")
           .select("subcategory_id")
-          .eq("id", worksheetId)
+          .eq("id", data.id)
           .maybeSingle();
         
         if (wsData?.subcategory_id) {
@@ -129,10 +129,10 @@ const WorksheetDetail = () => {
           
           const { data: topicWorksheets, error: topicError } = await supabase
             .from("worksheets")
-            .select("id, title, subject")
+            .select("id, title, subject, slug")
             .eq("subcategory_id", wsData.subcategory_id)
             .eq("is_archived", false)
-            .neq("id", worksheetId)
+            .neq("id", data.id)
             .limit(6);
           
           if (!topicError && topicWorksheets) {
@@ -145,10 +145,10 @@ const WorksheetDetail = () => {
         if (gradeNum) {
           const { data: gradeWorksheets, error: gradeError } = await supabase
             .from("worksheets")
-            .select("id, title, subject")
+            .select("id, title, subject, slug")
             .eq("grade", gradeNum)
             .eq("is_archived", false)
-            .neq("id", worksheetId)
+            .neq("id", data.id)
             .limit(6);
           
           if (!gradeError && gradeWorksheets) {
@@ -160,7 +160,7 @@ const WorksheetDetail = () => {
         }
 
         // Check for image override
-        const override = await getWorksheetImageOverride(worksheetId);
+        const override = await getWorksheetImageOverride(data.id);
         setImageUrl(override || data.imageUrl || "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=800");
       } catch (error) {
         console.error("Error loading worksheet:", error);
@@ -170,7 +170,7 @@ const WorksheetDetail = () => {
     };
 
     loadWorksheet();
-  }, [worksheetId]);
+  }, [worksheetSlug]);
 
   if (loading) {
     return (
