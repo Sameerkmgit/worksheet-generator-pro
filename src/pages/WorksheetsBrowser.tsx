@@ -372,7 +372,7 @@ const WorksheetsBrowser = () => {
                       size="sm"
                       asChild
                     >
-                      <Link to={`/worksheet/${worksheet.id}`}>
+                      <Link to={toWorksheetUrl(worksheet)}>
                         <ExternalLink className="h-4 w-4 mr-2" />
                         View Details
                       </Link>
