@@ -195,7 +195,7 @@ const Category = () => {
   
   const gradeTitle = gradeTitles[gradeSlug || ""] || `Grade ${gradeNumber}`;
   const pageTitle = `${gradeTitle} Worksheets`;
-  const seoTitle = `${gradeTitle} Worksheets – Free Printable Math, English & Science PDFs`;
+  const seoTitle = `${gradeTitle} Worksheets – Free Printable Math, English & Science PDFs | WizKidsHub`;
   
   const pageDescription = `Download free ${gradeTitle} printable worksheets in Math, English, and Science. Curriculum-aligned PDFs for home and classroom use.`;
 
@@ -229,6 +229,13 @@ const Category = () => {
         <title>{seoTitle}</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={pageUrl} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={pageDescription} />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>

@@ -165,23 +165,31 @@ const Subject = () => {
   const hasSubcategories = subcategories.length > 0;
   const gradeTitle = `Grade ${gradeNumber}`;
 
-  const pageTitle = category?.title || `${toTitleCase(subjectSearch)} Worksheets`;
-  const pageDescription = `Browse ${category?.title || toTitleCase(subjectSearch)} worksheets for ${gradeTitle}.`;
+  const subjectLabel = toTitleCase(category?.title) || toTitleCase(subjectSearch);
+  const pageTitle = `Grade ${gradeNumber} ${subjectLabel} Worksheets – Free Printable | WizKidsHub`;
+  const pageDescription = `Download free printable ${subjectLabel} worksheets for Grade ${gradeNumber}. Perfect for practice, homework, and classroom learning.`;
   const pageUrl = `https://www.wizkidshub.com/categories/${gradeSlug}/${subjectSlug}`;
 
   // Breadcrumb items
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: `${gradeTitle} Worksheets`, href: `/categories/${gradeSlug}` },
-    { label: toTitleCase(category?.title) || toTitleCase(subjectSearch) }
+    { label: subjectLabel }
   ];
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
-        <title>{pageTitle} | {gradeTitle} | WizKidsHub</title>
+        <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={pageUrl} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
       </Helmet>
       
       {/* Breadcrumbs component injects JSON-LD */}
