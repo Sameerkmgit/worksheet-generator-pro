@@ -190,6 +190,33 @@ const AdminDashboard = () => {
     loadImageOverrides();
   }, [imageUpdateTrigger]);
 
+  // Fetch dynamic sub-category name options when grade or subject changes
+  useEffect(() => {
+    const fetchSubCategoryNames = async () => {
+      if (!formData.grade || !formData.subject) {
+        setSubCategoryNameOptions([]);
+        return;
+      }
+      try {
+        const normalizedSubject = normalizeSubject(formData.subject);
+        const { data } = await supabase
+          .from("worksheet_subcategories")
+          .select("title, worksheet_categories!inner(grade, subject)")
+          .eq("worksheet_categories.grade", formData.grade)
+          .eq("worksheet_categories.subject", normalizedSubject)
+          .eq("is_archived", false)
+          .order("title");
+        if (data) {
+          const names = [...new Set(data.map((d: any) => d.title))].sort();
+          setSubCategoryNameOptions(names);
+        }
+      } catch {
+        setSubCategoryNameOptions([]);
+      }
+    };
+    fetchSubCategoryNames();
+  }, [formData.grade, formData.subject]);
+
   // Fetch categories when grade or subject changes
   useEffect(() => {
     const fetchCategories = async () => {
@@ -201,23 +228,14 @@ const AdminDashboard = () => {
       setIsCategoriesLoading(true);
       try {
         const normalizedSubject = normalizeSubject(formData.subject);
-        console.log(`Fetching categories for grade="${formData.grade}", subject="${normalizedSubject}"`);
-        
         const categories = await getWorksheetCategoriesByGradeAndSubject(
           formData.grade,
           normalizedSubject
         );
-        
-        console.log(`Fetched ${categories.length} categories:`, categories.map(c => c.title));
         setCategoryOptions(categories);
       } catch (error) {
         console.error('Error fetching categories:', error);
         setCategoryOptions([]);
-        toast({
-          title: "Error",
-          description: "Failed to load categories",
-          variant: "destructive",
-        });
       } finally {
         setIsCategoriesLoading(false);
       }
