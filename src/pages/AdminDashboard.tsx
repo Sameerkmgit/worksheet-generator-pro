@@ -1037,58 +1037,9 @@ const AdminDashboard = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="none">None</SelectItem>
-                      {formData.subject === "math" && (
-                        <>
-                          <SelectItem value="Addition">Addition</SelectItem>
-                          <SelectItem value="Subtraction">Subtraction</SelectItem>
-                          <SelectItem value="Multiplication">Multiplication</SelectItem>
-                          <SelectItem value="Division">Division</SelectItem>
-                          <SelectItem value="Place Value">Place Value</SelectItem>
-                          <SelectItem value="Fractions">Fractions</SelectItem>
-                          <SelectItem value="Shapes">Shapes</SelectItem>
-                          <SelectItem value="Measurement">Measurement</SelectItem>
-                          <SelectItem value="Time & Money">Time & Money</SelectItem>
-                          <SelectItem value="Word Problems">Word Problems</SelectItem>
-                          <SelectItem value="Numbers">Numbers</SelectItem>
-                          <SelectItem value="Decimals">Decimals</SelectItem>
-                          <SelectItem value="Factors & Multiples">Factors & Multiples</SelectItem>
-                          <SelectItem value="Operations">Operations</SelectItem>
-                        </>
-                      )}
-                      {formData.subject === "english" && (
-                        <>
-                          <SelectItem value="Reading">Reading</SelectItem>
-                          <SelectItem value="Grammar">Grammar</SelectItem>
-                          <SelectItem value="Vocabulary">Vocabulary</SelectItem>
-                          <SelectItem value="Writing">Writing</SelectItem>
-                          <SelectItem value="Phonics">Phonics</SelectItem>
-                        </>
-                      )}
-                      {formData.subject === "science" && (
-                        <>
-                          <SelectItem value="Plants & Animals">Plants & Animals</SelectItem>
-                          <SelectItem value="My Body">My Body</SelectItem>
-                          <SelectItem value="Family & Home">Family & Home</SelectItem>
-                          <SelectItem value="Food & Water">Food & Water</SelectItem>
-                          <SelectItem value="Environment">Environment</SelectItem>
-                        </>
-                      )}
-                      {formData.subject === "computer-science" && (
-                        <>
-                          <SelectItem value="Computer Basics">Computer Basics</SelectItem>
-                          <SelectItem value="Keyboard & Mouse">Keyboard & Mouse</SelectItem>
-                          <SelectItem value="Digital Safety">Digital Safety</SelectItem>
-                        </>
-                      )}
-                      {formData.subject === "assignments" && (
-                        <>
-                          <SelectItem value="CS Assignment Packs">CS Assignment Packs</SelectItem>
-                          <SelectItem value="English Assignment Packs">English Assignment Packs</SelectItem>
-                          <SelectItem value="Math Assignment Packs">Math Assignment Packs</SelectItem>
-                          <SelectItem value="EVS Assignment Packs">EVS Assignment Packs</SelectItem>
-                          <SelectItem value="Mixed Subject Revision Sheets">Mixed Subject Revision Sheets</SelectItem>
-                        </>
-                      )}
+                      {subCategoryNameOptions.map((name) => (
+                        <SelectItem key={name} value={name}>{name}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
