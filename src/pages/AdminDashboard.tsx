@@ -114,6 +114,7 @@ const AdminDashboard = () => {
   });
   const [categoryOptions, setCategoryOptions] = useState<WorksheetCategoryData[]>([]);
   const [subcategoryOptions, setSubcategoryOptions] = useState<SubcategoryData[]>([]);
+  const [subCategoryNameOptions, setSubCategoryNameOptions] = useState<string[]>([]);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
   const [isSubcategoriesLoading, setIsSubcategoriesLoading] = useState(false);
 
