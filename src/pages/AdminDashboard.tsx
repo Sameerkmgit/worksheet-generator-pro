@@ -394,19 +394,7 @@ const AdminDashboard = () => {
     setFilteredWorksheets(filtered);
   };
 
-  const getSubCategoryOptionsForSubject = (subject: string): string[] => {
-    const map: Record<string, string[]> = {
-      math: ["Addition", "Subtraction", "Multiplication", "Division", "Place Value", "Fractions", "Shapes", "Measurement", "Time & Money"],
-      english: ["Reading", "Grammar", "Vocabulary", "Writing", "Phonics"],
-      science: ["Plants & Animals", "My Body", "Family & Home", "Food & Water", "Environment"],
-      "computer-science": ["Computer Basics", "Keyboard & Mouse", "Digital Safety"],
-      assignments: ["English Assignment Packs", "Math Assignment Packs", "EVS Assignment Packs", "Mixed Subject Revision Sheets"],
-    };
-    if (subject === "all" || !map[subject]) {
-      return [...new Set(Object.values(map).flat())];
-    }
-    return map[subject];
-  };
+  // Removed hardcoded getSubCategoryOptionsForSubject - subcategories are now loaded dynamically from DB
 
   const handleLogout = () => {
     adminLogout();
@@ -1041,6 +1029,11 @@ const AdminDashboard = () => {
                           <SelectItem value="Shapes">Shapes</SelectItem>
                           <SelectItem value="Measurement">Measurement</SelectItem>
                           <SelectItem value="Time & Money">Time & Money</SelectItem>
+                          <SelectItem value="Word Problems">Word Problems</SelectItem>
+                          <SelectItem value="Numbers">Numbers</SelectItem>
+                          <SelectItem value="Decimals">Decimals</SelectItem>
+                          <SelectItem value="Factors & Multiples">Factors & Multiples</SelectItem>
+                          <SelectItem value="Operations">Operations</SelectItem>
                         </>
                       )}
                       {formData.subject === "english" && (
@@ -1070,6 +1063,7 @@ const AdminDashboard = () => {
                       )}
                       {formData.subject === "assignments" && (
                         <>
+                          <SelectItem value="CS Assignment Packs">CS Assignment Packs</SelectItem>
                           <SelectItem value="English Assignment Packs">English Assignment Packs</SelectItem>
                           <SelectItem value="Math Assignment Packs">Math Assignment Packs</SelectItem>
                           <SelectItem value="EVS Assignment Packs">EVS Assignment Packs</SelectItem>
