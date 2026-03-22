@@ -1063,6 +1063,7 @@ const AdminDashboard = () => {
                       )}
                       {formData.subject === "assignments" && (
                         <>
+                          <SelectItem value="CS Assignment Packs">CS Assignment Packs</SelectItem>
                           <SelectItem value="English Assignment Packs">English Assignment Packs</SelectItem>
                           <SelectItem value="Math Assignment Packs">Math Assignment Packs</SelectItem>
                           <SelectItem value="EVS Assignment Packs">EVS Assignment Packs</SelectItem>
