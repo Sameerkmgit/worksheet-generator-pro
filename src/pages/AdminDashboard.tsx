@@ -1029,6 +1029,11 @@ const AdminDashboard = () => {
                           <SelectItem value="Shapes">Shapes</SelectItem>
                           <SelectItem value="Measurement">Measurement</SelectItem>
                           <SelectItem value="Time & Money">Time & Money</SelectItem>
+                          <SelectItem value="Word Problems">Word Problems</SelectItem>
+                          <SelectItem value="Numbers">Numbers</SelectItem>
+                          <SelectItem value="Decimals">Decimals</SelectItem>
+                          <SelectItem value="Factors & Multiples">Factors & Multiples</SelectItem>
+                          <SelectItem value="Operations">Operations</SelectItem>
                         </>
                       )}
                       {formData.subject === "english" && (
