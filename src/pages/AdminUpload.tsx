@@ -80,6 +80,34 @@ const AdminUpload = () => {
     fetchNextNumber();
   }, [grade, subject, subcategoryId, subcategories, titleManuallyEdited]);
 
+  // Fetch dynamic sub-category name options when grade or subject changes
+  useEffect(() => {
+    const fetchSubCategoryNames = async () => {
+      if (!grade || !subject) {
+        setSubCategoryNameOptions([]);
+        return;
+      }
+      try {
+        const gradeNumber = grade.replace("grade-", "");
+        const normalizedSubject = SUBJECT_LABELS[subject] || subject;
+        const { data } = await supabase
+          .from("worksheet_subcategories")
+          .select("title, worksheet_categories!inner(grade, subject)")
+          .eq("worksheet_categories.grade", gradeNumber)
+          .eq("worksheet_categories.subject", normalizedSubject)
+          .eq("is_archived", false)
+          .order("title");
+        if (data) {
+          const names = [...new Set(data.map((d: any) => d.title))].sort();
+          setSubCategoryNameOptions(names);
+        }
+      } catch {
+        setSubCategoryNameOptions([]);
+      }
+    };
+    fetchSubCategoryNames();
+  }, [grade, subject]);
+
   // Fetch categories when grade + subject change
   useEffect(() => {
     if (!grade || !subject) {
