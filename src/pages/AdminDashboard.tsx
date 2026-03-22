@@ -394,19 +394,7 @@ const AdminDashboard = () => {
     setFilteredWorksheets(filtered);
   };
 
-  const getSubCategoryOptionsForSubject = (subject: string): string[] => {
-    const map: Record<string, string[]> = {
-      math: ["Addition", "Subtraction", "Multiplication", "Division", "Place Value", "Fractions", "Shapes", "Measurement", "Time & Money"],
-      english: ["Reading", "Grammar", "Vocabulary", "Writing", "Phonics"],
-      science: ["Plants & Animals", "My Body", "Family & Home", "Food & Water", "Environment"],
-      "computer-science": ["Computer Basics", "Keyboard & Mouse", "Digital Safety"],
-      assignments: ["English Assignment Packs", "Math Assignment Packs", "EVS Assignment Packs", "Mixed Subject Revision Sheets"],
-    };
-    if (subject === "all" || !map[subject]) {
-      return [...new Set(Object.values(map).flat())];
-    }
-    return map[subject];
-  };
+  // Removed hardcoded getSubCategoryOptionsForSubject - subcategories are now loaded dynamically from DB
 
   const handleLogout = () => {
     adminLogout();
