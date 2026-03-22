@@ -48,6 +48,7 @@ const AdminUpload = () => {
 
   const [categories, setCategories] = useState<WorksheetCategory[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [subCategoryNameOptions, setSubCategoryNameOptions] = useState<string[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [loadingSubcategories, setLoadingSubcategories] = useState(false);
 
