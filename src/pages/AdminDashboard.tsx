@@ -114,6 +114,7 @@ const AdminDashboard = () => {
   });
   const [categoryOptions, setCategoryOptions] = useState<WorksheetCategoryData[]>([]);
   const [subcategoryOptions, setSubcategoryOptions] = useState<SubcategoryData[]>([]);
+  const [subCategoryNameOptions, setSubCategoryNameOptions] = useState<string[]>([]);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
   const [isSubcategoriesLoading, setIsSubcategoriesLoading] = useState(false);
 
@@ -189,6 +190,33 @@ const AdminDashboard = () => {
     loadImageOverrides();
   }, [imageUpdateTrigger]);
 
+  // Fetch dynamic sub-category name options when grade or subject changes
+  useEffect(() => {
+    const fetchSubCategoryNames = async () => {
+      if (!formData.grade || !formData.subject) {
+        setSubCategoryNameOptions([]);
+        return;
+      }
+      try {
+        const normalizedSubject = normalizeSubject(formData.subject);
+        const { data } = await supabase
+          .from("worksheet_subcategories")
+          .select("title, worksheet_categories!inner(grade, subject)")
+          .eq("worksheet_categories.grade", formData.grade)
+          .eq("worksheet_categories.subject", normalizedSubject)
+          .eq("is_archived", false)
+          .order("title");
+        if (data) {
+          const names = [...new Set(data.map((d: any) => d.title))].sort();
+          setSubCategoryNameOptions(names);
+        }
+      } catch {
+        setSubCategoryNameOptions([]);
+      }
+    };
+    fetchSubCategoryNames();
+  }, [formData.grade, formData.subject]);
+
   // Fetch categories when grade or subject changes
   useEffect(() => {
     const fetchCategories = async () => {
@@ -200,23 +228,14 @@ const AdminDashboard = () => {
       setIsCategoriesLoading(true);
       try {
         const normalizedSubject = normalizeSubject(formData.subject);
-        console.log(`Fetching categories for grade="${formData.grade}", subject="${normalizedSubject}"`);
-        
         const categories = await getWorksheetCategoriesByGradeAndSubject(
           formData.grade,
           normalizedSubject
         );
-        
-        console.log(`Fetched ${categories.length} categories:`, categories.map(c => c.title));
         setCategoryOptions(categories);
       } catch (error) {
         console.error('Error fetching categories:', error);
         setCategoryOptions([]);
-        toast({
-          title: "Error",
-          description: "Failed to load categories",
-          variant: "destructive",
-        });
       } finally {
         setIsCategoriesLoading(false);
       }
@@ -1018,58 +1037,9 @@ const AdminDashboard = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="none">None</SelectItem>
-                      {formData.subject === "math" && (
-                        <>
-                          <SelectItem value="Addition">Addition</SelectItem>
-                          <SelectItem value="Subtraction">Subtraction</SelectItem>
-                          <SelectItem value="Multiplication">Multiplication</SelectItem>
-                          <SelectItem value="Division">Division</SelectItem>
-                          <SelectItem value="Place Value">Place Value</SelectItem>
-                          <SelectItem value="Fractions">Fractions</SelectItem>
-                          <SelectItem value="Shapes">Shapes</SelectItem>
-                          <SelectItem value="Measurement">Measurement</SelectItem>
-                          <SelectItem value="Time & Money">Time & Money</SelectItem>
-                          <SelectItem value="Word Problems">Word Problems</SelectItem>
-                          <SelectItem value="Numbers">Numbers</SelectItem>
-                          <SelectItem value="Decimals">Decimals</SelectItem>
-                          <SelectItem value="Factors & Multiples">Factors & Multiples</SelectItem>
-                          <SelectItem value="Operations">Operations</SelectItem>
-                        </>
-                      )}
-                      {formData.subject === "english" && (
-                        <>
-                          <SelectItem value="Reading">Reading</SelectItem>
-                          <SelectItem value="Grammar">Grammar</SelectItem>
-                          <SelectItem value="Vocabulary">Vocabulary</SelectItem>
-                          <SelectItem value="Writing">Writing</SelectItem>
-                          <SelectItem value="Phonics">Phonics</SelectItem>
-                        </>
-                      )}
-                      {formData.subject === "science" && (
-                        <>
-                          <SelectItem value="Plants & Animals">Plants & Animals</SelectItem>
-                          <SelectItem value="My Body">My Body</SelectItem>
-                          <SelectItem value="Family & Home">Family & Home</SelectItem>
-                          <SelectItem value="Food & Water">Food & Water</SelectItem>
-                          <SelectItem value="Environment">Environment</SelectItem>
-                        </>
-                      )}
-                      {formData.subject === "computer-science" && (
-                        <>
-                          <SelectItem value="Computer Basics">Computer Basics</SelectItem>
-                          <SelectItem value="Keyboard & Mouse">Keyboard & Mouse</SelectItem>
-                          <SelectItem value="Digital Safety">Digital Safety</SelectItem>
-                        </>
-                      )}
-                      {formData.subject === "assignments" && (
-                        <>
-                          <SelectItem value="CS Assignment Packs">CS Assignment Packs</SelectItem>
-                          <SelectItem value="English Assignment Packs">English Assignment Packs</SelectItem>
-                          <SelectItem value="Math Assignment Packs">Math Assignment Packs</SelectItem>
-                          <SelectItem value="EVS Assignment Packs">EVS Assignment Packs</SelectItem>
-                          <SelectItem value="Mixed Subject Revision Sheets">Mixed Subject Revision Sheets</SelectItem>
-                        </>
-                      )}
+                      {subCategoryNameOptions.map((name) => (
+                        <SelectItem key={name} value={name}>{name}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>

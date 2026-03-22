@@ -48,6 +48,7 @@ const AdminUpload = () => {
 
   const [categories, setCategories] = useState<WorksheetCategory[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [subCategoryNameOptions, setSubCategoryNameOptions] = useState<string[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [loadingSubcategories, setLoadingSubcategories] = useState(false);
 
@@ -78,6 +79,34 @@ const AdminUpload = () => {
 
     fetchNextNumber();
   }, [grade, subject, subcategoryId, subcategories, titleManuallyEdited]);
+
+  // Fetch dynamic sub-category name options when grade or subject changes
+  useEffect(() => {
+    const fetchSubCategoryNames = async () => {
+      if (!grade || !subject) {
+        setSubCategoryNameOptions([]);
+        return;
+      }
+      try {
+        const gradeNumber = grade.replace("grade-", "");
+        const normalizedSubject = SUBJECT_LABELS[subject] || subject;
+        const { data } = await supabase
+          .from("worksheet_subcategories")
+          .select("title, worksheet_categories!inner(grade, subject)")
+          .eq("worksheet_categories.grade", gradeNumber)
+          .eq("worksheet_categories.subject", normalizedSubject)
+          .eq("is_archived", false)
+          .order("title");
+        if (data) {
+          const names = [...new Set(data.map((d: any) => d.title))].sort();
+          setSubCategoryNameOptions(names);
+        }
+      } catch {
+        setSubCategoryNameOptions([]);
+      }
+    };
+    fetchSubCategoryNames();
+  }, [grade, subject]);
 
   // Fetch categories when grade + subject change
   useEffect(() => {
@@ -317,52 +346,9 @@ const AdminUpload = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="none">None</SelectItem>
-                      {subject === "math" && (
-                        <>
-                          <SelectItem value="Addition">Addition</SelectItem>
-                          <SelectItem value="Subtraction">Subtraction</SelectItem>
-                          <SelectItem value="Multiplication">Multiplication</SelectItem>
-                          <SelectItem value="Division">Division</SelectItem>
-                          <SelectItem value="Place Value">Place Value</SelectItem>
-                          <SelectItem value="Fractions">Fractions</SelectItem>
-                          <SelectItem value="Shapes">Shapes</SelectItem>
-                          <SelectItem value="Measurement">Measurement</SelectItem>
-                          <SelectItem value="Time & Money">Time & Money</SelectItem>
-                        </>
-                      )}
-                      {subject === "english" && (
-                        <>
-                          <SelectItem value="Reading">Reading</SelectItem>
-                          <SelectItem value="Grammar">Grammar</SelectItem>
-                          <SelectItem value="Vocabulary">Vocabulary</SelectItem>
-                          <SelectItem value="Writing">Writing</SelectItem>
-                          <SelectItem value="Phonics">Phonics</SelectItem>
-                        </>
-                      )}
-                      {subject === "science" && (
-                        <>
-                          <SelectItem value="Plants & Animals">Plants & Animals</SelectItem>
-                          <SelectItem value="My Body">My Body</SelectItem>
-                          <SelectItem value="Family & Home">Family & Home</SelectItem>
-                          <SelectItem value="Food & Water">Food & Water</SelectItem>
-                          <SelectItem value="Environment">Environment</SelectItem>
-                        </>
-                      )}
-                      {subject === "computer-science" && (
-                        <>
-                          <SelectItem value="Computer Basics">Computer Basics</SelectItem>
-                          <SelectItem value="Keyboard & Mouse">Keyboard & Mouse</SelectItem>
-                          <SelectItem value="Digital Safety">Digital Safety</SelectItem>
-                        </>
-                      )}
-                      {subject === "assignments" && (
-                        <>
-                          <SelectItem value="English Assignment Packs">English Assignment Packs</SelectItem>
-                          <SelectItem value="Math Assignment Packs">Math Assignment Packs</SelectItem>
-                          <SelectItem value="EVS Assignment Packs">EVS Assignment Packs</SelectItem>
-                          <SelectItem value="Mixed Subject Revision Sheets">Mixed Subject Revision Sheets</SelectItem>
-                        </>
-                      )}
+                      {subCategoryNameOptions.map((name) => (
+                        <SelectItem key={name} value={name}>{name}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
