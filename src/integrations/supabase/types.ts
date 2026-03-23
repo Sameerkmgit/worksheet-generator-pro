@@ -74,6 +74,66 @@ export type Database = {
         }
         Relationships: []
       }
+      seo_page_overrides: {
+        Row: {
+          created_at: string
+          example_questions_json: Json | null
+          grade: string
+          how_to_use: string | null
+          id: string
+          intro: string | null
+          is_active: boolean
+          key_skills_json: Json | null
+          meta_description: string | null
+          meta_title: string | null
+          page_path: string
+          page_type: string
+          practice_tips: string | null
+          subject: string
+          topic_slug: string | null
+          updated_at: string
+          what_kids_learn_json: Json | null
+        }
+        Insert: {
+          created_at?: string
+          example_questions_json?: Json | null
+          grade: string
+          how_to_use?: string | null
+          id?: string
+          intro?: string | null
+          is_active?: boolean
+          key_skills_json?: Json | null
+          meta_description?: string | null
+          meta_title?: string | null
+          page_path: string
+          page_type: string
+          practice_tips?: string | null
+          subject: string
+          topic_slug?: string | null
+          updated_at?: string
+          what_kids_learn_json?: Json | null
+        }
+        Update: {
+          created_at?: string
+          example_questions_json?: Json | null
+          grade?: string
+          how_to_use?: string | null
+          id?: string
+          intro?: string | null
+          is_active?: boolean
+          key_skills_json?: Json | null
+          meta_description?: string | null
+          meta_title?: string | null
+          page_path?: string
+          page_type?: string
+          practice_tips?: string | null
+          subject?: string
+          topic_slug?: string | null
+          updated_at?: string
+          what_kids_learn_json?: Json | null
+        }
+        Relationships: []
+      }
       support_messages: {
         Row: {
           created_at: string
