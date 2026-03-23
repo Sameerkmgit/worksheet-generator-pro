@@ -80,6 +80,11 @@ const Footer = () => {
                   Contact Us
                 </Link>
               </li>
+              <li>
+                <Link to="/disclaimer" className="opacity-90 hover:opacity-100 transition-opacity">
+                  Disclaimer
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

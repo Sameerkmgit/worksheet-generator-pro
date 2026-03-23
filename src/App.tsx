@@ -32,6 +32,7 @@ import DownloadPack from "./pages/DownloadPack";
 import Support from "./pages/Support";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
+import Disclaimer from "./pages/Disclaimer";
 
 const queryClient = new QueryClient();
 
