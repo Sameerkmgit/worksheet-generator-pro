@@ -56,6 +56,7 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === "development" && componentTagger(),
     sitemapPlugin(),
+    seoInjectPlugin(),
   ].filter(Boolean),
   resolve: {
     alias: {

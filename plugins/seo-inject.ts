@@ -164,7 +164,7 @@ export default function seoInjectPlugin(): Plugin {
           return;
         }
 
-        const records: SeoRecord[] = await res.json();
+        const records: SeoRecord[] = (await res.json()) as SeoRecord[];
         console.log(`SEO inject: ${records.length} overrides found`);
 
         if (records.length === 0) return;
