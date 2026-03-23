@@ -234,33 +234,45 @@ const Subject = () => {
         </section>
 
         {/* SEO Content Section */}
-        {seoContent && (
+        {displayIntro && (
           <section className="py-10 px-4 bg-secondary/5">
             <div className="max-w-4xl mx-auto prose prose-lg">
-              <p className="text-muted-foreground leading-relaxed">{seoContent.intro}</p>
+              <p className="text-muted-foreground leading-relaxed">{displayIntro}</p>
 
-              <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
-                Key Skills in {gradeTitle} {subjectLabel}
-              </h2>
-              <ul className="space-y-2 list-disc pl-5 text-muted-foreground">
-                {seoContent.keySkills.map((skill, i) => (
-                  <li key={i}>{skill}</li>
-                ))}
-              </ul>
+              {displaySkills && displaySkills.length > 0 && (
+                <>
+                  <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                    Key Skills in {gradeTitle} {subjectLabel}
+                  </h2>
+                  <ul className="space-y-2 list-disc pl-5 text-muted-foreground">
+                    {displaySkills.map((skill, i) => (
+                      <li key={i}>{skill}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
 
-              <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
-                Example Questions
-              </h2>
-              <ol className="space-y-3 list-decimal pl-5 text-muted-foreground">
-                {seoContent.exampleQuestions.map((q, i) => (
-                  <li key={i}>{q}</li>
-                ))}
-              </ol>
+              {displayQuestions && displayQuestions.length > 0 && (
+                <>
+                  <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                    Example Questions
+                  </h2>
+                  <ol className="space-y-3 list-decimal pl-5 text-muted-foreground">
+                    {displayQuestions.map((q, i) => (
+                      <li key={i}>{q}</li>
+                    ))}
+                  </ol>
+                </>
+              )}
 
-              <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
-                How to Use These Worksheets
-              </h2>
-              <p className="text-muted-foreground leading-relaxed">{seoContent.howToUse}</p>
+              {displayHowToUse && (
+                <>
+                  <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                    How to Use These Worksheets
+                  </h2>
+                  <p className="text-muted-foreground leading-relaxed">{displayHowToUse}</p>
+                </>
+              )}
             </div>
           </section>
         )}

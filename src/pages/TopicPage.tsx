@@ -218,33 +218,49 @@ const TopicPage = () => {
         {/* SEO Content Section */}
         {(() => {
           const seo = getTopicSEOContent(gradeNumber, subjectLabel, topicTitle);
+          const displayIntro = override?.intro || seo.intro;
+          const displayLearn = override?.what_kids_learn_json || seo.whatKidsLearn;
+          const displayQuestions = override?.example_questions_json || seo.exampleQuestions;
+          const displayTips = override?.practice_tips || seo.practiceTips;
           return (
             <section className="py-10 px-4 bg-secondary/5">
               <div className="max-w-4xl mx-auto prose prose-lg">
-                <p className="text-muted-foreground leading-relaxed">{seo.intro}</p>
+                <p className="text-muted-foreground leading-relaxed">{displayIntro}</p>
 
-                <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
-                  What Kids Will Learn
-                </h2>
-                <ul className="space-y-2 list-disc pl-5 text-muted-foreground">
-                  {seo.whatKidsLearn.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
+                {displayLearn && displayLearn.length > 0 && (
+                  <>
+                    <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                      What Kids Will Learn
+                    </h2>
+                    <ul className="space-y-2 list-disc pl-5 text-muted-foreground">
+                      {displayLearn.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
 
-                <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
-                  Example Questions
-                </h2>
-                <ol className="space-y-3 list-decimal pl-5 text-muted-foreground">
-                  {seo.exampleQuestions.map((q, i) => (
-                    <li key={i}>{q}</li>
-                  ))}
-                </ol>
+                {displayQuestions && displayQuestions.length > 0 && (
+                  <>
+                    <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                      Example Questions
+                    </h2>
+                    <ol className="space-y-3 list-decimal pl-5 text-muted-foreground">
+                      {displayQuestions.map((q, i) => (
+                        <li key={i}>{q}</li>
+                      ))}
+                    </ol>
+                  </>
+                )}
 
-                <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
-                  Practice Tips for Parents & Teachers
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">{seo.practiceTips}</p>
+                {displayTips && (
+                  <>
+                    <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                      Practice Tips for Parents & Teachers
+                    </h2>
+                    <p className="text-muted-foreground leading-relaxed">{displayTips}</p>
+                  </>
+                )}
               </div>
             </section>
           );
