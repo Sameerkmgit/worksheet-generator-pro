@@ -189,6 +189,33 @@ const Subject = () => {
     { label: subjectLabel }
   ];
 
+  // Build enhanced JSON-LD
+  const collectionJsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: pageTitle.replace(/ – .*$/, ""),
+    description: pageDescription,
+    url: pageUrl,
+    isPartOf: { "@type": "WebSite", name: "WizKidsHub", url: "https://www.wizkidshub.com" },
+    about: {
+      "@type": "Course",
+      name: `${gradeTitle} ${subjectLabel}`,
+      educationalLevel: gradeTitle,
+    },
+    ...(hasSubcategories && {
+      mainEntity: {
+        "@type": "ItemList",
+        numberOfItems: subcategories.length,
+        itemListElement: subcategories.map((s, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: s.title,
+          url: `https://www.wizkidshub.com${toTopicUrl(gradeNumber, category?.subject || '', s.slug)}`,
+        })),
+      },
+    }),
+  });
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
@@ -203,6 +230,7 @@ const Subject = () => {
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDescription} />
+        <script type="application/ld+json">{collectionJsonLd}</script>
       </Helmet>
       
       {/* Breadcrumbs component injects JSON-LD */}
