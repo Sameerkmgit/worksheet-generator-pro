@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import fs from "fs";
 import { componentTagger } from "lovable-tagger";
+import seoInjectPlugin from "./plugins/seo-inject";
 
 const SITEMAP_EDGE_URL = "https://sitalsldfenvtdjdgafg.supabase.co/functions/v1/sitemap";
 
@@ -55,6 +56,7 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === "development" && componentTagger(),
     sitemapPlugin(),
+    seoInjectPlugin(),
   ].filter(Boolean),
   resolve: {
     alias: {

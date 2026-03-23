@@ -172,6 +172,39 @@ const TopicPage = () => {
     { label: topicTitle },
   ];
 
+  // Build enhanced JSON-LD
+  const collectionJsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: seoTitle.replace(/ – .*$/, ""),
+    description: seoDescription,
+    url: canonicalUrl,
+    isPartOf: { "@type": "WebSite", name: "WizKidsHub", url: SITE_URL },
+    about: {
+      "@type": "Course",
+      name: `${gradeLabel} ${subjectLabel}`,
+      educationalLevel: gradeLabel,
+    },
+    ...(worksheets.length > 0 && {
+      mainEntity: {
+        "@type": "ItemList",
+        numberOfItems: worksheets.length,
+        itemListElement: worksheets.slice(0, 20).map((ws, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          item: {
+            "@type": "LearningResource",
+            name: ws.title,
+            educationalLevel: gradeLabel,
+            learningResourceType: "Worksheet",
+            encodingFormat: "application/pdf",
+            url: `${SITE_URL}${toWorksheetUrl(ws)}`,
+          },
+        })),
+      },
+    }),
+  });
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
@@ -186,6 +219,7 @@ const TopicPage = () => {
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={seoTitle} />
         <meta name="twitter:description" content={seoDescription} />
+        <script type="application/ld+json">{collectionJsonLd}</script>
       </Helmet>
 
       <Breadcrumbs items={breadcrumbItems} className="hidden" />
