@@ -84,6 +84,7 @@ const App = () => {
             <Route path="/contact" element={<Support />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
 
             {/* ADMIN ROUTES */}
