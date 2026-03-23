@@ -18,6 +18,7 @@ import {
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 import { getSubjectSEOContent } from "@/lib/seoContent";
+import { useSeoOverride } from "@/hooks/useSeoOverride";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
