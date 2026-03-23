@@ -20,6 +20,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ResetPassword from "./pages/ResetPassword";
 import WorksheetAudit from "./pages/WorksheetAudit";
+import AdminSeoOverrides from "./pages/AdminSeoOverrides";
 
 import AssignmentsLanding from "./pages/AssignmentsLanding";
 import Packs from "./pages/Packs";
