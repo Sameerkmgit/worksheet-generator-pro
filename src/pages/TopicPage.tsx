@@ -11,6 +11,7 @@ import AdSense from "@/components/AdSense";
 import { supabase } from "@/integrations/supabase/client";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
+import { getTopicSEOContent } from "@/lib/seoContent";
 
 const getPdfEmbedUrl = (pdfUrl: string): string => {
   if (!pdfUrl) return "";
