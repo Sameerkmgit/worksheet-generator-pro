@@ -167,6 +167,7 @@ const Subject = () => {
   const gradeTitle = `Grade ${gradeNumber}`;
 
   const subjectLabel = toTitleCase(category?.subject) || toTitleCase(subjectSearch);
+  const seoContent = getSubjectSEOContent(gradeNumber, subjectLabel);
   const pageTitle = `Grade ${gradeNumber} ${subjectLabel} Worksheets – Free Printable | WizKidsHub`;
   const pageDescription = `Download free printable ${subjectLabel} worksheets for Grade ${gradeNumber}. Perfect for practice, homework, and classroom learning.`;
   const pageUrl = `https://www.wizkidshub.com/categories/${gradeSlug}/${subjectSlug}`;
