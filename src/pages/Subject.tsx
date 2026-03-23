@@ -169,9 +169,18 @@ const Subject = () => {
 
   const subjectLabel = toTitleCase(category?.subject) || toTitleCase(subjectSearch);
   const seoContent = getSubjectSEOContent(gradeNumber, subjectLabel);
-  const pageTitle = `Grade ${gradeNumber} ${subjectLabel} Worksheets – Free Printable | WizKidsHub`;
-  const pageDescription = `Download free printable ${subjectLabel} worksheets for Grade ${gradeNumber}. Perfect for practice, homework, and classroom learning.`;
-  const pageUrl = `https://www.wizkidshub.com/categories/${gradeSlug}/${subjectSlug}`;
+  const pagePath = `/categories/${gradeSlug}/${subjectSlug}`;
+  const override = useSeoOverride(pagePath);
+
+  const pageTitle = override?.meta_title || `Grade ${gradeNumber} ${subjectLabel} Worksheets – Free Printable | WizKidsHub`;
+  const pageDescription = override?.meta_description || `Download free printable ${subjectLabel} worksheets for Grade ${gradeNumber}. Perfect for practice, homework, and classroom learning.`;
+  const pageUrl = `https://www.wizkidshub.com${pagePath}`;
+
+  // Merged content: override wins over generated fallback
+  const displayIntro = override?.intro || seoContent?.intro;
+  const displaySkills = override?.key_skills_json || seoContent?.keySkills;
+  const displayQuestions = override?.example_questions_json || seoContent?.exampleQuestions;
+  const displayHowToUse = override?.how_to_use || seoContent?.howToUse;
 
   // Breadcrumb items
   const breadcrumbItems = [
