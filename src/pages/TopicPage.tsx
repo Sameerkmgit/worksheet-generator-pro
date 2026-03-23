@@ -159,9 +159,11 @@ const TopicPage = () => {
   const gradeLabel = `Grade ${gradeNumber}`;
   const subjectLabel = toTitleCase(category?.subject) || toTitleCase(subjectDisplay);
 
-  const canonicalUrl = `${SITE_URL}/categories/${gradeSlug}/${subjectSlug}/${topicSlug}`;
-  const seoTitle = `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} – Free Printable | WizKidsHub`;
-  const seoDescription = `Download free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. Perfect for practice, homework, and classroom learning.`;
+  const pagePath = `/categories/${gradeSlug}/${subjectSlug}/${topicSlug}`;
+  const override = useSeoOverride(pagePath);
+  const canonicalUrl = `${SITE_URL}${pagePath}`;
+  const seoTitle = override?.meta_title || `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} – Free Printable | WizKidsHub`;
+  const seoDescription = override?.meta_description || `Download free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. Perfect for practice, homework, and classroom learning.`;
 
   const breadcrumbItems = [
     { label: "Home", href: "/" },
