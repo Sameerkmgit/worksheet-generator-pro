@@ -17,6 +17,7 @@ import {
 } from "@/lib/worksheetStorage";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
+import { getSubjectSEOContent } from "@/lib/seoContent";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
@@ -166,6 +167,7 @@ const Subject = () => {
   const gradeTitle = `Grade ${gradeNumber}`;
 
   const subjectLabel = toTitleCase(category?.subject) || toTitleCase(subjectSearch);
+  const seoContent = getSubjectSEOContent(gradeNumber, subjectLabel);
   const pageTitle = `Grade ${gradeNumber} ${subjectLabel} Worksheets – Free Printable | WizKidsHub`;
   const pageDescription = `Download free printable ${subjectLabel} worksheets for Grade ${gradeNumber}. Perfect for practice, homework, and classroom learning.`;
   const pageUrl = `https://www.wizkidshub.com/categories/${gradeSlug}/${subjectSlug}`;
@@ -220,6 +222,38 @@ const Subject = () => {
             <InteractivePracticeBanner variant="page" grade={gradeNumber} subjectSlug={subjectSlug} />
           </div>
         </section>
+
+        {/* SEO Content Section */}
+        {seoContent && (
+          <section className="py-10 px-4 bg-secondary/5">
+            <div className="max-w-4xl mx-auto prose prose-lg">
+              <p className="text-muted-foreground leading-relaxed">{seoContent.intro}</p>
+
+              <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                Key Skills in {gradeTitle} {subjectLabel}
+              </h2>
+              <ul className="space-y-2 list-disc pl-5 text-muted-foreground">
+                {seoContent.keySkills.map((skill, i) => (
+                  <li key={i}>{skill}</li>
+                ))}
+              </ul>
+
+              <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                Example Questions
+              </h2>
+              <ol className="space-y-3 list-decimal pl-5 text-muted-foreground">
+                {seoContent.exampleQuestions.map((q, i) => (
+                  <li key={i}>{q}</li>
+                ))}
+              </ol>
+
+              <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                How to Use These Worksheets
+              </h2>
+              <p className="text-muted-foreground leading-relaxed">{seoContent.howToUse}</p>
+            </div>
+          </section>
+        )}
 
         {/* Content Section */}
         <section className="py-16 px-4">

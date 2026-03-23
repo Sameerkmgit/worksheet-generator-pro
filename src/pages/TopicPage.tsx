@@ -11,6 +11,7 @@ import AdSense from "@/components/AdSense";
 import { supabase } from "@/integrations/supabase/client";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
+import { getTopicSEOContent } from "@/lib/seoContent";
 
 const getPdfEmbedUrl = (pdfUrl: string): string => {
   if (!pdfUrl) return "";
@@ -210,6 +211,41 @@ const TopicPage = () => {
             <InteractivePracticeBanner variant="page" grade={gradeNumber} subjectSlug={subjectSlug} />
           </div>
         </section>
+
+        {/* SEO Content Section */}
+        {(() => {
+          const seo = getTopicSEOContent(gradeNumber, subjectLabel, topicTitle);
+          return (
+            <section className="py-10 px-4 bg-secondary/5">
+              <div className="max-w-4xl mx-auto prose prose-lg">
+                <p className="text-muted-foreground leading-relaxed">{seo.intro}</p>
+
+                <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                  What Kids Will Learn
+                </h2>
+                <ul className="space-y-2 list-disc pl-5 text-muted-foreground">
+                  {seo.whatKidsLearn.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+
+                <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                  Example Questions
+                </h2>
+                <ol className="space-y-3 list-decimal pl-5 text-muted-foreground">
+                  {seo.exampleQuestions.map((q, i) => (
+                    <li key={i}>{q}</li>
+                  ))}
+                </ol>
+
+                <h2 className="text-xl font-heading font-semibold text-foreground mt-8 mb-4">
+                  Practice Tips for Parents & Teachers
+                </h2>
+                <p className="text-muted-foreground leading-relaxed">{seo.practiceTips}</p>
+              </div>
+            </section>
+          );
+        })()}
 
         {/* Top Ad */}
         <div className="w-full py-4">
