@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 import { getTopicSEOContent } from "@/lib/seoContent";
+import { useSeoOverride } from "@/hooks/useSeoOverride";
 
 const getPdfEmbedUrl = (pdfUrl: string): string => {
   if (!pdfUrl) return "";
