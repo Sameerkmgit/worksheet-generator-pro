@@ -5,57 +5,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Breadcrumbs from "@/components/Breadcrumbs";
-
-const blogArticles = [
-  {
-    title: "How to Help Your Grade 1 Child Learn Addition at Home",
-    date: "February 15, 2026",
-    category: "Math",
-    summary:
-      "Addition is one of the first math skills your child will learn in school, and reinforcing it at home can make a big difference. Discover simple strategies, hands-on activities, and free printable worksheets to make addition practice fun and effective for young learners.",
-    slug: "grade-1-addition-at-home",
-  },
-  {
-    title: "Top 5 English Worksheets for Grade 2 Students",
-    date: "February 8, 2026",
-    category: "English",
-    summary:
-      "Grade 2 is a critical year for reading fluency and writing development. We've curated five of our most popular English worksheets that cover phonics, vocabulary, sentence building, and reading comprehension — all free to download and print.",
-    slug: "top-english-worksheets-grade-2",
-  },
-  {
-    title: "Why Printable Worksheets Are Better Than Screen Time for Young Learners",
-    date: "January 28, 2026",
-    category: "Parenting",
-    summary:
-      "While educational apps have their place, research shows that writing by hand and working on paper helps children retain information better. Learn why printable worksheets remain one of the most effective learning tools for kids in Grades 1–5.",
-    slug: "printable-vs-screen-time",
-  },
-  {
-    title: "How to Use WizKidsHub Worksheets in Your Classroom",
-    date: "January 20, 2026",
-    category: "Teaching Tips",
-    summary:
-      "Whether you teach a single grade or a mixed-ability class, WizKidsHub worksheets can save you hours of preparation time. Here's how teachers across the country are using our free printable resources for warm-ups, homework, and differentiated practice.",
-    slug: "wizkidshub-in-classroom",
-  },
-  {
-    title: "Grade 3 Science: Fun Ways to Teach Plants and Animals",
-    date: "January 12, 2026",
-    category: "Science",
-    summary:
-      "Plants and animals are fascinating topics for Grade 3 students. Combine hands-on activities like nature walks and garden projects with our free science worksheets to create engaging lessons that spark curiosity and scientific thinking.",
-    slug: "grade-3-science-plants-animals",
-  },
-  {
-    title: "Building Math Confidence in Grade 4 and Grade 5 Students",
-    date: "January 5, 2026",
-    category: "Math",
-    summary:
-      "Many students start to struggle with math confidence in upper elementary grades as concepts become more abstract. Learn proven strategies for building a growth mindset and how regular worksheet practice helps students master fractions, decimals, and multi-step problems.",
-    slug: "math-confidence-grade-4-5",
-  },
-];
+import { blogArticles } from "@/lib/blogArticles";
 
 const categoryColors: Record<string, string> = {
   Math: "bg-blue-100 text-blue-800",
@@ -105,22 +55,26 @@ const Blog = () => {
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {blogArticles.map((article) => (
-                <Card key={article.slug} className="flex flex-col hover:shadow-lg transition-shadow">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge className={`${categoryColors[article.category] || "bg-muted text-muted-foreground"} border-0 text-xs font-medium`}>
-                        {article.category}
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">{article.date}</span>
-                    </div>
-                    <CardTitle className="text-lg leading-snug">{article.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex-1">
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {article.summary}
-                    </p>
-                  </CardContent>
-                </Card>
+                <Link key={article.slug} to={`/blog/${article.slug}`} className="block group">
+                  <Card className="flex flex-col h-full hover:shadow-lg transition-shadow group-hover:border-primary/40">
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge className={`${categoryColors[article.category] || "bg-muted text-muted-foreground"} border-0 text-xs font-medium`}>
+                          {article.category}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">{article.date}</span>
+                        <span className="text-xs text-muted-foreground">· {article.readingMinutes} min</span>
+                      </div>
+                      <CardTitle className="text-lg leading-snug group-hover:text-primary transition-colors">{article.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex-1">
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {article.summary}
+                      </p>
+                      <span className="inline-block mt-3 text-sm font-medium text-primary">Read article →</span>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
           </div>
