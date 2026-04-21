@@ -64,6 +64,20 @@ Deno.serve(async (req) => {
     sitemap += buildUrlEntry(`${SITE_URL}/support`, null, "0.3", "yearly");
     sitemap += buildUrlEntry(`${SITE_URL}/disclaimer`, null, "0.3", "yearly");
 
+    // Blog
+    sitemap += buildUrlEntry(`${SITE_URL}/blog`, null, "0.7", "weekly");
+    const blogSlugs = [
+      "grade-1-addition-at-home",
+      "top-english-worksheets-grade-2",
+      "printable-vs-screen-time",
+      "wizkidshub-in-classroom",
+      "grade-3-science-plants-animals",
+      "math-confidence-grade-4-5",
+    ];
+    for (const slug of blogSlugs) {
+      sitemap += buildUrlEntry(`${SITE_URL}/blog/${slug}`, null, "0.7", "monthly");
+    }
+
     // Grade pages
     const grades = ["grade-1", "grade-2", "grade-3", "grade-4", "grade-5"];
     for (const grade of grades) {
