@@ -68,6 +68,34 @@ function generateHowToUse(grade: string, subject: string): string {
   return `Print this worksheet and give it to your Grade ${grade} student to complete independently or with guidance. Review the answers together to identify areas of strength and topics that may need additional practice. This worksheet works great as a classroom warm-up, homework assignment, or supplementary learning activity at home. For best results, encourage students to show their work and explain their reasoning.`;
 }
 
+// Generate dynamic FAQs when DB faq field is empty — boosts AdSense word count + enables FAQPage rich snippets
+function generateFaq(title: string, grade: string, subject: string): Array<{ question: string; answer: string }> {
+  const cleanName = toTitleCase(cleanDisplayTitle(title));
+  const subjectName = toTitleCase(subject);
+  return [
+    {
+      question: `Is the ${cleanName} worksheet free to download?`,
+      answer: `Yes. Every worksheet on WizKidsHub — including ${cleanName} — is 100% free to download and print. There is no sign-up, no email required, and no paywall. You can use it at home, in the classroom, or for tutoring.`,
+    },
+    {
+      question: `What grade level is this ${subjectName} worksheet for?`,
+      answer: `This worksheet is designed for Grade ${grade} students. The questions, vocabulary, and difficulty are aligned with Grade ${grade} ${subjectName} learning standards, but it also works well as review for older students or as a stretch challenge for advanced younger learners.`,
+    },
+    {
+      question: `How long does it take to complete this worksheet?`,
+      answer: `Most Grade ${grade} students complete this worksheet in 15 to 25 minutes. Give your child quiet, focused time to work through it, and plan another 5 minutes afterwards to review answers together. Struggling learners may need a little longer — that is completely normal.`,
+    },
+    {
+      question: `Do you provide an answer key?`,
+      answer: `Many of our worksheets include an answer key on the last page of the PDF. If an answer key is not included, the questions are designed to have clear, single correct answers that a parent or teacher can verify quickly. You can also reach out via our Support page if you need help.`,
+    },
+    {
+      question: `Can I use this ${subjectName} worksheet in my classroom?`,
+      answer: `Absolutely. Teachers are welcome to print and distribute WizKidsHub worksheets to their students for non-commercial classroom use. We just ask that you do not republish or resell our worksheets on other websites.`,
+    },
+  ];
+}
+
 const WorksheetDetail = () => {
   const { worksheetSlug } = useParams();
   const navigate = useNavigate();
