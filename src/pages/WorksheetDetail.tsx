@@ -68,6 +68,34 @@ function generateHowToUse(grade: string, subject: string): string {
   return `Print this worksheet and give it to your Grade ${grade} student to complete independently or with guidance. Review the answers together to identify areas of strength and topics that may need additional practice. This worksheet works great as a classroom warm-up, homework assignment, or supplementary learning activity at home. For best results, encourage students to show their work and explain their reasoning.`;
 }
 
+// Generate dynamic FAQs when DB faq field is empty — boosts AdSense word count + enables FAQPage rich snippets
+function generateFaq(title: string, grade: string, subject: string): Array<{ question: string; answer: string }> {
+  const cleanName = toTitleCase(cleanDisplayTitle(title));
+  const subjectName = toTitleCase(subject);
+  return [
+    {
+      question: `Is the ${cleanName} worksheet free to download?`,
+      answer: `Yes. Every worksheet on WizKidsHub — including ${cleanName} — is 100% free to download and print. There is no sign-up, no email required, and no paywall. You can use it at home, in the classroom, or for tutoring.`,
+    },
+    {
+      question: `What grade level is this ${subjectName} worksheet for?`,
+      answer: `This worksheet is designed for Grade ${grade} students. The questions, vocabulary, and difficulty are aligned with Grade ${grade} ${subjectName} learning standards, but it also works well as review for older students or as a stretch challenge for advanced younger learners.`,
+    },
+    {
+      question: `How long does it take to complete this worksheet?`,
+      answer: `Most Grade ${grade} students complete this worksheet in 15 to 25 minutes. Give your child quiet, focused time to work through it, and plan another 5 minutes afterwards to review answers together. Struggling learners may need a little longer — that is completely normal.`,
+    },
+    {
+      question: `Do you provide an answer key?`,
+      answer: `Many of our worksheets include an answer key on the last page of the PDF. If an answer key is not included, the questions are designed to have clear, single correct answers that a parent or teacher can verify quickly. You can also reach out via our Support page if you need help.`,
+    },
+    {
+      question: `Can I use this ${subjectName} worksheet in my classroom?`,
+      answer: `Absolutely. Teachers are welcome to print and distribute WizKidsHub worksheets to their students for non-commercial classroom use. We just ask that you do not republish or resell our worksheets on other websites.`,
+    },
+  ];
+}
+
 const WorksheetDetail = () => {
   const { worksheetSlug } = useParams();
   const navigate = useNavigate();
@@ -243,6 +271,25 @@ const WorksheetDetail = () => {
     }
   };
 
+  // FAQ — DB field if present, otherwise auto-generated
+  const faqItems: Array<{ question: string; answer: string }> =
+    worksheet.faq && Array.isArray(worksheet.faq) && worksheet.faq.length > 0
+      ? worksheet.faq
+      : generateFaq(worksheet.title, gradeNum, worksheet.subject);
+
+  const faqStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
   // Build dynamic breadcrumb items
   const breadcrumbItems: Array<{ label: string; href?: string }> = [
     { label: "Home", href: "/" },
@@ -284,6 +331,9 @@ const WorksheetDetail = () => {
         <meta name="twitter:image" content={imageUrl} />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(faqStructuredData)}
         </script>
       </Helmet>
       
@@ -407,6 +457,7 @@ const WorksheetDetail = () => {
                               className="w-full h-[600px] md:h-[800px]"
                               title={`${worksheet.title} Preview`}
                               allow="autoplay"
+                              loading="lazy"
                             />
                           </div>
                           <p className="text-sm text-muted-foreground mt-3 text-center">
@@ -478,22 +529,25 @@ const WorksheetDetail = () => {
                 </CardContent>
               </Card>
 
-              {/* FAQ Section */}
-              {worksheet.faq && Array.isArray(worksheet.faq) && worksheet.faq.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Frequently Asked Questions</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    {worksheet.faq.map((item: any, index: number) => (
-                      <div key={index}>
-                        <h3 className="font-semibold text-lg mb-2">{item.question}</h3>
-                        <p className="text-muted-foreground">{item.answer}</p>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              )}
+              {/* Mid-content Ad — high-CTR placement after main content */}
+              <div className="w-full">
+                <AdSense adSlot="2345678901" adFormat="auto" className="w-full min-h-[250px]" />
+              </div>
+
+              {/* FAQ Section — always rendered (auto-generated when DB faq is empty) */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Frequently Asked Questions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {faqItems.map((item, index) => (
+                    <div key={index}>
+                      <h3 className="font-semibold text-lg mb-2">{item.question}</h3>
+                      <p className="text-muted-foreground">{item.answer}</p>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
             </div>
 
             {/* Right Column - Sidebar */}
