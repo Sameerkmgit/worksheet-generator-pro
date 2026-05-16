@@ -457,6 +457,7 @@ const WorksheetDetail = () => {
                               className="w-full h-[600px] md:h-[800px]"
                               title={`${worksheet.title} Preview`}
                               allow="autoplay"
+                              loading="lazy"
                             />
                           </div>
                           <p className="text-sm text-muted-foreground mt-3 text-center">
