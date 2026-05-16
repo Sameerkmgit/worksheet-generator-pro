@@ -529,22 +529,25 @@ const WorksheetDetail = () => {
                 </CardContent>
               </Card>
 
-              {/* FAQ Section */}
-              {worksheet.faq && Array.isArray(worksheet.faq) && worksheet.faq.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Frequently Asked Questions</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    {worksheet.faq.map((item: any, index: number) => (
-                      <div key={index}>
-                        <h3 className="font-semibold text-lg mb-2">{item.question}</h3>
-                        <p className="text-muted-foreground">{item.answer}</p>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              )}
+              {/* Mid-content Ad — high-CTR placement after main content */}
+              <div className="w-full">
+                <AdSense adSlot="2345678901" adFormat="auto" className="w-full min-h-[250px]" />
+              </div>
+
+              {/* FAQ Section — always rendered (auto-generated when DB faq is empty) */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Frequently Asked Questions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {faqItems.map((item, index) => (
+                    <div key={index}>
+                      <h3 className="font-semibold text-lg mb-2">{item.question}</h3>
+                      <p className="text-muted-foreground">{item.answer}</p>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
             </div>
 
             {/* Right Column - Sidebar */}
