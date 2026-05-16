@@ -271,6 +271,25 @@ const WorksheetDetail = () => {
     }
   };
 
+  // FAQ — DB field if present, otherwise auto-generated
+  const faqItems: Array<{ question: string; answer: string }> =
+    worksheet.faq && Array.isArray(worksheet.faq) && worksheet.faq.length > 0
+      ? worksheet.faq
+      : generateFaq(worksheet.title, gradeNum, worksheet.subject);
+
+  const faqStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
   // Build dynamic breadcrumb items
   const breadcrumbItems: Array<{ label: string; href?: string }> = [
     { label: "Home", href: "/" },
