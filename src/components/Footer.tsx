@@ -14,7 +14,7 @@ const Footer = () => {
           {/* About */}
           <div>
             <h3 className="font-heading font-semibold text-lg mb-4">About Us</h3>
-            <p className="text-sm opacity-90">
+            <p className="text-sm">
               WizKidsHubWorksheets provides free, high-quality educational worksheets for students from Grade 1 to 5.
             </p>
           </div>
@@ -24,32 +24,32 @@ const Footer = () => {
             <h3 className="font-heading font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/" className="hover:underline transition-opacity">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/categories/grade-1" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/categories/grade-1" className="hover:underline transition-opacity">
                   Grade 1
                 </Link>
               </li>
               <li>
-                <Link to="/categories/grade-2" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/categories/grade-2" className="hover:underline transition-opacity">
                   Grade 2
                 </Link>
               </li>
               <li>
-                <Link to="/categories/grade-3" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/categories/grade-3" className="hover:underline transition-opacity">
                   Grade 3
                 </Link>
               </li>
               <li>
-                <Link to="/categories/grade-4" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/categories/grade-4" className="hover:underline transition-opacity">
                   Grade 4
                 </Link>
               </li>
               <li>
-                <Link to="/categories/grade-5" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/categories/grade-5" className="hover:underline transition-opacity">
                   Grade 5
                 </Link>
               </li>
@@ -61,27 +61,27 @@ const Footer = () => {
             <h3 className="font-heading font-semibold text-lg mb-4">Legal</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/privacy-policy" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/privacy-policy" className="hover:underline transition-opacity">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms-of-service" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/terms-of-service" className="hover:underline transition-opacity">
                   Terms Of Service
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/about" className="hover:underline transition-opacity">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/contact" className="hover:underline transition-opacity">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link to="/disclaimer" className="opacity-90 hover:opacity-100 transition-opacity">
+                <Link to="/disclaimer" className="hover:underline transition-opacity">
                   Disclaimer
                 </Link>
               </li>
@@ -90,7 +90,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/20 pt-8 text-center text-sm opacity-90">
+        <div className="border-t border-white/20 pt-8 text-center text-sm">
           <p>© 2026 WizKidsHubWorksheets. All rights reserved.</p>
         </div>
       </div>
