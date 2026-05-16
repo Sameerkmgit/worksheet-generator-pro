@@ -1,15 +1,9 @@
 import { Link } from "react-router-dom";
-import AdSense from "@/components/AdSense";
 
 const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground py-12 mt-16">
       <div className="container mx-auto max-w-[1140px] px-6">
-        
-        {/* Footer Ad Placement */}
-        <div className="mb-12 flex justify-center">
-          <AdSense adSlot="3456789012" adFormat="horizontal" className="w-full max-w-[728px] min-h-[90px]" />
-        </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* About */}
           <div>

@@ -187,11 +187,69 @@ const Home = () => {
         </div>
       </section>
 
+      {/* About WizKidsHub — substantial written content for AdSense reviewers */}
+      <section className="py-16 px-6 bg-background" aria-labelledby="about-wizkidshub-heading">
+        <div className="container mx-auto max-w-[1140px] prose prose-slate max-w-none">
+          <h2 id="about-wizkidshub-heading" className="text-3xl font-bold text-foreground mb-6 font-heading">
+            About WizKidsHub Worksheets
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
+            WizKidsHub is a free educational resource library built for parents, classroom teachers, and home-school
+            tutors who need ready-to-print practice material for children in Grades 1 through 5. Every worksheet on the
+            site is designed by educators, reviewed for age-appropriateness, and provided as a high-resolution PDF that
+            prints cleanly on standard letter or A4 paper. There is no subscription, no paywall, no account creation,
+            and no email required — you click a worksheet, you download it, you print it.
+          </p>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
+            Our library currently covers the three subjects that matter most in early primary education: Mathematics,
+            English Language Arts, and Science. Within Math, you will find worksheets on number sense, addition,
+            subtraction, multiplication tables, fractions, geometry, measurement, time, and money — each broken down by
+            grade so a Grade 2 child practising single-digit addition is not handed a Grade 5 fractions sheet. Within
+            English, we cover phonics, sight words, reading comprehension, grammar, punctuation, vocabulary building,
+            and creative writing prompts. Within Science, worksheets explore living things, plants and animals, the
+            human body, weather, materials, forces, and the solar system, all written at a level the child can read
+            independently.
+          </p>
+          <h3 className="text-2xl font-semibold text-foreground mt-8 mb-4 font-heading">Who this site is for</h3>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
+            <strong>Parents</strong> use WizKidsHub to supplement what their child is learning at school — a Grade 3
+            parent whose child is struggling with multiplication tables can download ten different worksheets on that
+            exact topic in under a minute. <strong>Teachers</strong> use the packs to build worksheet bundles for homework,
+            substitute-teacher folders, or rainy-day classroom activities without paying a monthly subscription to
+            another teaching-resources site. <strong>Tutors and homeschool families</strong> rely on the curriculum-aligned
+            structure (Grade → Subject → Topic) to plan a full year of practice without piecing material together
+            from a dozen different sources.
+          </p>
+          <h3 className="text-2xl font-semibold text-foreground mt-8 mb-4 font-heading">How worksheets are organised</h3>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
+            Every printable on the site lives at three coordinates: the <em>grade</em> (1 through 5), the <em>subject</em>
+            (Math, English, Science), and the <em>topic</em> (e.g. "two-digit subtraction", "long vowels", "states of
+            matter"). You can browse by grade from the homepage, drill into a subject, then pick the specific topic
+            your child needs to practise. If you already know what you are looking for, the search bar at the top of
+            every page accepts plain-language queries like "grade 4 fractions" or "phonics worksheets" and returns
+            matching PDFs ranked by relevance.
+          </p>
+          <h3 className="text-2xl font-semibold text-foreground mt-8 mb-4 font-heading">Why printable worksheets still matter</h3>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
+            Despite the rise of educational apps and online quiz platforms, written practice on paper remains one of
+            the most effective ways for primary-school children to consolidate what they have learned. Writing
+            answers by hand engages motor memory, slows the child down enough to think about each problem, and
+            removes the dopamine-driven distractions that come with screens. A printable worksheet is also the
+            single easiest way for a parent to <em>see</em> exactly which questions their child struggled with — there is
+            no app history to scroll through, just a sheet of paper with circles around the tricky problems. Every
+            WizKidsHub worksheet is built with that workflow in mind: large, legible fonts, generous whitespace for
+            working out, and a single clear topic per page so the child knows what skill they are practising.
+          </p>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+            The site is, and will always remain, free to use. If you would like to support our work, the most
+            valuable thing you can do is share a worksheet that helped your child with another parent or teacher who
+            might find it useful.
+          </p>
+        </div>
+      </section>
+
       {/* Interactive Practice Promotion */}
       <InteractivePracticeBanner variant="homepage" />
-
-      {/* Ad below hero - only renders when AdSense fills the slot */}
-      <AdSense adSlot="1234567890" adFormat="auto" className="w-full" />
 
       {/* Categories Section */}
       <section className="py-16 px-6" aria-labelledby="categories-heading">
@@ -300,13 +358,6 @@ const Home = () => {
               </p>
             </article>
           </div>
-        </div>
-      </section>
-
-      {/* Mid-Page Ad */}
-      <section className="py-8 px-6">
-        <div className="container mx-auto max-w-[1140px]">
-          <AdSense adSlot="2345678901" adFormat="horizontal" className="w-full min-h-[90px]" />
         </div>
       </section>
 
