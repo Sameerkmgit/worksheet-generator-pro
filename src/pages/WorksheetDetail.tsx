@@ -332,6 +332,9 @@ const WorksheetDetail = () => {
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
+        <script type="application/ld+json">
+          {JSON.stringify(faqStructuredData)}
+        </script>
       </Helmet>
       
       {/* Breadcrumbs component injects JSON-LD */}
