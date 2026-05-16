@@ -203,9 +203,24 @@ const WorksheetsBrowser = () => {
   return (
     <>
       <Helmet>
-        <title>Browse All Free Printable Worksheets – Grades 1 to 5 | WizKidsHub</title>
-        <meta name="description" content="Browse and download 715+ free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty. No sign-up required. | WizKidsHub" />
+        <title>Browse Free Printable Worksheets – Grades 1–5 | WizKidsHub</title>
+        <meta name="description" content="Browse and download 715+ free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty. No sign-up required." />
         <link rel="canonical" href="https://www.wizkidshub.com/worksheets" />
+        <meta property="og:title" content="Browse Free Printable Worksheets – Grades 1–5 | WizKidsHub" />
+        <meta property="og:description" content="Browse and download 715+ free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.wizkidshub.com/worksheets" />
+        <meta property="og:site_name" content="WizKidsHub" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Free Printable Worksheets for Grades 1–5",
+            description: "Browse and download free printable worksheets for Grades 1–5 across Math, English, Science, and Computer Science.",
+            url: "https://www.wizkidshub.com/worksheets",
+            isPartOf: { "@type": "WebSite", name: "WizKidsHub", url: "https://www.wizkidshub.com" },
+          })}
+        </script>
       </Helmet>
       
       {/* Breadcrumbs component injects JSON-LD */}

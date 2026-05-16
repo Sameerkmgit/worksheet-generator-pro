@@ -195,7 +195,7 @@ const Category = () => {
   
   const gradeTitle = gradeTitles[gradeSlug || ""] || `Grade ${gradeNumber}`;
   const pageTitle = `${gradeTitle} Worksheets`;
-  const seoTitle = `${gradeTitle} Worksheets – Free Printable Math, English & Science PDFs | WizKidsHub`;
+  const seoTitle = `${gradeTitle} Worksheets – Free Printable PDFs | WizKidsHub`;
   
   const pageDescription = `Download free ${gradeTitle} printable worksheets in Math, English, and Science. Curriculum-aligned PDFs for home and classroom use.`;
 

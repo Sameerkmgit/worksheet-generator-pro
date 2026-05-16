@@ -123,9 +123,14 @@ const Support = () => {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Contact & Support | WizKidsHub Worksheets</title>
+        <title>Contact & Support | WizKidsHub</title>
         <meta name="description" content="Get in touch with WizKidsHub. Send us your questions, feedback, or suggestions about our educational worksheets." />
         <link rel="canonical" href="https://www.wizkidshub.com/support" />
+        <meta property="og:title" content="Contact & Support | WizKidsHub" />
+        <meta property="og:description" content="Get in touch with WizKidsHub. Send us your questions, feedback, or suggestions about our educational worksheets." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.wizkidshub.com/support" />
+        <meta property="og:site_name" content="WizKidsHub" />
       </Helmet>
 
       <Header />

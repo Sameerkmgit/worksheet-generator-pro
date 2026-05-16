@@ -84,6 +84,11 @@ Deno.serve(async (req) => {
       sitemap += buildUrlEntry(`${SITE_URL}/categories/${grade}`, null, "0.8", "weekly");
     }
 
+    // Assignments landing pages (one per grade)
+    for (const grade of grades) {
+      sitemap += buildUrlEntry(`${SITE_URL}/assignments/${grade}`, null, "0.6", "weekly");
+    }
+
     // Subject pages
     console.log("Fetching worksheet_categories...");
     const { data: categories, error: catError } = await supabase
