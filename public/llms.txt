@@ -1,0 +1,34 @@
+# WizKidsHub
+
+> Free printable worksheets for Grades 1–5 in Math, English, Science, and Computer Science. No sign-up required.
+
+WizKidsHub offers 780+ curriculum-aligned PDF worksheets that parents and teachers can browse, preview, and download for free. Worksheets are organized by grade, subject, and topic, with curated grade-level packs and a learning blog with teaching guides.
+
+## Pages
+
+- [Home](/): Overview of free printable worksheets for Grades 1–5.
+- [Browse Worksheets](/worksheets): Searchable library of all printable worksheets, filterable by grade, subject, and difficulty.
+- [Worksheet Packs](/packs): Curated PDF packs (10 worksheets each) by grade.
+- [About](/about): Mission, team, and how WizKidsHub is built.
+- [Blog](/blog): Learning tips and teaching guides for parents and educators.
+- [Support](/support): Contact form for questions and feedback.
+- [Disclaimer](/disclaimer): Site disclaimer.
+- [Privacy Policy](/privacy-policy): How we handle data.
+- [Terms of Service](/terms-of-service): Terms governing site use.
+
+## Grades
+
+- [Grade 1 Worksheets](/categories/grade-1)
+- [Grade 2 Worksheets](/categories/grade-2)
+- [Grade 3 Worksheets](/categories/grade-3)
+- [Grade 4 Worksheets](/categories/grade-4)
+- [Grade 5 Worksheets](/categories/grade-5)
+
+## Optional
+
+- [Blog: Grade 1 Addition at Home](/blog/grade-1-addition-at-home)
+- [Blog: Top English Worksheets for Grade 2](/blog/top-english-worksheets-grade-2)
+- [Blog: Printable vs Screen Time](/blog/printable-vs-screen-time)
+- [Blog: WizKidsHub in the Classroom](/blog/wizkidshub-in-classroom)
+- [Blog: Grade 3 Science – Plants & Animals](/blog/grade-3-science-plants-animals)
+- [Blog: Building Math Confidence in Grades 4–5](/blog/math-confidence-grade-4-5)

@@ -24,12 +24,34 @@ const Blog = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>Learning Tips & Blog – Free Worksheet Guides for Parents & Teachers | WizKidsHub</title>
+        <title>Learning Tips & Worksheet Guides | WizKidsHub Blog</title>
         <meta
           name="description"
-          content="Read learning tips, teaching strategies, and worksheet guides for parents and teachers. Practical advice for helping Grade 1–5 students succeed in Math, English, and Science."
+          content="Learning tips, teaching strategies, and worksheet guides for parents and teachers helping Grade 1–5 students in Math, English, and Science."
         />
         <link rel="canonical" href="https://www.wizkidshub.com/blog" />
+        <meta property="og:title" content="Learning Tips & Worksheet Guides | WizKidsHub Blog" />
+        <meta property="og:description" content="Learning tips, teaching strategies, and worksheet guides for parents and teachers of Grade 1–5 students." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.wizkidshub.com/blog" />
+        <meta property="og:site_name" content="WizKidsHub" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            name: "WizKidsHub Learning Tips & Blog",
+            description: "Learning tips, teaching strategies, and worksheet guides for parents and teachers of Grade 1–5 students.",
+            url: "https://www.wizkidshub.com/blog",
+            blogPost: blogArticles.map((a) => ({
+              "@type": "BlogPosting",
+              headline: a.title,
+              url: `https://www.wizkidshub.com/blog/${a.slug}`,
+              datePublished: a.date,
+              articleSection: a.category,
+              description: a.summary,
+            })),
+          })}
+        </script>
       </Helmet>
 
       <Breadcrumbs items={breadcrumbItems} className="hidden" />
