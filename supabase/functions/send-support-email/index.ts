@@ -28,21 +28,29 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Received support email request:", { email, name, subject, pageUrl });
 
     // Build the email content
-    const emailSubject = subject ? `Support: ${subject}` : "New Support Message";
+    const esc = (s: string) =>
+      String(s ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    const emailSubject = subject ? `Support: ${esc(subject)}` : "New Support Message";
     const senderName = name || "Anonymous";
-    
+
     const htmlContent = `
       <h2>New Support Message from WizKidsHub</h2>
-      <p><strong>From:</strong> ${senderName} (${email})</p>
-      ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ""}
-      ${pageUrl ? `<p><strong>Page URL:</strong> ${pageUrl}</p>` : ""}
+      <p><strong>From:</strong> ${esc(senderName)} (${esc(email)})</p>
+      ${subject ? `<p><strong>Subject:</strong> ${esc(subject)}</p>` : ""}
+      ${pageUrl ? `<p><strong>Page URL:</strong> ${esc(pageUrl)}</p>` : ""}
       <hr />
       <h3>Message:</h3>
-      <p style="white-space: pre-wrap;">${message}</p>
+      <p style="white-space: pre-wrap;">${esc(message)}</p>
       <hr />
       <p style="color: #666; font-size: 12px;">
         This message was sent via the WizKidsHub support form.
-        Reply directly to this email to respond to ${email}.
+        Reply directly to this email to respond to ${esc(email)}.
       </p>
     `;
 
