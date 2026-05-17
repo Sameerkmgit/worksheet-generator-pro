@@ -778,7 +778,7 @@ export const getWorksheetsByCategoryId = async (categoryId: string): Promise<Wor
     return [];
   }
 
-  return data.map(mapWorksheetFromDB);
+  return sortWorksheetsNatural(data.map(mapWorksheetFromDB));
 };
 
 // Default categories
