@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Upload, FileText, CheckCircle, Loader2 } from "lucide-react";
+import { isAdminAuthenticated } from "@/lib/worksheetStorage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
