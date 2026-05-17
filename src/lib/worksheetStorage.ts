@@ -462,7 +462,7 @@ export const getWorksheetsBySubject = async (subject: string): Promise<Worksheet
     return [];
   }
 
-  return (data || []).map(mapWorksheetFromDB);
+  return sortWorksheetsNatural((data || []).map(mapWorksheetFromDB));
 };
 
 // Get worksheets by grade and subject (excluding archived)
