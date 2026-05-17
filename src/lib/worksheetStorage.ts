@@ -409,7 +409,7 @@ export const getAllWorksheets = async (): Promise<WorksheetData[]> => {
     return [];
   }
 
-  return (data || []).map(mapWorksheetFromDB);
+  return sortWorksheetsNatural((data || []).map(mapWorksheetFromDB));
 };
 
 // Fetch worksheet by ID
