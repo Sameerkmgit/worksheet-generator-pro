@@ -35,6 +35,13 @@ const SUBJECT_LABELS: Record<string, string> = {
 };
 
 const AdminUpload = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    (async () => {
+      const ok = await isAdminAuthenticated();
+      if (!ok) navigate("/dashboard-secure-2025");
+    })();
+  }, [navigate]);
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [titleManuallyEdited, setTitleManuallyEdited] = useState(false);
