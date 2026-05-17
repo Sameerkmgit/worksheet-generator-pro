@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Upload, FileText, CheckCircle, Loader2 } from "lucide-react";
+import { isAdminAuthenticated } from "@/lib/worksheetStorage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,6 +35,13 @@ const SUBJECT_LABELS: Record<string, string> = {
 };
 
 const AdminUpload = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    (async () => {
+      const ok = await isAdminAuthenticated();
+      if (!ok) navigate("/dashboard-secure-2025");
+    })();
+  }, [navigate]);
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [titleManuallyEdited, setTitleManuallyEdited] = useState(false);
