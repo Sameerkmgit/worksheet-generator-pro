@@ -3,6 +3,21 @@ import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
 import { toTitleCase } from '@/lib/utils';
 
+// Natural sort worksheets by the trailing "Worksheet N" number in their title (ascending).
+// Items without a number fall back to lexicographic order at the end.
+export const sortWorksheetsNatural = <T extends { title?: string | null }>(items: T[]): T[] => {
+  const numFor = (t?: string | null) => {
+    if (!t) return Number.POSITIVE_INFINITY;
+    const m = t.match(/worksheet\s*#?\s*(\d+)/i) || t.match(/(\d+)(?!.*\d)/);
+    return m ? parseInt(m[1], 10) : Number.POSITIVE_INFINITY;
+  };
+  return [...items].sort((a, b) => {
+    const na = numFor(a.title), nb = numFor(b.title);
+    if (na !== nb) return na - nb;
+    return (a.title || '').localeCompare(b.title || '', undefined, { numeric: true });
+  });
+};
+
 // Validation schema for worksheet data
 const worksheetSchema = z.object({
   title: z.string().trim().min(1, "Title is required").max(200, "Title must be less than 200 characters"),
@@ -394,7 +409,7 @@ export const getAllWorksheets = async (): Promise<WorksheetData[]> => {
     return [];
   }
 
-  return (data || []).map(mapWorksheetFromDB);
+  return sortWorksheetsNatural((data || []).map(mapWorksheetFromDB));
 };
 
 // Fetch worksheet by ID
@@ -430,7 +445,7 @@ export const getWorksheetsByGrade = async (grade: string): Promise<WorksheetData
     return [];
   }
 
-  return (data || []).map(mapWorksheetFromDB);
+  return sortWorksheetsNatural((data || []).map(mapWorksheetFromDB));
 };
 
 // Get worksheets by subject (excluding archived)
@@ -447,7 +462,7 @@ export const getWorksheetsBySubject = async (subject: string): Promise<Worksheet
     return [];
   }
 
-  return (data || []).map(mapWorksheetFromDB);
+  return sortWorksheetsNatural((data || []).map(mapWorksheetFromDB));
 };
 
 // Get worksheets by grade and subject (excluding archived)
@@ -471,7 +486,7 @@ export const getWorksheetsByGradeAndSubject = async (
     return [];
   }
 
-  return (data || []).map(mapWorksheetFromDB);
+  return sortWorksheetsNatural((data || []).map(mapWorksheetFromDB));
 };
 
 // Create a new worksheet
@@ -763,7 +778,7 @@ export const getWorksheetsByCategoryId = async (categoryId: string): Promise<Wor
     return [];
   }
 
-  return data.map(mapWorksheetFromDB);
+  return sortWorksheetsNatural(data.map(mapWorksheetFromDB));
 };
 
 // Default categories
@@ -991,5 +1006,5 @@ export const getWorksheetsBySubcategoryId = async (subcategoryId: string): Promi
     return [];
   }
 
-  return data.map(mapWorksheetFromDB);
+  return sortWorksheetsNatural(data.map(mapWorksheetFromDB));
 };
