@@ -486,7 +486,7 @@ export const getWorksheetsByGradeAndSubject = async (
     return [];
   }
 
-  return (data || []).map(mapWorksheetFromDB);
+  return sortWorksheetsNatural((data || []).map(mapWorksheetFromDB));
 };
 
 // Create a new worksheet
