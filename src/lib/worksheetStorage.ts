@@ -1006,5 +1006,5 @@ export const getWorksheetsBySubcategoryId = async (subcategoryId: string): Promi
     return [];
   }
 
-  return data.map(mapWorksheetFromDB);
+  return sortWorksheetsNatural(data.map(mapWorksheetFromDB));
 };
