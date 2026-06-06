@@ -30,6 +30,117 @@ interface SeoRecord {
   meta_description: string | null;
 }
 
+interface StaticSeoPage {
+  path: string;
+  title: string;
+  description: string;
+  heading: string;
+  sections: Array<{ heading: string; body: string }>;
+}
+
+const STATIC_SEO_PAGES: StaticSeoPage[] = [
+  {
+    path: "/",
+    title: "Free Printable Worksheets for Grades 1-5 | WizKidsHub",
+    description: "Download free printable Math, English, Science, and Computer Science worksheets for Grades 1 to 5. No sign-up required.",
+    heading: "Free Printable Worksheets for Grades 1-5",
+    sections: [
+      {
+        heading: "Printable practice for home and classroom",
+        body: "WizKidsHub provides free educational worksheets for primary school students. Parents and teachers can browse by grade, subject, and topic to find printable PDF practice for everyday learning.",
+      },
+      {
+        heading: "Organized by grade and subject",
+        body: "The library includes Math, English, Science, Computer Science, and assignment resources for Grades 1 through 5, with clear paths to worksheet details and grade collections.",
+      },
+    ],
+  },
+  {
+    path: "/worksheets",
+    title: "Browse Free Printable Worksheets - Grades 1-5 | WizKidsHub",
+    description: "Browse free printable worksheets for Grades 1-5. Filter by grade, subject, and topic to find PDF practice for kids.",
+    heading: "Browse Free Printable Worksheets",
+    sections: [
+      {
+        heading: "Worksheet browser",
+        body: "Use the worksheet browser to explore printable learning resources by grade, subject, difficulty, and keyword. Each result links to a worksheet detail page with more information.",
+      },
+    ],
+  },
+  {
+    path: "/packs",
+    title: "Free Worksheet Packs PDF for Grades 1-5 | WizKidsHub",
+    description: "Download free worksheet packs for Grades 1-5. Each pack groups carefully selected printable worksheets in PDF format.",
+    heading: "Free Worksheet Packs",
+    sections: [
+      {
+        heading: "Curated printable packs",
+        body: "Worksheet packs group selected PDFs by grade so parents and teachers can quickly download a focused set of practice materials after choosing a pack.",
+      },
+    ],
+  },
+  {
+    path: "/blog",
+    title: "Learning Tips & Worksheet Guides | WizKidsHub Blog",
+    description: "Learning tips, teaching strategies, and worksheet guides for parents and teachers helping Grade 1-5 students.",
+    heading: "Learning Tips & Blog",
+    sections: [
+      {
+        heading: "Guides for parents and teachers",
+        body: "The WizKidsHub blog shares practical learning tips, worksheet ideas, and teaching guidance for Math, English, Science, and early grade practice.",
+      },
+    ],
+  },
+  {
+    path: "/about",
+    title: "About Us - Free Printable Worksheets | WizKidsHub",
+    description: "Learn about WizKidsHub, a free printable worksheet library for Grades 1-5 covering Math, English, Science, and Computer Science.",
+    heading: "About WizKidsHub",
+    sections: [
+      {
+        heading: "Our purpose",
+        body: "WizKidsHub helps families, tutors, and teachers find free printable worksheets for primary school practice without requiring account registration.",
+      },
+    ],
+  },
+  {
+    path: "/support",
+    title: "Contact & Support | WizKidsHub",
+    description: "Contact WizKidsHub with worksheet questions, feedback, or support requests about free printable educational resources.",
+    heading: "Contact & Support",
+    sections: [
+      {
+        heading: "Get in touch",
+        body: "The support page gives visitors a clear way to contact WizKidsHub about worksheet resources, feedback, and website questions.",
+      },
+    ],
+  },
+  {
+    path: "/privacy-policy",
+    title: "Privacy Policy | WizKidsHub",
+    description: "Read the WizKidsHub privacy policy, including information about cookies, analytics, and third-party advertising.",
+    heading: "Privacy Policy",
+    sections: [
+      {
+        heading: "Privacy and advertising",
+        body: "The privacy policy explains how WizKidsHub uses basic website data, cookies, analytics, and third-party advertising services including Google AdSense.",
+      },
+    ],
+  },
+  {
+    path: "/terms-of-service",
+    title: "Terms of Service | WizKidsHub",
+    description: "Read the WizKidsHub terms of service for using free printable educational worksheets and website materials.",
+    heading: "Terms of Service",
+    sections: [
+      {
+        heading: "Using WizKidsHub",
+        body: "The terms explain permitted use of WizKidsHub worksheet resources, including personal, home, and classroom use of printable materials.",
+      },
+    ],
+  },
+];
+
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, "&amp;")
@@ -40,6 +151,21 @@ function escapeHtml(text: string): string {
 
 function toTitleCase(str: string): string {
   return str.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function buildStaticSeoHtml(page: StaticSeoPage): string {
+  const parts: string[] = [];
+  parts.push(`<article data-seo-prerender="true" style="max-width:900px;margin:0 auto;padding:2rem 1rem;font-family:system-ui,sans-serif;color:#333">`);
+  parts.push(`<h1>${escapeHtml(page.heading)}</h1>`);
+  parts.push(`<p>${escapeHtml(page.description)}</p>`);
+
+  for (const section of page.sections) {
+    parts.push(`<h2>${escapeHtml(section.heading)}</h2>`);
+    parts.push(`<p>${escapeHtml(section.body)}</p>`);
+  }
+
+  parts.push(`</article>`);
+  return parts.join("\n");
 }
 
 function buildSeoHtml(record: SeoRecord): string {
@@ -142,6 +268,68 @@ function buildJsonLd(record: SeoRecord, canonicalUrl: string): string {
   return `<script type="application/ld+json">${JSON.stringify(schema)}</script>`;
 }
 
+function buildStaticJsonLd(page: StaticSeoPage, canonicalUrl: string): string {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": page.path === "/blog" ? "Blog" : "WebPage",
+    name: page.heading,
+    description: page.description,
+    url: canonicalUrl,
+    isPartOf: { "@type": "WebSite", name: "WizKidsHub", url: SITE_URL },
+  };
+
+  return `<script type="application/ld+json">${JSON.stringify(schema)}</script>`;
+}
+
+function writeRouteHtml(distDir: string, routePath: string, html: string) {
+  const filePath = routePath === "/"
+    ? path.join(distDir, "index.html")
+    : path.join(distDir, routePath, "index.html");
+  const dir = path.dirname(filePath);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(filePath, html, "utf-8");
+}
+
+function injectHtml(baseHtml: string, metaTags: string, jsonLd: string, seoBlock: string): string {
+  let html = baseHtml;
+  html = html.replace(/<title>.*?<\/title>/, metaTags);
+  html = html.replace("</head>", `    ${jsonLd}\n  </head>`);
+  html = html.replace('<div id="root"></div>', `<div id="root">${seoBlock}</div>`);
+  return html;
+}
+
+function generateStaticPages(distDir: string, baseHtml: string) {
+  for (const page of STATIC_SEO_PAGES) {
+    const canonicalUrl = `${SITE_URL}${page.path === "/" ? "" : page.path}`;
+    const metaTags = buildMetaTags(
+      {
+        page_path: page.path,
+        page_type: "static",
+        grade: "",
+        subject: "",
+        topic_slug: null,
+        intro: null,
+        key_skills_json: null,
+        example_questions_json: null,
+        how_to_use: null,
+        what_kids_learn_json: null,
+        practice_tips: null,
+        meta_title: page.title,
+        meta_description: page.description,
+      },
+      canonicalUrl
+    );
+    const html = injectHtml(
+      baseHtml,
+      metaTags,
+      buildStaticJsonLd(page, canonicalUrl),
+      buildStaticSeoHtml(page)
+    );
+    writeRouteHtml(distDir, page.path, html);
+    console.log(`  static ${page.path === "/" ? "/index.html" : `${page.path}/index.html`}`);
+  }
+}
+
 export default function seoInjectPlugin(): Plugin {
   return {
     name: "vite-plugin-seo-inject",
@@ -149,6 +337,12 @@ export default function seoInjectPlugin(): Plugin {
     async closeBundle() {
       console.log("📍 SEO inject: fetching overrides...");
       try {
+        const distDir = path.resolve(process.cwd(), "dist");
+        const baseHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf-8");
+
+        console.log(`SEO inject: generating ${STATIC_SEO_PAGES.length} static public pages`);
+        generateStaticPages(distDir, baseHtml);
+
         const res = await fetch(
           `${SUPABASE_URL}/rest/v1/seo_page_overrides?is_active=eq.true&select=*`,
           {
@@ -169,12 +363,8 @@ export default function seoInjectPlugin(): Plugin {
 
         if (records.length === 0) return;
 
-        const distDir = path.resolve(process.cwd(), "dist");
-        const baseHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf-8");
-
         for (const record of records) {
           const routePath = record.page_path; // e.g. /categories/grade-1/math
-          const filePath = path.join(distDir, routePath, "index.html");
           const canonicalUrl = `${SITE_URL}${routePath}`;
 
           // Build SEO content
@@ -183,27 +373,10 @@ export default function seoInjectPlugin(): Plugin {
           const jsonLd = buildJsonLd(record, canonicalUrl);
 
           // Inject into HTML
-          let html = baseHtml;
-
-          // Replace the static <title> in head with page-specific meta
-          html = html.replace(
-            /<title>.*?<\/title>/,
-            metaTags
-          );
-
-          // Inject JSON-LD before </head>
-          html = html.replace("</head>", `    ${jsonLd}\n  </head>`);
-
-          // Inject SEO content inside <div id="root">
-          html = html.replace(
-            '<div id="root"></div>',
-            `<div id="root">${seoBlock}</div>`
-          );
+          const html = injectHtml(baseHtml, metaTags, jsonLd, seoBlock);
 
           // Write the file
-          const dir = path.dirname(filePath);
-          fs.mkdirSync(dir, { recursive: true });
-          fs.writeFileSync(filePath, html, "utf-8");
+          writeRouteHtml(distDir, routePath, html);
           console.log(`  ✅ ${routePath}/index.html`);
         }
 

@@ -83,12 +83,11 @@ const App = () => {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/support" element={<Support />} />
-            <Route path="/contact" element={<Support />} />
+            <Route path="/contact" element={<Navigate to="/support" replace />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogArticle />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
 
             {/* ADMIN ROUTES */}
             <Route path="/admin" element={<Navigate to="/admin/login" replace />} />

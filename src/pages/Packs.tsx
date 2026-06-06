@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Download, Package, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
@@ -16,7 +15,6 @@ import {
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 type PackCard = {
@@ -30,16 +28,11 @@ type PackCard = {
 };
 
 const Packs = () => {
-  const { toast } = useToast();
-
   const [packs, setPacks] = useState<PackCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [selectedPack, setSelectedPack] = useState<PackCard | null>(null);
-  const [email, setEmail] = useState("");
-  const [sending, setSending] = useState(false);
-  const [sendResult, setSendResult] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
   useEffect(() => {
     const loadPacks = async () => {
@@ -72,57 +65,9 @@ const Packs = () => {
 
   const getPackDownloadUrl = (grade: number) => `/downloads/grade-${grade}-pack`;
 
-  const handleSend = async (pack: PackCard) => {
-    console.log("[Pack Send] click", { packId: pack.pack_id, slug: pack.slug, email });
-    setSendResult(null);
-
-    // Validate email if provided
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setSendResult({ type: "error", message: "Please enter a valid email address." });
-      return;
-    }
-
-    setSending(true);
-
-    try {
-      if (email) {
-        // Attempt email delivery via edge function
-        console.log("[Pack Send] invoking send-support-email for pack delivery");
-        const { data, error: fnError } = await supabase.functions.invoke("send-support-email", {
-          body: {
-            email,
-            name: "Pack Request",
-            subject: `Pack Download: ${pack.title}`,
-            message: `User requested ${pack.title} (Grade ${pack.grade}) to be sent to ${email}.\n\nDirect download: https://www.wizkidshub.com/downloads/grade-${pack.grade}-pack`,
-          },
-        });
-        console.log("[Pack Send] edge function response:", data, fnError);
-
-        if (fnError) throw fnError;
-
-        toast({ title: "Email sent!", description: `We've sent ${pack.title} details to ${email}.` });
-        setSendResult({ type: "success", message: `Email sent to ${email}. You can also download directly below.` });
-      } else {
-        // No email — just trigger download
-        console.log("[Pack Send] no email, triggering direct download");
-        toast({ title: "Downloading pack…", description: `Starting download for ${pack.title}.` });
-        setSendResult({ type: "success", message: "Your download should start shortly." });
-        window.open(getPackDownloadUrl(pack.grade), "_blank", "noopener,noreferrer");
-      }
-    } catch (err: any) {
-      console.error("[Pack Send] failure:", err);
-      const msg = err?.message || "Something went wrong. Use the download link below.";
-      toast({ title: "Send failed", description: msg, variant: "destructive" });
-      setSendResult({ type: "error", message: msg });
-    } finally {
-      setSending(false);
-    }
-  };
 
   const handleDialogOpenChange = (open: boolean) => {
     if (!open) {
-      setEmail("");
-      setSendResult(null);
       setSelectedPack(null);
     }
   };
@@ -273,7 +218,7 @@ const Packs = () => {
                         <Button asChild className="flex-1">
                           <a href={getPackDownloadUrl(pack.grade)}>
                             <Download className="mr-2 h-4 w-4" />
-                            Download Now
+                            Download Pack
                           </a>
                         </Button>
 
@@ -309,51 +254,10 @@ const Packs = () => {
                             </div>
 
                             <div className="border-t pt-4 space-y-3">
-                              <p className="text-sm text-muted-foreground">
-                                Enter your email to receive this pack, or leave blank to download directly:
-                              </p>
-                              <div className="flex gap-2">
-                                <Input
-                                  type="email"
-                                  placeholder="your@email.com (optional)"
-                                  value={email}
-                                  onChange={(e) => {
-                                    setEmail(e.target.value);
-                                    setSendResult(null);
-                                  }}
-                                  disabled={sending}
-                                />
-                                <Button
-                                  onClick={() => pack && handleSend(pack)}
-                                  disabled={sending}
-                                >
-                                  {sending ? (
-                                    <>
-                                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                      Sending…
-                                    </>
-                                  ) : email ? "Send" : "Download"}
-                                </Button>
-                              </div>
-
-                              {sendResult && (
-                                <div className={`text-sm flex items-start gap-2 ${
-                                  sendResult.type === "success" ? "text-green-600" : "text-red-600"
-                                }`}>
-                                  {sendResult.type === "success" ? (
-                                    <CheckCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                                  ) : (
-                                    <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                                  )}
-                                  <span>{sendResult.message}</span>
-                                </div>
-                              )}
-
-                              {/* Always show direct download fallback */}
                               <Button asChild variant="outline" className="w-full">
                                 <a href={getPackDownloadUrl(pack.grade)}>
                                   <Download className="mr-2 h-4 w-4" />
-                                  Direct Download (PDF)
+                                  Download Pack
                                 </a>
                               </Button>
                             </div>
