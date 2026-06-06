@@ -70,7 +70,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:underline transition-opacity">
+                <Link to="/support" className="hover:underline transition-opacity">
                   Contact Us
                 </Link>
               </li>

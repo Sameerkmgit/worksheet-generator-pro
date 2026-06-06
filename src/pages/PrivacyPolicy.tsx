@@ -51,9 +51,9 @@ const PrivacyPolicy = () => {
             <h2 className="text-xl font-semibold text-foreground">Advertising</h2>
             <p>
               Our website may display advertisements from third-party advertising networks, including 
-              Google AdSense. These advertisers may use cookies and similar technologies to serve ads 
-              based on your prior visits to our website or other websites. You can opt out of 
-              personalized advertising by visiting{" "}
+              Google AdSense. Third-party vendors, including Google, may use cookies and similar 
+              technologies to serve ads based on your prior visits to this website or other websites. 
+              You can manage personalized ad settings by visiting{" "}
               <a 
                 href="https://www.google.com/settings/ads" 
                 target="_blank" 

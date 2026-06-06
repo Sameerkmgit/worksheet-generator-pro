@@ -41,6 +41,41 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://www.wizkidshub.com/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/blog/grade-1-addition-at-home</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/blog/top-english-worksheets-grade-2</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/blog/printable-vs-screen-time</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/blog/wizkidshub-in-classroom</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/blog/grade-3-science-plants-animals</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/blog/math-confidence-grade-4-5</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.wizkidshub.com/categories/grade-1</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -64,6 +99,31 @@
     <loc>https://www.wizkidshub.com/categories/grade-5</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/assignments/grade-1</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/assignments/grade-2</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/assignments/grade-3</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/assignments/grade-4</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.wizkidshub.com/assignments/grade-5</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.wizkidshub.com/categories/grade-5/assignments</loc>
