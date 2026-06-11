@@ -346,7 +346,8 @@ const WorksheetDetail = () => {
         {/* Top Banner Ad */}
         <div className="w-full py-4">
           <div className="max-w-7xl mx-auto px-4">
-            <AdSense adSlot="8901234567" adFormat="horizontal" className="w-full min-h-[90px]" />
+            <AdSense adSlot="8901234567" // TODO: Replace with real AdSense slot ID from adsense.google.com
+                      adFormat="horizontal" className="w-full min-h-[90px]" />
           </div>
         </div>
 
@@ -531,7 +532,8 @@ const WorksheetDetail = () => {
 
               {/* Mid-content Ad — high-CTR placement after main content */}
               <div className="w-full">
-                <AdSense adSlot="2345678901" adFormat="auto" className="w-full min-h-[250px]" />
+                <AdSense adSlot="2345678901" // TODO: Replace with real AdSense slot ID from adsense.google.com
+                          adFormat="auto" className="w-full min-h-[250px]" />
               </div>
 
               {/* FAQ Section — always rendered (auto-generated when DB faq is empty) */}
@@ -554,7 +556,8 @@ const WorksheetDetail = () => {
             <div className="space-y-6">
               {/* Sidebar Ad */}
               <div className="sticky top-4">
-                <AdSense adSlot="9012345678" adFormat="vertical" className="min-h-[250px]" />
+                <AdSense adSlot="9012345678" // TODO: Replace with real AdSense slot ID from adsense.google.com
+                          adFormat="vertical" className="min-h-[250px]" />
               </div>
             </div>
           </div>
@@ -627,7 +630,8 @@ const WorksheetDetail = () => {
         {/* Bottom Banner Ad */}
         <div className="w-full py-4">
           <div className="max-w-7xl mx-auto px-4">
-            <AdSense adSlot="0123456789" adFormat="horizontal" className="w-full min-h-[90px]" />
+            <AdSense adSlot="0123456789" // TODO: Replace with real AdSense slot ID from adsense.google.com
+                      adFormat="horizontal" className="w-full min-h-[90px]" />
           </div>
         </div>
       </main>
