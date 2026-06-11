@@ -1,6 +1,4 @@
-// AdSense ad slots are temporarily disabled while the site is under AdSense review.
-// The verification script in index.html stays so Google can crawl the site for approval.
-// After approval, restore this component from git history to re-enable ad slots.
+import { useEffect, useRef } from "react";
 
 interface AdSenseProps {
   adSlot: string;
@@ -9,6 +7,30 @@ interface AdSenseProps {
   className?: string;
 }
 
-const AdSense = (_props: AdSenseProps) => null;
+const AdSense = ({ adSlot, adFormat = "auto", fullWidthResponsive = true, className = "" }: AdSenseProps) => {
+  const adRef = useRef<HTMLModElement>(null);
+
+  useEffect(() => {
+    try {
+      if (typeof window !== "undefined" && adRef.current) {
+        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+      }
+    } catch (e) {
+      console.error("AdSense error:", e);
+    }
+  }, []);
+
+  return (
+    <ins
+      ref={adRef}
+      className={`adsbygoogle ${className}`}
+      style={{ display: "block" }}
+      data-ad-client="ca-pub-3449344307223523"
+      data-ad-slot={adSlot}
+      data-ad-format={adFormat}
+      data-full-width-responsive={fullWidthResponsive ? "true" : "false"}
+    />
+  );
+};
 
 export default AdSense;
