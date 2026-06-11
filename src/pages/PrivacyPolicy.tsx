@@ -15,7 +15,7 @@ const PrivacyPolicy = () => {
         <h1 className="text-3xl font-heading font-bold text-foreground mb-8">Privacy Policy</h1>
         
         <div className="prose prose-slate max-w-none space-y-6 text-muted-foreground">
-          <p className="text-sm">Last updated: January 2025</p>
+          <p className="text-sm">Last updated: June 2026</p>
           
           <section className="space-y-4">
             <h2 className="text-xl font-semibold text-foreground">Introduction</h2>
@@ -50,17 +50,22 @@ const PrivacyPolicy = () => {
           <section className="space-y-4">
             <h2 className="text-xl font-semibold text-foreground">Advertising</h2>
             <p>
-              Our website may display advertisements from third-party advertising networks, including 
-              Google AdSense. Third-party vendors, including Google, may use cookies and similar 
-              technologies to serve ads based on your prior visits to this website or other websites. 
-              You can manage personalized ad settings by visiting{" "}
-              <a 
-                href="https://www.google.com/settings/ads" 
-                target="_blank" 
+              We use Google AdSense to display advertisements. Google may use cookies to serve ads based on your prior visits to this or other websites. To opt out of personalised advertising, visit{" "}
+              <a
+                href="https://www.google.com/settings/ads"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
               >
                 Google Ads Settings
+              </a>. For more information, see{" "}
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Google's Privacy & Terms
               </a>.
             </p>
           </section>
