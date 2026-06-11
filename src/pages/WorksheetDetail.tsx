@@ -556,7 +556,8 @@ const WorksheetDetail = () => {
             <div className="space-y-6">
               {/* Sidebar Ad */}
               <div className="sticky top-4">
-                <AdSense adSlot="9012345678" adFormat="vertical" className="min-h-[250px]" />
+                <AdSense adSlot="9012345678" // TODO: Replace with real AdSense slot ID from adsense.google.com
+                          adFormat="vertical" className="min-h-[250px]" />
               </div>
             </div>
           </div>
