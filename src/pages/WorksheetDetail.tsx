@@ -532,7 +532,8 @@ const WorksheetDetail = () => {
 
               {/* Mid-content Ad — high-CTR placement after main content */}
               <div className="w-full">
-                <AdSense adSlot="2345678901" adFormat="auto" className="w-full min-h-[250px]" />
+                <AdSense adSlot="2345678901" // TODO: Replace with real AdSense slot ID from adsense.google.com
+                          adFormat="auto" className="w-full min-h-[250px]" />
               </div>
 
               {/* FAQ Section — always rendered (auto-generated when DB faq is empty) */}
