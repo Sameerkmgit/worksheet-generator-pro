@@ -630,7 +630,8 @@ const WorksheetDetail = () => {
         {/* Bottom Banner Ad */}
         <div className="w-full py-4">
           <div className="max-w-7xl mx-auto px-4">
-            <AdSense adSlot="0123456789" adFormat="horizontal" className="w-full min-h-[90px]" />
+            <AdSense adSlot="0123456789" // TODO: Replace with real AdSense slot ID from adsense.google.com
+                      adFormat="horizontal" className="w-full min-h-[90px]" />
           </div>
         </div>
       </main>
