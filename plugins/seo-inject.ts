@@ -482,8 +482,13 @@ export default function seoInjectPlugin(): Plugin {
         const distDir = path.resolve(process.cwd(), "dist");
         const baseHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf-8");
 
-        console.log(`SEO inject: generating ${STATIC_SEO_PAGES.length} static public pages`);
-        generateStaticPages(distDir, baseHtml);
+        const pages = [...STATIC_SEO_PAGES, ...buildGradePages()];
+        console.log(`SEO inject: generating ${pages.length} static public pages`);
+        generateStaticPages(distDir, baseHtml, pages);
+
+        await generateWorksheetPages(distDir, baseHtml);
+
+
 
         const res = await fetch(
           `${SUPABASE_URL}/rest/v1/seo_page_overrides?is_active=eq.true&select=*`,
