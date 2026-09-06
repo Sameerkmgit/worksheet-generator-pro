@@ -266,7 +266,7 @@ const WorksheetsBrowser = () => {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2 font-heading">Browse All Worksheets</h1>
-            <p className="text-muted-foreground">715 free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty.</p>
+            <p className="text-muted-foreground">{totalAllCount !== null ? `${totalAllCount} free` : "Free"} printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty.</p>
           </div>
 
           {/* Filters */}
