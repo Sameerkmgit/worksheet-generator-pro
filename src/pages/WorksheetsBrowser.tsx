@@ -392,8 +392,9 @@ const WorksheetsBrowser = () => {
           {!loadingWorksheets && worksheets.length > 0 && (
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground mb-4">
-                Showing {worksheets.length} worksheet{worksheets.length !== 1 ? 's' : ''}
+                Showing {worksheets.length} of {totalCount ?? worksheets.length} worksheet{(totalCount ?? worksheets.length) !== 1 ? 's' : ''}
               </p>
+
               {worksheets.map((worksheet, index) => (
                 <React.Fragment key={worksheet.id}>
                   {index === Math.floor(worksheets.length / 2) && (
