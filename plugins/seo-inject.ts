@@ -139,7 +139,52 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
       },
     ],
   },
+  {
+    path: "/disclaimer",
+    title: "Disclaimer | WizKidsHub",
+    description: "Read the WizKidsHub disclaimer about the educational purpose, accuracy, and intended use of our free printable worksheets.",
+    heading: "Disclaimer",
+    sections: [
+      {
+        heading: "Educational purpose",
+        body: "WizKidsHub worksheets are supplementary practice materials. They support classroom teaching and home learning but are not a replacement for a formal school curriculum.",
+      },
+      {
+        heading: "Accuracy and suitability",
+        body: "Content is prepared with care, but parents and educators should review each worksheet for accuracy and suitability before giving it to a child.",
+      },
+    ],
+  },
 ];
+
+// Grade collection pages: /categories/grade-1 ... /categories/grade-5
+const GRADE_INTROS: Record<string, string> = {
+  "1": "Grade 1 worksheets build early number sense, phonics, handwriting, and first science observations through short, focused printable practice.",
+  "2": "Grade 2 worksheets strengthen addition and subtraction with regrouping, reading fluency, paragraph writing, and hands-on science topics.",
+  "3": "Grade 3 worksheets cover multiplication, division, fractions, reading comprehension, essay basics, and guided science investigations.",
+  "4": "Grade 4 worksheets practise multi-digit multiplication and division, fractions and decimals, longer writing tasks, and energy and body science.",
+  "5": "Grade 5 worksheets prepare students for middle school with fraction and decimal operations, literary analysis, and space and matter science.",
+};
+
+function buildGradePages(): StaticSeoPage[] {
+  return ["1", "2", "3", "4", "5"].map((g) => ({
+    path: `/categories/grade-${g}`,
+    title: `Grade ${g} Worksheets – Free Printable PDFs | WizKidsHub`,
+    description: `Download free Grade ${g} printable worksheets in Math, English, and Science. Curriculum-aligned PDFs for home and classroom use.`,
+    heading: `Grade ${g} Worksheets`,
+    sections: [
+      {
+        heading: `What Grade ${g} students learn`,
+        body: GRADE_INTROS[g],
+      },
+      {
+        heading: "Browse by subject",
+        body: `Grade ${g} worksheets are organised into Math, English, Science, Computer Science, and Assignments collections, each with topic pages and printable PDF worksheets.`,
+      },
+    ],
+  }));
+}
+
 
 function escapeHtml(text: string): string {
   return text
@@ -298,8 +343,8 @@ function injectHtml(baseHtml: string, metaTags: string, jsonLd: string, seoBlock
   return html;
 }
 
-function generateStaticPages(distDir: string, baseHtml: string) {
-  for (const page of STATIC_SEO_PAGES) {
+function generateStaticPages(distDir: string, baseHtml: string, pages: StaticSeoPage[]) {
+  for (const page of pages) {
     const canonicalUrl = `${SITE_URL}${page.path === "/" ? "" : page.path}`;
     const metaTags = buildMetaTags(
       {
@@ -330,6 +375,103 @@ function generateStaticPages(distDir: string, baseHtml: string) {
   }
 }
 
+interface WorksheetRecord {
+  id: string;
+  slug: string | null;
+  title: string | null;
+  grade: string | null;
+  subject: string | null;
+}
+
+async function generateWorksheetPages(distDir: string, baseHtml: string) {
+  const all: WorksheetRecord[] = [];
+  const pageSize = 1000;
+  for (let offset = 0; ; offset += pageSize) {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/worksheets?is_archived=eq.false&select=id,slug,title,grade,subject&order=id.asc&limit=${pageSize}&offset=${offset}`,
+      {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+      }
+    );
+    if (!res.ok) {
+      console.error(`SEO inject: worksheets API returned ${res.status}`);
+      return;
+    }
+    const batch = (await res.json()) as WorksheetRecord[];
+    all.push(...batch);
+    if (batch.length < pageSize) break;
+  }
+
+  let written = 0;
+  for (const w of all) {
+    const rawTitle = (w.title || "").trim();
+    if (!rawTitle) continue;
+    const gradeNum = (w.grade || "").toString().replace("Grade ", "").trim();
+    const subject = toTitleCase((w.subject || "").toString());
+    const topicName = rawTitle.split("–")[0]?.replace(/\([^)]*\)/g, "").trim() || rawTitle;
+    const canonicalPath = `/worksheet/${w.slug || w.id}`;
+    const canonicalUrl = `${SITE_URL}${canonicalPath}`;
+    const title = `${rawTitle} | WizKidsHub`;
+    const description = `Download this free printable ${topicName} worksheet for Grade ${gradeNum} ${subject}. Perfect for practice, homework, and classroom use.`;
+
+    const metaTags = [
+      `<title>${escapeHtml(title)}</title>`,
+      `<meta name="description" content="${escapeHtml(description)}" />`,
+      `<meta property="og:title" content="${escapeHtml(title)}" />`,
+      `<meta property="og:description" content="${escapeHtml(description)}" />`,
+      `<meta property="og:type" content="article" />`,
+      `<meta property="og:url" content="${escapeHtml(canonicalUrl)}" />`,
+      `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`,
+      `<meta name="robots" content="index, follow" />`,
+    ].join("\n    ");
+
+    const jsonLd = `<script type="application/ld+json">${JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "EducationalResource",
+      name: rawTitle,
+      description,
+      educationalLevel: `Grade ${gradeNum}`,
+      learningResourceType: "Worksheet",
+      isAccessibleForFree: true,
+      inLanguage: "en",
+      url: canonicalUrl,
+      about: subject,
+      encodingFormat: "application/pdf",
+      publisher: {
+        "@type": "Organization",
+        name: "WizKidsHub Worksheets",
+        url: SITE_URL,
+      },
+    })}</script>`;
+
+    const seoBlock = [
+      `<article data-seo-prerender="true" style="max-width:900px;margin:0 auto;padding:2rem 1rem;font-family:system-ui,sans-serif;color:#333">`,
+      `<h1>${escapeHtml(rawTitle)}</h1>`,
+      `<p>${escapeHtml(description)}</p>`,
+      `<h2>Grade ${escapeHtml(gradeNum)} ${escapeHtml(subject)} practice</h2>`,
+      `<p>${escapeHtml(`This printable ${topicName} worksheet is part of the free WizKidsHub Grade ${gradeNum} ${subject} collection. Print it at home or in the classroom for extra practice.`)}</p>`,
+      `</article>`,
+    ].join("\n");
+
+    const html = injectHtml(baseHtml, metaTags, jsonLd, seoBlock);
+
+    // Canonical (slug) URL
+    writeRouteHtml(distDir, canonicalPath, html);
+    written++;
+
+    // Numeric-id URL: same head, canonical still points at the slug page
+    if (w.slug && w.id && `/worksheet/${w.id}` !== canonicalPath) {
+      writeRouteHtml(distDir, `/worksheet/${w.id}`, html);
+      written++;
+    }
+  }
+
+  console.log(`SEO inject: ${written} worksheet pages generated`);
+}
+
 export default function seoInjectPlugin(): Plugin {
   return {
     name: "vite-plugin-seo-inject",
@@ -340,8 +482,13 @@ export default function seoInjectPlugin(): Plugin {
         const distDir = path.resolve(process.cwd(), "dist");
         const baseHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf-8");
 
-        console.log(`SEO inject: generating ${STATIC_SEO_PAGES.length} static public pages`);
-        generateStaticPages(distDir, baseHtml);
+        const pages = [...STATIC_SEO_PAGES, ...buildGradePages()];
+        console.log(`SEO inject: generating ${pages.length} static public pages`);
+        generateStaticPages(distDir, baseHtml, pages);
+
+        await generateWorksheetPages(distDir, baseHtml);
+
+
 
         const res = await fetch(
           `${SUPABASE_URL}/rest/v1/seo_page_overrides?is_active=eq.true&select=*`,
