@@ -427,7 +427,27 @@ const WorksheetsBrowser = () => {
                 </Card>
                 </React.Fragment>
               ))}
+
+              {totalCount !== null && worksheets.length < totalCount && (
+                <div className="flex justify-center pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setPage((p) => p + 1)}
+                    disabled={loadingMore}
+                  >
+                    {loadingMore ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Loading…
+                      </>
+                    ) : (
+                      "Load more worksheets"
+                    )}
+                  </Button>
+                </div>
+              )}
             </div>
+
           )}
         </div>
         
