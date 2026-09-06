@@ -50,7 +50,10 @@ const PrivacyPolicy = () => {
           <section className="space-y-4">
             <h2 className="text-xl font-semibold text-foreground">Advertising</h2>
             <p>
-              We use Google AdSense to display advertisements. Google may use cookies to serve ads based on your prior visits to this or other websites. To opt out of personalised advertising, visit{" "}
+              We use Google AdSense and may work with other third-party advertising vendors to display advertisements. Google and other vendors may use cookies to serve ads based on your prior visits to this website or other websites. These cookies help vendors measure ad performance and, where permitted, personalize advertising.
+            </p>
+            <p>
+              You can opt out of personalized advertising through{" "}
               <a
                 href="https://www.google.com/settings/ads"
                 target="_blank"
@@ -58,7 +61,16 @@ const PrivacyPolicy = () => {
                 className="text-primary hover:underline"
               >
                 Google Ads Settings
-              </a>. For more information, see{" "}
+              </a>{" "}
+              or learn about additional industry opt-out choices at{" "}
+              <a
+                href="https://www.aboutads.info"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                AboutAds.info
+              </a>. For more information about Google's data practices, see{" "}
               <a
                 href="https://policies.google.com/privacy"
                 target="_blank"
@@ -73,10 +85,10 @@ const PrivacyPolicy = () => {
           <section className="space-y-4">
             <h2 className="text-xl font-semibold text-foreground">Children's Privacy</h2>
             <p>
-              Our website is designed to provide educational resources for children. We do not 
-              knowingly collect personal information from children under 13 years of age. Our 
-              worksheets can be downloaded freely without providing any personal information. 
-              We encourage parents and guardians to supervise their children's online activities.
+              WizKidsHub provides worksheets for children, but the website is intended to be selected and supervised by parents, guardians, and educators. Visitors can browse, print, and download worksheets without creating a public account or submitting personal information.
+            </p>
+            <p>
+              Consistent with child-privacy and COPPA-friendly practices, we do not knowingly ask children under 13 to provide names, email addresses, precise locations, or other personal information. If a parent or guardian believes a child has submitted personal information through our support channel, please contact us so we can review and delete it where appropriate. We encourage adults to supervise children's use of the internet and our materials.
             </p>
           </section>
 
@@ -94,9 +106,14 @@ const PrivacyPolicy = () => {
           <section className="space-y-4">
             <h2 className="text-xl font-semibold text-foreground">Third-Party Services</h2>
             <p>
-              We may use third-party services for analytics (such as Google Analytics) and 
-              advertising. These services have their own privacy policies and may collect 
-              information about your online activities across different websites.
+              We may use third-party analytics services, including Google Analytics, to understand aggregate website use, such as pages viewed, approximate location, device and browser type, referral source, and time spent on the site. Advertising and analytics providers may receive device identifiers, IP addresses, cookie information, and usage events according to their own privacy policies. WizKidsHub does not receive your payment details and does not sell worksheet downloads.
+            </p>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-xl font-semibold text-foreground">Cookie Choices</h2>
+            <p>
+              Most browsers let you block or delete cookies through their privacy settings. Disabling cookies may affect some website features, but the core worksheet library remains available without registration. Advertising choices made through Google or AboutAds are controlled by those providers and may need to be set separately on each browser or device.
             </p>
           </section>
 
@@ -121,8 +138,8 @@ const PrivacyPolicy = () => {
           <section className="space-y-4">
             <h2 className="text-xl font-semibold text-foreground">Contact Us</h2>
             <p>
-              If you have any questions about this Privacy Policy, please contact us through our 
-              website.
+              If you have a privacy question, request, or concern, contact us through the{" "}
+              <a href="/support" className="text-primary hover:underline">WizKidsHub support page</a>. Please do not include sensitive personal information in your message.
             </p>
           </section>
         </div>

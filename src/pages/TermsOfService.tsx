@@ -43,6 +43,9 @@ const TermsOfService = () => {
               <li>Remove or alter any copyright notices or branding on the worksheets</li>
               <li>Upload our worksheets to other websites without permission</li>
             </ul>
+            <p>
+              No public account or payment is required to access the worksheet library. You are responsible for selecting materials that are suitable for a learner's age, ability, and local educational requirements.
+            </p>
           </section>
 
           <section className="space-y-4">
@@ -61,6 +64,16 @@ const TermsOfService = () => {
               students in Grades 1 through 5. While we strive to provide accurate and helpful 
               content, we make no guarantees about the educational outcomes or suitability for 
               any particular curriculum or learning objective.
+            </p>
+            <p>
+              The materials supplement, rather than replace, instruction from a qualified teacher, school, tutor, or other education professional. Parents and educators should review each worksheet before use and adapt it when necessary.
+            </p>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-xl font-semibold text-foreground">Website Availability And Links</h2>
+            <p>
+              We may update, remove, or reorganize worksheets and website features without notice. Links to third-party websites are provided for convenience; WizKidsHub does not control or endorse their content, availability, or privacy practices.
             </p>
           </section>
 
@@ -116,8 +129,8 @@ const TermsOfService = () => {
           <section className="space-y-4">
             <h2 className="text-xl font-semibold text-foreground">Contact Us</h2>
             <p>
-              If you have any questions about these Terms of Service, please contact us through 
-              our website.
+              If you have questions about these Terms of Service, contact us through the{" "}
+              <a href="/support" className="text-primary hover:underline">WizKidsHub support page</a>.
             </p>
           </section>
         </div>
