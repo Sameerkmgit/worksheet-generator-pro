@@ -149,36 +149,42 @@ const Category = () => {
 
         if (topicsError) {
           console.error("Error fetching topics:", topicsError);
-        } else if (topicsData) {
-          // Get worksheet counts for each subcategory
-          const topicsWithCounts = await Promise.all(
-            topicsData.map(async (topic: any) => {
-              const { count } = await supabase
-                .from("worksheets")
-                .select("*", { count: "exact", head: true })
-                .eq("subcategory_id", topic.id)
-                .eq("is_archived", false);
-              
-              return {
-                id: topic.id,
-                title: topic.title,
-                slug: topic.slug,
-                subject: topic.worksheet_categories?.subject || "",
-                worksheet_count: count || 0,
-                category_title: topic.worksheet_categories?.title || "",
-                image_url: topic.image_url,
-              };
-            })
-          );
-          
-          // Sort by worksheet count and take top 8
-          const sortedTopics = topicsWithCounts
-            .filter(t => t.worksheet_count > 0)
+        } else if (topicsData && topicsData.length > 0) {
+          // Single query for all worksheet counts (avoids one request per topic)
+          const topicIds = topicsData.map((t: any) => t.id);
+          const { data: countRows, error: countError } = await supabase
+            .from("worksheets")
+            .select("subcategory_id")
+            .in("subcategory_id", topicIds)
+            .eq("is_archived", false);
+
+          if (countError) {
+            console.error("Error counting worksheets:", countError);
+          }
+
+          const counts = new Map<string, number>();
+          for (const row of countRows || []) {
+            const key = (row as any).subcategory_id as string;
+            counts.set(key, (counts.get(key) || 0) + 1);
+          }
+
+          const sortedTopics = topicsData
+            .map((topic: any) => ({
+              id: topic.id,
+              title: topic.title,
+              slug: topic.slug,
+              subject: topic.worksheet_categories?.subject || "",
+              worksheet_count: counts.get(topic.id) || 0,
+              category_title: topic.worksheet_categories?.title || "",
+              image_url: topic.image_url,
+            }))
+            .filter((t) => t.worksheet_count > 0)
             .sort((a, b) => b.worksheet_count - a.worksheet_count)
             .slice(0, 8);
-          
+
           setPopularTopics(sortedTopics);
         }
+
       } catch (error) {
         console.error("Error loading data:", error);
       } finally {
