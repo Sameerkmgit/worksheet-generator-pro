@@ -24,10 +24,16 @@ interface Worksheet {
   slug?: string | null;
 }
 
+const PAGE_SIZE = 24;
+
 const WorksheetsBrowser = () => {
   const [grades, setGrades] = useState<string[]>([]);
   const [subjects, setSubjects] = useState<string[]>([]);
   const [worksheets, setWorksheets] = useState<Worksheet[]>([]);
+  const [totalCount, setTotalCount] = useState<number | null>(null);
+  const [totalAllCount, setTotalAllCount] = useState<number | null>(null);
+  const [page, setPage] = useState(0);
+  const [loadingMore, setLoadingMore] = useState(false);
   
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
@@ -49,6 +55,7 @@ const WorksheetsBrowser = () => {
     setSelectedDifficulty(null);
     setSearchTerm("");
   };
+
 
   // Fetch distinct grades on mount
   useEffect(() => {
