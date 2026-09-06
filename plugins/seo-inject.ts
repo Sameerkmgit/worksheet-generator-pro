@@ -343,8 +343,8 @@ function injectHtml(baseHtml: string, metaTags: string, jsonLd: string, seoBlock
   return html;
 }
 
-function generateStaticPages(distDir: string, baseHtml: string) {
-  for (const page of STATIC_SEO_PAGES) {
+function generateStaticPages(distDir: string, baseHtml: string, pages: StaticSeoPage[]) {
+  for (const page of pages) {
     const canonicalUrl = `${SITE_URL}${page.path === "/" ? "" : page.path}`;
     const metaTags = buildMetaTags(
       {
