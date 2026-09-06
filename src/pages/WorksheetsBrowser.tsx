@@ -234,10 +234,10 @@ const WorksheetsBrowser = () => {
     <>
       <Helmet>
         <title>Browse Free Printable Worksheets – Grades 1–5 | WizKidsHub</title>
-        <meta name="description" content="Browse and download 715+ free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty. No sign-up required." />
+        <meta name="description" content="Browse and download hundreds of free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty. No sign-up required." />
         <link rel="canonical" href="https://www.wizkidshub.com/worksheets" />
         <meta property="og:title" content="Browse Free Printable Worksheets – Grades 1–5 | WizKidsHub" />
-        <meta property="og:description" content="Browse and download 715+ free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty." />
+        <meta property="og:description" content="Browse and download hundreds of free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.wizkidshub.com/worksheets" />
         <meta property="og:site_name" content="WizKidsHub" />
