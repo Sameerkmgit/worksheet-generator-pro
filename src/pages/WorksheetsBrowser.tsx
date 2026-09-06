@@ -24,10 +24,16 @@ interface Worksheet {
   slug?: string | null;
 }
 
+const PAGE_SIZE = 24;
+
 const WorksheetsBrowser = () => {
   const [grades, setGrades] = useState<string[]>([]);
   const [subjects, setSubjects] = useState<string[]>([]);
   const [worksheets, setWorksheets] = useState<Worksheet[]>([]);
+  const [totalCount, setTotalCount] = useState<number | null>(null);
+  const [totalAllCount, setTotalAllCount] = useState<number | null>(null);
+  const [page, setPage] = useState(0);
+  const [loadingMore, setLoadingMore] = useState(false);
   
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
@@ -49,6 +55,7 @@ const WorksheetsBrowser = () => {
     setSelectedDifficulty(null);
     setSearchTerm("");
   };
+
 
   // Fetch distinct grades on mount
   useEffect(() => {
@@ -114,18 +121,37 @@ const WorksheetsBrowser = () => {
     fetchSubjects();
   }, [selectedGrade]);
 
-  // Fetch worksheets when filters change
+  // Total worksheet count (unfiltered) for the intro line
+  useEffect(() => {
+    const fetchTotal = async () => {
+      const { count } = await supabase
+        .from("worksheets")
+        .select("id", { count: "exact", head: true })
+        .eq("is_archived", false);
+      if (typeof count === "number") setTotalAllCount(count);
+    };
+    fetchTotal();
+  }, []);
+
+  // Reset to first page whenever filters change
+  useEffect(() => {
+    setPage(0);
+  }, [selectedGrade, selectedSubject, selectedDifficulty, searchTerm]);
+
+  // Fetch worksheets when filters or page change
   useEffect(() => {
     const fetchWorksheets = async () => {
-      setLoadingWorksheets(true);
+      if (page === 0) setLoadingWorksheets(true);
+      else setLoadingMore(true);
       setError(null);
       try {
         let query = supabase
           .from("worksheets")
-          .select("id, grade, subject, title, pdf_url, created_at, slug")
+          .select("id, grade, subject, title, pdf_url, created_at, slug", { count: "exact" })
           .eq("is_archived", false)
           .order("grade", { ascending: true })
-          .order("title", { ascending: true });
+          .order("title", { ascending: true })
+          .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
 
         // Only apply filters if values are selected
         if (selectedGrade) {
@@ -144,20 +170,24 @@ const WorksheetsBrowser = () => {
           query = query.ilike("title", `%${searchTerm.trim()}%`);
         }
 
-        const { data, error: queryError } = await query;
+        const { data, count, error: queryError } = await query;
 
         if (queryError) throw queryError;
 
-        setWorksheets((data as Worksheet[]) || []);
+        const rows = (data as Worksheet[]) || [];
+        setWorksheets((prev) => (page === 0 ? rows : [...prev, ...rows]));
+        if (typeof count === "number") setTotalCount(count);
       } catch (err: any) {
         setError(err.message || "Failed to load worksheets");
       } finally {
         setLoadingWorksheets(false);
+        setLoadingMore(false);
       }
     };
 
     fetchWorksheets();
-  }, [selectedGrade, selectedSubject, selectedDifficulty, searchTerm]);
+  }, [selectedGrade, selectedSubject, selectedDifficulty, searchTerm, page]);
+
 
   const formatDate = (dateString: string) => {
     try {
@@ -204,10 +234,10 @@ const WorksheetsBrowser = () => {
     <>
       <Helmet>
         <title>Browse Free Printable Worksheets – Grades 1–5 | WizKidsHub</title>
-        <meta name="description" content="Browse and download 715+ free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty. No sign-up required." />
+        <meta name="description" content="Browse and download hundreds of free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty. No sign-up required." />
         <link rel="canonical" href="https://www.wizkidshub.com/worksheets" />
         <meta property="og:title" content="Browse Free Printable Worksheets – Grades 1–5 | WizKidsHub" />
-        <meta property="og:description" content="Browse and download 715+ free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty." />
+        <meta property="og:description" content="Browse and download hundreds of free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.wizkidshub.com/worksheets" />
         <meta property="og:site_name" content="WizKidsHub" />
@@ -236,7 +266,7 @@ const WorksheetsBrowser = () => {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2 font-heading">Browse All Worksheets</h1>
-            <p className="text-muted-foreground">715 free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty.</p>
+            <p className="text-muted-foreground">{totalAllCount !== null ? `${totalAllCount} free` : "Free"} printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty.</p>
           </div>
 
           {/* Filters */}
@@ -362,8 +392,9 @@ const WorksheetsBrowser = () => {
           {!loadingWorksheets && worksheets.length > 0 && (
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground mb-4">
-                Showing {worksheets.length} worksheet{worksheets.length !== 1 ? 's' : ''}
+                Showing {worksheets.length} of {totalCount ?? worksheets.length} worksheet{(totalCount ?? worksheets.length) !== 1 ? 's' : ''}
               </p>
+
               {worksheets.map((worksheet, index) => (
                 <React.Fragment key={worksheet.id}>
                   {index === Math.floor(worksheets.length / 2) && (
@@ -396,7 +427,27 @@ const WorksheetsBrowser = () => {
                 </Card>
                 </React.Fragment>
               ))}
+
+              {totalCount !== null && worksheets.length < totalCount && (
+                <div className="flex justify-center pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setPage((p) => p + 1)}
+                    disabled={loadingMore}
+                  >
+                    {loadingMore ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Loading…
+                      </>
+                    ) : (
+                      "Load more worksheets"
+                    )}
+                  </Button>
+                </div>
+              )}
             </div>
+
           )}
         </div>
         

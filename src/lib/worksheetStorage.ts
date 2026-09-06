@@ -149,10 +149,13 @@ export const getWorksheetBySlug = async (slug: string): Promise<WorksheetData | 
     .eq('is_archived', false)
     .maybeSingle();
 
-  if (error || !data) {
+  if (error) {
     console.error(`Error fetching worksheet with slug ${slug}:`, error);
     return null;
   }
+
+  if (!data) return null;
+
 
   return mapWorksheetFromDB(data);
 };
