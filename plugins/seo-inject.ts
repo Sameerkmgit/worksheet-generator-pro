@@ -375,6 +375,103 @@ function generateStaticPages(distDir: string, baseHtml: string, pages: StaticSeo
   }
 }
 
+interface WorksheetRecord {
+  id: string;
+  slug: string | null;
+  title: string | null;
+  grade: string | null;
+  subject: string | null;
+}
+
+async function generateWorksheetPages(distDir: string, baseHtml: string) {
+  const all: WorksheetRecord[] = [];
+  const pageSize = 1000;
+  for (let offset = 0; ; offset += pageSize) {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/worksheets?is_archived=eq.false&select=id,slug,title,grade,subject&order=id.asc&limit=${pageSize}&offset=${offset}`,
+      {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+      }
+    );
+    if (!res.ok) {
+      console.error(`SEO inject: worksheets API returned ${res.status}`);
+      return;
+    }
+    const batch = (await res.json()) as WorksheetRecord[];
+    all.push(...batch);
+    if (batch.length < pageSize) break;
+  }
+
+  let written = 0;
+  for (const w of all) {
+    const rawTitle = (w.title || "").trim();
+    if (!rawTitle) continue;
+    const gradeNum = (w.grade || "").toString().replace("Grade ", "").trim();
+    const subject = toTitleCase((w.subject || "").toString());
+    const topicName = rawTitle.split("–")[0]?.replace(/\([^)]*\)/g, "").trim() || rawTitle;
+    const canonicalPath = `/worksheet/${w.slug || w.id}`;
+    const canonicalUrl = `${SITE_URL}${canonicalPath}`;
+    const title = `${rawTitle} | WizKidsHub`;
+    const description = `Download this free printable ${topicName} worksheet for Grade ${gradeNum} ${subject}. Perfect for practice, homework, and classroom use.`;
+
+    const metaTags = [
+      `<title>${escapeHtml(title)}</title>`,
+      `<meta name="description" content="${escapeHtml(description)}" />`,
+      `<meta property="og:title" content="${escapeHtml(title)}" />`,
+      `<meta property="og:description" content="${escapeHtml(description)}" />`,
+      `<meta property="og:type" content="article" />`,
+      `<meta property="og:url" content="${escapeHtml(canonicalUrl)}" />`,
+      `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`,
+      `<meta name="robots" content="index, follow" />`,
+    ].join("\n    ");
+
+    const jsonLd = `<script type="application/ld+json">${JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "EducationalResource",
+      name: rawTitle,
+      description,
+      educationalLevel: `Grade ${gradeNum}`,
+      learningResourceType: "Worksheet",
+      isAccessibleForFree: true,
+      inLanguage: "en",
+      url: canonicalUrl,
+      about: subject,
+      encodingFormat: "application/pdf",
+      publisher: {
+        "@type": "Organization",
+        name: "WizKidsHub Worksheets",
+        url: SITE_URL,
+      },
+    })}</script>`;
+
+    const seoBlock = [
+      `<article data-seo-prerender="true" style="max-width:900px;margin:0 auto;padding:2rem 1rem;font-family:system-ui,sans-serif;color:#333">`,
+      `<h1>${escapeHtml(rawTitle)}</h1>`,
+      `<p>${escapeHtml(description)}</p>`,
+      `<h2>Grade ${escapeHtml(gradeNum)} ${escapeHtml(subject)} practice</h2>`,
+      `<p>${escapeHtml(`This printable ${topicName} worksheet is part of the free WizKidsHub Grade ${gradeNum} ${subject} collection. Print it at home or in the classroom for extra practice.`)}</p>`,
+      `</article>`,
+    ].join("\n");
+
+    const html = injectHtml(baseHtml, metaTags, jsonLd, seoBlock);
+
+    // Canonical (slug) URL
+    writeRouteHtml(distDir, canonicalPath, html);
+    written++;
+
+    // Numeric-id URL: same head, canonical still points at the slug page
+    if (w.slug && w.id && `/worksheet/${w.id}` !== canonicalPath) {
+      writeRouteHtml(distDir, `/worksheet/${w.id}`, html);
+      written++;
+    }
+  }
+
+  console.log(`SEO inject: ${written} worksheet pages generated`);
+}
+
 export default function seoInjectPlugin(): Plugin {
   return {
     name: "vite-plugin-seo-inject",
