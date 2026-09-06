@@ -139,7 +139,52 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
       },
     ],
   },
+  {
+    path: "/disclaimer",
+    title: "Disclaimer | WizKidsHub",
+    description: "Read the WizKidsHub disclaimer about the educational purpose, accuracy, and intended use of our free printable worksheets.",
+    heading: "Disclaimer",
+    sections: [
+      {
+        heading: "Educational purpose",
+        body: "WizKidsHub worksheets are supplementary practice materials. They support classroom teaching and home learning but are not a replacement for a formal school curriculum.",
+      },
+      {
+        heading: "Accuracy and suitability",
+        body: "Content is prepared with care, but parents and educators should review each worksheet for accuracy and suitability before giving it to a child.",
+      },
+    ],
+  },
 ];
+
+// Grade collection pages: /categories/grade-1 ... /categories/grade-5
+const GRADE_INTROS: Record<string, string> = {
+  "1": "Grade 1 worksheets build early number sense, phonics, handwriting, and first science observations through short, focused printable practice.",
+  "2": "Grade 2 worksheets strengthen addition and subtraction with regrouping, reading fluency, paragraph writing, and hands-on science topics.",
+  "3": "Grade 3 worksheets cover multiplication, division, fractions, reading comprehension, essay basics, and guided science investigations.",
+  "4": "Grade 4 worksheets practise multi-digit multiplication and division, fractions and decimals, longer writing tasks, and energy and body science.",
+  "5": "Grade 5 worksheets prepare students for middle school with fraction and decimal operations, literary analysis, and space and matter science.",
+};
+
+function buildGradePages(): StaticSeoPage[] {
+  return ["1", "2", "3", "4", "5"].map((g) => ({
+    path: `/categories/grade-${g}`,
+    title: `Grade ${g} Worksheets – Free Printable PDFs | WizKidsHub`,
+    description: `Download free Grade ${g} printable worksheets in Math, English, and Science. Curriculum-aligned PDFs for home and classroom use.`,
+    heading: `Grade ${g} Worksheets`,
+    sections: [
+      {
+        heading: `What Grade ${g} students learn`,
+        body: GRADE_INTROS[g],
+      },
+      {
+        heading: "Browse by subject",
+        body: `Grade ${g} worksheets are organised into Math, English, Science, Computer Science, and Assignments collections, each with topic pages and printable PDF worksheets.`,
+      },
+    ],
+  }));
+}
+
 
 function escapeHtml(text: string): string {
   return text
