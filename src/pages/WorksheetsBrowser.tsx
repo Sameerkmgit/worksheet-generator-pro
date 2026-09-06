@@ -121,18 +121,37 @@ const WorksheetsBrowser = () => {
     fetchSubjects();
   }, [selectedGrade]);
 
-  // Fetch worksheets when filters change
+  // Total worksheet count (unfiltered) for the intro line
+  useEffect(() => {
+    const fetchTotal = async () => {
+      const { count } = await supabase
+        .from("worksheets")
+        .select("id", { count: "exact", head: true })
+        .eq("is_archived", false);
+      if (typeof count === "number") setTotalAllCount(count);
+    };
+    fetchTotal();
+  }, []);
+
+  // Reset to first page whenever filters change
+  useEffect(() => {
+    setPage(0);
+  }, [selectedGrade, selectedSubject, selectedDifficulty, searchTerm]);
+
+  // Fetch worksheets when filters or page change
   useEffect(() => {
     const fetchWorksheets = async () => {
-      setLoadingWorksheets(true);
+      if (page === 0) setLoadingWorksheets(true);
+      else setLoadingMore(true);
       setError(null);
       try {
         let query = supabase
           .from("worksheets")
-          .select("id, grade, subject, title, pdf_url, created_at, slug")
+          .select("id, grade, subject, title, pdf_url, created_at, slug", { count: "exact" })
           .eq("is_archived", false)
           .order("grade", { ascending: true })
-          .order("title", { ascending: true });
+          .order("title", { ascending: true })
+          .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
 
         // Only apply filters if values are selected
         if (selectedGrade) {
@@ -151,20 +170,24 @@ const WorksheetsBrowser = () => {
           query = query.ilike("title", `%${searchTerm.trim()}%`);
         }
 
-        const { data, error: queryError } = await query;
+        const { data, count, error: queryError } = await query;
 
         if (queryError) throw queryError;
 
-        setWorksheets((data as Worksheet[]) || []);
+        const rows = (data as Worksheet[]) || [];
+        setWorksheets((prev) => (page === 0 ? rows : [...prev, ...rows]));
+        if (typeof count === "number") setTotalCount(count);
       } catch (err: any) {
         setError(err.message || "Failed to load worksheets");
       } finally {
         setLoadingWorksheets(false);
+        setLoadingMore(false);
       }
     };
 
     fetchWorksheets();
-  }, [selectedGrade, selectedSubject, selectedDifficulty, searchTerm]);
+  }, [selectedGrade, selectedSubject, selectedDifficulty, searchTerm, page]);
+
 
   const formatDate = (dateString: string) => {
     try {
