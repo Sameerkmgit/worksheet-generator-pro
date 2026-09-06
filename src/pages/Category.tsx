@@ -192,12 +192,18 @@ const Category = () => {
       }
     };
 
-    if (gradeNumber) {
-      loadData();
-    } else {
+    if (!gradeNumber) {
       setLoading(false);
+      return;
     }
+
+    loadData();
+
+    // Safety net: never leave the page spinning forever if a request stalls
+    const timeoutId = window.setTimeout(() => setLoading(false), 12000);
+    return () => window.clearTimeout(timeoutId);
   }, [gradeNumber]);
+
   
   const gradeTitle = gradeTitles[gradeSlug || ""] || `Grade ${gradeNumber}`;
   const pageTitle = `${gradeTitle} Worksheets`;
