@@ -91,14 +91,20 @@ export interface CategoryData {
   worksheetCount?: number;
 }
 
-// simple subject-based fallbacks
+// Inline SVG placeholders per subject (no network request, so they can never 404)
+const makePlaceholder = (label: string, from: string, to: string): string => {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${from}"/><stop offset="1" stop-color="${to}"/></linearGradient></defs><rect width="400" height="240" fill="url(#g)"/><text x="200" y="128" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="30" font-weight="700" fill="#ffffff" text-anchor="middle">${label}</text></svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+};
+
 const WORKSHEET_SUBJECT_FALLBACKS: Record<string, string> = {
-  math: "/images/fallback-math.jpg",
-  english: "/images/fallback-english.jpg",
-  science: "/images/fallback-science.jpg",
-  "computer-science": "/images/fallback-computer.jpg",
-  assignments: "/images/fallback-assignments.jpg",
-  default: "/images/fallback-generic.jpg",
+  math: makePlaceholder("Math", "#60a5fa", "#2563eb"),
+  english: makePlaceholder("English", "#f472b6", "#db2777"),
+  science: makePlaceholder("Science", "#34d399", "#059669"),
+  "computer science": makePlaceholder("Computer Science", "#a78bfa", "#7c3aed"),
+  "computer-science": makePlaceholder("Computer Science", "#a78bfa", "#7c3aed"),
+  assignments: makePlaceholder("Assignments", "#fbbf24", "#d97706"),
+  default: makePlaceholder("Worksheet", "#94a3b8", "#475569"),
 };
 
 export const getWorksheetCardImage = (worksheet: WorksheetData): string => {
@@ -106,12 +112,11 @@ export const getWorksheetCardImage = (worksheet: WorksheetData): string => {
   if (worksheet.imageUrl && worksheet.imageUrl.trim() !== "") {
     return worksheet.imageUrl;
   }
-  // 2) otherwise, fall back by subject
-  return (
-    WORKSHEET_SUBJECT_FALLBACKS[worksheet.subject] ||
-    WORKSHEET_SUBJECT_FALLBACKS.default
-  );
+  // 2) otherwise, fall back to a subject-coloured inline placeholder
+  const key = (worksheet.subject || "").trim().toLowerCase();
+  return WORKSHEET_SUBJECT_FALLBACKS[key] || WORKSHEET_SUBJECT_FALLBACKS.default;
 };
+
 
 // Helper to convert DB row to WorksheetData
 const mapWorksheetFromDB = (w: any): WorksheetData => ({
