@@ -8,49 +8,20 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getWorksheetCardImage, WorksheetData } from "@/lib/worksheetStorage";
-import { toTitleCase } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { getWorksheetCardImage, WorksheetData, sortWorksheetsNatural } from "@/lib/worksheetStorage";
+import { toTitleCase, cleanDisplayTitle, toWorksheetUrl } from "@/lib/utils";
 
-// Import all worksheet data from Category page structure
-const allWorksheets = [
-  // Grade 1
-  { id: 3, title: "Introduction to Multiplication", category: "Math", grade: "1", preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=800", keywords: ["multiplication", "math", "multiply"] },
-  { id: 40, title: "Grade 1 Addition Practice - Complete Worksheet", category: "Math", grade: "1", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", keywords: ["addition", "numbers", "practice", "math", "complete"] },
-  { id: 50, title: "Counting & Number Recognition (1-20)", category: "Math", grade: "1", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", keywords: ["counting", "numbers", "recognition", "math"] },
-  { id: 51, title: "Simple Subtraction (1-10)", category: "Math", grade: "1", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", keywords: ["subtraction", "minus", "math"] },
-  { id: 52, title: "Shapes & Patterns", category: "Math", grade: "1", preview: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400", keywords: ["shapes", "patterns", "geometry", "math"] },
-  { id: 53, title: "Comparing Numbers (Greater/Less Than)", category: "Math", grade: "1", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", keywords: ["comparing", "greater", "less", "numbers", "math"] },
-  { id: 20, title: "Alphabet Tracing", category: "English", grade: "1", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", keywords: ["alphabet", "tracing", "letters", "english", "writing"] },
-  { id: 14, title: "Letter Recognition", category: "English", grade: "1", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", keywords: ["letters", "recognition", "alphabet", "english"] },
-  { id: 41, title: "Alphabet Writing Practice (Letters A to M)", category: "English", grade: "1", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", keywords: ["alphabet", "writing", "letters", "english"] },
-  { id: 55, title: "Vowels & Consonants", category: "English", grade: "1", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", keywords: ["vowels", "consonants", "letters", "english"] },
-  { id: 56, title: "CVC Words (Cat, Dog, Sun)", category: "English", grade: "1", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", keywords: ["CVC", "words", "phonics", "reading", "english"] },
-  { id: 57, title: "Rhyming Words", category: "English", grade: "1", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", keywords: ["rhyming", "words", "phonics", "english"] },
-  { id: 58, title: "Simple Sentences", category: "English", grade: "1", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", keywords: ["sentences", "writing", "grammar", "english"] },
-  { id: 59, title: "Sight Words (Dolch List)", category: "English", grade: "1", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", keywords: ["sight words", "dolch", "reading", "english"] },
-  { id: 30, title: "Animal Habitats", category: "Science", grade: "1", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", keywords: ["animals", "habitats", "science", "nature"] },
-  { id: 60, title: "Parts of a Plant", category: "Science", grade: "1", preview: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400", keywords: ["plants", "parts", "science", "nature"] },
-  { id: 200, title: "Introduction to Computers - Digital Literacy Basics", category: "Computer Science", grade: "1", preview: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400", keywords: ["computer", "digital", "literacy", "coding", "technology", "keyboard", "mouse", "safety"] },
-  { id: 201, title: "Animal Identification & Learning", category: "Assignments", grade: "1", preview: "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400", keywords: ["animals", "revision", "practice", "identification", "learning", "fun"] },
-  
-  // Grade 2
-  { id: 42, title: "Multiplication Tables (2 and 5)", category: "Math", grade: "2", preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=400", keywords: ["multiplication", "tables", "math", "times tables"] },
-  { id: 70, title: "2-Digit Addition", category: "Math", grade: "2", preview: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400", keywords: ["addition", "math", "two digit"] },
-  { id: 43, title: "Nouns and Verbs", category: "English", grade: "2", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", keywords: ["nouns", "verbs", "grammar", "english", "parts of speech"] },
-  { id: 76, title: "Simple Sentences & Punctuation", category: "English", grade: "2", preview: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400", keywords: ["sentences", "punctuation", "english", "grammar"] },
-  
-  // Grade 3
-  { id: 44, title: "Division Practice", category: "Math", grade: "3", preview: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=400", keywords: ["division", "math", "divide"] },
-  { id: 45, title: "Reading Comprehension", category: "English", grade: "3", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", keywords: ["reading", "comprehension", "english"] },
-  
-  // Grade 4
-  { id: 46, title: "Introduction to Fractions", category: "Math", grade: "4", preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=400", keywords: ["fractions", "math"] },
-  { id: 47, title: "Our Solar System", category: "Science", grade: "4", preview: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400", keywords: ["solar system", "planets", "space", "science", "astronomy"] },
-  
-  // Grade 5
-  { id: 48, title: "Decimals and Place Value", category: "Math", grade: "5", preview: "https://images.unsplash.com/photo-1596496050755-c923e73e42e1?w=400", keywords: ["decimals", "place value", "math"] },
-  { id: 49, title: "Essay Writing and Paragraph Structure", category: "English", grade: "5", preview: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400", keywords: ["essay", "writing", "paragraph", "english"] },
-];
+const PAGE_SIZE = 24;
+
+interface SearchResult {
+  id: string;
+  title: string;
+  grade: string;
+  subject: string;
+  slug?: string | null;
+  image_url?: string | null;
+}
 
 // Available subjects for exact matching (order matters: exact matches are checked first)
 const SUBJECTS = ["Math", "English", "Science", "Computer Science", "Assignments"];
@@ -61,14 +32,13 @@ const SUBJECTS = ["Math", "English", "Science", "Computer Science", "Assignments
  */
 const getExactSubjectMatch = (query: string): string | null => {
   const normalizedQuery = query.trim().toLowerCase();
-  
-  // Check for exact match first (e.g., "science" should match "Science", not "Computer Science")
+
   for (const subject of SUBJECTS) {
     if (subject.toLowerCase() === normalizedQuery) {
       return subject.toLowerCase();
     }
   }
-  
+
   return null;
 };
 
@@ -83,12 +53,18 @@ const Search = () => {
   const [showJumpInput, setShowJumpInput] = useState(false);
   const resultsGridRef = useRef<HTMLDivElement>(null);
 
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
   const scrollToBottom = () => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 
   const handleJumpToResult = () => {
     const num = parseInt(jumpToValue, 10);
-    if (isNaN(num) || num < 1 || num > filteredWorksheets.length) return;
+    if (isNaN(num) || num < 1 || num > results.length) return;
     const card = resultsGridRef.current?.querySelector(`[data-result-index="${num}"]`);
     if (card) {
       card.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -101,18 +77,13 @@ const Search = () => {
   useEffect(() => {
     const query = searchParams.get("q") || "";
     const existingSubjectParam = searchParams.get("subject");
-    
-    // Only auto-select if:
-    // 1. There's a query
-    // 2. No subject filter is already set via URL param
-    // 3. We haven't already auto-selected for this session
+
     if (query && !existingSubjectParam && !hasAutoSelectedSubject) {
       const exactMatch = getExactSubjectMatch(query);
       if (exactMatch) {
         setSubjectFilter(exactMatch);
         setHasAutoSelectedSubject(true);
-        
-        // Update URL params to include the auto-selected subject
+
         const params = new URLSearchParams(searchParams);
         params.set("subject", exactMatch);
         setSearchParams(params, { replace: true });
@@ -139,7 +110,7 @@ const Search = () => {
 
   const handleSubjectChange = (value: string) => {
     setSubjectFilter(value);
-    setHasAutoSelectedSubject(true); // Mark as manually changed
+    setHasAutoSelectedSubject(true);
     const params = new URLSearchParams();
     if (searchQuery) params.set("q", searchQuery);
     if (gradeFilter !== "all") params.set("grade", gradeFilter);
@@ -147,27 +118,82 @@ const Search = () => {
     setSearchParams(params);
   };
 
-  const query = searchParams.get("q")?.trim().toLowerCase() || "";
+  const query = searchParams.get("q")?.trim() || "";
   const grade = searchParams.get("grade") || "all";
   const subject = searchParams.get("subject") || "all";
 
-  // Only filter worksheets if there's a query OR filters are applied
-  const hasSearchCriteria = query || grade !== "all" || subject !== "all";
+  const hasSearchCriteria = Boolean(query) || grade !== "all" || subject !== "all";
 
-  const filteredWorksheets = hasSearchCriteria
-    ? allWorksheets.filter((worksheet) => {
-        // Query matching: must match title, category, or keywords (case-insensitive)
-        const matchesQuery = !query || 
-          worksheet.title.toLowerCase().includes(query) ||
-          worksheet.category.toLowerCase().includes(query) ||
-          worksheet.keywords?.some(kw => kw.toLowerCase().includes(query));
+  // Reset pagination whenever the search criteria change
+  useEffect(() => {
+    setPage(0);
+  }, [query, grade, subject]);
 
-        const matchesGrade = grade === "all" || worksheet.grade === grade;
-        const matchesSubject = subject === "all" || worksheet.category.toLowerCase() === subject.toLowerCase();
+  // Fetch matching worksheets from the live library
+  useEffect(() => {
+    if (!hasSearchCriteria) {
+      setResults([]);
+      setTotalCount(0);
+      return;
+    }
 
-        return matchesQuery && matchesGrade && matchesSubject;
-      })
-    : []; // Return empty array when no search criteria provided
+    let cancelled = false;
+
+    const fetchResults = async () => {
+      if (page === 0) setLoading(true);
+      else setLoadingMore(true);
+
+      try {
+        let request = supabase
+          .from("worksheets")
+          .select("id, title, grade, subject, slug, image_url", { count: "exact" })
+          .eq("is_archived", false)
+          .order("grade", { ascending: true })
+          .order("title", { ascending: true })
+          .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
+
+        if (grade !== "all") request = request.eq("grade", grade);
+        if (subject !== "all") request = request.ilike("subject", subject);
+        if (query) {
+          const term = query.replace(/[%,]/g, " ").trim();
+          request = request.or(
+            `title.ilike.%${term}%,description.ilike.%${term}%,sub_category.ilike.%${term}%,subject.ilike.%${term}%`
+          );
+        }
+
+        const { data, count, error } = await request;
+        if (error) throw error;
+        if (cancelled) return;
+
+        const rows = sortWorksheetsNatural((data as SearchResult[]) || []);
+        setResults((prev) => (page === 0 ? rows : [...prev, ...rows]));
+        if (typeof count === "number") setTotalCount(count);
+      } catch {
+        if (!cancelled && page === 0) {
+          setResults([]);
+          setTotalCount(0);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+          setLoadingMore(false);
+        }
+      }
+    };
+
+    fetchResults();
+    return () => {
+      cancelled = true;
+    };
+  }, [query, grade, subject, page, hasSearchCriteria]);
+
+  const clearAll = () => {
+    setSearchQuery("");
+    setGradeFilter("all");
+    setSubjectFilter("all");
+    setHasAutoSelectedSubject(false);
+    setSearchParams(new URLSearchParams());
+  };
 
   return (
     <div className="min-h-screen">
@@ -242,13 +268,7 @@ const Search = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setGradeFilter("all");
-                    setSubjectFilter("all");
-                    setHasAutoSelectedSubject(false); // Reset auto-select flag
-                    setSearchParams(new URLSearchParams());
-                  }}
+                  onClick={clearAll}
                   className="text-muted-foreground hover:text-foreground"
                 >
                   <X className="h-4 w-4 mr-2" />
@@ -261,95 +281,106 @@ const Search = () => {
           {/* Results */}
           <div className="mb-6">
             <h2 className="text-2xl font-semibold font-heading">
-              {filteredWorksheets.length} {filteredWorksheets.length === 1 ? "Worksheet" : "Worksheets"} Found
+              {loading
+                ? "Searching worksheets…"
+                : `${totalCount} ${totalCount === 1 ? "Worksheet" : "Worksheets"} Found`}
             </h2>
           </div>
 
-          {filteredWorksheets.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" ref={resultsGridRef}>
-              {filteredWorksheets.map((worksheet, index) => (
-                <Card key={worksheet.id} className="group cursor-pointer" data-result-index={index + 1}>
-                  <CardHeader>
-                    {(() => {
-                      // Convert the old worksheet format to WorksheetData for the helper
-                      const worksheetData: Partial<WorksheetData> = {
-                        imageUrl: worksheet.preview || "",
-                        subject: worksheet.category,
-                        title: worksheet.title,
-                        id: worksheet.id.toString(),
-                      } as WorksheetData;
-                      const imageSrc = getWorksheetCardImage(worksheetData as WorksheetData);
-                      return (
-                        <img
-                          src={imageSrc}
-                          alt={worksheet.title}
-                          className="w-full h-48 object-cover rounded-lg mb-4"
-                          onError={(e) => {
-                            // if the custom URL fails, fall back once to the subject image
-                            const target = e.currentTarget as HTMLImageElement;
-                            const fallback = getWorksheetCardImage({ ...worksheetData, imageUrl: "" } as WorksheetData);
-                            if (target.src !== fallback) {
-                              target.src = fallback;
-                            }
-                          }}
-                        />
-                      );
-                    })()}
-                    <CardTitle className="text-xl group-hover:text-primary transition-colors font-heading">
-                      {toTitleCase(worksheet.title)}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex gap-2 mb-2">
-                      <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded">
-                        Grade {worksheet.grade}
-                      </span>
-                      <span className="text-xs px-2 py-1 bg-secondary/10 text-secondary rounded">
-                        {toTitleCase(worksheet.category)}
-                      </span>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Link to={`/worksheet/${worksheet.id}`} className="w-full">
-                      <Button className="w-full">
-                        <Download className="mr-2 h-4 w-4" />
-                        View & Download
-                      </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="h-72 rounded-lg bg-muted animate-pulse" />
               ))}
             </div>
+          ) : results.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" ref={resultsGridRef}>
+                {results.map((worksheet, index) => {
+                  const worksheetData = {
+                    imageUrl: worksheet.image_url || "",
+                    subject: worksheet.subject,
+                    title: worksheet.title,
+                    id: worksheet.id,
+                  } as WorksheetData;
+                  const imageSrc = getWorksheetCardImage(worksheetData);
+
+                  return (
+                    <Card key={worksheet.id} className="group" data-result-index={index + 1}>
+                      <CardHeader>
+                        <img
+                          src={imageSrc}
+                          alt={cleanDisplayTitle(worksheet.title)}
+                          loading="lazy"
+                          className="w-full h-48 object-cover rounded-lg mb-4"
+                          onError={(e) => {
+                            const target = e.currentTarget as HTMLImageElement;
+                            const fallback = getWorksheetCardImage({ ...worksheetData, imageUrl: "" } as WorksheetData);
+                            if (target.src !== fallback) target.src = fallback;
+                          }}
+                        />
+                        <CardTitle className="text-xl group-hover:text-primary transition-colors font-heading">
+                          {toTitleCase(cleanDisplayTitle(worksheet.title))}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex gap-2 mb-2">
+                          <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded">
+                            Grade {worksheet.grade}
+                          </span>
+                          <span className="text-xs px-2 py-1 bg-secondary/10 text-secondary rounded">
+                            {toTitleCase(worksheet.subject)}
+                          </span>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button asChild className="w-full">
+                          <Link to={toWorksheetUrl(worksheet)}>
+                            <Download className="mr-2 h-4 w-4" />
+                            View & Download
+                          </Link>
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  );
+                })}
+              </div>
+
+              {results.length < totalCount && (
+                <div className="mt-8 text-center">
+                  <Button variant="outline" onClick={() => setPage((p) => p + 1)} disabled={loadingMore}>
+                    {loadingMore ? "Loading…" : "Load more worksheets"}
+                  </Button>
+                </div>
+              )}
+            </>
           ) : (
             <div className="text-center py-12">
               <SearchIcon className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">No worksheets found</h3>
-              <p className="text-muted-foreground mb-6">Try adjusting your search or filters</p>
-              <Button onClick={() => {
-                setSearchQuery("");
-                setGradeFilter("all");
-                setSubjectFilter("all");
-                setHasAutoSelectedSubject(false); // Reset auto-select flag
-                setSearchParams(new URLSearchParams());
-              }}>
-                Clear All Filters
-              </Button>
+              <h3 className="text-xl font-semibold mb-2">
+                {hasSearchCriteria ? "No worksheets found" : "Start your search"}
+              </h3>
+              <p className="text-muted-foreground mb-6">
+                {hasSearchCriteria
+                  ? "Try adjusting your search or filters"
+                  : "Search by keyword, or pick a grade and subject"}
+              </p>
+              {hasSearchCriteria && <Button onClick={clearAll}>Clear All Filters</Button>}
             </div>
           )}
         </div>
       </main>
 
       {/* Floating Navigation Buttons */}
-      {filteredWorksheets.length > 0 && (
+      {results.length > 0 && (
         <div className="fixed bottom-6 right-6 flex flex-col gap-2 z-40">
-          {/* Jump to Result Input */}
           {showJumpInput && (
             <div className="flex items-center gap-1 bg-card border rounded-lg shadow-lg p-2 animate-fade-in">
               <Input
                 type="number"
                 min={1}
-                max={filteredWorksheets.length}
-                placeholder={`1-${filteredWorksheets.length}`}
+                max={results.length}
+                placeholder={`1-${results.length}`}
                 value={jumpToValue}
                 onChange={(e) => setJumpToValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleJumpToResult()}
@@ -363,7 +394,7 @@ const Search = () => {
               </Button>
             </div>
           )}
-          
+
           <div className="flex gap-2">
             <Button
               size="icon"
