@@ -58,7 +58,6 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       "Use past tense correctly for regular verbs, and learn the common irregulars — went, ate, saw, ran.",
       "Add commas between items in a simple list.",
     ],
-    objectivesNote: undefined as unknown as undefined,
     usage: [
       "The single biggest Grade 2 slip is the missing s on present-tense verbs after he, she or it. Have your child read their finished answer aloud pointing at the verb — the ear catches 'she walk' immediately even when the eye does not.",
       "For the joining questions, ask what the second sentence does to the first: adds more (and) or disagrees with it (but). Naming that job stops children using and for everything.",
