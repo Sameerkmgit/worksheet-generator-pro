@@ -17,7 +17,7 @@ import {
   SubcategoryData,
   WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toWorksheetUrl } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toWorksheetUrl, toTopicUrl } from "@/lib/utils";
 
 // Helper: turn Google Drive links into embeddable preview links
 const getPdfEmbedUrl = (pdfUrl: string): string => {
@@ -118,7 +118,9 @@ const SubcategoryWorksheets = () => {
   const subjectSlug = category?.subject ? toSubjectSlug(category.subject) : "";
   const pageTitle = toTitleCase(subcategory?.title) || "Worksheets";
   const pageDescription = `Browse ${pageTitle} worksheets for ${toTitleCase(category?.subject) || "this subject"}.`;
-  const pageUrl = `https://www.wizkidshub.com/subcategory/${subcategoryId}`;
+  const pageUrl = category?.grade && category?.subject && subcategory?.slug
+    ? `https://www.wizkidshub.com${toTopicUrl(category.grade, category.subject, subcategory.slug)}`
+    : `https://www.wizkidshub.com/categories/${gradeSlug}/${subjectSlug}`;
 
   // Breadcrumb items for Subcategory Worksheets page
   const breadcrumbItems = [
@@ -214,7 +216,7 @@ const SubcategoryWorksheets = () => {
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {relatedTopics.map((topic) => (
-                  <Link key={topic.id} to={`/subcategory/${topic.id}`}>
+                  <Link key={topic.id} to={category?.grade && category?.subject && topic.slug ? toTopicUrl(category.grade, category.subject, topic.slug) : `/categories/${gradeSlug}/${subjectSlug}`}>
                     <Card className="h-full hover:shadow-lg transition-shadow hover:border-primary/50 group overflow-hidden">
                       <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
                         {topic.image_url ? (

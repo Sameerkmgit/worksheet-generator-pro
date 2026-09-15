@@ -157,11 +157,18 @@ Deno.serve(async (req) => {
 
     if (wsError) console.error("Error fetching worksheets:", wsError);
     if (worksheets) {
+      let skipped = 0;
       for (const ws of worksheets) {
+        // Only list canonical slug URLs. Numeric-id URLs redirect to slugs,
+        // so including them makes Google report "Page with redirect".
+        if (!ws.slug) {
+          skipped++;
+          continue;
+        }
         const lastmod = formatDate(ws.updated_at);
-        const wsPath = ws.slug || ws.id;
-        sitemap += buildUrlEntry(`${SITE_URL}/worksheet/${wsPath}`, lastmod, "0.6", "monthly");
+        sitemap += buildUrlEntry(`${SITE_URL}/worksheet/${ws.slug}`, lastmod, "0.6", "monthly");
       }
+      if (skipped > 0) console.log(`Skipped ${skipped} worksheets without a slug`);
     }
 
     sitemap += `</urlset>`;

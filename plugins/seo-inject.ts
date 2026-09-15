@@ -462,9 +462,19 @@ async function generateWorksheetPages(distDir: string, baseHtml: string) {
     writeRouteHtml(distDir, canonicalPath, html);
     written++;
 
-    // Numeric-id URL: same head, canonical still points at the slug page
+    // Numeric-id URL: kept for legacy links, but noindex so Google only
+    // indexes the canonical slug URL (avoids "Page with redirect" reports)
     if (w.slug && w.id && `/worksheet/${w.id}` !== canonicalPath) {
-      writeRouteHtml(distDir, `/worksheet/${w.id}`, html);
+      const legacyHtml = injectHtml(
+        baseHtml,
+        metaTags.replace(
+          `<meta name="robots" content="index, follow" />`,
+          `<meta name="robots" content="noindex, follow" />`
+        ),
+        jsonLd,
+        seoBlock
+      );
+      writeRouteHtml(distDir, `/worksheet/${w.id}`, legacyHtml);
       written++;
     }
   }
