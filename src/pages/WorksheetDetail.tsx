@@ -514,6 +514,27 @@ const WorksheetDetail = () => {
                 </Card>
               )}
 
+              {/* Sample Questions — real questions taken from this worksheet's PDF */}
+              {sampleQuestions.length > 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Sample Question{sampleQuestions.length > 1 ? "s" : ""} From This Worksheet</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ol className="space-y-3 list-decimal list-inside">
+                      {sampleQuestions.map((q, index) => (
+                        <li key={index} className="text-foreground leading-relaxed">
+                          {q}
+                        </li>
+                      ))}
+                    </ol>
+                    <p className="text-sm text-muted-foreground mt-4">
+                      Download the free PDF above to see all of the questions on this worksheet.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* Learning Objectives / Skills Section — always shown */}
               <Card>
                 <CardHeader>
@@ -521,15 +542,22 @@ const WorksheetDetail = () => {
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {(worksheet.skills && Array.isArray(worksheet.skills) && worksheet.skills.length > 0
-                      ? worksheet.skills
-                      : generateLearningObjectives(worksheet.title, worksheet.subject)
-                    ).map((skill: string, index: number) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-primary mr-2">✓</span>
-                        <span className="text-muted-foreground">{toTitleCase(skill)}</span>
-                      </li>
-                    ))}
+                    {topicContent
+                      ? topicContent.objectives.map((objective, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="text-primary mr-2">✓</span>
+                            <span className="text-muted-foreground">{objective}</span>
+                          </li>
+                        ))
+                      : (worksheet.skills && Array.isArray(worksheet.skills) && worksheet.skills.length > 0
+                          ? worksheet.skills
+                          : generateLearningObjectives(worksheet.title, worksheet.subject)
+                        ).map((skill: string, index: number) => (
+                          <li key={index} className="flex items-start">
+                            <span className="text-primary mr-2">✓</span>
+                            <span className="text-muted-foreground">{toTitleCase(skill)}</span>
+                          </li>
+                        ))}
                   </ul>
                 </CardContent>
               </Card>
@@ -541,7 +569,7 @@ const WorksheetDetail = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground leading-relaxed">
-                    {worksheet.usage || generateHowToUse(gradeNum, worksheet.subject)}
+                    {worksheet.usage || topicContent?.usage || generateHowToUse(gradeNum, worksheet.subject)}
                   </p>
                 </CardContent>
               </Card>
