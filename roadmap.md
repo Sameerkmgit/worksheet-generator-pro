@@ -9,3 +9,4 @@
 - [x] Extract sample questions from worksheet PDFs (808 of 815 worksheets now show real questions)
 - [x] Topic-specific objectives / usage / FAQ for the top 10 topics, plus 15 more topics (batch 2)
 - [ ] Worksheet 690 has no readable questions in its PDF — needs a sample question entered manually in admin
+- [x] Batch 4 topic content: English grammar (1-5), phonics (3-5), vocabulary (4-5), reading (3-5), shapes (1-2)
