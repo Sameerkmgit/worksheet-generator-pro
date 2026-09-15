@@ -10,6 +10,8 @@
  * same paragraphs.
  */
 
+import { TOPIC_CONTENT_BATCH_2 } from "./topicContentBatch2";
+
 export interface FaqEntry {
   question: string;
   answer: string;
