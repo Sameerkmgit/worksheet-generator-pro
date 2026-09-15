@@ -448,7 +448,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       "Convert between improper fractions and mixed numbers.",
       "Find a fraction of a quantity, such as three quarters of 20.",
     ],
-    objectivesNote: undefined as never as undefined,
+    
     usage: [
       "The one misconception that causes most Grade 4 fraction errors is thinking a bigger denominator means a bigger fraction. Cut something real into halves and then into eighths — once your child sees that eighths are smaller pieces, 1/8 < 1/2 stops being confusing.",
       "When adding fractions with the same denominator, only the top numbers are added; the denominator names the size of the piece and does not change. Watch the first two sums for 1/5 + 2/5 = 3/10, which is the classic slip.",
