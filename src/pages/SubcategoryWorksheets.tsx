@@ -35,6 +35,7 @@ interface RelatedTopic {
   title: string;
   worksheetCount: number;
   image_url?: string | null;
+  slug?: string | null;
 }
 
 const SubcategoryWorksheets = () => {

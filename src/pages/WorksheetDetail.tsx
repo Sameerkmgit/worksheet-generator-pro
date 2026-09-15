@@ -11,6 +11,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { getWorksheetBySlug, getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
 import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
+import { pickTopicContent } from "@/lib/topicContent";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 import { Badge } from "@/components/ui/badge";
 
@@ -271,11 +272,26 @@ const WorksheetDetail = () => {
     }
   };
 
-  // FAQ — DB field if present, otherwise auto-generated
+  // Topic-specific content bank (rotated per worksheet) — falls back to null
+  // for topics not written yet, in which case the generic generators are used.
+  const topicContent = pickTopicContent({
+    worksheetId: String(worksheet.id),
+    title: worksheet.title,
+    grade: gradeNum,
+    subject: worksheet.subject,
+    topic: subcategory?.title || worksheet.subCategory || null,
+  });
+
+  // Real questions pulled from this worksheet's PDF (unique per worksheet)
+  const sampleQuestions: string[] = Array.isArray(worksheet.questions)
+    ? worksheet.questions.filter((q: unknown) => typeof q === "string" && q.trim().length > 0).slice(0, 2)
+    : [];
+
+  // FAQ — DB field if present, then topic bank, otherwise auto-generated
   const faqItems: Array<{ question: string; answer: string }> =
     worksheet.faq && Array.isArray(worksheet.faq) && worksheet.faq.length > 0
       ? worksheet.faq
-      : generateFaq(worksheet.title, gradeNum, worksheet.subject);
+      : topicContent?.faq ?? generateFaq(worksheet.title, gradeNum, worksheet.subject);
 
   const faqStructuredData = {
     "@context": "https://schema.org",
@@ -498,6 +514,27 @@ const WorksheetDetail = () => {
                 </Card>
               )}
 
+              {/* Sample Questions — real questions taken from this worksheet's PDF */}
+              {sampleQuestions.length > 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Sample Question{sampleQuestions.length > 1 ? "s" : ""} From This Worksheet</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ol className="space-y-3 list-decimal list-inside">
+                      {sampleQuestions.map((q, index) => (
+                        <li key={index} className="text-foreground leading-relaxed">
+                          {q}
+                        </li>
+                      ))}
+                    </ol>
+                    <p className="text-sm text-muted-foreground mt-4">
+                      Download the free PDF above to see all of the questions on this worksheet.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* Learning Objectives / Skills Section — always shown */}
               <Card>
                 <CardHeader>
@@ -505,15 +542,22 @@ const WorksheetDetail = () => {
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {(worksheet.skills && Array.isArray(worksheet.skills) && worksheet.skills.length > 0
-                      ? worksheet.skills
-                      : generateLearningObjectives(worksheet.title, worksheet.subject)
-                    ).map((skill: string, index: number) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-primary mr-2">✓</span>
-                        <span className="text-muted-foreground">{toTitleCase(skill)}</span>
-                      </li>
-                    ))}
+                    {topicContent
+                      ? topicContent.objectives.map((objective, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="text-primary mr-2">✓</span>
+                            <span className="text-muted-foreground">{objective}</span>
+                          </li>
+                        ))
+                      : (worksheet.skills && Array.isArray(worksheet.skills) && worksheet.skills.length > 0
+                          ? worksheet.skills
+                          : generateLearningObjectives(worksheet.title, worksheet.subject)
+                        ).map((skill: string, index: number) => (
+                          <li key={index} className="flex items-start">
+                            <span className="text-primary mr-2">✓</span>
+                            <span className="text-muted-foreground">{toTitleCase(skill)}</span>
+                          </li>
+                        ))}
                   </ul>
                 </CardContent>
               </Card>
@@ -525,7 +569,7 @@ const WorksheetDetail = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground leading-relaxed">
-                    {worksheet.usage || generateHowToUse(gradeNum, worksheet.subject)}
+                    {worksheet.usage || topicContent?.usage || generateHowToUse(gradeNum, worksheet.subject)}
                   </p>
                 </CardContent>
               </Card>
