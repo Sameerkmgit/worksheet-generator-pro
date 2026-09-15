@@ -11,6 +11,7 @@
  */
 
 import { TOPIC_CONTENT_BATCH_2 } from "./topicContentBatch2";
+import { TOPIC_CONTENT_BATCH_3 } from "./topicContentBatch3";
 
 export interface FaqEntry {
   question: string;
