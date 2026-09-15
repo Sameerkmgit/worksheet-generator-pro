@@ -532,6 +532,7 @@ const TOPIC_CONTENT_BATCH_1: Record<string, TopicContentBank> = {
 const TOPIC_CONTENT: Record<string, TopicContentBank> = {
   ...TOPIC_CONTENT_BATCH_1,
   ...TOPIC_CONTENT_BATCH_2,
+  ...TOPIC_CONTENT_BATCH_3,
 };
 
 /** Normalise a topic key so lookups are tolerant of casing and spacing. */
