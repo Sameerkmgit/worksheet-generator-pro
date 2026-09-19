@@ -9,6 +9,33 @@
 import type { Plugin } from "vite";
 import path from "path";
 import fs from "fs";
+import { pickTopicContent } from "../src/lib/topicContent";
+
+/** Pulls plain question strings out of the stored questions JSON. */
+function extractQuestions(raw: unknown): string[] {
+  if (!raw) return [];
+  let value: unknown = raw;
+  if (typeof value === "string") {
+    try {
+      value = JSON.parse(value);
+    } catch {
+      return [];
+    }
+  }
+  if (!Array.isArray(value)) return [];
+  const out: string[] = [];
+  for (const item of value) {
+    let text = "";
+    if (typeof item === "string") text = item;
+    else if (item && typeof item === "object") {
+      const obj = item as Record<string, unknown>;
+      text = String(obj.question ?? obj.text ?? obj.prompt ?? "");
+    }
+    text = text.replace(/\s+/g, " ").trim();
+    if (text.length >= 8 && text.length <= 300) out.push(text);
+  }
+  return out;
+}
 
 const SUPABASE_URL = "https://sitalsldfenvtdjdgafg.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNpdGFsc2xkZmVudnRkamRnYWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1MjkxMTEsImV4cCI6MjA4MTEwNTExMX0.Wy-zLYtjOVXHEL1dDn1v6FavZV2xrT4P4iEaK-ZX6sY";

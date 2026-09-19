@@ -7,11 +7,31 @@ interface AdSenseProps {
   className?: string;
 }
 
+/**
+ * Slot IDs that were never created in the AdSense account. Rendering these
+ * produces empty collapsed boxes and console errors, so we skip them entirely
+ * until real slot IDs are pasted in from adsense.google.com.
+ */
+const PLACEHOLDER_SLOTS = new Set([
+  "0123456789",
+  "1234567890",
+  "2345678901",
+  "3456789012",
+  "4567890123",
+  "5678901234",
+  "6789012345",
+  "7890123456",
+  "8901234567",
+  "9012345678",
+]);
+
 const AdSense = ({ adSlot, adFormat = "auto", fullWidthResponsive = true, className = "" }: AdSenseProps) => {
   const adRef = useRef<HTMLModElement>(null);
   const pushedRef = useRef(false);
+  const isPlaceholder = PLACEHOLDER_SLOTS.has(adSlot);
 
   useEffect(() => {
+    if (isPlaceholder) return;
     const el = adRef.current;
     if (!el || typeof window === "undefined") return;
 
