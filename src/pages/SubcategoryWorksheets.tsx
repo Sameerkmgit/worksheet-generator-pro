@@ -67,7 +67,7 @@ const SubcategoryWorksheets = () => {
           // Fetch related topics (other subcategories in same category)
           const { data: relatedData, error: relatedError } = await supabase
             .from("worksheet_subcategories")
-            .select("id, title, image_url")
+            .select("id, title, image_url, slug")
             .eq("category_id", subcatData.categoryId)
             .eq("is_archived", false)
             .neq("id", subcategoryId)
@@ -89,6 +89,7 @@ const SubcategoryWorksheets = () => {
                   title: topic.title,
                   worksheetCount: count || 0,
                   image_url: topic.image_url,
+                  slug: topic.slug,
                 };
               })
             );
