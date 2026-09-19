@@ -562,6 +562,70 @@ function generateStaticPages(distDir: string, baseHtml: string, pages: StaticSeo
   }
 }
 
+/**
+ * Fallback objectives, guidance and FAQs for worksheets whose topic is not yet
+ * in the hand-written topic bank. Varied per worksheet so pages are not
+ * identical, and kept honest about what the sheet actually does.
+ */
+function genericWorksheetContent(
+  gradeNum: string,
+  subject: string,
+  topicName: string,
+  worksheetId: string
+): { objectives: string[]; usage: string; faq: Array<{ question: string; answer: string }> } {
+  const seed = Array.from(worksheetId).reduce((a, c) => a + c.charCodeAt(0), 0);
+  const topic = topicName || subject;
+
+  const objectivePool = [
+    `Practise ${topic} at a Grade ${gradeNum} level with questions that stay on one skill instead of mixing several at once.`,
+    `Build accuracy on ${topic} by working through questions that increase in difficulty down the page.`,
+    `Show understanding of ${topic} in writing, so an adult can see the method used rather than only the final answer.`,
+    `Use the vocabulary of ${topic} correctly when reading each instruction and explaining an answer aloud.`,
+    `Recognise the common mistakes in ${topic} by checking completed work before handing the sheet in.`,
+    `Apply ${topic} to short, familiar examples so the skill transfers beyond this worksheet.`,
+    `Work independently through a full page of ${topic} practice and gain confidence from finishing it.`,
+  ];
+
+  const usagePool = [
+    `Print this sheet and let your child attempt it without help first, then sit down together and review it question by question. Where an answer is wrong, ask them to explain the step they took rather than telling them the correct answer straight away — in Grade ${gradeNum} ${subject}, most errors are a slipped step rather than a missing idea, and hearing the reasoning aloud tells you which one it is.`,
+    `Work this sheet in one short sitting of around fifteen minutes. Read the first question together so the instruction is clear, then step back and let your child continue alone. If they stall on more than two questions in a row, stop and go back to an easier sheet on ${topic} before pushing on; practice only helps while it still feels achievable.`,
+    `Use this worksheet as a check rather than a lesson. Give it after your child has already met ${topic} in class, and watch which questions slow them down. The pattern of slow answers, not the score, is what tells you what to practise next. Keep the finished sheet so you can compare it with the next one on the same topic.`,
+    `Do the first half of the page with your child and let them finish the second half on their own. Comparing the two halves is useful: if the supported questions are right and the independent ones are not, the method is understood but not yet automatic, and short daily practice on ${topic} will fix it faster than one long session.`,
+  ];
+
+  const faqPool = [
+    {
+      question: `Is this ${topic} worksheet free to print?`,
+      answer: `Yes. Every WizKidsHub worksheet is a free printable PDF. You can download it, print it as many times as you need, and photocopy it for a class or tuition group. There is no sign-up and no download limit.`,
+    },
+    {
+      question: `How long should this worksheet take?`,
+      answer: `Most Grade ${gradeNum} children finish a single sheet in ten to twenty minutes. If it is taking much longer, the level is probably too high for now — try an earlier worksheet on ${topic} and come back to this one.`,
+    },
+    {
+      question: `Is there an answer key?`,
+      answer: `Answers are not printed on the sheet. For Grade ${gradeNum} ${subject} practice we suggest checking the work together, because talking through a wrong answer teaches more than comparing it with a key.`,
+    },
+    {
+      question: `Can I use this worksheet in my classroom?`,
+      answer: `Yes. Teachers and tutors are welcome to print and photocopy this sheet for their own students. Worksheets on the same topic are numbered in teaching order, which makes it easy to give different groups different sheets.`,
+    },
+    {
+      question: `My child found this too easy. What next?`,
+      answer: `Move to the next numbered worksheet in the same ${topic} collection, or try the same topic one grade higher. Grade labels describe the level a sheet was written for, not a limit on who can use it.`,
+    },
+  ];
+
+  const rotate = <T,>(pool: T[], count: number): T[] =>
+    Array.from({ length: Math.min(count, pool.length) }, (_, i) => pool[(seed + i) % pool.length]);
+
+  return {
+    objectives: rotate(objectivePool, 4),
+    usage: usagePool[seed % usagePool.length],
+    faq: rotate(faqPool, 3),
+  };
+}
+
 interface WorksheetRecord {
   id: string;
   slug: string | null;
