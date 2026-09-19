@@ -46,12 +46,28 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
     heading: "Free Printable Worksheets for Grades 1-5",
     sections: [
       {
-        heading: "Printable practice for home and classroom",
-        body: "WizKidsHub provides free educational worksheets for primary school students. Parents and teachers can browse by grade, subject, and topic to find printable PDF practice for everyday learning.",
+        heading: "Printable practice written for primary classrooms and kitchen tables",
+        body: "WizKidsHub is a free library of printable worksheets for children in Grades 1 to 5. Every sheet is organised by grade, subject and topic, so a parent who wants ten minutes of multiplication practice before dinner, or a teacher who needs a phonics revision sheet for Monday morning, can find it in two or three clicks. There is no account to create, no trial period and no watermark on the printable pages. Each worksheet page also explains what the sheet teaches, where children usually get stuck, and how an adult can help without simply giving away the answer.",
       },
       {
-        heading: "Organized by grade and subject",
-        body: "The library includes Math, English, Science, Computer Science, and assignment resources for Grades 1 through 5, with clear paths to worksheet details and grade collections.",
+        heading: "How the library is organised",
+        body: "The collection is split by grade first, because a Grade 2 child and a Grade 5 child need very different practice even inside the same subject. Within each grade you will find Math, English, Science, Computer Science and mixed assignment sheets. Each subject then opens into topic collections such as addition with regrouping, fractions, phonics, vocabulary, reading comprehension, shapes, time and money, plants and animals, the human body, and computer basics. Topic pages group every worksheet on that skill in order, from the gentlest introduction to the more demanding practice, so you can work through a skill in sequence rather than hunting for a suitable next step.",
+      },
+      {
+        heading: "What makes a good practice sheet",
+        body: "A worksheet works when it does one job well. Our Math sheets keep a single skill in focus, so a child practising carrying tens is not also wrestling with word-problem language at the same time. English sheets separate decoding from comprehension, because a child who can read every word aloud may still not be able to say what a paragraph was about. Science sheets ask for observation and explanation rather than recall of isolated facts. Where a topic has a predictable trap, such as adding the denominators when adding fractions or treating clock time like ordinary numbers, the worksheet page names that trap so the adult supervising knows what to watch for.",
+      },
+      {
+        heading: "Using worksheets at home",
+        body: "Short and frequent beats long and rare. Fifteen focused minutes, four times a week, does more for a Grade 3 reader than an hour of Sunday catch-up. Print two sheets rather than ten, let the child finish something, and stop while confidence is still high. When a mistake appears, ask the child to talk you through the step rather than marking it wrong straight away; most errors in primary practice are procedural slips rather than gaps in understanding, and hearing the reasoning aloud usually reveals which it is.",
+      },
+      {
+        heading: "Using worksheets in the classroom",
+        body: "Teachers and tutors are welcome to print and photocopy these sheets for their own classes. They work well as bell-ringer starters, as differentiated practice for groups moving at different speeds, as homework that parents can actually help with, and as quick diagnostic checks before starting a new unit. Because sheets on the same topic are numbered in order, it is straightforward to give one group the earlier sheets while another group moves ahead.",
+      },
+      {
+        heading: "Free, and free to print",
+        body: "Everything on WizKidsHub is free for personal, home and classroom use. There are no downloads counted against you, no email wall in front of a PDF and no paid tier holding back the better material. The library is added to regularly, and the support page is the fastest way to ask for a topic that is missing or to report a sheet with a problem.",
       },
     ],
   },
@@ -62,8 +78,20 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
     heading: "Browse Free Printable Worksheets",
     sections: [
       {
-        heading: "Worksheet browser",
-        body: "Use the worksheet browser to explore printable learning resources by grade, subject, difficulty, and keyword. Each result links to a worksheet detail page with more information.",
+        heading: "Every worksheet in one place",
+        body: "This page lists the full WizKidsHub library and lets you narrow it down by grade, subject and keyword. If you already know what you need, typing a topic such as fractions, phonics, telling time or plants will bring back every matching sheet across the grades. If you are browsing, start with the grade filter and then pick a subject, which is usually the quickest route to something a child can start straight away.",
+      },
+      {
+        heading: "Choosing the right level",
+        body: "Grade labels describe the level the sheet was written for, not a rule. A confident Grade 2 reader may be ready for Grade 3 comprehension, while a child who has just moved schools may need to revisit earlier number work before fractions make sense. The safest approach is to print one sheet slightly below where you think the child is. If it is finished quickly and correctly, move up; if it takes real effort, you have found the right place to practise.",
+      },
+      {
+        heading: "What you get on each worksheet page",
+        body: "Opening a worksheet shows a preview of the printable PDF along with a short explanation of the skill it practises, the learning objectives behind it, sample questions taken from the sheet itself, guidance for the adult supervising, and answers to the questions parents most often ask about that topic. From there you can print, download, or jump to related worksheets on the same skill.",
+      },
+      {
+        heading: "Subjects covered",
+        body: "Math runs from counting, number sense and shapes in the early grades through addition and subtraction with regrouping, multiplication and division, fractions, decimals, measurement, time and money. English covers phonics, handwriting, grammar, punctuation, vocabulary, sentence and paragraph writing, and reading comprehension. Science covers plants and animals, the human body, food and water, materials, the environment, weather and simple physical science. Computer Science introduces parts of a computer, input and output devices, basic software use, and safe behaviour online.",
       },
     ],
   },
@@ -74,8 +102,16 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
     heading: "Free Worksheet Packs",
     sections: [
       {
-        heading: "Curated printable packs",
-        body: "Worksheet packs group selected PDFs by grade so parents and teachers can quickly download a focused set of practice materials after choosing a pack.",
+        heading: "A grade's practice in one download",
+        body: "Worksheet packs collect a set of printable sheets for a single grade into one PDF, so you can download once and have a fortnight of practice ready to print. Each pack mixes subjects deliberately: number work, reading and writing, and a science or computer topic, which keeps a child from spending every session on the same skill and losing interest in it.",
+      },
+      {
+        heading: "When a pack is the better choice",
+        body: "Packs suit school holidays, long journeys, and the weeks before an assessment when you want steady revision rather than a specific skill drill. They are also useful for tutors planning ahead, and for families with limited internet time who would rather download once and print as needed. If you need practice on one particular skill instead, the topic pages in the worksheet browser are a better starting point.",
+      },
+      {
+        heading: "How to use a pack",
+        body: "Print the first few pages rather than the whole pack, and work through them in order; the sheets are sequenced so earlier pages prepare a child for later ones. Keep completed sheets together so both you and the child can see progress accumulating. Packs are free to print for home and classroom use.",
       },
     ],
   },
@@ -86,8 +122,16 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
     heading: "Learning Tips & Blog",
     sections: [
       {
-        heading: "Guides for parents and teachers",
-        body: "The WizKidsHub blog shares practical learning tips, worksheet ideas, and teaching guidance for Math, English, Science, and early grade practice.",
+        heading: "Practical guidance, not general advice",
+        body: "The WizKidsHub blog is written for the adult sitting next to the child. Articles work through the situations that actually come up in primary learning: a child who reads fluently but cannot summarise, a child who knows the times tables but freezes on word problems, handwriting that falls apart as soon as speed increases, and the point in Grade 4 where fractions stop being pictures and start being arithmetic.",
+      },
+      {
+        heading: "What the articles cover",
+        body: "Topics include building a home practice routine that survives a busy week, spotting the difference between a careless slip and a genuine misunderstanding, teaching phonics without confusing a child who is already guessing from pictures, helping with multiplication when carried digits go missing, making reading comprehension questions less intimidating, and choosing the right worksheet level so practice feels achievable rather than punishing.",
+      },
+      {
+        heading: "Written from classroom experience",
+        body: "Each article explains the underlying reason a child struggles with a skill before offering what to do about it, because the same wrong answer can have several different causes and the useful response depends on which one it is. Where a worksheet on the site fits the advice, the article links to it directly so you can move from reading to practising in one step.",
       },
     ],
   },
@@ -98,8 +142,24 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
     heading: "About WizKidsHub",
     sections: [
       {
-        heading: "Our purpose",
-        body: "WizKidsHub helps families, tutors, and teachers find free printable worksheets for primary school practice without requiring account registration.",
+        heading: "Why the site exists",
+        body: "WizKidsHub began with a simple frustration: searching for a printable worksheet usually leads to sites that ask for an email address, watermark the page, lock the useful sheets behind a subscription, or bury one usable PDF under a pile of adverts. This library was built to be the opposite. Pick a grade, pick a topic, print the sheet. Nothing to join, nothing to pay, nothing to unsubscribe from later.",
+      },
+      {
+        heading: "What we publish",
+        body: "The library covers Math, English, Science, Computer Science and mixed assignments for Grades 1 to 5, organised into topic collections and numbered in teaching order. Alongside each printable PDF we write the supporting material an adult actually needs: what the sheet is practising, the mistakes children typically make on it, sample questions from the sheet itself, and short answers to the questions parents ask most about that topic.",
+      },
+      {
+        heading: "How worksheets are prepared",
+        body: "Sheets are grouped by skill rather than by page count, so a topic collection moves from an accessible first sheet to more demanding practice. Wording is kept short and plain, because a child who cannot read the instruction cannot show what they know about the mathematics. Layouts leave room to work on the page, and each sheet stays on one skill so a mistake tells you something specific rather than leaving you guessing.",
+      },
+      {
+        heading: "Who it is for",
+        body: "Parents supporting homework, tutors planning sessions, teachers who need differentiated practice quickly, and families homeschooling all use the same library. Because everything is printable PDF, it works equally well for a child who should be away from a screen and for a classroom with a single shared printer.",
+      },
+      {
+        heading: "Feedback and corrections",
+        body: "The collection grows in response to what visitors ask for. If a topic is missing, a sheet has an error, or the level looks wrong for the grade it sits under, the support page reaches us directly and those messages shape what gets published next.",
       },
     ],
   },
@@ -110,8 +170,16 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
     heading: "Contact & Support",
     sections: [
       {
-        heading: "Get in touch",
-        body: "The support page gives visitors a clear way to contact WizKidsHub about worksheet resources, feedback, and website questions.",
+        heading: "How to reach us",
+        body: "The support form on this page is the direct way to contact WizKidsHub. It is read by a person, and messages about broken downloads, mistakes on a worksheet, or a topic that is missing from a grade are the ones acted on fastest. Please describe the grade, subject and worksheet title where you can, since that makes a problem far quicker to locate and fix.",
+      },
+      {
+        heading: "What we can help with",
+        body: "Common requests include a PDF that will not open or print, a worksheet that seems pitched at the wrong grade, a request for more practice on a particular skill, questions about using the sheets in a classroom or tuition centre, and permission questions about printing and photocopying. Printing and copying for home, classroom and tuition use is already allowed, so no request is needed for that.",
+      },
+      {
+        heading: "Privacy when you write to us",
+        body: "Only send what is needed to answer your question. Please do not include a child's full name, school details, photographs or any other personal information in a support message, and never send payment details, since nothing on WizKidsHub is sold. Messages are used solely to reply and to improve the worksheet library.",
       },
     ],
   },
@@ -122,8 +190,24 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
     heading: "Privacy Policy",
     sections: [
       {
-        heading: "Privacy and advertising",
-        body: "The privacy policy explains how WizKidsHub uses basic website data, cookies, analytics, and third-party advertising services including Google AdSense.",
+        heading: "What this policy covers",
+        body: "This policy explains what information WizKidsHub collects when you visit the site, why it is collected, and the choices you have. The worksheet library can be browsed, printed and downloaded without creating an account, so in normal use you are never asked for your name, address or any other personal detail.",
+      },
+      {
+        heading: "Analytics and cookies",
+        body: "Like most websites, WizKidsHub records basic technical information such as the pages viewed, the approximate region a visit came from, the browser and device type, and the referring site. This is used in aggregate to understand which worksheets are useful and where the library has gaps. Cookies support this measurement and can be blocked or deleted in your browser settings; the worksheet library continues to work if you do.",
+      },
+      {
+        heading: "Advertising",
+        body: "Third-party advertising, including Google AdSense, may be shown on the site, and those providers may use cookies to measure ad performance and, where permitted, to personalise the ads you see. Personalised advertising can be turned off through Google Ads Settings, and further industry opt-out choices are available through AboutAds.info. These choices are stored per browser and per device.",
+      },
+      {
+        heading: "Children's privacy",
+        body: "The worksheets are for children, but the site is intended to be chosen and supervised by a parent, guardian or teacher. Children are never asked to register or to submit personal information, and we do not knowingly collect names, email addresses or precise locations from children under 13. If you believe a child has sent us personal information through the support form, contact us and we will review and delete it.",
+      },
+      {
+        heading: "Contact",
+        body: "Privacy questions and deletion requests can be sent through the WizKidsHub support page. The full policy text, including how information is used and how changes to this policy are published, is shown on this page once it loads.",
       },
     ],
   },
@@ -134,8 +218,20 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
     heading: "Terms of Service",
     sections: [
       {
-        heading: "Using WizKidsHub",
-        body: "The terms explain permitted use of WizKidsHub worksheet resources, including personal, home, and classroom use of printable materials.",
+        heading: "Using the worksheet library",
+        body: "WizKidsHub worksheets are free to download, print and photocopy for personal, family, classroom and tuition use. You may hand printed copies to the children you teach or care for, and use them in lessons and homework. What is not permitted is reselling the sheets, republishing them on another website or app as your own, or bundling them into a paid product.",
+      },
+      {
+        heading: "Availability and changes",
+        body: "The library is added to and corrected regularly, so individual worksheets may be revised, renumbered or withdrawn. The site is provided as it is, and while we work to keep it available and accurate, we cannot guarantee uninterrupted access or that every sheet is free of error.",
+      },
+      {
+        heading: "Educational responsibility",
+        body: "Worksheets are supplementary practice, not a curriculum. Adults should review a sheet before giving it to a child to confirm the level and content suit that particular learner. Decisions about a child's learning remain with the parent, guardian or teacher.",
+      },
+      {
+        heading: "Third-party content",
+        body: "The site uses third-party services for analytics and advertising, and worksheet PDFs may be delivered or previewed through third-party file services. Those providers operate under their own terms and privacy policies.",
       },
     ],
   },
@@ -147,42 +243,106 @@ const STATIC_SEO_PAGES: StaticSeoPage[] = [
     sections: [
       {
         heading: "Educational purpose",
-        body: "WizKidsHub worksheets are supplementary practice materials. They support classroom teaching and home learning but are not a replacement for a formal school curriculum.",
+        body: "WizKidsHub worksheets are supplementary practice materials. They are written to reinforce skills a child is already meeting at school or at home, and they do not replace a formal school curriculum, a qualified teacher, or professional assessment of a child's learning needs.",
       },
       {
         heading: "Accuracy and suitability",
-        body: "Content is prepared with care, but parents and educators should review each worksheet for accuracy and suitability before giving it to a child.",
+        body: "Worksheets and the guidance around them are prepared with care, but errors can survive review, and a sheet that suits one child in a grade may be too easy or too hard for another. Parents and educators should read a worksheet before giving it to a child, and use their own judgement about level, content and timing. Mistakes reported through the support page are corrected.",
+      },
+      {
+        heading: "No professional advice",
+        body: "Nothing on this site is educational, psychological or medical advice. If you are concerned about a child's reading, numeracy, attention or development, speak to the child's teacher or to a qualified specialist rather than relying on practice sheets to resolve it.",
+      },
+      {
+        heading: "External links and advertising",
+        body: "Pages may link to third-party websites and may display advertising served by third parties. WizKidsHub does not control that content and is not responsible for it. Adults should supervise children's browsing, as with any website.",
       },
     ],
   },
 ];
 
 // Grade collection pages: /categories/grade-1 ... /categories/grade-5
-const GRADE_INTROS: Record<string, string> = {
-  "1": "Grade 1 worksheets build early number sense, phonics, handwriting, and first science observations through short, focused printable practice.",
-  "2": "Grade 2 worksheets strengthen addition and subtraction with regrouping, reading fluency, paragraph writing, and hands-on science topics.",
-  "3": "Grade 3 worksheets cover multiplication, division, fractions, reading comprehension, essay basics, and guided science investigations.",
-  "4": "Grade 4 worksheets practise multi-digit multiplication and division, fractions and decimals, longer writing tasks, and energy and body science.",
-  "5": "Grade 5 worksheets prepare students for middle school with fraction and decimal operations, literary analysis, and space and matter science.",
+interface GradeDetail {
+  learn: string;
+  math: string;
+  english: string;
+  science: string;
+  computing: string;
+  struggles: string;
+  routine: string;
+}
+
+const GRADE_DETAILS: Record<string, GradeDetail> = {
+  "1": {
+    learn: "Grade 1 is the year formal practice begins. Children move from recognising numbers to using them, from naming letters to blending them into words, and from listening to stories to reading short ones themselves. Progress is uneven by nature: a child may count confidently to a hundred on Monday and lose track at the teens on Wednesday. Short, frequent practice suits this age far better than long sessions.",
+    math: "Number sense comes first: counting forwards and backwards, comparing quantities, and understanding that the 2 in 25 means two tens. Addition and subtraction stay within twenty, usually with counters, fingers or a number line still allowed. Children meet flat and solid shapes, simple patterns, non-standard measurement, the hour and half hour on a clock, and coins used in small totals.",
+    english: "Phonics dominates: single letter sounds, consonant blends, digraphs such as sh and ch, and the first look at how a silent e changes a vowel. Alongside decoding, children practise letter formation, capital letters and full stops, sight words, and writing a complete sentence that someone else can read.",
+    science: "Science in Grade 1 is observation. Children compare living and non-living things, name the parts of a plant, sort animals by where they live and what they eat, learn what a body needs to stay healthy, and notice weather and seasons changing around them.",
+    computing: "Computer work starts with the physical machine: naming the monitor, keyboard and mouse, understanding what input and output mean, switching a device on and off properly, and the first rules about asking an adult before using one.",
+    struggles: "Reversed letters and digits are normal at this age and usually resolve with practice. The two genuine sticking points are counting on from a number rather than restarting at one, and guessing a word from the picture instead of sounding it out. Both are worth catching early, because both get harder to unlearn in Grade 2.",
+    routine: "Ten to fifteen minutes is plenty. One number sheet and one phonics sheet, finished and praised, beats a stack half done. Let the child read the instruction aloud so you know whether a wrong answer came from the skill or from the words describing it.",
+  },
+  "2": {
+    learn: "Grade 2 is where methods replace counting. Children start adding and subtracting two-digit numbers on paper, read for meaning rather than only decoding, and write several connected sentences. The jump in expectation is larger than it looks, and this is often the year a parent first notices a gap.",
+    math: "Addition and subtraction move to two and three digits with regrouping, which is the year's central skill. Children meet equal groups and repeated addition as the beginning of multiplication, halves and quarters as first fractions, standard units of length and mass, time to five minutes, and money problems needing change.",
+    english: "Phonics continues with long vowel patterns, r-controlled vowels and common suffixes, while attention shifts towards comprehension: answering questions about a passage, retelling a story in order, and finding a word's meaning from the sentence around it. Writing grows to a short paragraph with consistent tense and correct sentence punctuation.",
+    science: "Children compare life cycles, look at habitats and simple food chains, sort materials by their properties, explore where water comes from and why it must be kept clean, and start recording what they observe rather than just describing it.",
+    computing: "Work moves onto the screen: using a mouse and keyboard with intent, opening and saving a file, typing and formatting a few lines, recognising common icons, and following simple rules about screen time and privacy.",
+    struggles: "Regrouping is where most Grade 2 errors live, and the usual cause is columns drifting out of line rather than a misunderstanding of tens. In reading, children who answer comprehension questions from memory instead of returning to the text need to be shown that going back to look is allowed and expected.",
+    routine: "Twenty minutes, four or five times a week. Ask the child to explain one answer aloud each session. In subtraction with borrowing, watch the working rather than only the final number, because the slip is nearly always visible mid-calculation.",
+  },
+  "3": {
+    learn: "Grade 3 brings multiplication, division and the first real fractions, and reading shifts from learning to read towards reading to learn. Children are expected to hold a method in mind across several steps, which is a genuine change in demand and the reason Grade 3 practice benefits most from an adult nearby.",
+    math: "Multiplication tables and division facts become the backbone, used in area, arrays and word problems. Fractions arrive properly as parts of a whole and as points on a number line. Children also work with place value to thousands, column addition and subtraction, perimeter, elapsed time, and money problems with more than one step.",
+    english: "Comprehension becomes central: main idea, sequence, cause and effect, and inference from clues rather than direct statements. Grammar covers nouns, verbs, adjectives, subject-verb agreement and commas in lists. Vocabulary work uses prefixes, suffixes and context. Writing extends to structured paragraphs with a clear opening and closing.",
+    science: "Investigation begins. Children plan simple fair tests, learn about plant parts and their functions, food groups and digestion, forces and simple machines, the water cycle, and how human activity affects the local environment.",
+    computing: "Children use software with purpose: typing and editing a document, making a simple presentation, searching sensibly for information, understanding that not everything found online is true, and learning the basics of passwords and safe sharing.",
+    struggles: "Two problems recur. In fractions, children add the denominators as well as the numerators, because the notation looks like two separate numbers. In time, they subtract clock times as if they were ordinary numbers and lose the sixty-minute hour. Both need naming explicitly rather than simply marking wrong.",
+    routine: "Twenty to twenty-five minutes. Keep times-table recall and written method practice separate; fluency drills and multi-step problems tire a child in different ways, and mixing them makes it hard to tell which part is failing.",
+  },
+  "4": {
+    learn: "Grade 4 is a consolidation year with heavier arithmetic. Multi-digit multiplication and division, fractions and decimals as two views of the same idea, and writing that must be planned before it is written. Accuracy over several steps matters more than it did before, and careless slips start costing whole answers.",
+    math: "Children multiply and divide multi-digit numbers with formal written methods, find factors and multiples, compare and add fractions, convert between fractions and decimals, work with measurement conversions and area and perimeter of compound shapes, and read data from tables and graphs.",
+    english: "Reading covers longer passages, inference, author's purpose, and summarising without copying. Grammar adds tense consistency, pronoun agreement, apostrophes for possession and contraction, and direct speech punctuation. Vocabulary grows through roots, synonyms and shades of meaning, and writing extends to planned multi-paragraph pieces.",
+    science: "Topics include the human body's major systems, adaptation and classification, energy and its transfers, states of matter and changes between them, sources and conservation of water, and environmental impact with evidence-based reasoning.",
+    computing: "Work becomes more independent: organising files into folders, editing documents and presentations properly, using spreadsheets for simple sums, evaluating sources found online, and understanding what information should never be shared.",
+    struggles: "In long multiplication the carried digit goes missing or lands in the wrong column, and in division the remainder is dropped. In fractions, unlike denominators are added without finding a common one. In writing, the apostrophe migrates onto ordinary plurals. None of these signal weak understanding; they signal a method not yet automatic.",
+    routine: "Twenty-five to thirty minutes. Have the child check one completed calculation by estimating first, then compare. Estimation catches misplaced digits faster than re-doing the whole sum and builds the habit of noticing an answer that cannot be right.",
+  },
+  "5": {
+    learn: "Grade 5 is preparation for middle school. Fractions and decimals must be operated on confidently, reading must be analysed rather than retold, and writing must hold a position across several paragraphs. Independence is part of the expectation, so practice this year should end with the child checking their own work.",
+    math: "Children add, subtract, multiply and divide fractions and decimals, work with percentages, use order of operations, handle volume and surface area, plot coordinates, calculate averages, and solve multi-step word problems where choosing the operation is the difficult part.",
+    english: "Reading covers theme, character motivation, figurative language, comparing texts and distinguishing fact from opinion. Grammar extends to clauses, complex sentences, active and passive voice and consistent register. Writing includes structured essays, opinion pieces with reasons, and summaries in the child's own words.",
+    science: "Topics include space and the solar system, matter and its properties, energy transfer, ecosystems and interdependence, the water cycle and conservation, and human impact on climate and habitats, with an emphasis on explaining evidence.",
+    computing: "Children work with documents, spreadsheets and presentations for real tasks, understand file types and storage, research critically, recognise plagiarism, and discuss digital footprint, online safety and responsible behaviour.",
+    struggles: "Dividing by a fraction produces a larger answer, which feels wrong and gets reversed. Decimal points drift when multiplying. In comprehension, children retell the plot when asked for the theme. In essays, paragraphs are written but never linked into an argument. Each needs its own conversation rather than more of the same sheet.",
+    routine: "Thirty minutes, with the last five spent checking rather than doing. Ask the child to say why an answer is reasonable before accepting it; at this level, explaining the reasoning is the skill that transfers to secondary school.",
+  },
 };
 
 function buildGradePages(): StaticSeoPage[] {
-  return ["1", "2", "3", "4", "5"].map((g) => ({
-    path: `/categories/grade-${g}`,
-    title: `Grade ${g} Worksheets – Free Printable PDFs | WizKidsHub`,
-    description: `Download free Grade ${g} printable worksheets in Math, English, and Science. Curriculum-aligned PDFs for home and classroom use.`,
-    heading: `Grade ${g} Worksheets`,
-    sections: [
-      {
-        heading: `What Grade ${g} students learn`,
-        body: GRADE_INTROS[g],
-      },
-      {
-        heading: "Browse by subject",
-        body: `Grade ${g} worksheets are organised into Math, English, Science, Computer Science, and Assignments collections, each with topic pages and printable PDF worksheets.`,
-      },
-    ],
-  }));
+  return ["1", "2", "3", "4", "5"].map((g) => {
+    const d = GRADE_DETAILS[g];
+    return {
+      path: `/categories/grade-${g}`,
+      title: `Grade ${g} Worksheets – Free Printable PDFs | WizKidsHub`,
+      description: `Download free Grade ${g} printable worksheets in Math, English, and Science. Curriculum-aligned PDFs for home and classroom use.`,
+      heading: `Grade ${g} Worksheets`,
+      sections: [
+        { heading: `What Grade ${g} students are working on`, body: d.learn },
+        { heading: `Grade ${g} Math worksheets`, body: d.math },
+        { heading: `Grade ${g} English worksheets`, body: d.english },
+        { heading: `Grade ${g} Science worksheets`, body: d.science },
+        { heading: `Grade ${g} Computer Science worksheets`, body: d.computing },
+        { heading: `Where Grade ${g} children usually get stuck`, body: d.struggles },
+        { heading: `How to use Grade ${g} worksheets at home`, body: d.routine },
+        {
+          heading: "Free to print for home and classroom",
+          body: `Every Grade ${g} worksheet on this page is a free printable PDF with no sign-up and no download limit. Sheets on the same topic are numbered in teaching order, so you can work through a skill in sequence, and each worksheet page explains the objectives, shows sample questions from the sheet, and answers the questions parents ask most about that topic.`,
+        },
+      ],
+    };
+  });
 }
 
 
