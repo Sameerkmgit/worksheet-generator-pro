@@ -541,6 +541,8 @@ interface WorksheetRecord {
   title: string | null;
   grade: string | null;
   subject: string | null;
+  sub_category: string | null;
+  questions: unknown;
 }
 
 async function generateWorksheetPages(distDir: string, baseHtml: string) {
@@ -548,7 +550,7 @@ async function generateWorksheetPages(distDir: string, baseHtml: string) {
   const pageSize = 1000;
   for (let offset = 0; ; offset += pageSize) {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/worksheets?is_archived=eq.false&select=id,slug,title,grade,subject&order=id.asc&limit=${pageSize}&offset=${offset}`,
+      `${SUPABASE_URL}/rest/v1/worksheets?is_archived=eq.false&select=id,slug,title,grade,subject,sub_category,questions&order=id.asc&limit=${pageSize}&offset=${offset}`,
       {
         headers: {
           apikey: SUPABASE_ANON_KEY,
@@ -607,14 +609,46 @@ async function generateWorksheetPages(distDir: string, baseHtml: string) {
       },
     })}</script>`;
 
-    const seoBlock = [
+    const topicContent = pickTopicContent({
+      worksheetId: String(w.id),
+      title: rawTitle,
+      grade: gradeNum,
+      subject: (w.subject || "").toString(),
+      topic: w.sub_category,
+    });
+
+    const sampleQuestions = extractQuestions(w.questions).slice(0, 3);
+
+    const parts: string[] = [
       `<article data-seo-prerender="true" style="max-width:900px;margin:0 auto;padding:2rem 1rem;font-family:system-ui,sans-serif;color:#333">`,
       `<h1>${escapeHtml(rawTitle)}</h1>`,
       `<p>${escapeHtml(description)}</p>`,
       `<h2>Grade ${escapeHtml(gradeNum)} ${escapeHtml(subject)} practice</h2>`,
       `<p>${escapeHtml(`This printable ${topicName} worksheet is part of the free WizKidsHub Grade ${gradeNum} ${subject} collection. Print it at home or in the classroom for extra practice.`)}</p>`,
-      `</article>`,
-    ].join("\n");
+    ];
+
+    if (topicContent) {
+      parts.push(`<h2>What this worksheet teaches</h2><ul>`);
+      for (const o of topicContent.objectives) parts.push(`<li>${escapeHtml(o)}</li>`);
+      parts.push(`</ul>`);
+      parts.push(`<h2>How to use this worksheet</h2><p>${escapeHtml(topicContent.usage)}</p>`);
+    }
+
+    if (sampleQuestions.length > 0) {
+      parts.push(`<h2>Sample questions from this worksheet</h2><ol>`);
+      for (const q of sampleQuestions) parts.push(`<li>${escapeHtml(q)}</li>`);
+      parts.push(`</ol>`);
+    }
+
+    if (topicContent && topicContent.faq.length > 0) {
+      parts.push(`<h2>Frequently asked questions</h2>`);
+      for (const f of topicContent.faq) {
+        parts.push(`<h3>${escapeHtml(f.question)}</h3><p>${escapeHtml(f.answer)}</p>`);
+      }
+    }
+
+    parts.push(`</article>`);
+    const seoBlock = parts.join("\n");
 
     const html = injectHtml(baseHtml, metaTags, jsonLd, seoBlock);
 
