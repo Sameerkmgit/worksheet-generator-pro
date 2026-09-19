@@ -77,7 +77,9 @@ const AdSense = ({ adSlot, adFormat = "auto", fullWidthResponsive = true, classN
       resizeObserver?.disconnect();
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [isPlaceholder]);
+
+  if (isPlaceholder) return null;
 
   return (
     <ins
