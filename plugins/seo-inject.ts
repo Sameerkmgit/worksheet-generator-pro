@@ -636,13 +636,14 @@ async function generateWorksheetPages(distDir: string, baseHtml: string) {
       },
     })}</script>`;
 
-    const topicContent = pickTopicContent({
-      worksheetId: String(w.id),
-      title: rawTitle,
-      grade: gradeNum,
-      subject: (w.subject || "").toString(),
-      topic: w.sub_category,
-    });
+    const content =
+      pickTopicContent({
+        worksheetId: String(w.id),
+        title: rawTitle,
+        grade: gradeNum,
+        subject: (w.subject || "").toString(),
+        topic: w.sub_category || topicName,
+      }) || genericWorksheetContent(gradeNum, subject, topicName, String(w.id));
 
     const sampleQuestions = extractQuestions(w.questions).slice(0, 3);
 
@@ -654,12 +655,10 @@ async function generateWorksheetPages(distDir: string, baseHtml: string) {
       `<p>${escapeHtml(`This printable ${topicName} worksheet is part of the free WizKidsHub Grade ${gradeNum} ${subject} collection. Print it at home or in the classroom for extra practice.`)}</p>`,
     ];
 
-    if (topicContent) {
-      parts.push(`<h2>What this worksheet teaches</h2><ul>`);
-      for (const o of topicContent.objectives) parts.push(`<li>${escapeHtml(o)}</li>`);
-      parts.push(`</ul>`);
-      parts.push(`<h2>How to use this worksheet</h2><p>${escapeHtml(topicContent.usage)}</p>`);
-    }
+    parts.push(`<h2>What this worksheet teaches</h2><ul>`);
+    for (const o of content.objectives) parts.push(`<li>${escapeHtml(o)}</li>`);
+    parts.push(`</ul>`);
+    parts.push(`<h2>How to use this worksheet</h2><p>${escapeHtml(content.usage)}</p>`);
 
     if (sampleQuestions.length > 0) {
       parts.push(`<h2>Sample questions from this worksheet</h2><ol>`);
@@ -667,12 +666,13 @@ async function generateWorksheetPages(distDir: string, baseHtml: string) {
       parts.push(`</ol>`);
     }
 
-    if (topicContent && topicContent.faq.length > 0) {
+    if (content.faq.length > 0) {
       parts.push(`<h2>Frequently asked questions</h2>`);
-      for (const f of topicContent.faq) {
+      for (const f of content.faq) {
         parts.push(`<h3>${escapeHtml(f.question)}</h3><p>${escapeHtml(f.answer)}</p>`);
       }
     }
+
 
     parts.push(`</article>`);
     const seoBlock = parts.join("\n");
