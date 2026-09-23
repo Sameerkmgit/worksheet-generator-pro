@@ -1,12 +1,12 @@
 # WizKidsHub
 
-> Free printable worksheets for Grades 1–5 in Math, English, Science, and Computer Science. No sign-up required.
+> Free printable worksheets for Grades 1 to 5 in Math, English, Science, and Computer Science. No sign-up required.
 
 WizKidsHub offers 780+ curriculum-aligned PDF worksheets that parents and teachers can browse, preview, and download for free. Worksheets are organized by grade, subject, and topic, with curated grade-level packs and a learning blog with teaching guides.
 
 ## Pages
 
-- [Home](/): Overview of free printable worksheets for Grades 1–5.
+- [Home](/): Overview of free printable worksheets for Grades 1 to 5.
 - [Browse Worksheets](/worksheets): Searchable library of all printable worksheets, filterable by grade, subject, and difficulty.
 - [Worksheet Packs](/packs): Curated PDF packs (10 worksheets each) by grade.
 - [About](/about): Mission, team, and how WizKidsHub is built.
@@ -30,5 +30,5 @@ WizKidsHub offers 780+ curriculum-aligned PDF worksheets that parents and teache
 - [Blog: Top English Worksheets for Grade 2](/blog/top-english-worksheets-grade-2)
 - [Blog: Printable vs Screen Time](/blog/printable-vs-screen-time)
 - [Blog: WizKidsHub in the Classroom](/blog/wizkidshub-in-classroom)
-- [Blog: Grade 3 Science – Plants & Animals](/blog/grade-3-science-plants-animals)
-- [Blog: Building Math Confidence in Grades 4–5](/blog/math-confidence-grade-4-5)
+- [Blog: Grade 3 Science - Plants & Animals](/blog/grade-3-science-plants-animals)
+- [Blog: Building Math Confidence in Grades 4 to 5](/blog/math-confidence-grade-4-5)

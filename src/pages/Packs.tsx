@@ -81,14 +81,14 @@ const Packs = () => {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Free Worksheet Packs (PDF) for Grades 1–5 | WizKidsHub</title>
+        <title>Free Worksheet Packs (PDF) for Grades 1 to 5 | WizKidsHub</title>
         <meta
           name="description"
-          content="Download free worksheet packs for Grades 1–5. Each pack includes 10 carefully selected printable worksheets in PDF format."
+          content="Download free worksheet packs for Grades 1 to 5. Each pack includes 10 carefully selected printable worksheets in PDF format."
         />
         <link rel="canonical" href="https://www.wizkidshub.com/packs" />
-        <meta property="og:title" content="Free Worksheet Packs (PDF) for Grades 1–5 | WizKidsHub" />
-        <meta property="og:description" content="Download free worksheet packs for Grades 1–5. Each pack includes 10 carefully selected printable worksheets in PDF format." />
+        <meta property="og:title" content="Free Worksheet Packs (PDF) for Grades 1 to 5 | WizKidsHub" />
+        <meta property="og:description" content="Download free worksheet packs for Grades 1 to 5. Each pack includes 10 carefully selected printable worksheets in PDF format." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.wizkidshub.com/packs" />
         <meta property="og:site_name" content="WizKidsHub" />
@@ -96,8 +96,8 @@ const Packs = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Free Worksheet Packs for Grades 1–5",
-            description: "Curated PDF worksheet packs for Grades 1–5. Each pack includes 10 printable worksheets.",
+            name: "Free Worksheet Packs for Grades 1 to 5",
+            description: "Curated PDF worksheet packs for Grades 1 to 5. Each pack includes 10 printable worksheets.",
             url: "https://www.wizkidshub.com/packs",
             isPartOf: { "@type": "WebSite", name: "WizKidsHub", url: "https://www.wizkidshub.com" },
             mainEntity: {

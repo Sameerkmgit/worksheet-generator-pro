@@ -354,7 +354,7 @@ function buildGradePages(): StaticSeoPage[] {
     const d = GRADE_DETAILS[g];
     return {
       path: `/categories/grade-${g}`,
-      title: `Grade ${g} Worksheets – Free Printable PDFs | WizKidsHub`,
+      title: `Grade ${g} Worksheets - Free Printable PDFs | WizKidsHub`,
       description: `Download free Grade ${g} printable worksheets in Math, English, and Science. Curriculum-aligned PDFs for home and classroom use.`,
       heading: `Grade ${g} Worksheets`,
       sections: [
@@ -666,7 +666,7 @@ async function generateWorksheetPages(distDir: string, baseHtml: string) {
     if (!rawTitle) continue;
     const gradeNum = (w.grade || "").toString().replace("Grade ", "").trim();
     const subject = toTitleCase((w.subject || "").toString());
-    const topicName = rawTitle.split("–")[0]?.replace(/\([^)]*\)/g, "").trim() || rawTitle;
+    const topicName = rawTitle.split("-")[0]?.replace(/\([^)]*\)/g, "").trim() || rawTitle;
     const canonicalPath = `/worksheet/${w.slug || w.id}`;
     const canonicalUrl = `${SITE_URL}${canonicalPath}`;
     const title = `${rawTitle} | WizKidsHub`;
@@ -814,7 +814,7 @@ async function generateTopicPages(distDir: string, baseHtml: string) {
     const topicTitle = utilTitleCase(sub.title);
     const subjectLabel = utilTitleCase(cat.subject);
     const gradeLabel = `Grade ${grade}`;
-    const title = `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} – Free Printable | WizKidsHub`;
+    const title = `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} - Free Printable | WizKidsHub`;
     const description = `Download free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. Perfect for practice, homework, and classroom learning.`;
 
     const metaTags = [

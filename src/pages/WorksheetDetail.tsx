@@ -247,7 +247,7 @@ const WorksheetDetail = () => {
   // Use the raw DB title (already in standard naming convention) for SEO meta
   const rawTitle = worksheet.title || cleanTitle;
   const pageTitle = `${rawTitle} | WizKidsHub`;
-  const topicName = cleanTitle.split("–")[0]?.trim() || cleanTitle;
+  const topicName = cleanTitle.split("-")[0]?.trim() || cleanTitle;
   const pageDescription = `Download this free printable ${topicName} worksheet for Grade ${gradeNum} ${subjectName}. Perfect for practice, homework, and classroom use.`;
   const pageUrl = `https://www.wizkidshub.com/worksheet/${worksheet.slug || worksheet.id}`;
 

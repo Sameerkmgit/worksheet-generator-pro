@@ -162,7 +162,7 @@ const TopicPage = () => {
   const pagePath = `/categories/${gradeSlug}/${subjectSlug}/${topicSlug}`;
   const override = useSeoOverride(pagePath);
   const canonicalUrl = `${SITE_URL}${pagePath}`;
-  const seoTitle = override?.meta_title || `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} – Free Printable | WizKidsHub`;
+  const seoTitle = override?.meta_title || `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} - Free Printable | WizKidsHub`;
   const seoDescription = override?.meta_description || `Download free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. Perfect for practice, homework, and classroom learning.`;
 
   const breadcrumbItems = [
@@ -176,7 +176,7 @@ const TopicPage = () => {
   const collectionJsonLd = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: seoTitle.replace(/ – .*$/, ""),
+    name: seoTitle.replace(/ - .*$/, ""),
     description: seoDescription,
     url: canonicalUrl,
     isPartOf: { "@type": "WebSite", name: "WizKidsHub", url: SITE_URL },

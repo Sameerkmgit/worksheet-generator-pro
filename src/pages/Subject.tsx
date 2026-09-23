@@ -172,7 +172,7 @@ const Subject = () => {
   const pagePath = `/categories/${gradeSlug}/${subjectSlug}`;
   const override = useSeoOverride(pagePath);
 
-  const pageTitle = override?.meta_title || `Grade ${gradeNumber} ${subjectLabel} Worksheets – Free Printable | WizKidsHub`;
+  const pageTitle = override?.meta_title || `Grade ${gradeNumber} ${subjectLabel} Worksheets - Free Printable | WizKidsHub`;
   const pageDescription = override?.meta_description || `Download free printable ${subjectLabel} worksheets for Grade ${gradeNumber}. Perfect for practice, homework, and classroom learning.`;
   const pageUrl = `https://www.wizkidshub.com${pagePath}`;
 
@@ -193,7 +193,7 @@ const Subject = () => {
   const collectionJsonLd = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: pageTitle.replace(/ – .*$/, ""),
+    name: pageTitle.replace(/ - .*$/, ""),
     description: pageDescription,
     url: pageUrl,
     isPartOf: { "@type": "WebSite", name: "WizKidsHub", url: "https://www.wizkidshub.com" },

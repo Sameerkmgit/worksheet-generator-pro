@@ -76,18 +76,18 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Free Printable Worksheets for Grades 1–5 | WizKidsHub</title>
+        <title>Free Printable Worksheets for Grades 1 to 5 | WizKidsHub</title>
         <meta name="description" content="Download free printable Math, English, and Science worksheets for Grades 1 to 5. Trusted PDF worksheets for parents and teachers." />
         <meta name="keywords" content="free printable worksheets, grade 1 worksheets, grade 2 worksheets, grade 3 worksheets, grade 4 worksheets, grade 5 worksheets, CBSE worksheets, math worksheets, english worksheets, science worksheets" />
         <link rel="canonical" href="https://www.wizkidshub.com/" />
-        <meta property="og:title" content="Free Printable Worksheets for Grades 1–5 | WizKidsHub" />
+        <meta property="og:title" content="Free Printable Worksheets for Grades 1 to 5 | WizKidsHub" />
         <meta property="og:description" content="Download free printable Math, English, and Science worksheets for Grades 1 to 5. Trusted PDF worksheets for parents and teachers." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.wizkidshub.com/" />
         <meta property="og:image" content="https://www.wizkidshub.com/og-image.jpg" />
         <meta property="og:site_name" content="WizKidsHub" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Free Printable Worksheets for Grades 1–5 | WizKidsHub" />
+        <meta name="twitter:title" content="Free Printable Worksheets for Grades 1 to 5 | WizKidsHub" />
         <meta name="twitter:description" content="Download free printable Math, English, and Science worksheets for Grades 1 to 5." />
         <meta name="twitter:image" content="https://www.wizkidshub.com/og-image.jpg" />
         <script type="application/ld+json">
@@ -110,7 +110,7 @@ const Home = () => {
         <div className="container mx-auto max-w-[1140px] relative z-10">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in font-heading">
-              Free Printable Worksheets for Grades 1–5
+              Free Printable Worksheets for Grades 1 to 5
             </h1>
             <h2 className="text-xl md:text-2xl text-blue-50 mb-4 animate-fade-in max-w-3xl mx-auto font-medium">
               Printable Math, English, and Science Worksheets for Kids

@@ -14,14 +14,14 @@ const About = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>About Us – Free Printable Worksheets | WizKidsHub</title>
+        <title>About Us - Free Printable Worksheets | WizKidsHub</title>
         <meta
           name="description"
-          content="WizKidsHub offers 780+ free printable worksheets for Grades 1–5 in Math, English, Science, and Computer Science. Built by parents and educators."
+          content="WizKidsHub offers 780+ free printable worksheets for Grades 1 to 5 in Math, English, Science, and Computer Science. Built by parents and educators."
         />
         <link rel="canonical" href="https://www.wizkidshub.com/about" />
-        <meta property="og:title" content="About WizKidsHub – Free Printable Worksheets for Kids" />
-        <meta property="og:description" content="WizKidsHub offers 780+ free printable worksheets for Grades 1–5 in Math, English, Science, and Computer Science." />
+        <meta property="og:title" content="About WizKidsHub - Free Printable Worksheets for Kids" />
+        <meta property="og:description" content="WizKidsHub offers 780+ free printable worksheets for Grades 1 to 5 in Math, English, Science, and Computer Science." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.wizkidshub.com/about" />
         <meta property="og:site_name" content="WizKidsHub" />

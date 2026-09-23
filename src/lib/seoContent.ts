@@ -116,7 +116,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Write a sentence about your favorite animal. Remember to start with a capital letter!",
         "Circle all the nouns in this sentence: The dog ran to the big park.",
       ],
-      howToUse: "Read the instructions aloud for emerging readers. Pair worksheets with read-aloud sessions - after a story, use related worksheets to practice new vocabulary. Keep sessions short (10–15 minutes) to maintain focus and enthusiasm.",
+      howToUse: "Read the instructions aloud for emerging readers. Pair worksheets with read-aloud sessions - after a story, use related worksheets to practice new vocabulary. Keep sessions short (10 to 15 minutes) to maintain focus and enthusiasm.",
     },
     "2": {
       intro: "Grade 2 English expands reading comprehension and introduces structured writing. Students move beyond decoding to understanding what they read, learning to identify main ideas and story elements. Writing becomes more expressive as second graders learn to organize thoughts into paragraphs and use descriptive language. Our worksheets support this exciting transition from learning to read to reading to learn.",
@@ -566,7 +566,7 @@ const topicExampleQs: Record<string, Record<string, (grade: string) => string[]>
 const topicPracticeTips: Record<string, Record<string, (grade: string, topic: string) => string>> = {
   math: {
     default: (g, t) =>
-      `For the best results with ${t} practice, work through problems in order from easiest to hardest. If your child gets stuck, encourage them to re-read the problem and try drawing a picture or using objects to visualize it. Aim for 10–15 minutes of focused practice daily rather than long, tiring sessions. Review completed worksheets together to celebrate correct answers and learn from mistakes - both are valuable!`,
+      `For the best results with ${t} practice, work through problems in order from easiest to hardest. If your child gets stuck, encourage them to re-read the problem and try drawing a picture or using objects to visualize it. Aim for 10 to 15 minutes of focused practice daily rather than long, tiring sessions. Review completed worksheets together to celebrate correct answers and learn from mistakes - both are valuable!`,
   },
   english: {
     default: (g, t) =>
