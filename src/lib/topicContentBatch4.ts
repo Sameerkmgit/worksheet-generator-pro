@@ -1,5 +1,5 @@
 /**
- * Topic content bank — batch 4.
+ * Topic content bank - batch 4.
  *
  * Remaining English topics (grammar, phonics, vocabulary, reading) plus early
  * shapes. Same quality bar: grade-specific, names the real difficulty and what
@@ -20,7 +20,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       "Use I instead of me as the person doing the action ('I ran', not 'me ran').",
     ],
     usage: [
-      "Grade 1 grammar is mostly an ear skill, not a rule skill. Read each sentence aloud with your child before they write — 'a apple' sounds wrong to a six-year-old long before they can explain the vowel rule, and that instinct is what the sheet is training.",
+      "Grade 1 grammar is mostly an ear skill, not a rule skill. Read each sentence aloud with your child before they write - 'a apple' sounds wrong to a six-year-old long before they can explain the vowel rule, and that instinct is what the sheet is training.",
       "Check capitals and full stops last, as a separate pass. Children this age can either think about the words or think about the punctuation, rarely both at once, so splitting the job cuts the error count sharply.",
       "If handwriting is slowing things down, let your child say the answer and you write it. The grammar choice is what matters here; letter formation is a separate practice.",
     ],
@@ -43,7 +43,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "How long should this take?",
         answer:
-          "Around ten to fifteen minutes. If it stretches much past that, stop and finish later — accuracy drops quickly once a Grade 1 child tires.",
+          "Around ten to fifteen minutes. If it stretches much past that, stop and finish later - accuracy drops quickly once a Grade 1 child tires.",
       },
     ],
   },
@@ -55,19 +55,19 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       "Match subject and verb correctly ('she walks', not 'she walk').",
       "Use question marks and exclamation marks where the sentence needs them, not just full stops.",
       "Join two short sentences with and or but so the result still makes sense.",
-      "Use past tense correctly for regular verbs, and learn the common irregulars — went, ate, saw, ran.",
+      "Use past tense correctly for regular verbs, and learn the common irregulars - went, ate, saw, ran.",
       "Add commas between items in a simple list.",
     ],
     usage: [
-      "The single biggest Grade 2 slip is the missing s on present-tense verbs after he, she or it. Have your child read their finished answer aloud pointing at the verb — the ear catches 'she walk' immediately even when the eye does not.",
+      "The single biggest Grade 2 slip is the missing s on present-tense verbs after he, she or it. Have your child read their finished answer aloud pointing at the verb - the ear catches 'she walk' immediately even when the eye does not.",
       "For the joining questions, ask what the second sentence does to the first: adds more (and) or disagrees with it (but). Naming that job stops children using and for everything.",
-      "Irregular past tenses cannot be worked out, only remembered. Keep a running list on the fridge of the ones your child gets wrong and add to it over weeks — that beats re-teaching the same sheet.",
+      "Irregular past tenses cannot be worked out, only remembered. Keep a running list on the fridge of the ones your child gets wrong and add to it over weeks - that beats re-teaching the same sheet.",
     ],
     faq: [
       {
         question: "My child writes 'goed' and 'runned'. Is something wrong?",
         answer:
-          "No — that is actually a good sign. It means your child has learned the add-ed rule and is applying it everywhere. The irregular forms are simply memorised exceptions and come with exposure.",
+          "No - that is actually a good sign. It means your child has learned the add-ed rule and is applying it everywhere. The irregular forms are simply memorised exceptions and come with exposure.",
       },
       {
         question: "How many adjectives should a Grade 2 sentence have?",
@@ -99,14 +99,14 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
     ],
     usage: [
       "Apostrophes are the Grade 3 sticking point, and the confusion is always plural versus possessive. Ask one question of every apostrophe on the page: does something belong to somebody? If not, it should not be there.",
-      "For run-on sentences, have your child read the sentence out loud in one breath. If they run out of air, it needs splitting — a physical test works better than counting words.",
+      "For run-on sentences, have your child read the sentence out loud in one breath. If they run out of air, it needs splitting - a physical test works better than counting words.",
       "Tense consistency is easier to see across a whole paragraph than in one line. After the sheet is done, ask your child to underline every verb and check they all point to the same time.",
     ],
     faq: [
       {
         question: "Why does my child put an apostrophe in every word ending in s?",
         answer:
-          "It is a known over-correction once apostrophes are taught. Keep to the single test — does it show belonging? — and the extra ones disappear within a few weeks of practice.",
+          "It is a known over-correction once apostrophes are taught. Keep to the single test - does it show belonging? - and the extra ones disappear within a few weeks of practice.",
       },
       {
         question: "What exactly is a run-on sentence?",
@@ -133,19 +133,19 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       "Punctuate direct speech correctly, keeping the comma and full stop inside the quotation marks.",
       "Use conjunctions such as because, although and while to build complex sentences.",
       "Keep pronoun and antecedent agreement clear across two or three sentences.",
-      "Fix common confusions in writing — their/there/they're and its/it's.",
+      "Fix common confusions in writing - their/there/they're and its/it's.",
       "Use commas after an opening phrase ('After lunch, we left').",
     ],
     usage: [
-      "Direct speech punctuation has four separate moving parts — opening marks, the comma, the capital letter and the closing punctuation inside the marks. Have your child check one part at a time across all the sentences instead of perfecting each sentence in turn.",
+      "Direct speech punctuation has four separate moving parts - opening marks, the comma, the capital letter and the closing punctuation inside the marks. Have your child check one part at a time across all the sentences instead of perfecting each sentence in turn.",
       "For their/there/they're, teach the substitution test out loud: try 'they are' in the sentence. If it works, they're is right. It is the only reliable way to stop the error recurring.",
-      "When your child writes a complex sentence, ask them to point at the two verbs. If there is only one, they have written a phrase rather than a second clause — this is where Grade 4 sentences usually collapse.",
+      "When your child writes a complex sentence, ask them to point at the two verbs. If there is only one, they have written a phrase rather than a second clause - this is where Grade 4 sentences usually collapse.",
     ],
     faq: [
       {
         question: "Does the full stop go inside or outside the speech marks?",
         answer:
-          "Inside, when the words belong to the speaker — 'Let's go.' said with the stop before the closing mark. This is the most frequently missed detail at Grade 4.",
+          "Inside, when the words belong to the speaker - 'Let's go.' said with the stop before the closing mark. This is the most frequently missed detail at Grade 4.",
       },
       {
         question: "My child still writes 'there' for everything. What helps?",
@@ -155,7 +155,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "Are complex sentences expected at this grade?",
         answer:
-          "Yes — using because, although and while is a standard Grade 4 target, and it is one of the clearest markers of writing maturity in assessments.",
+          "Yes - using because, although and while is a standard Grade 4 target, and it is one of the clearest markers of writing maturity in assessments.",
       },
       {
         question: "How much grammar practice per week is sensible?",
@@ -177,14 +177,14 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
     ],
     usage: [
       "Passive voice is where Grade 5 writing quietly loses clarity. Ask your child who did the action in each sentence; if the answer is missing or hidden at the end, rewriting it actively usually improves the sentence immediately.",
-      "Semicolons only join two complete sentences. Have your child cover the semicolon and read each half alone — if either half cannot stand up, a comma or a full stop is correct instead.",
+      "Semicolons only join two complete sentences. Have your child cover the semicolon and read each half alone - if either half cannot stand up, a comma or a full stop is correct instead.",
       "Dangling modifiers are funniest read literally. Reading the sentence exactly as written ('Running down the road, the bag fell') makes the error obvious without any grammatical vocabulary.",
     ],
     faq: [
       {
         question: "Is passive voice wrong?",
         answer:
-          "No — it is right when the doer is unknown or unimportant, as in science writing. The Grade 5 skill is choosing it on purpose rather than drifting into it.",
+          "No - it is right when the doer is unknown or unimportant, as in science writing. The Grade 5 skill is choosing it on purpose rather than drifting into it.",
       },
       {
         question: "When does a relative clause need commas?",
@@ -207,7 +207,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
   // ──────────────────────────────────────────────────────────────────
   "3|english|phonics": {
     objectives: [
-      "Read and spell words with r-controlled vowels — ar, or, er, ir, ur — and hear that er, ir and ur often sound the same.",
+      "Read and spell words with r-controlled vowels - ar, or, er, ir, ur - and hear that er, ir and ur often sound the same.",
       "Split longer words into syllables to decode them instead of guessing from the first letter.",
       "Use common prefixes and suffixes (un-, re-, -ful, -less) to read unfamiliar words.",
       "Recognise soft c and soft g before e, i and y (city, giant).",
@@ -215,7 +215,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       "Spell words where the suffix changes the base word (hoping, hopped, happiest).",
     ],
     usage: [
-      "The Grade 3 phonics wall is that er, ir and ur all say the same sound, so spelling cannot be worked out by ear. Ask your child to write the word and check whether it looks right — visual memory is the only reliable route here, and short daily exposure builds it.",
+      "The Grade 3 phonics wall is that er, ir and ur all say the same sound, so spelling cannot be worked out by ear. Ask your child to write the word and check whether it looks right - visual memory is the only reliable route here, and short daily exposure builds it.",
       "For any long word your child stalls on, cover all but the first syllable, read it, then reveal the next. Chunking prevents the wild guess from the first letter that stalls reading at this grade.",
       "When a suffix is added, say the base word first, then the new word. That makes the doubling and the dropped e audible: hop, hopping; hope, hoping.",
     ],
@@ -223,7 +223,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "How do I know whether to write er, ir or ur?",
         answer:
-          "Sound alone will not tell you — they are near-identical. This is a look-and-remember spelling pattern, which is why the sheet mixes them deliberately rather than teaching one at a time.",
+          "Sound alone will not tell you - they are near-identical. This is a look-and-remember spelling pattern, which is why the sheet mixes them deliberately rather than teaching one at a time.",
       },
       {
         question: "My child reads fluently but spells badly. Is phonics still useful?",
@@ -233,7 +233,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "Why does the c sometimes sound like s?",
         answer:
-          "Because c is soft before e, i and y — city, cent, cycle. Learning the three trigger letters covers almost every case your child will meet.",
+          "Because c is soft before e, i and y - city, cent, cycle. Learning the three trigger letters covers almost every case your child will meet.",
       },
       {
         question: "Should we still be doing phonics in Grade 3?",
@@ -248,13 +248,13 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
     objectives: [
       "Read multisyllable words by finding the vowel sounds and splitting between them.",
       "Use Greek and Latin roots (tele-, port-, graph-, dict-) to work out unfamiliar words.",
-      "Spell words with silent letters — knee, wrist, lamb, sign — and know where they cluster.",
+      "Spell words with silent letters - knee, wrist, lamb, sign - and know where they cluster.",
       "Handle -tion, -sion and -cian endings, all of which say the same sound.",
       "Apply the doubling rule when adding endings to two-syllable words.",
       "Read homophones correctly in context (weight/wait, board/bored).",
     ],
     usage: [
-      "By Grade 4 the useful skill is not sounding out letters but spotting familiar chunks. When your child meets a hard word, ask what part they already recognise — tele, port, graph — and build outwards from it.",
+      "By Grade 4 the useful skill is not sounding out letters but spotting familiar chunks. When your child meets a hard word, ask what part they already recognise - tele, port, graph - and build outwards from it.",
       "The -tion / -sion / -cian endings are pure memory, so treat them as three separate word lists rather than one rule. Grouping them by the words your child actually got wrong is more efficient than the full list.",
       "Silent letters follow patterns worth naming out loud: kn at the start, mb at the end, wr before a vowel. Naming the pattern turns a hundred odd spellings into three small groups.",
     ],
@@ -287,13 +287,13 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
     objectives: [
       "Break unfamiliar academic words into root, prefix and suffix to work out meaning and pronunciation.",
       "Read words where stress changes the meaning (record, present, object).",
-      "Spell words with unstressed vowels that disappear in speech — separate, definite, family.",
+      "Spell words with unstressed vowels that disappear in speech - separate, definite, family.",
       "Use spelling patterns to choose between -able and -ible, and -ant and -ent.",
       "Handle irregular plurals and Latin forms (cactus/cacti, analysis/analyses).",
       "Read subject-specific vocabulary in science and social studies without stalling.",
     ],
     usage: [
-      "Most Grade 5 spelling errors come from unstressed vowels that simply are not pronounced — sep-a-rate, def-i-nite, fam-i-ly. Have your child deliberately over-pronounce the word syllable by syllable while writing it; exaggerating the hidden vowel is the standard fix.",
+      "Most Grade 5 spelling errors come from unstressed vowels that simply are not pronounced - sep-a-rate, def-i-nite, fam-i-ly. Have your child deliberately over-pronounce the word syllable by syllable while writing it; exaggerating the hidden vowel is the standard fix.",
       "For stress-shift words, read the sentence both ways out loud and pick the one that sounds natural. Meaning follows stress here, which is why silent reading alone misses the error.",
       "When your child meets a long science word, cover the prefix and suffix and read the middle first. Building outwards from the root turns intimidating vocabulary into something decodable.",
     ],
@@ -325,7 +325,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
   "4|english|vocabulary": {
     objectives: [
       "Work out an unfamiliar word's meaning from the surrounding sentence before reaching for a dictionary.",
-      "Use synonyms with attention to strength — 'furious' is not simply a longer 'angry'.",
+      "Use synonyms with attention to strength - 'furious' is not simply a longer 'angry'.",
       "Recognise antonyms formed with prefixes (possible/impossible, agree/disagree).",
       "Tell literal from figurative language in everyday idioms.",
       "Sort words by shades of meaning, from warm to hot to scalding.",
@@ -334,7 +334,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
     usage: [
       "Before your child looks a word up, ask them to guess from the sentence and say why. The guess is the skill being tested in Grade 4 assessments; the dictionary just confirms it.",
       "For synonym questions, ask which word is stronger rather than which is correct. Children this age treat synonyms as interchangeable, and grading them by intensity is what makes their writing precise.",
-      "Idioms cannot be decoded, only known. When one appears, read it literally and laugh at the picture — 'it's raining cats and dogs' — because the absurd image is what fixes the phrase in memory.",
+      "Idioms cannot be decoded, only known. When one appears, read it literally and laugh at the picture - 'it's raining cats and dogs' - because the absurd image is what fixes the phrase in memory.",
     ],
     faq: [
       {
@@ -345,7 +345,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "My child uses long words wrongly. Is that bad?",
         answer:
-          "It is a normal and encouraging stage — they are reaching. Discussing the shade of meaning, not banning the word, is what turns ambition into accuracy.",
+          "It is a normal and encouraging stage - they are reaching. Discussing the shade of meaning, not banning the word, is what turns ambition into accuracy.",
       },
       {
         question: "How many new words a week is reasonable?",
@@ -355,7 +355,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "Do idioms matter for assessments?",
         answer:
-          "Yes — comprehension questions frequently hinge on figurative phrases, and children who read them literally lose marks despite understanding the passage.",
+          "Yes - comprehension questions frequently hinge on figurative phrases, and children who read them literally lose marks despite understanding the passage.",
       },
     ],
   },
@@ -364,15 +364,15 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
   "5|english|vocabulary": {
     objectives: [
       "Use context, roots and affixes together to infer the meaning of academic vocabulary.",
-      "Distinguish connotation from denotation — why 'thrifty' and 'stingy' describe the same behaviour differently.",
+      "Distinguish connotation from denotation - why 'thrifty' and 'stingy' describe the same behaviour differently.",
       "Choose precise verbs and nouns in place of vague ones in their own writing.",
       "Understand and use common Greek and Latin roots across subjects.",
       "Interpret similes, metaphors and personification in what they read.",
       "Use a thesaurus critically, checking the replacement actually fits the sentence.",
     ],
     usage: [
-      "The thesaurus trap is the main Grade 5 problem: a technically correct synonym that no one would say in that sentence. Have your child read the sentence aloud with the new word in place — if it sounds odd, it is wrong regardless of the thesaurus.",
-      "For connotation questions, ask whether the word is a compliment or a criticism. Same meaning, different attitude — that is the whole distinction, and framing it that way is quicker than defining the term.",
+      "The thesaurus trap is the main Grade 5 problem: a technically correct synonym that no one would say in that sentence. Have your child read the sentence aloud with the new word in place - if it sounds odd, it is wrong regardless of the thesaurus.",
+      "For connotation questions, ask whether the word is a compliment or a criticism. Same meaning, different attitude - that is the whole distinction, and framing it that way is quicker than defining the term.",
       "When a root appears, ask your child for two other words that share it. Building small word families is what makes vocabulary work compound rather than accumulate one word at a time.",
     ],
     faq: [
@@ -410,7 +410,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       "Compare two characters or two facts described in the same passage.",
     ],
     usage: [
-      "The most common Grade 3 comprehension error is answering from what your child already knows about the topic rather than from the text. Ask them to underline the exact line their answer came from — if there is no line, the answer needs rethinking.",
+      "The most common Grade 3 comprehension error is answering from what your child already knows about the topic rather than from the text. Ask them to underline the exact line their answer came from - if there is no line, the answer needs rethinking.",
       "Read the questions before the passage the first time through. It feels backwards but it teaches purposeful reading, which is what timed comprehension tests actually measure.",
       "For inference questions, ask what the character did and what that usually means. Feelings are almost never stated at this level, and looking for the action is the reliable route to the answer.",
     ],
@@ -418,7 +418,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "My child reads well aloud but scores poorly on comprehension. Why?",
         answer:
-          "Decoding and understanding are separate skills. Fluent reading can use so much attention on accuracy that meaning is not stored — slowing down and retelling each paragraph fixes it.",
+          "Decoding and understanding are separate skills. Fluent reading can use so much attention on accuracy that meaning is not stored - slowing down and retelling each paragraph fixes it.",
       },
       {
         question: "How many times should the passage be read?",
@@ -428,7 +428,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "Should my child write in full sentences?",
         answer:
-          "For most comprehension marking, yes — and it also forces them to reread the question, which prevents half-answers.",
+          "For most comprehension marking, yes - and it also forces them to reread the question, which prevents half-answers.",
       },
       {
         question: "What is an inference question?",
@@ -442,14 +442,14 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
   "4|english|reading": {
     objectives: [
       "Summarise a passage in two or three sentences without copying whole lines.",
-      "Identify the author's purpose — to inform, persuade, entertain or instruct.",
+      "Identify the author's purpose - to inform, persuade, entertain or instruct.",
       "Support inferences with specific evidence from the text.",
       "Distinguish fact from opinion inside the same paragraph.",
       "Explain how a text is organised: sequence, cause and effect, or compare and contrast.",
       "Work out the meaning of figurative language in context.",
     ],
     usage: [
-      "Summarising is where Grade 4 children struggle most, because copying feels safer than choosing. Set a hard limit of three sentences — the constraint is what forces real selection, and it is the whole point of the exercise.",
+      "Summarising is where Grade 4 children struggle most, because copying feels safer than choosing. Set a hard limit of three sentences - the constraint is what forces real selection, and it is the whole point of the exercise.",
       "For fact versus opinion, ask a single question of each statement: could someone check this? Anything that depends on how a person feels is opinion, however confidently it is written.",
       "When your child gives an inference, follow every answer with 'how do you know?' That habit alone lifts comprehension marks, because most lost marks are correct answers without the supporting evidence.",
     ],
@@ -462,7 +462,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "How can a child tell the author's purpose?",
         answer:
-          "By what the text tries to make them do — buy, believe, learn or enjoy. Persuasive writing usually shows itself in strong opinion words.",
+          "By what the text tries to make them do - buy, believe, learn or enjoy. Persuasive writing usually shows itself in strong opinion words.",
       },
       {
         question: "Should we read fiction or non-fiction?",
@@ -488,7 +488,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       "Interpret figurative and symbolic language and explain its effect.",
     ],
     usage: [
-      "Theme and plot get confused at Grade 5 constantly. Plot is what happened; theme is what it is about underneath — courage, fairness, loss. Asking both questions separately about the same passage makes the difference concrete.",
+      "Theme and plot get confused at Grade 5 constantly. Plot is what happened; theme is what it is about underneath - courage, fairness, loss. Asking both questions separately about the same passage makes the difference concrete.",
       "For word-choice questions, have your child swap the author's word for a plainer one and read both. The change in feeling is what they are being asked to explain, and hearing it is far easier than describing it cold.",
       "When judging an argument, ask what evidence is offered and whether it actually proves the point. Grade 5 readers tend to accept confident writing as proven, and separating claim from evidence is the skill that changes that.",
     ],
@@ -521,13 +521,13 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
     objectives: [
       "Name circles, squares, rectangles and triangles regardless of how they are turned on the page.",
       "Count the sides and corners of a flat shape accurately.",
-      "Tell flat shapes from solid ones — a circle from a ball, a square from a box.",
+      "Tell flat shapes from solid ones - a circle from a ball, a square from a box.",
       "Spot shapes in everyday objects around the house.",
       "Continue a simple repeating shape pattern.",
       "Sort shapes by one property, such as number of sides or having curves.",
     ],
     usage: [
-      "The classic Grade 1 mistake is refusing to call a rotated square a square, or calling a long rectangle 'not a rectangle'. Cut one shape out of paper and physically turn it — seeing the same shape in a new position is what fixes this, and pictures alone rarely do.",
+      "The classic Grade 1 mistake is refusing to call a rotated square a square, or calling a long rectangle 'not a rectangle'. Cut one shape out of paper and physically turn it - seeing the same shape in a new position is what fixes this, and pictures alone rarely do.",
       "When counting corners, have your child mark each one with a pencil dot as they count. Six-year-olds lose track of where they started, and the dots remove the double-counting.",
       "Finish with a shape hunt in one room: a clock circle, a door rectangle, a roof triangle. That two-minute walk makes the whole sheet stick better than repeating it.",
     ],
@@ -535,7 +535,7 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "Why won't my child accept a tilted square as a square?",
         answer:
-          "Because they learned the shape in one fixed position. Turning a paper cut-out while they watch resolves it quickly — it is a very common Grade 1 stage.",
+          "Because they learned the shape in one fixed position. Turning a paper cut-out while they watch resolves it quickly - it is a very common Grade 1 stage.",
       },
       {
         question: "Should my child know 3D shape names now?",
@@ -559,14 +559,14 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
   "2|math|shapes": {
     objectives: [
       "Name 2D shapes up to hexagons and pentagons by counting their sides.",
-      "Identify 3D shapes — cube, cuboid, sphere, cylinder, cone — and count faces, edges and vertices.",
+      "Identify 3D shapes - cube, cuboid, sphere, cylinder, cone - and count faces, edges and vertices.",
       "Find lines of symmetry in simple shapes and letters.",
       "Recognise the same shape at different sizes and orientations.",
       "Combine two shapes to make a new one (two triangles into a square).",
       "Match a solid shape to the flat shapes on its faces.",
     ],
     usage: [
-      "Faces, edges and vertices is where Grade 2 counting breaks down, because the hidden back of the shape gets forgotten. Use a real box or a ball and turn it as your child counts — flat drawings hide exactly the faces they miss.",
+      "Faces, edges and vertices is where Grade 2 counting breaks down, because the hidden back of the shape gets forgotten. Use a real box or a ball and turn it as your child counts - flat drawings hide exactly the faces they miss.",
       "For symmetry, fold a paper copy of the shape rather than drawing the line. If the halves match, the fold is a line of symmetry; that physical check beats judging by eye.",
       "When combining shapes, let your child cut and place real paper triangles. The mental rotation involved is genuinely hard at this age and much easier with pieces in hand.",
     ],
@@ -574,12 +574,12 @@ export const TOPIC_CONTENT_BATCH_4: Record<string, TopicContentBank> = {
       {
         question: "Why does my child undercount the faces of a cube?",
         answer:
-          "Because a picture shows only three. Handling a real cube and marking each face as it is counted solves it — this is the single most common Grade 2 error in this topic.",
+          "Because a picture shows only three. Handling a real cube and marking each face as it is counted solves it - this is the single most common Grade 2 error in this topic.",
       },
       {
         question: "What is the difference between an edge and a vertex?",
         answer:
-          "An edge is a line where two faces meet; a vertex is a point where edges meet — the pointy bit. Tracing edges and tapping vertices keeps the words apart.",
+          "An edge is a line where two faces meet; a vertex is a point where edges meet - the pointy bit. Tracing edges and tapping vertices keeps the words apart.",
       },
       {
         question: "How many lines of symmetry does a rectangle have?",

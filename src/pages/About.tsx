@@ -39,7 +39,7 @@ const About = () => {
               About WizKidsHub
             </h1>
             <p className="text-lg text-muted-foreground">
-              Free, curriculum-aligned printable worksheets for Grade&nbsp;1 to Grade&nbsp;5 students&nbsp;— no sign-up required.
+              Free, curriculum-aligned printable worksheets for Grade&nbsp;1 to Grade&nbsp;5 students&nbsp; - no sign-up required.
             </p>
           </div>
         </section>
@@ -59,17 +59,17 @@ const About = () => {
 
             <h2 className="text-2xl font-bold text-foreground font-heading pt-4">Our Mission</h2>
             <p>
-              Our mission is simple: to provide <strong>free, high-quality printable worksheets</strong> so that every child has access to effective learning materials regardless of their family's financial background. We believe that quality education resources should not be locked behind paywalls. Every student deserves the chance to practice, learn, and grow — and that starts with having the right materials at hand.
+              Our mission is simple: to provide <strong>free, high-quality printable worksheets</strong> so that every child has access to effective learning materials regardless of their family's financial background. We believe that quality education resources should not be locked behind paywalls. Every student deserves the chance to practice, learn, and grow - and that starts with having the right materials at hand.
             </p>
 
             <h2 className="text-2xl font-bold text-foreground font-heading pt-4">What We Offer</h2>
             <p>
-              WizKidsHub offers a growing library of <strong>780+ free printable worksheets</strong> covering four core subjects: <strong>Math, English, Science, and Computer Science</strong> for students in Grades 1 through 5. Our worksheets range from basic counting and phonics for Grade 1 students to advanced fractions, essay writing, and scientific investigations for Grade 5 learners. Each worksheet is available as a high-quality PDF that you can download and print instantly — no sign-up, no email address, no hidden costs.
+              WizKidsHub offers a growing library of <strong>780+ free printable worksheets</strong> covering four core subjects: <strong>Math, English, Science, and Computer Science</strong> for students in Grades 1 through 5. Our worksheets range from basic counting and phonics for Grade 1 students to advanced fractions, essay writing, and scientific investigations for Grade 5 learners. Each worksheet is available as a high-quality PDF that you can download and print instantly - no sign-up, no email address, no hidden costs.
             </p>
 
             <h2 className="text-2xl font-bold text-foreground font-heading pt-4">Our Approach</h2>
             <p>
-              Every worksheet on WizKidsHub is <strong>curriculum-aligned and educator-reviewed</strong>. We design our resources to follow a progressive difficulty structure, so students build skills step by step within each grade level. Our worksheets are suitable for both <strong>classroom instruction and home use</strong> — whether you are a teacher looking for ready-made practice material, a parent supplementing your child's homework, or a tutor seeking structured exercises for your students.
+              Every worksheet on WizKidsHub is <strong>curriculum-aligned and educator-reviewed</strong>. We design our resources to follow a progressive difficulty structure, so students build skills step by step within each grade level. Our worksheets are suitable for both <strong>classroom instruction and home use</strong> - whether you are a teacher looking for ready-made practice material, a parent supplementing your child's homework, or a tutor seeking structured exercises for your students.
             </p>
 
             <h2 className="text-2xl font-bold text-foreground font-heading pt-4">Why Free?</h2>
@@ -87,7 +87,7 @@ const About = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { icon: Download, title: "100% Free", desc: "Every worksheet is free to download and print — always. No subscriptions, no hidden fees." },
+                { icon: Download, title: "100% Free", desc: "Every worksheet is free to download and print - always. No subscriptions, no hidden fees." },
                 { icon: Users, title: "No Sign-Up", desc: "Just browse, pick a worksheet, and download the PDF instantly. No account required." },
                 { icon: GraduationCap, title: "Curriculum-Aligned", desc: "Worksheets are structured by grade and subject, aligned with standard school curricula." },
                 { icon: BookOpen, title: "Growing Library", desc: "780+ worksheets and counting, with new resources added regularly across all subjects." },
@@ -114,7 +114,7 @@ const About = () => {
             <p className="text-muted-foreground leading-relaxed">
               Have a question, suggestion, or feedback? We'd love to hear from you. Visit our{" "}
               <Link to="/support" className="text-primary hover:underline font-medium">Contact page</Link>{" "}
-              to send us a message. Whether you're a teacher looking for a specific worksheet topic, a parent with a suggestion for improvement, or just want to say hello — our team reads every message and responds as quickly as possible.
+              to send us a message. Whether you're a teacher looking for a specific worksheet topic, a parent with a suggestion for improvement, or just want to say hello - our team reads every message and responds as quickly as possible.
             </p>
           </div>
         </section>
@@ -124,7 +124,7 @@ const About = () => {
           <div className="max-w-2xl mx-auto space-y-4">
             <h2 className="text-2xl font-bold text-foreground font-heading">Start Exploring</h2>
             <p className="text-muted-foreground">
-              Browse worksheets by grade and subject — it only takes a few clicks to find what you need.
+              Browse worksheets by grade and subject - it only takes a few clicks to find what you need.
             </p>
             <Link
               to="/"

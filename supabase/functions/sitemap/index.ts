@@ -110,7 +110,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Topic pages — readable URLs, only include topics with ≥3 worksheets
+    // Topic pages - readable URLs, only include topics with ≥3 worksheets
     console.log("Fetching subcategories with worksheet counts...");
     const { data: subcategories, error: subError } = await supabase
       .from("worksheet_subcategories")
@@ -147,7 +147,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Worksheet detail pages — use slugs
+    // Worksheet detail pages - use slugs
     console.log("Fetching worksheets...");
     const { data: worksheets, error: wsError } = await supabase
       .from("worksheets")

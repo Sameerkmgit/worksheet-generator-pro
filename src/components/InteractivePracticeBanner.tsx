@@ -6,7 +6,7 @@ interface InteractivePracticeBannerProps {
   variant?: "homepage" | "page" | "detail";
   /** Grade number (e.g. "1", "2") */
   grade?: string;
-  /** Subject slug (e.g. "math", "english") — already slugified */
+  /** Subject slug (e.g. "math", "english") - already slugified */
   subjectSlug?: string;
 }
 
@@ -82,7 +82,7 @@ const InteractivePracticeBanner = ({
     );
   }
 
-  // variant === "page" — compact banner for category/subject/topic pages
+  // variant === "page" - compact banner for category/subject/topic pages
   return (
     <div className="rounded-xl border border-primary/15 bg-gradient-to-r from-primary/8 to-accent/5 p-6 flex flex-col sm:flex-row items-center gap-4">
       <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">

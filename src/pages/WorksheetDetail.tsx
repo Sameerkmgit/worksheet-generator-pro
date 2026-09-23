@@ -26,7 +26,7 @@ interface RelatedWorksheet {
 function generateDescription(title: string, grade: string, subject: string): string {
   const subjectName = toTitleCase(subject);
   const cleanName = toTitleCase(cleanDisplayTitle(title));
-  return `This free printable ${subjectName} worksheet is designed for Grade ${grade} students. "${cleanName}" helps young learners build essential ${subjectName.toLowerCase()} skills through structured practice problems. Perfect for classroom instruction, homework assignments, or at-home learning — no sign-up required.`;
+  return `This free printable ${subjectName} worksheet is designed for Grade ${grade} students. "${cleanName}" helps young learners build essential ${subjectName.toLowerCase()} skills through structured practice problems. Perfect for classroom instruction, homework assignments, or at-home learning - no sign-up required.`;
 }
 
 // Generate dynamic learning objectives when DB skills field is empty
@@ -69,14 +69,14 @@ function generateHowToUse(grade: string, subject: string): string {
   return `Print this worksheet and give it to your Grade ${grade} student to complete independently or with guidance. Review the answers together to identify areas of strength and topics that may need additional practice. This worksheet works great as a classroom warm-up, homework assignment, or supplementary learning activity at home. For best results, encourage students to show their work and explain their reasoning.`;
 }
 
-// Generate dynamic FAQs when DB faq field is empty — boosts AdSense word count + enables FAQPage rich snippets
+// Generate dynamic FAQs when DB faq field is empty - boosts AdSense word count + enables FAQPage rich snippets
 function generateFaq(title: string, grade: string, subject: string): Array<{ question: string; answer: string }> {
   const cleanName = toTitleCase(cleanDisplayTitle(title));
   const subjectName = toTitleCase(subject);
   return [
     {
       question: `Is the ${cleanName} worksheet free to download?`,
-      answer: `Yes. Every worksheet on WizKidsHub — including ${cleanName} — is 100% free to download and print. There is no sign-up, no email required, and no paywall. You can use it at home, in the classroom, or for tutoring.`,
+      answer: `Yes. Every worksheet on WizKidsHub - including ${cleanName} - is 100% free to download and print. There is no sign-up, no email required, and no paywall. You can use it at home, in the classroom, or for tutoring.`,
     },
     {
       question: `What grade level is this ${subjectName} worksheet for?`,
@@ -84,7 +84,7 @@ function generateFaq(title: string, grade: string, subject: string): Array<{ que
     },
     {
       question: `How long does it take to complete this worksheet?`,
-      answer: `Most Grade ${grade} students complete this worksheet in 15 to 25 minutes. Give your child quiet, focused time to work through it, and plan another 5 minutes afterwards to review answers together. Struggling learners may need a little longer — that is completely normal.`,
+      answer: `Most Grade ${grade} students complete this worksheet in 15 to 25 minutes. Give your child quiet, focused time to work through it, and plan another 5 minutes afterwards to review answers together. Struggling learners may need a little longer - that is completely normal.`,
     },
     {
       question: `Do you provide an answer key?`,
@@ -272,7 +272,7 @@ const WorksheetDetail = () => {
     }
   };
 
-  // Topic-specific content bank (rotated per worksheet) — falls back to null
+  // Topic-specific content bank (rotated per worksheet) - falls back to null
   // for topics not written yet, in which case the generic generators are used.
   const topicContent = pickTopicContent({
     worksheetId: String(worksheet.id),
@@ -287,7 +287,7 @@ const WorksheetDetail = () => {
     ? worksheet.questions.filter((q: unknown) => typeof q === "string" && q.trim().length > 0).slice(0, 2)
     : [];
 
-  // FAQ — DB field if present, then topic bank, otherwise auto-generated
+  // FAQ - DB field if present, then topic bank, otherwise auto-generated
   const faqItems: Array<{ question: string; answer: string }> =
     worksheet.faq && Array.isArray(worksheet.faq) && worksheet.faq.length > 0
       ? worksheet.faq
@@ -514,7 +514,7 @@ const WorksheetDetail = () => {
                 </Card>
               )}
 
-              {/* Sample Questions — real questions taken from this worksheet's PDF */}
+              {/* Sample Questions - real questions taken from this worksheet's PDF */}
               {sampleQuestions.length > 0 && (
                 <Card>
                   <CardHeader>
@@ -535,7 +535,7 @@ const WorksheetDetail = () => {
                 </Card>
               )}
 
-              {/* Learning Objectives / Skills Section — always shown */}
+              {/* Learning Objectives / Skills Section - always shown */}
               <Card>
                 <CardHeader>
                   <CardTitle>Learning Objectives</CardTitle>
@@ -562,7 +562,7 @@ const WorksheetDetail = () => {
                 </CardContent>
               </Card>
 
-              {/* How to Use — always shown */}
+              {/* How to Use - always shown */}
               <Card>
                 <CardHeader>
                   <CardTitle>How to Use This Worksheet</CardTitle>
@@ -574,13 +574,13 @@ const WorksheetDetail = () => {
                 </CardContent>
               </Card>
 
-              {/* Mid-content Ad — high-CTR placement after main content */}
+              {/* Mid-content Ad - high-CTR placement after main content */}
               <div className="w-full">
                 <AdSense adSlot="2345678901" // TODO: Replace with real AdSense slot ID from adsense.google.com
                           adFormat="auto" className="w-full min-h-[250px]" />
               </div>
 
-              {/* FAQ Section — always rendered (auto-generated when DB faq is empty) */}
+              {/* FAQ Section - always rendered (auto-generated when DB faq is empty) */}
               <Card>
                 <CardHeader>
                   <CardTitle>Frequently Asked Questions</CardTitle>

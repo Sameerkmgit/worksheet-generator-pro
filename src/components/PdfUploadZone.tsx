@@ -79,7 +79,7 @@ export default function PdfUploadZone({
         <div className="flex-1 min-w-0">
           <p className="font-medium text-sm text-foreground truncate">{file.name}</p>
           <p className="text-xs text-muted-foreground">
-            {(file.size / 1024 / 1024).toFixed(2)} MB — ready to upload on save
+            {(file.size / 1024 / 1024).toFixed(2)} MB - ready to upload on save
           </p>
         </div>
         <Button

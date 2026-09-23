@@ -589,7 +589,7 @@ function genericWorksheetContent(
   ];
 
   const usagePool = [
-    `Print this sheet and let your child attempt it without help first, then sit down together and review it question by question. Where an answer is wrong, ask them to explain the step they took rather than telling them the correct answer straight away — in Grade ${gradeNum} ${subject}, most errors are a slipped step rather than a missing idea, and hearing the reasoning aloud tells you which one it is.`,
+    `Print this sheet and let your child attempt it without help first, then sit down together and review it question by question. Where an answer is wrong, ask them to explain the step they took rather than telling them the correct answer straight away - in Grade ${gradeNum} ${subject}, most errors are a slipped step rather than a missing idea, and hearing the reasoning aloud tells you which one it is.`,
     `Work this sheet in one short sitting of around fifteen minutes. Read the first question together so the instruction is clear, then step back and let your child continue alone. If they stall on more than two questions in a row, stop and go back to an easier sheet on ${topic} before pushing on; practice only helps while it still feels achievable.`,
     `Use this worksheet as a check rather than a lesson. Give it after your child has already met ${topic} in class, and watch which questions slow them down. The pattern of slow answers, not the score, is what tells you what to practise next. Keep the finished sheet so you can compare it with the next one on the same topic.`,
     `Do the first half of the page with your child and let them finish the second half on their own. Comparing the two halves is useful: if the supported questions are right and the independent ones are not, the method is understood but not yet automatic, and short daily practice on ${topic} will fix it faster than one long session.`,
@@ -602,7 +602,7 @@ function genericWorksheetContent(
     },
     {
       question: `How long should this worksheet take?`,
-      answer: `Most Grade ${gradeNum} children finish a single sheet in ten to twenty minutes. If it is taking much longer, the level is probably too high for now — try an earlier worksheet on ${topic} and come back to this one.`,
+      answer: `Most Grade ${gradeNum} children finish a single sheet in ten to twenty minutes. If it is taking much longer, the level is probably too high for now - try an earlier worksheet on ${topic} and come back to this one.`,
     },
     {
       question: `Is there an answer key?`,
@@ -783,7 +783,7 @@ async function restGet<T>(query: string): Promise<T[]> {
   return out;
 }
 
-/** Topic pages: /categories/grade-N/subject/topic — mirrors TopicPage.tsx metadata. */
+/** Topic pages: /categories/grade-N/subject/topic - mirrors TopicPage.tsx metadata. */
 async function generateTopicPages(distDir: string, baseHtml: string) {
   const cats = await restGet<{ id: string; grade: string | number; subject: string; title: string | null }>(
     "worksheet_categories?select=id,grade,subject,title&order=id.asc"

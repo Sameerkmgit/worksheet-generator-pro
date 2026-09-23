@@ -267,7 +267,7 @@ const WorksheetAudit = () => {
             </CardHeader>
             <CardContent>
               {zeroTopics.length === 0 ? (
-                <p className="text-sm text-muted-foreground">None — all topics have worksheets!</p>
+                <p className="text-sm text-muted-foreground">None - all topics have worksheets!</p>
               ) : (
                 <ul className="text-sm space-y-1">
                   {zeroTopics.map((t, i) => (

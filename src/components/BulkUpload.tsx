@@ -208,10 +208,10 @@ export default function BulkUpload() {
 
   return (
     <div className="space-y-6">
-      {/* STEP 1 — Shared Settings */}
+      {/* STEP 1 - Shared Settings */}
       <Card>
         <CardHeader>
-          <CardTitle>Step 1 — Shared Settings</CardTitle>
+          <CardTitle>Step 1 - Shared Settings</CardTitle>
           <CardDescription>These apply to all uploaded files.</CardDescription>
         </CardHeader>
         <CardContent>
@@ -309,10 +309,10 @@ export default function BulkUpload() {
         </CardContent>
       </Card>
 
-      {/* STEP 2 — Drop Zone + Queue */}
+      {/* STEP 2 - Drop Zone + Queue */}
       <Card>
         <CardHeader>
-          <CardTitle>Step 2 — Select PDF Files</CardTitle>
+          <CardTitle>Step 2 - Select PDF Files</CardTitle>
           <CardDescription>Drop multiple PDF files or click to browse. You can edit each title before uploading.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -400,7 +400,7 @@ export default function BulkUpload() {
         </CardContent>
       </Card>
 
-      {/* STEP 3 — Upload */}
+      {/* STEP 3 - Upload */}
       {queue.length > 0 && (
         <Card>
           <CardContent className="py-4 flex flex-wrap items-center gap-4">

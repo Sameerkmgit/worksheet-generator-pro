@@ -160,7 +160,7 @@ const Home = () => {
         <div className="container mx-auto max-w-[1140px] text-center">
           <h2 id="mission-heading" className="text-3xl font-bold text-foreground mb-4 font-heading">Our Mission</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            WizKidsHub exists to make quality education accessible to every child. We provide free, curriculum-aligned printable worksheets so that parents, teachers, and tutors never have to worry about finding — or paying for — grade-appropriate practice material. Every worksheet is educator-reviewed and ready to print.
+            WizKidsHub exists to make quality education accessible to every child. We provide free, curriculum-aligned printable worksheets so that parents, teachers, and tutors never have to worry about finding - or paying for - grade-appropriate practice material. Every worksheet is educator-reviewed and ready to print.
           </p>
         </div>
       </section>
@@ -187,7 +187,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* About WizKidsHub — substantial written content for AdSense reviewers */}
+      {/* About WizKidsHub - substantial written content for AdSense reviewers */}
       <section className="py-16 px-6 bg-background" aria-labelledby="about-wizkidshub-heading">
         <div className="container mx-auto max-w-[1140px] prose prose-slate max-w-none">
           <h2 id="about-wizkidshub-heading" className="text-3xl font-bold text-foreground mb-6 font-heading">
@@ -198,12 +198,12 @@ const Home = () => {
             tutors who need ready-to-print practice material for children in Grades 1 through 5. Every worksheet on the
             site is designed by educators, reviewed for age-appropriateness, and provided as a high-resolution PDF that
             prints cleanly on standard letter or A4 paper. There is no subscription, no paywall, no account creation,
-            and no email required — you click a worksheet, you download it, you print it.
+            and no email required - you click a worksheet, you download it, you print it.
           </p>
           <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
             Our library currently covers the three subjects that matter most in early primary education: Mathematics,
             English Language Arts, and Science. Within Math, you will find worksheets on number sense, addition,
-            subtraction, multiplication tables, fractions, geometry, measurement, time, and money — each broken down by
+            subtraction, multiplication tables, fractions, geometry, measurement, time, and money - each broken down by
             grade so a Grade 2 child practising single-digit addition is not handed a Grade 5 fractions sheet. Within
             English, we cover phonics, sight words, reading comprehension, grammar, punctuation, vocabulary building,
             and creative writing prompts. Within Science, worksheets explore living things, plants and animals, the
@@ -212,7 +212,7 @@ const Home = () => {
           </p>
           <h3 className="text-2xl font-semibold text-foreground mt-8 mb-4 font-heading">Who this site is for</h3>
           <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
-            <strong>Parents</strong> use WizKidsHub to supplement what their child is learning at school — a Grade 3
+            <strong>Parents</strong> use WizKidsHub to supplement what their child is learning at school - a Grade 3
             parent whose child is struggling with multiplication tables can download ten different worksheets on that
             exact topic in under a minute. <strong>Teachers</strong> use the packs to build worksheet bundles for homework,
             substitute-teacher folders, or rainy-day classroom activities without paying a monthly subscription to
@@ -235,7 +235,7 @@ const Home = () => {
             the most effective ways for primary-school children to consolidate what they have learned. Writing
             answers by hand engages motor memory, slows the child down enough to think about each problem, and
             removes the dopamine-driven distractions that come with screens. A printable worksheet is also the
-            single easiest way for a parent to <em>see</em> exactly which questions their child struggled with — there is
+            single easiest way for a parent to <em>see</em> exactly which questions their child struggled with - there is
             no app history to scroll through, just a sheet of paper with circles around the tricky problems. Every
             WizKidsHub worksheet is built with that workflow in mind: large, legible fonts, generous whitespace for
             working out, and a single clear topic per page so the child knows what skill they are practising.
