@@ -29,7 +29,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Circle the shape that has 4 equal sides. Is it a square or a rectangle?",
         "Which number is greater: 14 or 41? How do you know?",
       ],
-      howToUse: "Print each worksheet and let your child work through problems at their own pace. Use physical objects like blocks or coins alongside the worksheets to make counting more hands-on. Celebrate small wins to build confidence — math should feel like an adventure, not a chore.",
+      howToUse: "Print each worksheet and let your child work through problems at their own pace. Use physical objects like blocks or coins alongside the worksheets to make counting more hands-on. Celebrate small wins to build confidence - math should feel like an adventure, not a chore.",
     },
     "2": {
       intro: "Grade 2 Math builds on early number sense and introduces more complex operations. Students strengthen their addition and subtraction skills with two-digit numbers, begin exploring multiplication concepts, and deepen their understanding of measurement and data. These worksheets bridge the gap between concrete counting and abstract thinking, preparing second graders for more advanced problem solving.",
@@ -39,21 +39,21 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Introduction to multiplication as repeated addition",
         "Measuring length using standard and non-standard units",
         "Reading and creating simple bar graphs and picture graphs",
-        "Working with money — coins and their values",
+        "Working with money - coins and their values",
       ],
       exampleQuestions: [
         "What is 48 + 27? Show your work using place value.",
         "Skip count by 5s from 15 to 50. Write each number.",
         "You have 3 groups of 4 apples. How many apples in total?",
       ],
-      howToUse: "Encourage your child to show their work on each problem — this builds mathematical reasoning. Use these worksheets alongside everyday activities: count change at the store, measure ingredients while cooking, or track weather data on a simple chart.",
+      howToUse: "Encourage your child to show their work on each problem - this builds mathematical reasoning. Use these worksheets alongside everyday activities: count change at the store, measure ingredients while cooking, or track weather data on a simple chart.",
     },
     "3": {
       intro: "Grade 3 Math marks a turning point where students transition from learning to add to mastering multiplication and division. Third graders tackle fractions for the first time, explore area and perimeter, and develop fluency with multi-digit arithmetic. Our worksheets provide structured practice that helps students internalize multiplication tables and build the problem-solving confidence they need for upper elementary math.",
       keySkills: [
         "Memorizing multiplication facts up to 10 × 10",
         "Understanding division as the inverse of multiplication",
-        "Introducing fractions — halves, thirds, quarters, and equivalents",
+        "Introducing fractions - halves, thirds, quarters, and equivalents",
         "Calculating area and perimeter of rectangles",
         "Solving two-step word problems",
         "Rounding numbers to the nearest 10 and 100",
@@ -63,7 +63,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Shade 3/4 of the rectangle. How many parts are shaded out of the total?",
         "A garden is 6 meters long and 4 meters wide. What is its area?",
       ],
-      howToUse: "Focus on one skill at a time — master multiplication facts before moving to division. Use timed drills for fluency practice and untimed sheets for word problems. Revisit completed worksheets to track progress and identify areas that need extra attention.",
+      howToUse: "Focus on one skill at a time - master multiplication facts before moving to division. Use timed drills for fluency practice and untimed sheets for word problems. Revisit completed worksheets to track progress and identify areas that need extra attention.",
     },
     "4": {
       intro: "Grade 4 Math challenges students with multi-digit multiplication, long division, and deeper work with fractions and decimals. Fourth graders learn to think about numbers in more sophisticated ways, connecting arithmetic to geometry, measurement, and real-world data analysis. Our worksheets provide the repetition and variety needed to build true mathematical fluency at this critical stage.",
@@ -80,7 +80,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Divide 852 by 4. What is the quotient and remainder?",
         "Which is greater: 3/8 or 5/8? Explain using a number line.",
       ],
-      howToUse: "Break longer worksheets into manageable chunks across multiple sessions. Encourage students to estimate answers before calculating — this builds number sense. Use graph paper for multi-digit calculations to keep digits aligned.",
+      howToUse: "Break longer worksheets into manageable chunks across multiple sessions. Encourage students to estimate answers before calculating - this builds number sense. Use graph paper for multi-digit calculations to keep digits aligned.",
     },
     "5": {
       intro: "Grade 5 Math prepares students for middle school by solidifying operations with fractions, decimals, and introducing algebraic thinking. Fifth graders explore the coordinate plane, work with volume, and develop strategies for complex multi-step problems. These worksheets ensure students have the rock-solid foundation needed to transition confidently to pre-algebra and beyond.",
@@ -97,7 +97,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Evaluate: (8 + 2) × 3 − 5. Show each step.",
         "A box is 5 cm long, 3 cm wide, and 4 cm tall. What is its volume?",
       ],
-      howToUse: "At this level, students should practice explaining their reasoning in writing. After completing a worksheet, ask your child to teach you one problem — teaching deepens understanding. Mix timed fact practice with longer problem-solving sessions for balanced growth.",
+      howToUse: "At this level, students should practice explaining their reasoning in writing. After completing a worksheet, ask your child to teach you one problem - teaching deepens understanding. Mix timed fact practice with longer problem-solving sessions for balanced growth.",
     },
   },
   english: {
@@ -116,7 +116,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Write a sentence about your favorite animal. Remember to start with a capital letter!",
         "Circle all the nouns in this sentence: The dog ran to the big park.",
       ],
-      howToUse: "Read the instructions aloud for emerging readers. Pair worksheets with read-aloud sessions — after a story, use related worksheets to practice new vocabulary. Keep sessions short (10–15 minutes) to maintain focus and enthusiasm.",
+      howToUse: "Read the instructions aloud for emerging readers. Pair worksheets with read-aloud sessions - after a story, use related worksheets to practice new vocabulary. Keep sessions short (10–15 minutes) to maintain focus and enthusiasm.",
     },
     "2": {
       intro: "Grade 2 English expands reading comprehension and introduces structured writing. Students move beyond decoding to understanding what they read, learning to identify main ideas and story elements. Writing becomes more expressive as second graders learn to organize thoughts into paragraphs and use descriptive language. Our worksheets support this exciting transition from learning to read to reading to learn.",
@@ -133,7 +133,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Add the correct punctuation: Is it going to rain today__",
         "Write three sentences describing your best day using at least two adjectives.",
       ],
-      howToUse: "Have your child read passages aloud before answering questions — this builds fluency alongside comprehension. For writing worksheets, encourage drafting on scratch paper first, then copying a neat final version. Praise effort and creativity over perfection.",
+      howToUse: "Have your child read passages aloud before answering questions - this builds fluency alongside comprehension. For writing worksheets, encourage drafting on scratch paper first, then copying a neat final version. Praise effort and creativity over perfection.",
     },
     "3": {
       intro: "Grade 3 English deepens reading comprehension and refines writing skills. Third graders analyze characters, settings, and plots in longer texts, while learning the mechanics of grammar that make their writing clearer and more engaging. Students begin writing multi-paragraph compositions and exploring different genres. Our worksheets provide targeted practice in the skills that transform good readers into great communicators.",
@@ -150,7 +150,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Add the prefix 'un-' or 're-' to complete: She had to ___do her homework.",
         "Write a short paragraph comparing cats and dogs as pets. Use transition words.",
       ],
-      howToUse: "Encourage active reading — have students underline key details and circle unfamiliar words as they go. For grammar worksheets, review rules together before independent practice. Writing assignments work best when spread across multiple sittings: brainstorm, draft, revise.",
+      howToUse: "Encourage active reading - have students underline key details and circle unfamiliar words as they go. For grammar worksheets, review rules together before independent practice. Writing assignments work best when spread across multiple sittings: brainstorm, draft, revise.",
     },
     "4": {
       intro: "Grade 4 English challenges students to become analytical readers and purposeful writers. Fourth graders engage with complex texts, distinguish between fact and opinion, and learn to support arguments with evidence. Writing becomes more structured as students master essay organization, varied sentence structures, and the art of revision. Our worksheets build the critical thinking skills essential for academic success.",
@@ -167,7 +167,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Write a persuasive paragraph about why recess should be longer. Include at least two reasons.",
         "Choose the correct homophone: Their/There/They're going to the library after school.",
       ],
-      howToUse: "At this level, worksheets should spark discussion. After a reading comprehension exercise, talk about the text together — what did the author want readers to feel? For writing, use a checklist approach: does the piece have a clear thesis, supporting details, and a conclusion?",
+      howToUse: "At this level, worksheets should spark discussion. After a reading comprehension exercise, talk about the text together - what did the author want readers to feel? For writing, use a checklist approach: does the piece have a clear thesis, supporting details, and a conclusion?",
     },
     "5": {
       intro: "Grade 5 English prepares students for the rigor of middle school language arts. Fifth graders tackle sophisticated literary analysis, master advanced grammar and vocabulary, and write across multiple genres including narrative, persuasive, and research-based essays. Our worksheets provide the challenging, thought-provoking practice that helps students develop the mature reading and writing skills they will need in secondary education.",
@@ -184,7 +184,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Write a five-sentence summary of the passage. Include only the most important details.",
         "Use a semicolon to combine these sentences: She studied all night. She aced the test.",
       ],
-      howToUse: "Fifth graders benefit from peer review — have students swap worksheets and provide feedback. For reading comprehension, encourage annotation with sticky notes. For writing, focus on the revision process: first drafts are meant to be improved, not perfected.",
+      howToUse: "Fifth graders benefit from peer review - have students swap worksheets and provide feedback. For reading comprehension, encourage annotation with sticky notes. For writing, focus on the revision process: first drafts are meant to be improved, not perfected.",
     },
   },
   science: {
@@ -201,7 +201,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
       exampleQuestions: [
         "Is a rock living or nonliving? How do you know?",
         "Draw today's weather. Is it sunny, cloudy, or rainy?",
-        "Which sense do you use to tell if a lemon is sour — sight, taste, or touch?",
+        "Which sense do you use to tell if a lemon is sour - sight, taste, or touch?",
       ],
       howToUse: "Combine these worksheets with hands-on exploration. After a worksheet about weather, step outside and observe the sky together. After learning about living things, go on a nature walk and find examples. Science is best learned by doing!",
     },
@@ -235,9 +235,9 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
       exampleQuestions: [
         "What force keeps you on the ground when you jump? Is it gravity or friction?",
         "Name the four inner planets of our solar system in order from the Sun.",
-        "What happens to sound when you pluck a guitar string harder — does it get louder or softer?",
+        "What happens to sound when you pluck a guitar string harder - does it get louder or softer?",
       ],
-      howToUse: "Encourage students to predict answers before reading — this builds scientific thinking. Use the experiment worksheets as guides for real at-home investigations. Have students keep a science journal alongside these worksheets to track their observations and questions.",
+      howToUse: "Encourage students to predict answers before reading - this builds scientific thinking. Use the experiment worksheets as guides for real at-home investigations. Have students keep a science journal alongside these worksheets to track their observations and questions.",
     },
     "4": {
       intro: "Grade 4 Science introduces more complex systems and processes. Students explore electricity and circuits, the rock cycle, plant and animal cell structures, and the engineering design process. Fourth graders learn to analyze data, draw conclusions from evidence, and communicate scientific findings. Our worksheets challenge students to think like scientists by connecting classroom concepts to real-world phenomena.",
@@ -271,7 +271,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "When light passes through a prism, it splits into colors. What is this called?",
         "Name three renewable energy sources and explain why they are considered renewable.",
       ],
-      howToUse: "Fifth graders should be able to work through these worksheets independently, then discuss answers with a parent or teacher. Focus on the 'why' behind each answer. Encourage students to research topics that interest them beyond what the worksheet covers — curiosity is the best teacher.",
+      howToUse: "Fifth graders should be able to work through these worksheets independently, then discuss answers with a parent or teacher. Focus on the 'why' behind each answer. Encourage students to research topics that interest them beyond what the worksheet covers - curiosity is the best teacher.",
     },
   },
   "computer science": {
@@ -290,7 +290,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Is a game on the computer hardware or software?",
         "Put these steps in order: 1) Turn on the computer 2) Open the program 3) Click the icon.",
       ],
-      howToUse: "Use these worksheets alongside real computer time. After identifying parts on paper, have your child point to each part on a real computer. Keep sessions playful — technology learning should feel exciting, not intimidating.",
+      howToUse: "Use these worksheets alongside real computer time. After identifying parts on paper, have your child point to each part on a real computer. Keep sessions playful - technology learning should feel exciting, not intimidating.",
     },
     "2": {
       intro: "Grade 2 Computer Science builds on basic tech literacy by introducing simple coding concepts, file management, and expanded digital citizenship. Students learn what algorithms are through everyday examples, explore basic input and output, and practice responsible online behavior. Our worksheets use age-appropriate scenarios that connect computing ideas to activities second graders already understand.",
@@ -307,7 +307,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Is a printer an input device or an output device? Why?",
         "What should you do if a stranger asks for your name online?",
       ],
-      howToUse: "Connect the algorithm worksheets to real life — have your child write step-by-step instructions for daily routines. For typing practice, use the worksheets to identify keys, then practice on a real keyboard. Discuss internet safety scenarios as a family.",
+      howToUse: "Connect the algorithm worksheets to real life - have your child write step-by-step instructions for daily routines. For typing practice, use the worksheets to identify keys, then practice on a real keyboard. Discuss internet safety scenarios as a family.",
     },
     "3": {
       intro: "Grade 3 Computer Science moves into structured problem-solving and introductory programming concepts. Students explore loops, conditionals, and debugging through unplugged activities and visual programming logic. They also learn about networks, data organization, and expanded digital responsibility. Our worksheets provide the logical thinking foundation that supports coding skills and computational problem solving.",
@@ -324,7 +324,7 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Fix the bug: The robot was told to go 'Forward, Forward, Left, Forward' but hit a wall. Which step is wrong?",
         "If it is raining, take an umbrella. If not, wear sunglasses. Write this as an if/then statement.",
       ],
-      howToUse: "These worksheets work great as unplugged coding activities. Use grid paper and a toy figure to act out algorithms physically. When debugging, encourage your child to read instructions aloud step-by-step — hearing errors is often easier than seeing them.",
+      howToUse: "These worksheets work great as unplugged coding activities. Use grid paper and a toy figure to act out algorithms physically. When debugging, encourage your child to read instructions aloud step-by-step - hearing errors is often easier than seeing them.",
     },
     "4": {
       intro: "Grade 4 Computer Science introduces more sophisticated programming logic, data representation, and collaborative problem-solving. Students work with variables, nested loops, and event-driven programming concepts. They explore how data is stored and transmitted digitally, and learn about intellectual property and ethical technology use. Our worksheets build the analytical mindset essential for success in an increasingly digital world.",
@@ -341,10 +341,10 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
         "Write a nested loop: For each row (1 to 3), draw 4 stars. How many stars total?",
         "Why should you not copy someone else's work from the internet without permission?",
       ],
-      howToUse: "Connect variable concepts to math — they are similar to algebra. Use the worksheets as planning documents before moving to a visual programming platform. Encourage your child to work with a friend on debugging challenges to build collaboration skills.",
+      howToUse: "Connect variable concepts to math - they are similar to algebra. Use the worksheets as planning documents before moving to a visual programming platform. Encourage your child to work with a friend on debugging challenges to build collaboration skills.",
     },
     "5": {
-      intro: "Grade 5 Computer Science prepares students for middle school technology and real-world programming. Students explore functions, abstraction, and decomposition — the building blocks of software design. They investigate how the internet works, practice cybersecurity awareness, and begin thinking about technology's impact on society. Our worksheets develop the computational thinking skills that modern employers value most.",
+      intro: "Grade 5 Computer Science prepares students for middle school technology and real-world programming. Students explore functions, abstraction, and decomposition - the building blocks of software design. They investigate how the internet works, practice cybersecurity awareness, and begin thinking about technology's impact on society. Our worksheets develop the computational thinking skills that modern employers value most.",
       keySkills: [
         "Using functions to organize and reuse code blocks",
         "Applying decomposition to break complex problems into parts",
@@ -356,9 +356,9 @@ const subjectContent: Record<string, Record<string, SubjectSEOContent>> = {
       exampleQuestions: [
         "Break down the task 'organize a birthday party' into 4 smaller sub-tasks (decomposition).",
         "What makes a strong password? Rate these: 'password123', 'Gx7!mK9p', 'mydog'. Explain.",
-        "You create a function called 'greet' that says 'Hello!' — how would you use it three times without rewriting it?",
+        "You create a function called 'greet' that says 'Hello!' - how would you use it three times without rewriting it?",
       ],
-      howToUse: "These worksheets complement hands-on coding platforms. Use decomposition exercises before tackling any large project, whether digital or not. For cybersecurity worksheets, review your family's own passwords and online habits together — it makes the learning real and immediately useful.",
+      howToUse: "These worksheets complement hands-on coding platforms. Use decomposition exercises before tackling any large project, whether digital or not. For cybersecurity worksheets, review your family's own passwords and online habits together - it makes the learning real and immediately useful.",
     },
   },
 };
@@ -566,19 +566,19 @@ const topicExampleQs: Record<string, Record<string, (grade: string) => string[]>
 const topicPracticeTips: Record<string, Record<string, (grade: string, topic: string) => string>> = {
   math: {
     default: (g, t) =>
-      `For the best results with ${t} practice, work through problems in order from easiest to hardest. If your child gets stuck, encourage them to re-read the problem and try drawing a picture or using objects to visualize it. Aim for 10–15 minutes of focused practice daily rather than long, tiring sessions. Review completed worksheets together to celebrate correct answers and learn from mistakes — both are valuable!`,
+      `For the best results with ${t} practice, work through problems in order from easiest to hardest. If your child gets stuck, encourage them to re-read the problem and try drawing a picture or using objects to visualize it. Aim for 10–15 minutes of focused practice daily rather than long, tiring sessions. Review completed worksheets together to celebrate correct answers and learn from mistakes - both are valuable!`,
   },
   english: {
     default: (g, t) =>
-      `To get the most from these ${t} worksheets, create a quiet reading and writing space free from distractions. Encourage your child to read questions twice before answering. For writing exercises, remind them that a first draft doesn't need to be perfect — the goal is to get ideas down, then polish them. Reading aloud helps with fluency and comprehension, so pair worksheet time with a daily read-aloud session.`,
+      `To get the most from these ${t} worksheets, create a quiet reading and writing space free from distractions. Encourage your child to read questions twice before answering. For writing exercises, remind them that a first draft doesn't need to be perfect - the goal is to get ideas down, then polish them. Reading aloud helps with fluency and comprehension, so pair worksheet time with a daily read-aloud session.`,
   },
   science: {
     default: (g, t) =>
-      `Science learning thrives on curiosity. Before starting a ${t} worksheet, ask your child what they already know about the topic and what questions they have. After completing the worksheet, explore the concept further with a simple at-home experiment or a nature observation. Encourage your child to keep a science notebook where they record interesting facts and questions — this builds lifelong scientific thinking habits.`,
+      `Science learning thrives on curiosity. Before starting a ${t} worksheet, ask your child what they already know about the topic and what questions they have. After completing the worksheet, explore the concept further with a simple at-home experiment or a nature observation. Encourage your child to keep a science notebook where they record interesting facts and questions - this builds lifelong scientific thinking habits.`,
   },
   "computer science": {
     default: (g, t) =>
-      `When practicing ${t}, connect worksheet concepts to real technology your child uses every day. Discuss how the concepts apply to phones, tablets, and computers around your home. For algorithm and coding worksheets, try acting out the instructions physically before writing answers — this makes abstract concepts concrete. Keep sessions interactive and discussion-based rather than purely written.`,
+      `When practicing ${t}, connect worksheet concepts to real technology your child uses every day. Discuss how the concepts apply to phones, tablets, and computers around your home. For algorithm and coding worksheets, try acting out the instructions physically before writing answers - this makes abstract concepts concrete. Keep sessions interactive and discussion-based rather than purely written.`,
   },
 };
 

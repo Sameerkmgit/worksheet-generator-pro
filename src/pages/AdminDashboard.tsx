@@ -1539,7 +1539,7 @@ const AdminDashboard = () => {
 
         {activeTab === "worksheet-categories" && (
           <div className="space-y-8">
-            {/* Subcategory Image Management — shown first for visibility */}
+            {/* Subcategory Image Management - shown first for visibility */}
             <Card>
               <CardHeader>
                 <CardTitle>📸 Subcategory / Topic Thumbnails</CardTitle>
@@ -1689,7 +1689,7 @@ const AdminDashboard = () => {
               </CardContent>
             </Card>
 
-            {/* Category Management — below thumbnails */}
+            {/* Category Management - below thumbnails */}
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">

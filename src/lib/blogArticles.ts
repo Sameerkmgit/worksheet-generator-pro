@@ -24,7 +24,7 @@ export const blogArticles: BlogArticle[] = [
       <p>The good news is that you don't need to be a math teacher to help. With a few minutes of focused practice each day, the right materials, and a patient approach, you can give your child a strong foundation that will pay off for years.</p>
 
       <h2>Why Grade 1 Addition Matters More Than You Think</h2>
-      <p>Addition isn't just about getting the right answer. It's the gateway to subtraction, place value, multiplication, and eventually algebra. Children who develop "number sense" in Grade 1 — an intuitive feel for how numbers combine and break apart — tend to find later math much easier. Children who memorize answers without understanding often hit a wall in Grade 3 or 4, when problems become more abstract.</p>
+      <p>Addition isn't just about getting the right answer. It's the gateway to subtraction, place value, multiplication, and eventually algebra. Children who develop "number sense" in Grade 1 - an intuitive feel for how numbers combine and break apart - tend to find later math much easier. Children who memorize answers without understanding often hit a wall in Grade 3 or 4, when problems become more abstract.</p>
       <p>This is why how you teach addition matters as much as what you teach. The goal at this age is understanding, not speed.</p>
 
       <h2>Start With Concrete Objects, Not Symbols</h2>
@@ -33,7 +33,7 @@ export const blogArticles: BlogArticle[] = [
 
       <h2>Move to Pictures, Then to Numbers</h2>
       <p>Once your child is comfortable combining objects, move to drawings. Have them draw three apples and two apples in a basket and count the total. This bridges the gap between physical objects and written symbols.</p>
-      <p>Only after they can do this should you introduce the equation form. When you do, read it out loud naturally: "Three and two more makes five." Avoid the word "equals" until they're comfortable — "makes" or "is the same as" feels more intuitive at this age.</p>
+      <p>Only after they can do this should you introduce the equation form. When you do, read it out loud naturally: "Three and two more makes five." Avoid the word "equals" until they're comfortable - "makes" or "is the same as" feels more intuitive at this age.</p>
 
       <h2>Five Quick Activities You Can Do This Week</h2>
       <ul>
@@ -45,7 +45,7 @@ export const blogArticles: BlogArticle[] = [
       </ul>
 
       <h2>How to Use Printable Worksheets Effectively</h2>
-      <p>Worksheets are not busywork when used well. They give your child a quiet, focused moment to apply what they've learned and let you spot exactly where they're struggling. The key is to keep sessions short — 5 to 10 minutes is plenty for a Grade 1 student — and always end on success.</p>
+      <p>Worksheets are not busywork when used well. They give your child a quiet, focused moment to apply what they've learned and let you spot exactly where they're struggling. The key is to keep sessions short - 5 to 10 minutes is plenty for a Grade 1 student - and always end on success.</p>
       <p>Pick worksheets that match where your child actually is, not where you wish they were. If "8 + 7" is causing tears, drop back to sums within 10 for a week. Build confidence first, then push the difficulty.</p>
       <p>Our free <a href="/categories/grade-1/math/addition">Grade 1 Addition worksheets</a> are organized from simple sums within 5 up through sums to 20, so you can match the right level to your child.</p>
 
@@ -57,7 +57,7 @@ export const blogArticles: BlogArticle[] = [
         <li><strong>Skipping the "why."</strong> Always tie symbols back to objects. "What does the plus sign mean?" should have an easy answer.</li>
       </ul>
 
-      <h2>When to Worry — and When Not To</h2>
+      <h2>When to Worry - and When Not To</h2>
       <p>Most Grade 1 children take until well into the school year to be fluent with addition facts to 10, and many don't fully master sums to 20 until Grade 2. As long as your child is making steady progress and enjoying the process, you're on track.</p>
       <p>Talk to their teacher if you notice persistent confusion about which number is bigger, frequent reversal of digits in writing, or strong anxiety around math after several weeks of gentle practice. These can be early signs that your child would benefit from extra support.</p>
 
@@ -72,31 +72,31 @@ export const blogArticles: BlogArticle[] = [
     category: "English",
     readingMinutes: 6,
     summary:
-      "Grade 2 is a critical year for reading fluency and writing development. We've curated five of our most popular English worksheets that cover phonics, vocabulary, sentence building, and reading comprehension — all free to download and print.",
+      "Grade 2 is a critical year for reading fluency and writing development. We've curated five of our most popular English worksheets that cover phonics, vocabulary, sentence building, and reading comprehension - all free to download and print.",
     content: `
       <p>Grade 2 is the year that English really clicks for most children. By the end of the year, students are expected to read short chapter books, write multi-sentence paragraphs, spell common words correctly, and understand basic grammar like nouns, verbs, and adjectives. That's a lot of ground to cover in a single school year.</p>
 
-      <p>Worksheets aren't a magic solution, but the right ones — done consistently, even just a few times a week — can dramatically accelerate progress. Below are five worksheet types we recommend for every Grade 2 student, along with why they work and how to use them at home.</p>
+      <p>Worksheets aren't a magic solution, but the right ones - done consistently, even just a few times a week - can dramatically accelerate progress. Below are five worksheet types we recommend for every Grade 2 student, along with why they work and how to use them at home.</p>
 
       <h2>1. Phonics: Long Vowel Sounds</h2>
       <p>Most children have mastered short vowel sounds (cat, bed, pig) by the end of Grade 1. Grade 2 is where long vowels and vowel teams (rain, boat, see, pie) become the focus. These patterns unlock hundreds of new words.</p>
-      <p>Look for worksheets that group words by pattern — all the "ai" words together, then all the "ay" words — rather than mixing them randomly. Pattern-based practice helps the rules stick.</p>
+      <p>Look for worksheets that group words by pattern - all the "ai" words together, then all the "ay" words - rather than mixing them randomly. Pattern-based practice helps the rules stick.</p>
       <p>Browse our <a href="/categories/grade-2/english">Grade 2 English worksheets</a> for a structured set of phonics practice sheets.</p>
 
       <h2>2. Sight Words and High-Frequency Words</h2>
       <p>About 100 words make up roughly half of everything your child will ever read. Words like "the," "was," "have," "they," and "because" don't always follow phonics rules and need to be recognized instantly.</p>
-      <p>Effective sight word worksheets ask children to read the word, write it, and use it in a sentence — all on the same page. This three-step approach reinforces recognition, spelling, and meaning together.</p>
+      <p>Effective sight word worksheets ask children to read the word, write it, and use it in a sentence - all on the same page. This three-step approach reinforces recognition, spelling, and meaning together.</p>
 
       <h2>3. Reading Comprehension Passages</h2>
       <p>Reading the words isn't the same as understanding them. Grade 2 comprehension worksheets typically include a short passage (4–8 sentences) followed by 3–5 questions covering main idea, detail recall, and a simple inference.</p>
-      <p>Sit with your child the first few times. Ask them to underline the part of the passage that proves their answer. This habit — finding evidence — is the single most valuable comprehension skill they can build at this age.</p>
+      <p>Sit with your child the first few times. Ask them to underline the part of the passage that proves their answer. This habit - finding evidence - is the single most valuable comprehension skill they can build at this age.</p>
 
       <h2>4. Sentence Building and Punctuation</h2>
       <p>Many Grade 2 children can read a full sentence but write fragments. Worksheets that ask students to fix capitalization, add a period or question mark, or rearrange jumbled words into a complete sentence help bridge this gap.</p>
       <p>Look for sheets that include a mix of statements, questions, and exclamations. Recognizing the difference between "Where is the dog" and "Where is the dog?" is a small change with a big impact on writing.</p>
 
       <h2>5. Vocabulary in Context</h2>
-      <p>Worksheets that present a new word inside a sentence — and ask children to choose its meaning from three options — build vocabulary far faster than memorizing definitions. The context teaches them how to figure out unfamiliar words on their own, a skill they'll use for the rest of their school career.</p>
+      <p>Worksheets that present a new word inside a sentence - and ask children to choose its meaning from three options - build vocabulary far faster than memorizing definitions. The context teaches them how to figure out unfamiliar words on their own, a skill they'll use for the rest of their school career.</p>
 
       <h2>How to Build a Weekly Routine</h2>
       <p>Five worksheets a week is plenty for a Grade 2 student. A simple rotation looks like this:</p>
@@ -110,7 +110,7 @@ export const blogArticles: BlogArticle[] = [
       <p>Aim for 10–15 minutes per session. Always read the worksheet together first, then let your child work independently. Review answers together at the end and celebrate effort, not just correctness.</p>
 
       <h2>The Bottom Line</h2>
-      <p>Grade 2 English is built on five pillars: phonics, sight words, comprehension, sentence structure, and vocabulary. Hit each one weekly with focused, well-designed worksheets and your child will end the year as a confident reader and writer. You don't need expensive workbooks or apps — a printer, a quiet table, and consistency are enough.</p>
+      <p>Grade 2 English is built on five pillars: phonics, sight words, comprehension, sentence structure, and vocabulary. Hit each one weekly with focused, well-designed worksheets and your child will end the year as a confident reader and writer. You don't need expensive workbooks or apps - a printer, a quiet table, and consistency are enough.</p>
     `,
   },
   {
@@ -122,7 +122,7 @@ export const blogArticles: BlogArticle[] = [
     summary:
       "While educational apps have their place, research shows that writing by hand and working on paper helps children retain information better. Learn why printable worksheets remain one of the most effective learning tools for kids in Grades 1–5.",
     content: `
-      <p>If you've walked through a children's section of any bookstore lately, you'll have noticed something: paper workbooks are still everywhere. Despite a decade of "edtech" promising to replace them, printable worksheets remain one of the most widely used learning tools for elementary-age children. There's a reason for that — and it's not just nostalgia.</p>
+      <p>If you've walked through a children's section of any bookstore lately, you'll have noticed something: paper workbooks are still everywhere. Despite a decade of "edtech" promising to replace them, printable worksheets remain one of the most widely used learning tools for elementary-age children. There's a reason for that - and it's not just nostalgia.</p>
 
       <p>A growing body of research suggests that for young learners, handwriting and paper-based practice produce better learning outcomes than tapping on a screen. Here's why, and how to balance both in your child's week.</p>
 
@@ -135,7 +135,7 @@ export const blogArticles: BlogArticle[] = [
       <p>Even the best educational apps include reward animations, points, and unlockables that pull attention away from the actual learning. Worksheets remove all of that noise.</p>
 
       <h2>Mistakes Stay Visible</h2>
-      <p>On paper, an erased answer leaves a mark. A wrong sum stays on the page. This is a feature, not a bug. Children — and parents — can see exactly where the thinking went wrong and talk about it. Most apps simply remove the wrong answer and move on, robbing children of the chance to learn from their mistake.</p>
+      <p>On paper, an erased answer leaves a mark. A wrong sum stays on the page. This is a feature, not a bug. Children - and parents - can see exactly where the thinking went wrong and talk about it. Most apps simply remove the wrong answer and move on, robbing children of the chance to learn from their mistake.</p>
       <p>Reviewing a completed worksheet together at the end is one of the most valuable five minutes you can spend on your child's education.</p>
 
       <h2>Worksheets Build Stamina</h2>
@@ -160,7 +160,7 @@ export const blogArticles: BlogArticle[] = [
         <li>10–15 minutes of educational app use, 2–3 times per week</li>
         <li>Daily reading from physical books, ideally 20+ minutes</li>
       </ul>
-      <p>This balance gives you the brain-development benefits of handwriting, the focus benefits of paper, and the targeted drill benefits of digital — without letting screens take over.</p>
+      <p>This balance gives you the brain-development benefits of handwriting, the focus benefits of paper, and the targeted drill benefits of digital - without letting screens take over.</p>
 
       <h2>Final Word</h2>
       <p>The best learning tool isn't the newest one. For young learners, paper-based worksheets remain one of the most effective, focused, and pediatrician-friendly ways to practice core skills. Pair them with great books and a small dose of well-chosen apps, and you have a complete learning routine that doesn't require a tablet, a subscription, or a Wi-Fi connection.</p>
@@ -176,7 +176,7 @@ export const blogArticles: BlogArticle[] = [
     summary:
       "Whether you teach a single grade or a mixed-ability class, WizKidsHub worksheets can save you hours of preparation time. Here's how teachers across the country are using our free printable resources for warm-ups, homework, and differentiated practice.",
     content: `
-      <p>Every elementary teacher knows the Sunday-night feeling of staring at the week ahead and wondering how to find five days' worth of warm-ups, homework, early-finisher activities, and differentiated practice. Worksheets — the right ones, used the right way — can take a real chunk out of that planning load.</p>
+      <p>Every elementary teacher knows the Sunday-night feeling of staring at the week ahead and wondering how to find five days' worth of warm-ups, homework, early-finisher activities, and differentiated practice. Worksheets - the right ones, used the right way - can take a real chunk out of that planning load.</p>
 
       <p>Here's how teachers are using our free printable library to make their week more manageable without cutting corners on quality.</p>
 
@@ -185,11 +185,11 @@ export const blogArticles: BlogArticle[] = [
       <p>Pick a worksheet that reviews yesterday's content rather than introducing today's. This builds retention and gives you instant data on what stuck.</p>
 
       <h2>Differentiated Practice</h2>
-      <p>The hardest part of teaching a mixed-ability class is finding three different levels of the same activity. Our worksheets are organized by grade and difficulty so you can pull a Grade 1, Grade 2, and Grade 3 version of the same skill — say, addition or sentence building — and hand them out by row without anyone noticing.</p>
+      <p>The hardest part of teaching a mixed-ability class is finding three different levels of the same activity. Our worksheets are organized by grade and difficulty so you can pull a Grade 1, Grade 2, and Grade 3 version of the same skill - say, addition or sentence building - and hand them out by row without anyone noticing.</p>
       <p>This lets every child work at the right level without setting up three separate centers.</p>
 
       <h2>Homework That Parents Can Actually Help With</h2>
-      <p>One of the most common parent complaints about homework is that it doesn't match what was taught in class. Sending home a printable worksheet that mirrors the day's lesson — with a clear example at the top — makes it easy for parents to support without confusion.</p>
+      <p>One of the most common parent complaints about homework is that it doesn't match what was taught in class. Sending home a printable worksheet that mirrors the day's lesson - with a clear example at the top - makes it easy for parents to support without confusion.</p>
       <p>Our worksheets include a heading, a short instruction, and consistent formatting so families know exactly what they're looking at.</p>
 
       <h2>Sub Plans That Don't Waste a Day</h2>
@@ -200,18 +200,18 @@ export const blogArticles: BlogArticle[] = [
 
       <h2>Assessment Without the Test Anxiety</h2>
       <p>A weekly worksheet on the previous week's skills functions as a low-stakes formative assessment. Students don't perceive it as a test, but you get a clean piece of evidence for each child showing what they've retained.</p>
-      <p>Spread these out across subjects — math on Monday, English on Wednesday, science on Friday — and you'll have a running portfolio for every student by the end of the term.</p>
+      <p>Spread these out across subjects - math on Monday, English on Wednesday, science on Friday - and you'll have a running portfolio for every student by the end of the term.</p>
 
       <h2>Practical Tips for Classroom Use</h2>
       <ul>
         <li><strong>Print double-sided</strong> when possible to cut paper use roughly in half.</li>
-        <li><strong>Laminate a few</strong> for use with dry-erase markers — perfect for math centers and small-group work.</li>
+        <li><strong>Laminate a few</strong> for use with dry-erase markers - perfect for math centers and small-group work.</li>
         <li><strong>Keep a master folder</strong> organized by week so you can repeat the rotation next year with minimal effort.</li>
         <li><strong>Send a "weekly worksheet pack"</strong> home on Mondays so families can plan around it.</li>
       </ul>
 
       <h2>Getting Started</h2>
-      <p>If you're new to the site, start by browsing the <a href="/worksheets">full library</a> by grade. Each worksheet is free to download and print, with no account required and no watermark on the page. Use what works for your students, ignore the rest, and let us know in the contact form if there's a topic we haven't covered yet — we add new sheets every week based on teacher requests.</p>
+      <p>If you're new to the site, start by browsing the <a href="/worksheets">full library</a> by grade. Each worksheet is free to download and print, with no account required and no watermark on the page. Use what works for your students, ignore the rest, and let us know in the contact form if there's a topic we haven't covered yet - we add new sheets every week based on teacher requests.</p>
     `,
   },
   {
@@ -225,15 +225,15 @@ export const blogArticles: BlogArticle[] = [
     content: `
       <p>Grade 3 is the year science starts to feel like real science. Children move from simple observation ("the leaf is green") to classification, life cycles, food chains, and basic experimentation. The Plants and Animals unit is usually one of the first deep dives into biology that students experience, and it sets the tone for how they feel about science for years to come.</p>
 
-      <p>The good news is that this topic is genuinely fun to teach. The world is full of plants and animals, and children are naturally curious about them. Here's how to make the most of it — at home or in the classroom.</p>
+      <p>The good news is that this topic is genuinely fun to teach. The world is full of plants and animals, and children are naturally curious about them. Here's how to make the most of it - at home or in the classroom.</p>
 
       <h2>Start With What's Outside the Window</h2>
       <p>Before opening any textbook, take a 20-minute nature walk. Even an apartment courtyard or a school playground has plants, insects, birds, and probably a squirrel or two. Ask children to count how many different living things they can spot. This single activity unlocks every concept in the unit.</p>
-      <p>Bring a clipboard. Have them sketch one plant and one animal in detail. The act of drawing — slow, careful observation — teaches more than any video.</p>
+      <p>Bring a clipboard. Have them sketch one plant and one animal in detail. The act of drawing - slow, careful observation - teaches more than any video.</p>
 
       <h2>Teach Classification With Sorting Games</h2>
       <p>Grade 3 students are expected to understand basic classification: living vs. non-living, plant vs. animal, vertebrate vs. invertebrate, herbivore vs. carnivore vs. omnivore. These categories are best taught through sorting, not memorization.</p>
-      <p>Print a set of animal picture cards and ask children to sort them. Then ask them to re-sort using a different rule. The same lion can be in "mammal," "carnivore," and "wild animal" — this flexibility is what classification really means.</p>
+      <p>Print a set of animal picture cards and ask children to sort them. Then ask them to re-sort using a different rule. The same lion can be in "mammal," "carnivore," and "wild animal" - this flexibility is what classification really means.</p>
 
       <h2>Plant Life Cycles With a Bean and a Cup</h2>
       <p>The fastest way to make a life cycle real is to grow one. A dried bean, a plastic cup, a paper towel, and a tablespoon of water are all you need. Within 5–7 days, children can watch the seed swell, split, and sprout. They'll remember it forever.</p>
@@ -284,17 +284,17 @@ export const blogArticles: BlogArticle[] = [
     summary:
       "Many students start to struggle with math confidence in upper elementary grades as concepts become more abstract. Learn proven strategies for building a growth mindset and how regular worksheet practice helps students master fractions, decimals, and multi-step problems.",
     content: `
-      <p>Somewhere between Grade 3 and Grade 5, a lot of children quietly decide they're "not a math person." This is one of the most consequential beliefs they will ever form, because it tends to follow them into middle school, high school, and beyond. The truth is that almost every child can succeed at upper elementary math — but the way the subject is taught at this stage often undermines confidence rather than building it.</p>
+      <p>Somewhere between Grade 3 and Grade 5, a lot of children quietly decide they're "not a math person." This is one of the most consequential beliefs they will ever form, because it tends to follow them into middle school, high school, and beyond. The truth is that almost every child can succeed at upper elementary math - but the way the subject is taught at this stage often undermines confidence rather than building it.</p>
 
       <p>Here's what's happening, why it matters, and what you can do about it.</p>
 
       <h2>Why Confidence Drops in Grade 4 and 5</h2>
       <p>Up until Grade 3, math is mostly about whole numbers and operations a child can model with physical objects. Then comes Grade 4 and everything changes: fractions, decimals, long division, multi-step word problems, and area and perimeter calculations all show up at once.</p>
-      <p>For the first time, children encounter problems where the right answer isn't obvious and the path to it has multiple steps. Many also encounter their first real math failure — a worksheet covered in red marks. The combination is a confidence killer.</p>
+      <p>For the first time, children encounter problems where the right answer isn't obvious and the path to it has multiple steps. Many also encounter their first real math failure - a worksheet covered in red marks. The combination is a confidence killer.</p>
 
       <h2>The Growth Mindset Foundation</h2>
       <p>Decades of research by psychologist Carol Dweck have shown that children who believe ability can grow with effort outperform children who believe ability is fixed. The language you use at home or in the classroom matters enormously.</p>
-      <p>Replace "You're so smart at math" with "I love how you stuck with that problem." Replace "It's okay, math isn't your thing" with "You haven't figured this out yet." That single word — yet — changes how children think about challenge.</p>
+      <p>Replace "You're so smart at math" with "I love how you stuck with that problem." Replace "It's okay, math isn't your thing" with "You haven't figured this out yet." That single word - yet - changes how children think about challenge.</p>
 
       <h2>Tackle Fractions Before They Tackle You</h2>
       <p>Fractions are the single biggest stumbling block in upper elementary math. The reason is simple: most children are taught fractions as procedures (find a common denominator, flip and multiply) without ever understanding what a fraction actually means.</p>
@@ -317,14 +317,14 @@ export const blogArticles: BlogArticle[] = [
       <p>If a child gets stuck, resist the urge to explain immediately. Ask a question instead: "What do you already know?" or "What's a similar problem you've solved before?" The goal is to build their problem-solving muscle, not to give them the answer.</p>
 
       <h2>Celebrate Effort Over Speed</h2>
-      <p>Timed multiplication tests are one of the most reliable ways to create math anxiety. Speed has its place — fluency matters — but it shouldn't be the headline metric for a child who is still building confidence. Praise persistence, careful work, and good thinking. Speed will come on its own.</p>
+      <p>Timed multiplication tests are one of the most reliable ways to create math anxiety. Speed has its place - fluency matters - but it shouldn't be the headline metric for a child who is still building confidence. Praise persistence, careful work, and good thinking. Speed will come on its own.</p>
 
       <h2>Watch for Specific Gaps</h2>
       <p>Many Grade 4 and 5 struggles trace back to a Grade 2 or 3 gap that was never filled. If your child can't subtract with regrouping fluently, every long division problem will be a nightmare. If they don't know their multiplication facts cold, fractions will feel impossible.</p>
-      <p>Don't be afraid to drop back. A week of Grade 3 review worksheets isn't a step backward — it's a foundation repair. Once the gap is filled, current grade work suddenly feels easier.</p>
+      <p>Don't be afraid to drop back. A week of Grade 3 review worksheets isn't a step backward - it's a foundation repair. Once the gap is filled, current grade work suddenly feels easier.</p>
 
       <h2>The Long View</h2>
-      <p>Your goal in Grade 4 and 5 isn't to produce a child who finishes worksheets the fastest. It's to produce a child who, when faced with a hard problem, sits down and tries. That mindset — earned through small daily wins on well-chosen practice — is the real foundation for every math class that comes next.</p>
+      <p>Your goal in Grade 4 and 5 isn't to produce a child who finishes worksheets the fastest. It's to produce a child who, when faced with a hard problem, sits down and tries. That mindset - earned through small daily wins on well-chosen practice - is the real foundation for every math class that comes next.</p>
       <p>Browse our <a href="/categories/grade-5/math">Grade 5 Math worksheets</a> for a structured library covering fractions, decimals, geometry, and word problems.</p>
     `,
   },

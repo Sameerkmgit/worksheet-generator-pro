@@ -25,7 +25,7 @@ const WorksheetRedirect = () => {
       // Check if this looks like a numeric ID (legacy URL)
       const isNumeric = /^\d+$/.test(worksheetId);
       if (!isNumeric) {
-        // Already a slug — this shouldn't happen via this route, but handle gracefully
+        // Already a slug - this shouldn't happen via this route, but handle gracefully
         navigate(`/worksheet/${worksheetId}`, { replace: true });
         return;
       }
@@ -40,7 +40,7 @@ const WorksheetRedirect = () => {
         if (data?.slug) {
           navigate(`/worksheet/${data.slug}`, { replace: true });
         } else {
-          // No slug found — worksheet may not exist
+          // No slug found - worksheet may not exist
           navigate("/", { replace: true });
         }
       } catch {

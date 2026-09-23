@@ -1,5 +1,5 @@
 /**
- * Topic content bank — batch 3.
+ * Topic content bank - batch 3.
  *
  * Next 15 highest-volume topics not covered by batches 1 and 2.
  * Same quality bar: grade-specific, names the real difficulty and what a
@@ -12,15 +12,15 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
   // ──────────────────────────────────────────────────────────────────
   "1|computer science|computer basics": {
     objectives: [
-      "Name the four parts a Grade 1 child actually touches — screen, keyboard, mouse and power button — and point to each in a picture.",
+      "Name the four parts a Grade 1 child actually touches - screen, keyboard, mouse and power button - and point to each in a picture.",
       "Learn that a click means press and let go once, and that holding the button down does something different.",
       "Find letter keys, the space bar and the Enter key on a keyboard picture.",
       "Sort pictures into things that are part of a computer and things that are not (book, pencil, mouse, monitor).",
-      "Understand that a computer only does what someone tells it to do — it does not decide by itself.",
+      "Understand that a computer only does what someone tells it to do - it does not decide by itself.",
       "Practise the safe habits of clean dry hands, no food near the keys, and asking a grown-up before switching anything off.",
     ],
     usage: [
-      "At Grade 1 the words are harder than the ideas. Read each label out loud for your child before they write it — 'monitor' and 'mouse' both start with M and get swapped constantly. If a real computer or tablet is in the room, point at the part as you say its name, then come back to the paper.",
+      "At Grade 1 the words are harder than the ideas. Read each label out loud for your child before they write it - 'monitor' and 'mouse' both start with M and get swapped constantly. If a real computer or tablet is in the room, point at the part as you say its name, then come back to the paper.",
       "Do this sheet in two short sittings rather than one. Six new technical words is a lot for a six-year-old, and recall improves sharply when the second half happens the next day.",
       "If your child cannot yet read the labels independently, let them draw a line or colour instead of writing the word. The goal at this grade is recognising the parts, not spelling them.",
     ],
@@ -33,7 +33,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "Why does my child keep mixing up mouse and monitor?",
         answer:
-          "Both start with the same sound, which is the single most common Grade 1 error here. Saying 'monitor — the one you look at' every time you read the word clears it up faster than correcting the written answer.",
+          "Both start with the same sound, which is the single most common Grade 1 error here. Saying 'monitor - the one you look at' every time you read the word clears it up faster than correcting the written answer.",
       },
       {
         question: "Should I teach typing at this stage?",
@@ -52,15 +52,15 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
   "4|computer science|computer basics": {
     objectives: [
       "Explain the input, process, output cycle using a familiar example such as typing a document and printing it.",
-      "Tell the difference between storage (hard disk, pen drive) and memory (RAM) — one keeps files when the power goes off, the other does not.",
+      "Tell the difference between storage (hard disk, pen drive) and memory (RAM) - one keeps files when the power goes off, the other does not.",
       "Organise files into folders and describe why file names and file types (.jpg, .pdf, .docx) matter.",
       "Identify common software categories: operating system, application, browser.",
-      "Convert between simple units of digital storage — bits, bytes, kilobytes, megabytes.",
+      "Convert between simple units of digital storage - bits, bytes, kilobytes, megabytes.",
       "Describe basic online safety rules: strong passwords, not sharing personal details, telling an adult about anything uncomfortable.",
     ],
     usage: [
       "The RAM-versus-storage question is where Grade 4 students lose marks, and the fix is a demonstration rather than a definition: open something without saving, cut the power, and show that the work is gone. Do that once and the worksheet answers stop being guesses.",
-      "Have a real computer open while working through the file-and-folder questions. Ask your child to actually create a folder, drop two files in and rename one — then the written answers describe something they did rather than something they read.",
+      "Have a real computer open while working through the file-and-folder questions. Ask your child to actually create a folder, drop two files in and rename one - then the written answers describe something they did rather than something they read.",
       "For the storage-unit conversions, let your child check a real file's size on screen. Seeing that a photo is a few megabytes makes the numbers in the questions mean something.",
     ],
     faq: [
@@ -72,7 +72,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "Is this aligned with school computer syllabuses?",
         answer:
-          "It covers the standard Grade 4 computer-literacy block — the input-process-output cycle, hardware and software, file management, storage units and basic internet safety — which appears in most school ICT curricula.",
+          "It covers the standard Grade 4 computer-literacy block - the input-process-output cycle, hardware and software, file management, storage units and basic internet safety - which appears in most school ICT curricula.",
       },
       {
         question: "My child confuses memory and storage constantly. Is that normal?",
@@ -82,7 +82,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "Should I let my child answer the internet safety questions from experience?",
         answer:
-          "Yes — those questions work best as a conversation. Ask what they would do before they write, then compare with the answer they choose.",
+          "Yes - those questions work best as a conversation. Ask what they would do before they write, then compare with the answer they choose.",
       },
     ],
   },
@@ -93,25 +93,25 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       "Sort everyday things into living and non-living, and give one reason for each choice.",
       "Name the three things every living thing needs: air, water and food.",
       "Recognise the difference between clean and dirty surroundings and say what causes each.",
-      "Learn simple ways a Grade 1 child can help — put litter in a bin, close a tap, switch off a light, reuse paper.",
+      "Learn simple ways a Grade 1 child can help - put litter in a bin, close a tap, switch off a light, reuse paper.",
       "Identify where things belong: plants in soil, fish in water, birds in the air.",
       "Talk about the weather they can see today and how it changes what people wear and do.",
     ],
     usage: [
       "Take this sheet outside or to a window before writing anything. Grade 1 environment questions are about noticing, and a child who has just looked at a real tree, tap or bin answers from memory instead of from a picture.",
       "Living versus non-living trips up almost every Grade 1 child on the same three items: a car (it moves but is not alive), a seed (looks still but is alive) and water. Talk through those three specifically before your child fills the boxes.",
-      "Pair each 'how can we help' answer with one thing you actually do together that day — closing the tap while brushing, or carrying a wrapper to a bin. The written answer sticks when it describes something real.",
+      "Pair each 'how can we help' answer with one thing you actually do together that day - closing the tap while brushing, or carrying a wrapper to a bin. The written answer sticks when it describes something real.",
     ],
     faq: [
       {
         question: "My child says a car is living because it moves. How do I explain it?",
         answer:
-          "Movement alone is not the test. Ask whether it eats, drinks, grows or has babies — a car does none of those, so it is non-living. That four-part check works for almost every item at this grade.",
+          "Movement alone is not the test. Ask whether it eats, drinks, grows or has babies - a car does none of those, so it is non-living. That four-part check works for almost every item at this grade.",
       },
       {
         question: "Is this worksheet the same as EVS at school?",
         answer:
-          "Yes, it covers the environment portion of Grade 1 EVS or general science — living and non-living, needs of living things, clean surroundings and simple conservation habits.",
+          "Yes, it covers the environment portion of Grade 1 EVS or general science - living and non-living, needs of living things, clean surroundings and simple conservation habits.",
       },
       {
         question: "Do the answers need full sentences?",
@@ -131,10 +131,10 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
     objectives: [
       "Group foods into energy-giving, body-building and protective foods, with examples of each.",
       "Explain why a meal needs items from more than one group to count as balanced.",
-      "Describe where common foods come from — plant or animal — and trace one food back to its source.",
+      "Describe where common foods come from - plant or animal - and trace one food back to its source.",
       "Name simple ways water is made safe to drink at home: boiling, filtering, letting it settle.",
       "Recognise signs that food has spoiled and explain why covered, refrigerated food stays safe longer.",
-      "List everyday habits that prevent water-borne illness — washing hands, washing fruit, drinking stored covered water.",
+      "List everyday habits that prevent water-borne illness - washing hands, washing fruit, drinking stored covered water.",
     ],
     usage: [
       "Answer the food-group questions using what is actually in your kitchen rather than the textbook list. Grade 3 students remember 'rice is energy-giving' far better when they have just looked at the rice tin.",
@@ -155,7 +155,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "Does this cover the Grade 3 EVS food chapter?",
         answer:
-          "Yes — food groups, balanced meals, food sources, food spoilage and safe drinking water are the standard Grade 3 topics in this chapter.",
+          "Yes - food groups, balanced meals, food sources, food spoilage and safe drinking water are the standard Grade 3 topics in this chapter.",
       },
       {
         question: "My child listed junk food as energy-giving. Is that wrong?",
@@ -168,16 +168,16 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
   // ──────────────────────────────────────────────────────────────────
   "4|science|food & water": {
     objectives: [
-      "Name the main nutrients — carbohydrates, proteins, fats, vitamins, minerals, water and roughage — and give one food source for each.",
+      "Name the main nutrients - carbohydrates, proteins, fats, vitamins, minerals, water and roughage - and give one food source for each.",
       "Explain what a deficiency disease is and match common ones to the missing nutrient.",
       "Describe why roughage and water are needed even though they give no energy.",
-      "Compare methods of food preservation — drying, salting, refrigeration, canning — and say when each is used.",
+      "Compare methods of food preservation - drying, salting, refrigeration, canning - and say when each is used.",
       "Trace the journey of water from a source to a tap, and identify where it can get contaminated.",
       "Explain how everyday water wastage happens at home and calculate a simple way to reduce it.",
     ],
     usage: [
       "Read the nutrition labels on two packets from your kitchen before starting. Grade 4 nutrient questions become concrete the moment a child sees 'carbohydrates' and 'protein' printed in grams on a real packet.",
-      "Deficiency diseases are pure memorisation unless linked to a symptom, so say them as pairs out loud — no vitamin A, poor night vision; no vitamin C, bleeding gums; no iron, tiredness. Then let your child fill the table from memory.",
+      "Deficiency diseases are pure memorisation unless linked to a symptom, so say them as pairs out loud - no vitamin A, poor night vision; no vitamin C, bleeding gums; no iron, tiredness. Then let your child fill the table from memory.",
       "For the preservation section, find one dried, one salted and one refrigerated item at home and line them up. Writing the answers next to three real examples beats reciting the list.",
     ],
     faq: [
@@ -189,7 +189,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "Which deficiency diseases should my child know?",
         answer:
-          "Typically night blindness (vitamin A), scurvy (vitamin C), rickets (vitamin D), anaemia (iron), goitre (iodine) and beri-beri (vitamin B1) — the set most Grade 4 textbooks use.",
+          "Typically night blindness (vitamin A), scurvy (vitamin C), rickets (vitamin D), anaemia (iron), goitre (iodine) and beri-beri (vitamin B1) - the set most Grade 4 textbooks use.",
       },
       {
         question: "Does the worksheet need a science lab or experiment?",
@@ -211,19 +211,19 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       "Describe the main stages of digestion and where each nutrient is absorbed.",
       "Compare food adulteration examples and simple home tests used to detect them.",
       "Explain the water cycle and connect it to the availability of fresh water for drinking.",
-      "Evaluate water purification methods — sedimentation, filtration, chlorination, boiling, RO — by what each removes.",
+      "Evaluate water purification methods - sedimentation, filtration, chlorination, boiling, RO - by what each removes.",
       "Analyse causes of water pollution and propose realistic community-level solutions.",
     ],
     usage: [
       "Grade 5 answers are judged on reasoning, not recall, so push for the 'because' on every question. 'Chlorination is used because it kills germs but does not remove mud' is a Grade 5 answer; 'chlorination cleans water' is a Grade 3 one.",
-      "Only about three per cent of the world's water is fresh, and most of that is frozen. Give your child that figure before the water-cycle questions — it reframes the conservation answers from slogans into arithmetic.",
+      "Only about three per cent of the world's water is fresh, and most of that is frozen. Give your child that figure before the water-cycle questions - it reframes the conservation answers from slogans into arithmetic.",
       "For the adulteration section, discuss one real example you have heard of in the news or at a market. Grade 5 students write far better proposals when the problem is local rather than textbook.",
     ],
     faq: [
       {
         question: "How is this different from the Grade 4 food chapter?",
         answer:
-          "Grade 4 identifies nutrients and preservation methods; Grade 5 explains processes — digestion and absorption, the water cycle, why each purification method suits a particular impurity, and pollution analysis.",
+          "Grade 4 identifies nutrients and preservation methods; Grade 5 explains processes - digestion and absorption, the water cycle, why each purification method suits a particular impurity, and pollution analysis.",
       },
       {
         question: "Does RO water need boiling too?",
@@ -233,7 +233,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "Should answers be written in full paragraphs?",
         answer:
-          "For the 'explain' and 'suggest' questions, yes — two or three sentences with a reason. Labelling and matching questions can stay short.",
+          "For the 'explain' and 'suggest' questions, yes - two or three sentences with a reason. Labelling and matching questions can stay short.",
       },
       {
         question: "Is a diagram expected for the water cycle?",
@@ -247,14 +247,14 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
   "4|science|plants & animals": {
     objectives: [
       "Explain how roots, stems, leaves, flowers and fruit each contribute to a plant's survival.",
-      "Describe adaptations that suit a plant or animal to its habitat — desert, aquatic, mountain, forest.",
+      "Describe adaptations that suit a plant or animal to its habitat - desert, aquatic, mountain, forest.",
       "Compare herbivores, carnivores and omnivores using teeth and diet as evidence.",
       "Build a simple food chain and explain what happens when one link is removed.",
       "Describe how seeds are dispersed by wind, water, animals and bursting, with an example of each.",
       "Explain how animals protect themselves through camouflage, mimicry, shells and speed.",
     ],
     usage: [
-      "Work through one real plant before answering. Pull up a weed with roots intact, or use any potted plant, and name each part aloud — Grade 4 adaptation questions ask why a part is shaped as it is, which is hard to answer from a diagram alone.",
+      "Work through one real plant before answering. Pull up a weed with roots intact, or use any potted plant, and name each part aloud - Grade 4 adaptation questions ask why a part is shaped as it is, which is hard to answer from a diagram alone.",
       "Food-chain questions are marked on arrow direction, and arrows point from the eaten to the eater because they show energy flow. Check the direction on the first chain together; most lost marks come from that single detail.",
       "For the adaptation section, ask 'what would go wrong if this animal lived somewhere else?' before writing. That question turns a memorised list of features into the reasoning Grade 4 papers are actually looking for.",
     ],
@@ -267,12 +267,12 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "Is a cactus spine a leaf or a thorn?",
         answer:
-          "Cactus spines are modified leaves — the reduced surface cuts water loss, and the thick green stem takes over photosynthesis. This is a favourite Grade 4 adaptation question.",
+          "Cactus spines are modified leaves - the reduced surface cuts water loss, and the thick green stem takes over photosynthesis. This is a favourite Grade 4 adaptation question.",
       },
       {
         question: "Does my child need to memorise habitat lists?",
         answer:
-          "Not lists. What is assessed is matching a feature to a reason — thick fur for cold, webbed feet for water — so understanding a few clear examples beats memorising many.",
+          "Not lists. What is assessed is matching a feature to a reason - thick fur for cold, webbed feet for water - so understanding a few clear examples beats memorising many.",
       },
       {
         question: "How is this different from the Grade 3 sheet on the same topic?",
@@ -286,7 +286,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
   "3|science|family & home": {
     objectives: [
       "Describe the difference between a nuclear and a joint family, with an example of each.",
-      "Name relationships correctly — cousin, aunt, uncle, grandparent — and place them on a simple family tree.",
+      "Name relationships correctly - cousin, aunt, uncle, grandparent - and place them on a simple family tree.",
       "Explain how family members share work at home and why sharing matters.",
       "Identify the parts of a house and what each room is used for.",
       "List safety rules at home for electricity, fire, sharp objects and medicines.",
@@ -333,8 +333,8 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
     ],
     usage: [
       "Check the carried digit before checking the answer. Almost every wrong sum on a Grade 3 addition sheet is a carry written in the wrong column or forgotten entirely, not a fact your child does not know.",
-      "Have your child estimate before calculating on the larger sums — 298 + 405 is 'about 700'. An answer of 1,203 then looks obviously wrong to them without you saying anything.",
-      "For word problems, ask them to say what the answer will be about — rupees, books, minutes — before they touch the numbers. Most lost marks here come from solving correctly and labelling the wrong thing.",
+      "Have your child estimate before calculating on the larger sums - 298 + 405 is 'about 700'. An answer of 1,203 then looks obviously wrong to them without you saying anything.",
+      "For word problems, ask them to say what the answer will be about - rupees, books, minutes - before they touch the numbers. Most lost marks here come from solving correctly and labelling the wrong thing.",
     ],
     faq: [
       {
@@ -355,7 +355,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "Why does the worksheet ask for estimates?",
         answer:
-          "Because estimating is the self-checking habit Grade 3 syllabuses introduce here — it catches answers that are wildly out before the answer key does.",
+          "Because estimating is the self-checking habit Grade 3 syllabuses introduce here - it catches answers that are wildly out before the answer key does.",
       },
     ],
   },
@@ -371,7 +371,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       "Recognise multiplication patterns for 5, 10 and 9 and use them to check answers.",
     ],
     usage: [
-      "Start with the two tables your child is least sure of rather than the whole sheet — usually 7 and 8 at Grade 3. Five minutes on those two makes the rest of the page much faster.",
+      "Start with the two tables your child is least sure of rather than the whole sheet - usually 7 and 8 at Grade 3. Five minutes on those two makes the rest of the page much faster.",
       "When carrying in two-digit multiplication, the carried digit is added after multiplying, not before. That single sequencing mistake accounts for most wrong answers here, so watch the first two sums closely.",
       "For word problems, ask 'are the groups the same size?' If yes, it is multiplication; if not, it is addition. That one question sorts nearly every Grade 3 word problem correctly.",
     ],
@@ -410,9 +410,9 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       "Read a simple timetable or bill and answer questions from it.",
     ],
     usage: [
-      "Elapsed time is the hardest part of this topic at Grade 3, because children subtract times as if they were ordinary numbers. Count on in jumps instead — to the next hour, then whole hours, then the leftover minutes. Do the first question that way together.",
+      "Elapsed time is the hardest part of this topic at Grade 3, because children subtract times as if they were ordinary numbers. Count on in jumps instead - to the next hour, then whole hours, then the leftover minutes. Do the first question that way together.",
       "Use real coins and notes for the money questions. Working out change by physically making the amount is far more reliable at this age than a subtraction sum on paper, and the written answer follows easily afterwards.",
-      "Twenty-five past and twenty-five to look almost identical on a clock face. Before starting, have your child say which side of the clock 'past' and 'to' live on — that single check prevents most reading errors.",
+      "Twenty-five past and twenty-five to look almost identical on a clock face. Before starting, have your child say which side of the clock 'past' and 'to' live on - that single check prevents most reading errors.",
     ],
     faq: [
       {
@@ -450,7 +450,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
     ],
     
     usage: [
-      "The one misconception that causes most Grade 4 fraction errors is thinking a bigger denominator means a bigger fraction. Cut something real into halves and then into eighths — once your child sees that eighths are smaller pieces, 1/8 < 1/2 stops being confusing.",
+      "The one misconception that causes most Grade 4 fraction errors is thinking a bigger denominator means a bigger fraction. Cut something real into halves and then into eighths - once your child sees that eighths are smaller pieces, 1/8 < 1/2 stops being confusing.",
       "When adding fractions with the same denominator, only the top numbers are added; the denominator names the size of the piece and does not change. Watch the first two sums for 1/5 + 2/5 = 3/10, which is the classic slip.",
       "Fold paper strips for the equivalent-fraction questions. A strip folded into quarters laid over one folded into halves proves 2/4 = 1/2 in a way no explanation matches, and the written answers get much faster afterwards.",
     ],
@@ -473,7 +473,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "How do I explain equivalent fractions simply?",
         answer:
-          "Same amount, different sized pieces. Half a chapati and two quarters of the same chapati are the same food — that comparison usually settles it.",
+          "Same amount, different sized pieces. Half a chapati and two quarters of the same chapati are the same food - that comparison usually settles it.",
       },
     ],
   },
@@ -485,7 +485,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       "Read and write short-vowel CVC words and hear the difference between pin and pen.",
       "Identify beginning and ending sounds in a spoken word.",
       "Recognise common digraphs sh, ch and th as one sound made by two letters.",
-      "Read the first set of sight words — the, is, was, said — that cannot be sounded out.",
+      "Read the first set of sight words - the, is, was, said - that cannot be sounded out.",
       "Segment a spoken word into its sounds before spelling it.",
     ],
     usage: [
@@ -497,7 +497,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "My child knows letter names but cannot blend. What now?",
         answer:
-          "Names and sounds are different skills. Practise sounds only — /s/ not 'ess' — and stretch the word slowly, s-u-n, before speeding it up. Blending usually follows within a few weeks.",
+          "Names and sounds are different skills. Practise sounds only - /s/ not 'ess' - and stretch the word slowly, s-u-n, before speeding it up. Blending usually follows within a few weeks.",
       },
       {
         question: "Why do some words have to be memorised?",
@@ -551,7 +551,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "How long should this take?",
         answer:
-          "Usually 15 to 20 minutes. If it stretches much beyond that, split it — passage and reading today, questions tomorrow.",
+          "Usually 15 to 20 minutes. If it stretches much beyond that, split it - passage and reading today, questions tomorrow.",
       },
     ],
   },
@@ -560,7 +560,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
   "2|english|vocabulary": {
     objectives: [
       "Match new words to their meanings and use each one in a sentence of your own.",
-      "Identify simple synonyms and antonyms — big and large, hot and cold.",
+      "Identify simple synonyms and antonyms - big and large, hot and cold.",
       "Sort words into groups such as animals, food, weather and feelings.",
       "Recognise compound words and split them into the two words they came from.",
       "Choose the right word for a sentence when two options look similar.",
@@ -569,7 +569,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
     usage: [
       "A word is only learnt when your child uses it themselves, so ask for one spoken sentence per new word before anything is written. That step matters more than the matching exercise.",
       "Antonyms are easier than synonyms at Grade 2, because opposites feel obvious while 'nearly the same' does not. Do the antonym rows first to build momentum, then work on synonyms with a pair of examples in front of you.",
-      "Keep the new words visible for the rest of the week — on a fridge note or a bookmark. Grade 2 vocabulary fades quickly without a second and third encounter after the worksheet.",
+      "Keep the new words visible for the rest of the week - on a fridge note or a bookmark. Grade 2 vocabulary fades quickly without a second and third encounter after the worksheet.",
     ],
     faq: [
       {
@@ -580,7 +580,7 @@ export const TOPIC_CONTENT_BATCH_3: Record<string, TopicContentBank> = {
       {
         question: "Should we use a dictionary?",
         answer:
-          "A children's picture dictionary is helpful, but try guessing from the sentence first — that guessing skill is one of the objectives here.",
+          "A children's picture dictionary is helpful, but try guessing from the sentence first - that guessing skill is one of the objectives here.",
       },
       {
         question: "My child mixes up synonyms and antonyms. Any tip?",
