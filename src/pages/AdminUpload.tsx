@@ -82,7 +82,7 @@ const AdminUpload = () => {
 
       const nextNum = (count ?? 0) + 1;
       setTitle(
-        `${selectedSubcat.title} \u2013 Grade ${gradeNumber} ${subjectLabel} Worksheet ${nextNum} \u2013 Free Printable`
+        `${selectedSubcat.title} - Grade ${gradeNumber} ${subjectLabel} Worksheet ${nextNum} - Free Printable`
       );
     };
 
