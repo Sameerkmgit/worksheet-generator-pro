@@ -10,6 +10,7 @@ import type { Plugin } from "vite";
 import path from "path";
 import fs from "fs";
 import { pickTopicContent } from "../src/lib/topicContent";
+import { blogArticles } from "../src/lib/blogArticles";
 import { getTopicSEOContent } from "../src/lib/seoContent";
 import { toTitleCase as utilTitleCase, toTopicUrl as utilToTopicUrl } from "../src/lib/utils";
 
