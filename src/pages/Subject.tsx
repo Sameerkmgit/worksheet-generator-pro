@@ -15,7 +15,7 @@ import {
   WorksheetData,
   WorksheetCategoryData,
 } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, normalizeTitleDashes, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 import { getSubjectSEOContent } from "@/lib/seoContent";
 import { useSeoOverride } from "@/hooks/useSeoOverride";
@@ -172,7 +172,7 @@ const Subject = () => {
   const pagePath = `/categories/${gradeSlug}/${subjectSlug}`;
   const override = useSeoOverride(pagePath);
 
-  const pageTitle = override?.meta_title || `Grade ${gradeNumber} ${subjectLabel} Worksheets - Free Printable | WizKidsHub`;
+  const pageTitle = normalizeTitleDashes(override?.meta_title || `Grade ${gradeNumber} ${subjectLabel} Worksheets - Free Printable | WizKidsHub`);
   const pageDescription = override?.meta_description || `Download free printable ${subjectLabel} worksheets for Grade ${gradeNumber}. Perfect for practice, homework, and classroom learning.`;
   const pageUrl = `https://www.wizkidshub.com${pagePath}`;
 

@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { getWorksheetBySlug, getWorksheetById, getWorksheetImageOverride, getWorksheetCategoryById, getSubcategoryById, WorksheetData } from "@/lib/worksheetStorage";
-import { toTitleCase, cleanDisplayTitle, toSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, normalizeTitleDashes, toSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import { pickTopicContent } from "@/lib/topicContent";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 import { Badge } from "@/components/ui/badge";
@@ -241,11 +241,11 @@ const WorksheetDetail = () => {
     );
   }
 
-  const cleanTitle = toTitleCase(cleanDisplayTitle(worksheet.title));
+  const cleanTitle = normalizeTitleDashes(toTitleCase(cleanDisplayTitle(worksheet.title)));
   const gradeNum = worksheet.grade?.toString().replace("Grade ", "").trim();
   const subjectName = toTitleCase(worksheet.subject);
   // Use the raw DB title (already in standard naming convention) for SEO meta
-  const rawTitle = worksheet.title || cleanTitle;
+  const rawTitle = normalizeTitleDashes(worksheet.title || cleanTitle);
   const pageTitle = `${rawTitle} | WizKidsHub`;
   const topicName = cleanTitle.split("-")[0]?.trim() || cleanTitle;
   const pageDescription = `Download this free printable ${topicName} worksheet for Grade ${gradeNum} ${subjectName}. Perfect for practice, homework, and classroom use.`;

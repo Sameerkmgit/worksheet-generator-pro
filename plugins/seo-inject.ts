@@ -43,6 +43,11 @@ const SUPABASE_URL = "https://sitalsldfenvtdjdgafg.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNpdGFsc2xkZmVudnRkamRnYWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1MjkxMTEsImV4cCI6MjA4MTEwNTExMX0.Wy-zLYtjOVXHEL1dDn1v6FavZV2xrT4P4iEaK-ZX6sY";
 const SITE_URL = "https://www.wizkidshub.com";
 
+/** Keep all generated metadata and headings on plain ASCII separators. */
+function normalizeTitleDashes(value: string): string {
+  return value.replace(/[\u2013\u2014]/g, "-");
+}
+
 interface SeoRecord {
   page_path: string;
   page_type: string;
@@ -662,7 +667,7 @@ async function generateWorksheetPages(distDir: string, baseHtml: string) {
 
   let written = 0;
   for (const w of all) {
-    const rawTitle = (w.title || "").trim();
+    const rawTitle = normalizeTitleDashes((w.title || "").trim());
     if (!rawTitle) continue;
     const gradeNum = (w.grade || "").toString().replace("Grade ", "").trim();
     const subject = toTitleCase((w.subject || "").toString());
@@ -811,10 +816,10 @@ async function generateTopicPages(distDir: string, baseHtml: string) {
     const grade = String(cat.grade);
     const topicPath = utilToTopicUrl(grade, cat.subject, sub.slug);
     const canonicalUrl = `${SITE_URL}${topicPath}`;
-    const topicTitle = utilTitleCase(sub.title);
+    const topicTitle = normalizeTitleDashes(utilTitleCase(sub.title));
     const subjectLabel = utilTitleCase(cat.subject);
     const gradeLabel = `Grade ${grade}`;
-    const title = `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} - Free Printable | WizKidsHub`;
+    const title = normalizeTitleDashes(`${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} - Free Printable | WizKidsHub`);
     const description = `Download free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. Perfect for practice, homework, and classroom learning.`;
 
     const metaTags = [
