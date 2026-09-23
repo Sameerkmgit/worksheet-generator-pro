@@ -10,6 +10,8 @@ import type { Plugin } from "vite";
 import path from "path";
 import fs from "fs";
 import { pickTopicContent } from "../src/lib/topicContent";
+import { getTopicSEOContent } from "../src/lib/seoContent";
+import { toTitleCase as utilTitleCase, toTopicUrl as utilToTopicUrl } from "../src/lib/utils";
 
 /** Pulls plain question strings out of the stored questions JSON. */
 function extractQuestions(raw: unknown): string[] {
@@ -767,6 +769,101 @@ async function generateWorksheetPages(distDir: string, baseHtml: string) {
   console.log(`SEO inject: ${written} worksheet pages generated`);
 }
 
+async function restGet<T>(query: string): Promise<T[]> {
+  const out: T[] = [];
+  for (let offset = 0; ; offset += 1000) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${query}&limit=1000&offset=${offset}`, {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+    });
+    if (!res.ok) throw new Error(`REST ${query} returned ${res.status}`);
+    const batch = (await res.json()) as T[];
+    out.push(...batch);
+    if (batch.length < 1000) break;
+  }
+  return out;
+}
+
+/** Topic pages: /categories/grade-N/subject/topic — mirrors TopicPage.tsx metadata. */
+async function generateTopicPages(distDir: string, baseHtml: string) {
+  const cats = await restGet<{ id: string; grade: string | number; subject: string; title: string | null }>(
+    "worksheet_categories?select=id,grade,subject,title&order=id.asc"
+  );
+  const subs = await restGet<{ id: string; title: string; slug: string; category_id: string }>(
+    "worksheet_subcategories?is_archived=eq.false&select=id,title,slug,category_id&order=sort_order.asc"
+  );
+  const ws = await restGet<{ id: number; slug: string | null; title: string; subcategory_id: string | null }>(
+    "worksheets?is_archived=eq.false&subcategory_id=not.is.null&select=id,slug,title,subcategory_id&order=id.asc"
+  );
+  const catById = new Map(cats.map((c) => [c.id, c]));
+  const wsBySub = new Map<string, typeof ws>();
+  for (const w of ws) {
+    if (!w.subcategory_id) continue;
+    if (!wsBySub.has(w.subcategory_id)) wsBySub.set(w.subcategory_id, []);
+    wsBySub.get(w.subcategory_id)!.push(w);
+  }
+
+  let written = 0;
+  for (const sub of subs) {
+    const cat = catById.get(sub.category_id);
+    const list = wsBySub.get(sub.id) || [];
+    if (!cat || !sub.slug || list.length === 0) continue;
+
+    const grade = String(cat.grade);
+    const topicPath = utilToTopicUrl(grade, cat.subject, sub.slug);
+    const canonicalUrl = `${SITE_URL}${topicPath}`;
+    const topicTitle = utilTitleCase(sub.title);
+    const subjectLabel = utilTitleCase(cat.subject);
+    const gradeLabel = `Grade ${grade}`;
+    const title = `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} – Free Printable | WizKidsHub`;
+    const description = `Download free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. Perfect for practice, homework, and classroom learning.`;
+
+    const metaTags = [
+      `<title>${escapeHtml(title)}</title>`,
+      `<meta name="description" content="${escapeHtml(description)}" />`,
+      `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`,
+      `<meta name="robots" content="index, follow" />`,
+      `<meta property="og:title" content="${escapeHtml(title)}" />`,
+      `<meta property="og:description" content="${escapeHtml(description)}" />`,
+      `<meta property="og:type" content="website" />`,
+      `<meta property="og:url" content="${escapeHtml(canonicalUrl)}" />`,
+    ].join("\n    ");
+
+    const jsonLd = `<script type="application/ld+json">${JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel}`,
+      description,
+      url: canonicalUrl,
+      isPartOf: { "@type": "WebSite", name: "WizKidsHub", url: SITE_URL },
+    }).replace(/</g, "\\u003c")}</script>`;
+
+    const seo = getTopicSEOContent(grade, subjectLabel, topicTitle);
+    const parts: string[] = [];
+    parts.push(`<article data-seo-prerender="true" style="max-width:900px;margin:0 auto;padding:2rem 1rem;font-family:system-ui,sans-serif;color:#333">`);
+    parts.push(`<h1>${escapeHtml(topicTitle)} Worksheets</h1>`);
+    parts.push(`<p>${list.length} free printable ${escapeHtml(topicTitle.toLowerCase())} worksheet${list.length !== 1 ? "s" : ""} for ${gradeLabel} ${escapeHtml(subjectLabel)} students.</p>`);
+    if (seo.intro) parts.push(`<p>${escapeHtml(seo.intro)}</p>`);
+    if (seo.whatKidsLearn?.length) {
+      parts.push(`<h2>What Kids Will Learn</h2><ul>${seo.whatKidsLearn.map((i) => `<li>${escapeHtml(i)}</li>`).join("")}</ul>`);
+    }
+    if (seo.exampleQuestions?.length) {
+      parts.push(`<h2>Example Questions</h2><ol>${seo.exampleQuestions.map((q) => `<li>${escapeHtml(q)}</li>`).join("")}</ol>`);
+    }
+    if (seo.practiceTips) parts.push(`<h2>Practice Tips for Parents &amp; Teachers</h2><p>${escapeHtml(seo.practiceTips)}</p>`);
+    parts.push(`<h2>Worksheets in this topic</h2><ul>`);
+    for (const w of list) {
+      const href = w.slug ? `/worksheet/${w.slug}` : `/worksheet/${w.id}`;
+      parts.push(`<li><a href="${escapeHtml(href)}">${escapeHtml(w.title)}</a></li>`);
+    }
+    parts.push(`</ul></article>`);
+
+    writeRouteHtml(distDir, topicPath, injectHtml(baseHtml, metaTags, jsonLd, parts.join("\n")));
+    written++;
+  }
+  console.log(`SEO inject: ${written} topic pages generated`);
+}
+
+
 export default function seoInjectPlugin(): Plugin {
   return {
     name: "vite-plugin-seo-inject",
@@ -782,6 +879,12 @@ export default function seoInjectPlugin(): Plugin {
         generateStaticPages(distDir, baseHtml, pages);
 
         await generateWorksheetPages(distDir, baseHtml);
+
+        try {
+          await generateTopicPages(distDir, baseHtml);
+        } catch (e) {
+          console.error("SEO inject: topic pages failed:", e);
+        }
 
 
 
