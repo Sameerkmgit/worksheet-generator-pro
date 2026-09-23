@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
-import { toTitleCase, toSubjectSlug, toTopicUrl } from "@/lib/utils";
+import { normalizeTitleDashes, toTitleCase, toSubjectSlug, toTopicUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 
 interface WorksheetCategory {
@@ -207,7 +207,7 @@ const Category = () => {
   
   const gradeTitle = gradeTitles[gradeSlug || ""] || `Grade ${gradeNumber}`;
   const pageTitle = `${gradeTitle} Worksheets`;
-  const seoTitle = `${gradeTitle} Worksheets - Free Printable PDFs | WizKidsHub`;
+  const seoTitle = normalizeTitleDashes(`${gradeTitle} Worksheets - Free Printable PDFs | WizKidsHub`);
   
   const pageDescription = `Download free ${gradeTitle} printable worksheets in Math, English, and Science. Curriculum-aligned PDFs for home and classroom use.`;
 

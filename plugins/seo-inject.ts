@@ -43,6 +43,11 @@ const SUPABASE_URL = "https://sitalsldfenvtdjdgafg.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNpdGFsc2xkZmVudnRkamRnYWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1MjkxMTEsImV4cCI6MjA4MTEwNTExMX0.Wy-zLYtjOVXHEL1dDn1v6FavZV2xrT4P4iEaK-ZX6sY";
 const SITE_URL = "https://www.wizkidshub.com";
 
+/** Keep all generated metadata and headings on plain ASCII separators. */
+function normalizeTitleDashes(value: string): string {
+  return value.replace(/[\u2013\u2014]/g, "-");
+}
+
 interface SeoRecord {
   page_path: string;
   page_type: string;
@@ -662,7 +667,7 @@ async function generateWorksheetPages(distDir: string, baseHtml: string) {
 
   let written = 0;
   for (const w of all) {
-    const rawTitle = (w.title || "").trim();
+    const rawTitle = normalizeTitleDashes((w.title || "").trim());
     if (!rawTitle) continue;
     const gradeNum = (w.grade || "").toString().replace("Grade ", "").trim();
     const subject = toTitleCase((w.subject || "").toString());
@@ -783,6 +788,50 @@ async function restGet<T>(query: string): Promise<T[]> {
   return out;
 }
 
+/** Subject pages: /categories/grade-N/subject - supplies route-specific source metadata. */
+async function generateSubjectPages(distDir: string, baseHtml: string) {
+  const cats = await restGet<{ id: string; grade: string | number; subject: string; title: string | null; description: string | null }>(
+    "worksheet_categories?select=id,grade,subject,title,description&order=id.asc"
+  );
+
+  let written = 0;
+  for (const cat of cats) {
+    const grade = String(cat.grade);
+    const subjectLabel = normalizeTitleDashes(utilTitleCase(cat.subject));
+    const subjectSlug = cat.subject.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+    const subjectPath = `/categories/grade-${grade}/${subjectSlug}`;
+    const canonicalUrl = `${SITE_URL}${subjectPath}`;
+    const title = `Grade ${grade} ${subjectLabel} Worksheets - Free Printable | WizKidsHub`;
+    const description = normalizeTitleDashes(
+      cat.description || `Download free printable Grade ${grade} ${subjectLabel} worksheets for practice, homework, and classroom learning.`
+    );
+    const heading = normalizeTitleDashes(cat.title || `Grade ${grade} ${subjectLabel} Worksheets`);
+    const metaTags = [
+      `<title>${escapeHtml(title)}</title>`,
+      `<meta name="description" content="${escapeHtml(description)}" />`,
+      `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`,
+      `<meta name="robots" content="index, follow" />`,
+      `<meta property="og:title" content="${escapeHtml(title)}" />`,
+      `<meta property="og:description" content="${escapeHtml(description)}" />`,
+      `<meta property="og:type" content="website" />`,
+      `<meta property="og:url" content="${escapeHtml(canonicalUrl)}" />`,
+    ].join("\n    ");
+    const jsonLd = `<script type="application/ld+json">${JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: heading,
+      description,
+      url: canonicalUrl,
+      isPartOf: { "@type": "WebSite", name: "WizKidsHub", url: SITE_URL },
+    }).replace(/</g, "\\u003c")}</script>`;
+    const seoBlock = `<article data-seo-prerender="true" style="max-width:900px;margin:0 auto;padding:2rem 1rem;font-family:system-ui,sans-serif;color:#333"><h1>${escapeHtml(heading)}</h1><p>${escapeHtml(description)}</p></article>`;
+
+    writeRouteHtml(distDir, subjectPath, injectHtml(baseHtml, metaTags, jsonLd, seoBlock));
+    written++;
+  }
+  console.log(`SEO inject: ${written} subject pages generated`);
+}
+
 /** Topic pages: /categories/grade-N/subject/topic - mirrors TopicPage.tsx metadata. */
 async function generateTopicPages(distDir: string, baseHtml: string) {
   const cats = await restGet<{ id: string; grade: string | number; subject: string; title: string | null }>(
@@ -811,10 +860,10 @@ async function generateTopicPages(distDir: string, baseHtml: string) {
     const grade = String(cat.grade);
     const topicPath = utilToTopicUrl(grade, cat.subject, sub.slug);
     const canonicalUrl = `${SITE_URL}${topicPath}`;
-    const topicTitle = utilTitleCase(sub.title);
+    const topicTitle = normalizeTitleDashes(utilTitleCase(sub.title));
     const subjectLabel = utilTitleCase(cat.subject);
     const gradeLabel = `Grade ${grade}`;
-    const title = `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} - Free Printable | WizKidsHub`;
+    const title = normalizeTitleDashes(`${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} - Free Printable | WizKidsHub`);
     const description = `Download free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. Perfect for practice, homework, and classroom learning.`;
 
     const metaTags = [
@@ -879,6 +928,12 @@ export default function seoInjectPlugin(): Plugin {
         generateStaticPages(distDir, baseHtml, pages);
 
         await generateWorksheetPages(distDir, baseHtml);
+
+        try {
+          await generateSubjectPages(distDir, baseHtml);
+        } catch (e) {
+          console.error("SEO inject: subject pages failed:", e);
+        }
 
         try {
           await generateTopicPages(distDir, baseHtml);

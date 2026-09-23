@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AdSense from "@/components/AdSense";
 import { supabase } from "@/integrations/supabase/client";
-import { toTitleCase, cleanDisplayTitle, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
+import { toTitleCase, cleanDisplayTitle, normalizeTitleDashes, toSubjectSlug, fromSubjectSlug, toTopicUrl, toWorksheetUrl } from "@/lib/utils";
 import InteractivePracticeBanner from "@/components/InteractivePracticeBanner";
 import { getTopicSEOContent } from "@/lib/seoContent";
 import { useSeoOverride } from "@/hooks/useSeoOverride";
@@ -162,7 +162,7 @@ const TopicPage = () => {
   const pagePath = `/categories/${gradeSlug}/${subjectSlug}/${topicSlug}`;
   const override = useSeoOverride(pagePath);
   const canonicalUrl = `${SITE_URL}${pagePath}`;
-  const seoTitle = override?.meta_title || `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} - Free Printable | WizKidsHub`;
+  const seoTitle = normalizeTitleDashes(override?.meta_title || `${topicTitle} Worksheets for ${gradeLabel} ${subjectLabel} - Free Printable | WizKidsHub`);
   const seoDescription = override?.meta_description || `Download free printable ${topicTitle} worksheets for ${gradeLabel} ${subjectLabel}. Perfect for practice, homework, and classroom learning.`;
 
   const breadcrumbItems = [

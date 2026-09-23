@@ -58,6 +58,16 @@ export function cleanDisplayTitle(str: string | null | undefined): string {
 }
 
 /**
+ * Normalizes typographic dash separators in generated and stored page titles.
+ * This keeps metadata and visible headings consistent even when older content
+ * or a manual SEO override contains an en dash or em dash.
+ */
+export function normalizeTitleDashes(str: string | null | undefined): string {
+  if (!str) return "";
+  return str.replace(/[\u2013\u2014]/g, "-");
+}
+
+/**
  * Converts a subject name to a URL-friendly slug.
  * Derived from actual data, not hardcoded.
  * 
