@@ -27,11 +27,11 @@ const Blog = () => {
         <title>Learning Tips & Worksheet Guides | WizKidsHub Blog</title>
         <meta
           name="description"
-          content="Learning tips, teaching strategies, and worksheet guides for parents and teachers helping Grade 1–5 students in Math, English, and Science."
+          content="Learning tips, teaching strategies, and worksheet guides for parents and teachers helping Grade 1 to 5 students in Math, English, and Science."
         />
         <link rel="canonical" href="https://www.wizkidshub.com/blog" />
         <meta property="og:title" content="Learning Tips & Worksheet Guides | WizKidsHub Blog" />
-        <meta property="og:description" content="Learning tips, teaching strategies, and worksheet guides for parents and teachers of Grade 1–5 students." />
+        <meta property="og:description" content="Learning tips, teaching strategies, and worksheet guides for parents and teachers of Grade 1 to 5 students." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.wizkidshub.com/blog" />
         <meta property="og:site_name" content="WizKidsHub" />
@@ -40,7 +40,7 @@ const Blog = () => {
             "@context": "https://schema.org",
             "@type": "Blog",
             name: "WizKidsHub Learning Tips & Blog",
-            description: "Learning tips, teaching strategies, and worksheet guides for parents and teachers of Grade 1–5 students.",
+            description: "Learning tips, teaching strategies, and worksheet guides for parents and teachers of Grade 1 to 5 students.",
             url: "https://www.wizkidshub.com/blog",
             blogPost: blogArticles.map((a) => ({
               "@type": "BlogPosting",
@@ -67,7 +67,7 @@ const Blog = () => {
               Learning Tips &amp; Blog
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Practical guides, teaching strategies, and learning tips for parents and educators working with Grade 1–5 students. Pair these insights with our free printable worksheets for maximum impact.
+              Practical guides, teaching strategies, and learning tips for parents and educators working with Grade 1 to 5 students. Pair these insights with our free printable worksheets for maximum impact.
             </p>
           </div>
         </section>
@@ -107,7 +107,7 @@ const Blog = () => {
           <div className="max-w-2xl mx-auto space-y-4">
             <h2 className="text-2xl font-bold text-foreground font-heading">Ready to Get Started?</h2>
             <p className="text-muted-foreground">
-              Browse our full library of 780+ free printable worksheets for Grades 1–5.
+              Browse our full library of 780+ free printable worksheets for Grades 1 to 5.
             </p>
             <Link
               to="/worksheets"

@@ -233,11 +233,11 @@ const WorksheetsBrowser = () => {
   return (
     <>
       <Helmet>
-        <title>Browse Free Printable Worksheets – Grades 1–5 | WizKidsHub</title>
-        <meta name="description" content="Browse and download hundreds of free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty. No sign-up required." />
+        <title>Browse Free Printable Worksheets - Grades 1 to 5 | WizKidsHub</title>
+        <meta name="description" content="Browse and download hundreds of free printable worksheets for Grades 1 to 5. Filter by grade, subject, and difficulty. No sign-up required." />
         <link rel="canonical" href="https://www.wizkidshub.com/worksheets" />
-        <meta property="og:title" content="Browse Free Printable Worksheets – Grades 1–5 | WizKidsHub" />
-        <meta property="og:description" content="Browse and download hundreds of free printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty." />
+        <meta property="og:title" content="Browse Free Printable Worksheets - Grades 1 to 5 | WizKidsHub" />
+        <meta property="og:description" content="Browse and download hundreds of free printable worksheets for Grades 1 to 5. Filter by grade, subject, and difficulty." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.wizkidshub.com/worksheets" />
         <meta property="og:site_name" content="WizKidsHub" />
@@ -245,8 +245,8 @@ const WorksheetsBrowser = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Free Printable Worksheets for Grades 1–5",
-            description: "Browse and download free printable worksheets for Grades 1–5 across Math, English, Science, and Computer Science.",
+            name: "Free Printable Worksheets for Grades 1 to 5",
+            description: "Browse and download free printable worksheets for Grades 1 to 5 across Math, English, Science, and Computer Science.",
             url: "https://www.wizkidshub.com/worksheets",
             isPartOf: { "@type": "WebSite", name: "WizKidsHub", url: "https://www.wizkidshub.com" },
           })}
@@ -266,7 +266,7 @@ const WorksheetsBrowser = () => {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2 font-heading">Browse All Worksheets</h1>
-            <p className="text-muted-foreground">{totalAllCount !== null ? `${totalAllCount} free` : "Free"} printable worksheets for Grades 1–5. Filter by grade, subject, and difficulty.</p>
+            <p className="text-muted-foreground">{totalAllCount !== null ? `${totalAllCount} free` : "Free"} printable worksheets for Grades 1 to 5. Filter by grade, subject, and difficulty.</p>
           </div>
 
           {/* Filters */}

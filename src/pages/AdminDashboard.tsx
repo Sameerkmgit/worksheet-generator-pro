@@ -1236,7 +1236,7 @@ const AdminDashboard = () => {
         {/* Worksheets List - Paginated */}
         <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            Showing {((safeWorksheetPage - 1) * WORKSHEETS_PER_PAGE) + 1}–{Math.min(safeWorksheetPage * WORKSHEETS_PER_PAGE, searchFilteredWorksheets.length)} of {searchFilteredWorksheets.length} worksheets
+            Showing {((safeWorksheetPage - 1) * WORKSHEETS_PER_PAGE) + 1}-{Math.min(safeWorksheetPage * WORKSHEETS_PER_PAGE, searchFilteredWorksheets.length)} of {searchFilteredWorksheets.length} worksheets
             {worksheetSearch && ` matching "${worksheetSearch}"`}
           </p>
 

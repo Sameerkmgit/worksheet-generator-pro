@@ -88,7 +88,7 @@ export const blogArticles: BlogArticle[] = [
       <p>Effective sight word worksheets ask children to read the word, write it, and use it in a sentence - all on the same page. This three-step approach reinforces recognition, spelling, and meaning together.</p>
 
       <h2>3. Reading Comprehension Passages</h2>
-      <p>Reading the words isn't the same as understanding them. Grade 2 comprehension worksheets typically include a short passage (4–8 sentences) followed by 3–5 questions covering main idea, detail recall, and a simple inference.</p>
+      <p>Reading the words isn't the same as understanding them. Grade 2 comprehension worksheets typically include a short passage (4 to 8 sentences) followed by 3 to 5 questions covering main idea, detail recall, and a simple inference.</p>
       <p>Sit with your child the first few times. Ask them to underline the part of the passage that proves their answer. This habit - finding evidence - is the single most valuable comprehension skill they can build at this age.</p>
 
       <h2>4. Sentence Building and Punctuation</h2>
@@ -107,7 +107,7 @@ export const blogArticles: BlogArticle[] = [
         <li><strong>Thursday:</strong> Sentence building</li>
         <li><strong>Friday:</strong> Vocabulary</li>
       </ul>
-      <p>Aim for 10–15 minutes per session. Always read the worksheet together first, then let your child work independently. Review answers together at the end and celebrate effort, not just correctness.</p>
+      <p>Aim for 10 to 15 minutes per session. Always read the worksheet together first, then let your child work independently. Review answers together at the end and celebrate effort, not just correctness.</p>
 
       <h2>The Bottom Line</h2>
       <p>Grade 2 English is built on five pillars: phonics, sight words, comprehension, sentence structure, and vocabulary. Hit each one weekly with focused, well-designed worksheets and your child will end the year as a confident reader and writer. You don't need expensive workbooks or apps - a printer, a quiet table, and consistency are enough.</p>
@@ -120,7 +120,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Parenting",
     readingMinutes: 6,
     summary:
-      "While educational apps have their place, research shows that writing by hand and working on paper helps children retain information better. Learn why printable worksheets remain one of the most effective learning tools for kids in Grades 1–5.",
+      "While educational apps have their place, research shows that writing by hand and working on paper helps children retain information better. Learn why printable worksheets remain one of the most effective learning tools for kids in Grades 1 to 5.",
     content: `
       <p>If you've walked through a children's section of any bookstore lately, you'll have noticed something: paper workbooks are still everywhere. Despite a decade of "edtech" promising to replace them, printable worksheets remain one of the most widely used learning tools for elementary-age children. There's a reason for that - and it's not just nostalgia.</p>
 
@@ -139,7 +139,7 @@ export const blogArticles: BlogArticle[] = [
       <p>Reviewing a completed worksheet together at the end is one of the most valuable five minutes you can spend on your child's education.</p>
 
       <h2>Worksheets Build Stamina</h2>
-      <p>By the time children reach Grade 3, they're expected to sit and work independently for 20–30 minutes at a time on tasks that don't entertain them in real time. This is a learned skill. Children who have done printable worksheets since Grade 1 walk into this much better prepared than those whose practice has been entirely interactive.</p>
+      <p>By the time children reach Grade 3, they're expected to sit and work independently for 20 to 30 minutes at a time on tasks that don't entertain them in real time. This is a learned skill. Children who have done printable worksheets since Grade 1 walk into this much better prepared than those whose practice has been entirely interactive.</p>
 
       <h2>Reduced Eye Strain and Better Sleep</h2>
       <p>Pediatric guidelines consistently recommend limiting screen time for children under 10, particularly in the hour before bed. Paper-based practice can happen at the kitchen table after dinner without affecting sleep, while screen-based learning at the same hour can delay it.</p>
@@ -156,8 +156,8 @@ export const blogArticles: BlogArticle[] = [
       <h2>A Sensible Weekly Balance</h2>
       <p>For most elementary-age children, a healthy mix looks like this:</p>
       <ul>
-        <li>3–5 short worksheet sessions per week (10–15 minutes each)</li>
-        <li>10–15 minutes of educational app use, 2–3 times per week</li>
+        <li>3 to 5 short worksheet sessions per week (10 to 15 minutes each)</li>
+        <li>10 to 15 minutes of educational app use, 2 to 3 times per week</li>
         <li>Daily reading from physical books, ideally 20+ minutes</li>
       </ul>
       <p>This balance gives you the brain-development benefits of handwriting, the focus benefits of paper, and the targeted drill benefits of digital - without letting screens take over.</p>
@@ -236,7 +236,7 @@ export const blogArticles: BlogArticle[] = [
       <p>Print a set of animal picture cards and ask children to sort them. Then ask them to re-sort using a different rule. The same lion can be in "mammal," "carnivore," and "wild animal" - this flexibility is what classification really means.</p>
 
       <h2>Plant Life Cycles With a Bean and a Cup</h2>
-      <p>The fastest way to make a life cycle real is to grow one. A dried bean, a plastic cup, a paper towel, and a tablespoon of water are all you need. Within 5–7 days, children can watch the seed swell, split, and sprout. They'll remember it forever.</p>
+      <p>The fastest way to make a life cycle real is to grow one. A dried bean, a plastic cup, a paper towel, and a tablespoon of water are all you need. Within 5 to 7 days, children can watch the seed swell, split, and sprout. They'll remember it forever.</p>
       <p>Pair the experiment with a worksheet that asks them to label the stages of the life cycle in order. The combination of hands-on observation and structured recording is exactly how scientists actually work.</p>
 
       <h2>Food Chains and Webs</h2>

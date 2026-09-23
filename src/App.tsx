@@ -97,10 +97,10 @@ const App = () => {
             <Route path="/admin/reset-password" element={<ResetPassword />} />
             <Route path="/admin/worksheet-audit" element={<WorksheetAudit />} />
             <Route path="/admin/seo-overrides" element={<AdminSeoOverrides />} />
-            {/* Obscured secure entry URL – goes to admin login */}
+            {/* Obscured secure entry URL - goes to admin login */}
             <Route path="/dashboard-secure-2025" element={<AdminLogin />} />
 
-            {/* FALLBACK – keep this last */}
+            {/* FALLBACK - keep this last */}
             <Route path="*" element={<NotFound />} />
 
           </Routes>
