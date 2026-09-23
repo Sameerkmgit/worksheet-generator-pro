@@ -923,7 +923,32 @@ export default function seoInjectPlugin(): Plugin {
         const distDir = path.resolve(process.cwd(), "dist");
         const baseHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf-8");
 
-        const pages = [...STATIC_SEO_PAGES, ...buildGradePages()];
+        const strip = (s: string) => s.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+        const blogPages: StaticSeoPage[] = blogArticles.map((a) => {
+          const parts = a.content.split(/<h2>/i);
+          const sections = parts.slice(1).map((p) => {
+            const [h, ...rest] = p.split(/<\/h2>/i);
+            return { heading: strip(h), body: strip(rest.join(" ")) };
+          });
+          return {
+            path: `/blog/${a.slug}`,
+            title: normalizeTitleDashes(`${a.title} | WizKidsHub`),
+            description: a.summary.slice(0, 158),
+            heading: a.title,
+            sections: [{ heading: "Overview", body: strip(parts[0]) || a.summary }, ...sections],
+          };
+        });
+        const assignmentPages: StaticSeoPage[] = [1, 2, 3, 4, 5].map((g) => ({
+          path: `/assignments/grade-${g}`,
+          title: `Grade ${g} Assignments - Free Printable Practice | WizKidsHub`,
+          description: `Free printable Grade ${g} assignments in Math, English, Science and Computer Science for home practice and classroom review.`,
+          heading: `Grade ${g} Assignments`,
+          sections: [
+            { heading: `About Grade ${g} assignments`, body: `These free printable Grade ${g} assignments bring together practice across Math, English, Science and Computer Science. Each assignment is designed to be printed and completed on paper, making it easy to use for homework, weekend review or classroom warm-ups.` },
+            { heading: "How to use them", body: `Pick one assignment at a time, work through it together, and check answers right away so mistakes become learning moments. Short, regular sessions work better than long ones for Grade ${g} learners.` },
+          ],
+        }));
+        const pages = [...STATIC_SEO_PAGES, ...buildGradePages(), ...blogPages, ...assignmentPages];
         console.log(`SEO inject: generating ${pages.length} static public pages`);
         generateStaticPages(distDir, baseHtml, pages);
 
